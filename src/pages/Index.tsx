@@ -24,7 +24,7 @@ const Index = () => {
           >
             <div className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse-slow" />
             <span className="text-[11px] font-medium uppercase tracking-[0.25em] text-muted-foreground">
-              Fältserviceplattform · Norden
+              AI-plattform för fältservice · Norden
             </span>
           </motion.div>
 
@@ -34,10 +34,10 @@ const Index = () => {
             transition={{ duration: 0.7, delay: 0.1 }}
             className="font-display text-4xl sm:text-5xl md:text-6xl font-bold leading-[0.95] tracking-tight mb-5"
           >
-            <span className="text-gradient-ice">Beskriv er verksamhet.</span>
+            <span className="text-gradient-ice">Smartare fältservice.</span>
             <br />
             <span className="text-muted-foreground text-2xl sm:text-3xl md:text-4xl font-medium">
-              Vi visar vad som är möjligt.
+              Beskriv era utmaningar — vi visar lösningen.
             </span>
           </motion.h1>
 
@@ -47,8 +47,8 @@ const Index = () => {
             transition={{ delay: 0.3 }}
             className="text-muted-foreground text-sm md:text-base leading-relaxed max-w-lg mx-auto mb-10"
           >
-            Traivo kombinerar fältserviceerfarenhet med AI. Skriv om er bransch, 
-            era utmaningar eller vad ni vill förbättra — helt anonymt.
+            Avfallshantering, fastighetsskötsel, snöröjning, teknisk service — 
+            berätta om era vardagliga utmaningar i fält så visar vi hur AI och smart planering kan hjälpa.
           </motion.p>
 
           <AIInput />
