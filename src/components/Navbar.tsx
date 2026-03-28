@@ -5,8 +5,8 @@ import { Menu, X } from "lucide-react";
 
 const links = [
   { to: "/", label: "Utforska" },
-  { to: "/traivo-one", label: "One" },
-  { to: "/traivo-go", label: "Go" },
+  { to: "/traivo-one", label: "Traivo One" },
+  { to: "/traivo-go", label: "Traivo Go" },
   
   { to: "/om-oss", label: "Om oss" },
   { to: "/kontakt", label: "Kontakt" },
