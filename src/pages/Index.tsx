@@ -47,9 +47,9 @@ const Index = () => {
             transition={{ delay: 0.3 }}
             className="text-muted-foreground text-sm md:text-base leading-relaxed max-w-lg mx-auto mb-10"
           >
-            Bakom Traivo står ett team som jobbat med fältservice hela livet — 
-            avfallshantering, fastighetsskötsel, snöröjning, teknisk service. 
-            Berätta om era utmaningar så visar vi hur vår erfarenhet och AI kan hjälpa.
+            Traivo är byggt av ett team med djup erfarenhet av verkligheten i fält — 
+            inte av folk som bara sett den på avstånd. Berätta om era utmaningar 
+            så visar vi vad vi kan göra åt dem.
           </motion.p>
 
           <AIInput />
