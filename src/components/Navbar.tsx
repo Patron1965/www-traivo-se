@@ -7,7 +7,7 @@ const links = [
   { to: "/", label: "Utforska" },
   { to: "/traivo-one", label: "One" },
   { to: "/traivo-go", label: "Go" },
-  { to: "/priser", label: "Priser" },
+  
   { to: "/om-oss", label: "Om oss" },
   { to: "/kontakt", label: "Kontakt" },
 ];
