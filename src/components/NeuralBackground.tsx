@@ -86,7 +86,7 @@ const NeuralBackground = () => {
         q.y += q.vy;
 
         if (q.x < 10 || q.x > canvas.width * 0.13) q.vx *= -1;
-        if (q.y < 40 || q.y > canvas.height - 40) q.vy *= -1;
+        if (q.y < 80 || q.y > 430) q.vy *= -1;
 
         q.timer += 1;
         if (q.timer > q.timerMax) {
