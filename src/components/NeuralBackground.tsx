@@ -66,7 +66,7 @@ const NeuralBackground = () => {
       items.push({
         text: shuffled[i % shuffled.length],
         x: Math.random() * canvas.width * 0.1 + 10,
-        y: Math.random() * canvas.height * 0.8 + canvas.height * 0.1,
+        y: Math.random() * 350 + 80,
         vx: (Math.random() - 0.5) * 0.08,
         vy: (Math.random() - 0.5) * 0.04,
         alpha: 0,
@@ -86,7 +86,7 @@ const NeuralBackground = () => {
         q.y += q.vy;
 
         if (q.x < 10 || q.x > canvas.width * 0.13) q.vx *= -1;
-        if (q.y < 40 || q.y > canvas.height - 40) q.vy *= -1;
+        if (q.y < 80 || q.y > 430) q.vy *= -1;
 
         q.timer += 1;
         if (q.timer > q.timerMax) {
