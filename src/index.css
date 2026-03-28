@@ -7,23 +7,23 @@
 @layer base {
   :root {
     /* Traivo — Teal-forward colorful */
-    --background: 190 26% 23%;
+    --background: 190 27% 21%;
     --foreground: 180 15% 93%;
 
-    --card: 190 23% 27%;
+    --card: 190 24% 25%;
     --card-foreground: 180 15% 93%;
 
-    --popover: 190 23% 27%;
+    --popover: 190 24% 25%;
     --popover-foreground: 180 15% 93%;
 
     --primary: 180 55% 42%;
     --primary-foreground: 190 40% 8%;
 
-    --secondary: 190 20% 33%;
+    --secondary: 190 21% 31%;
     --secondary-foreground: 180 20% 85%;
 
-    --muted: 190 14% 31%;
-    --muted-foreground: 185 16% 70%;
+    --muted: 190 15% 29%;
+    --muted-foreground: 185 16% 68%;
 
     --accent: 160 50% 48%;
     --accent-foreground: 190 40% 8%;
@@ -31,8 +31,8 @@
     --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 185 14% 38%;
-    --input: 185 14% 38%;
+    --border: 185 15% 36%;
+    --input: 185 15% 36%;
     --ring: 180 55% 42%;
 
     --radius: 0.75rem;
@@ -42,7 +42,7 @@
     --teal: 180 55% 42%;
     --aurora: 160 50% 48%;
     --ice: 180 45% 92%;
-    --navy: 190 26% 23%;
+    --navy: 190 27% 21%;
     --mountain: 185 16% 50%;
 
     --sidebar-background: 210 26% 13%;
