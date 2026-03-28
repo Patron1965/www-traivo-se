@@ -128,7 +128,7 @@ const BrainHero = () => {
           <polygon points="50,16 58,20 50,24" fill="hsl(180 70% 50% / 0.4)" />
         </svg>
 
-        <div className="w-[230px] rounded-xl border border-primary/20 bg-card/90 backdrop-blur-md p-4 shadow-lg shadow-primary/5">
+        <div className="w-[230px] rounded-xl border border-primary/20 bg-card/90 backdrop-blur-md p-4 animate-border-pulse">
           <div className="flex items-start gap-2.5">
             <ShieldCheck className="w-4 h-4 text-primary mt-0.5 shrink-0" />
             <p className="text-xs text-muted-foreground leading-relaxed">
@@ -146,7 +146,7 @@ const BrainHero = () => {
         transition={{ delay: 2, duration: 0.8 }}
         className="relative z-20 mt-4 lg:hidden"
       >
-        <div className="w-[280px] rounded-xl border border-primary/20 bg-card/90 backdrop-blur-md p-3 shadow-lg shadow-primary/5">
+        <div className="w-[280px] rounded-xl border border-primary/20 bg-card/90 backdrop-blur-md p-3 animate-border-pulse">
           <div className="flex items-start gap-2">
             <ShieldCheck className="w-4 h-4 text-primary mt-0.5 shrink-0" />
             <p className="text-[11px] text-muted-foreground leading-relaxed">
