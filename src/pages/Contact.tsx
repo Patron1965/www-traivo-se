@@ -1,9 +1,8 @@
 import { useState, FormEvent } from "react";
 import { motion } from "framer-motion";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { CheckCircle2, Mail, MapPin, ArrowRight } from "lucide-react";
+import { CheckCircle2, Mail, MapPin } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 const Contact = () => {
@@ -18,128 +17,90 @@ const Contact = () => {
 
   return (
     <section className="relative min-h-screen bg-noise">
-      <div className="absolute inset-0 bg-grid-pattern opacity-15" />
-      <div className="absolute top-20 right-20 w-[400px] h-[400px] rounded-full bg-primary/[0.03] blur-[120px]" />
+      <div className="absolute inset-0 bg-grid-pattern opacity-10" />
+      <div className="absolute top-20 right-20 w-[300px] h-[300px] rounded-full bg-primary/[0.03] blur-[100px]" />
 
-      <div className="relative z-10 max-w-6xl mx-auto px-6 py-28 md:py-36 grid md:grid-cols-2 gap-16 items-start">
+      <div className="relative z-10 max-w-5xl mx-auto px-6 py-28 grid md:grid-cols-2 gap-16 items-start">
         {/* Left */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-        >
-          <span className="text-xs font-medium uppercase tracking-[0.2em] text-primary mb-4 block">
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
+          <span className="text-[11px] font-medium uppercase tracking-[0.25em] text-primary mb-4 block">
             Kontakt
           </span>
-          <h1 className="font-display text-4xl md:text-5xl font-bold leading-[0.95] tracking-tight mb-6">
-            <span className="text-gradient-ice">Boka en</span>
-            <br />
-            <span className="text-gradient-aurora">kostnadsfri demo</span>
+          <h1 className="font-display text-3xl md:text-4xl font-bold leading-[0.95] tracking-tight mb-5">
+            <span className="text-gradient-ice">Hör av dig</span>
           </h1>
-          <p className="text-muted-foreground mb-10 leading-relaxed max-w-md">
-            Vi visar hur Traivo kan effektivisera just er verksamhet. 
-            Ingen bindningstid, inget krångel.
+          <p className="text-sm text-muted-foreground mb-8 leading-relaxed max-w-sm">
+            Har ni frågor om plattformen, vill se en demo eller bara prata fältservice? 
+            Fyll i formuläret så återkommer vi.
           </p>
 
-          <div className="space-y-4 text-sm mb-12">
-            {["30 minuters personlig demo", "Anpassad efter er bransch", "Ingen bindningstid"].map((item) => (
+          <div className="space-y-3 text-sm mb-10">
+            {["Personlig genomgång av plattformen", "Anpassat efter er bransch", "Ingen bindningstid"].map((item) => (
               <div key={item} className="flex items-center gap-3">
-                <div className="w-1.5 h-1.5 rounded-full bg-accent" />
-                <span className="text-foreground/80">{item}</span>
+                <div className="w-1 h-1 rounded-full bg-primary" />
+                <span className="text-foreground/70">{item}</span>
               </div>
             ))}
           </div>
 
-          <div className="space-y-3 text-sm text-muted-foreground">
-            <div className="flex items-center gap-3">
-              <Mail className="w-4 h-4 text-primary/60" />
+          <div className="space-y-2.5 text-xs text-muted-foreground">
+            <div className="flex items-center gap-2">
+              <Mail className="w-3.5 h-3.5 text-primary/50" />
               <span>hello@traivo.se</span>
             </div>
-            <div className="flex items-center gap-3">
-              <MapPin className="w-4 h-4 text-primary/60" />
+            <div className="flex items-center gap-2">
+              <MapPin className="w-3.5 h-3.5 text-primary/50" />
               <span>Sverige</span>
             </div>
           </div>
         </motion.div>
 
-        {/* Right — form */}
+        {/* Right */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
+          transition={{ duration: 0.6, delay: 0.15 }}
         >
           {submitted ? (
-            <div className="glass rounded-2xl p-12 text-center">
-              <div className="w-16 h-16 rounded-full bg-accent/10 flex items-center justify-center mx-auto mb-6">
-                <CheckCircle2 className="w-8 h-8 text-accent" />
+            <div className="glass rounded-2xl p-10 text-center">
+              <div className="w-14 h-14 rounded-full bg-accent/10 flex items-center justify-center mx-auto mb-5">
+                <CheckCircle2 className="w-7 h-7 text-accent" />
               </div>
-              <h2 className="font-display text-xl font-bold mb-2">Tack!</h2>
-              <p className="text-muted-foreground">Vi hör av oss inom 24 timmar.</p>
+              <h2 className="font-display text-lg font-bold mb-2">Tack!</h2>
+              <p className="text-sm text-muted-foreground">Vi hör av oss inom 24 timmar.</p>
             </div>
           ) : (
-            <form onSubmit={handleSubmit} className="glass rounded-2xl p-8 space-y-5">
-              <div className="grid sm:grid-cols-2 gap-4">
+            <form onSubmit={handleSubmit} className="glass rounded-2xl p-7 space-y-4">
+              <div className="grid sm:grid-cols-2 gap-3">
                 <div>
-                  <label className="text-xs font-medium uppercase tracking-wider text-muted-foreground mb-2 block">
-                    Namn
-                  </label>
-                  <Input
-                    placeholder="Anna Andersson"
-                    required
-                    className="bg-secondary/50 border-border focus:border-primary/40"
-                  />
+                  <label className="text-[10px] font-medium uppercase tracking-wider text-muted-foreground mb-1.5 block">Namn</label>
+                  <Input placeholder="Anna Andersson" required className="bg-secondary/30 border-border text-sm" />
                 </div>
                 <div>
-                  <label className="text-xs font-medium uppercase tracking-wider text-muted-foreground mb-2 block">
-                    Företag
-                  </label>
-                  <Input
-                    placeholder="Ert företag"
-                    required
-                    className="bg-secondary/50 border-border focus:border-primary/40"
-                  />
+                  <label className="text-[10px] font-medium uppercase tracking-wider text-muted-foreground mb-1.5 block">Företag</label>
+                  <Input placeholder="Ert företag" required className="bg-secondary/30 border-border text-sm" />
                 </div>
               </div>
               <div>
-                <label className="text-xs font-medium uppercase tracking-wider text-muted-foreground mb-2 block">
-                  E-post
-                </label>
-                <Input
-                  type="email"
-                  placeholder="anna@foretaget.se"
-                  required
-                  className="bg-secondary/50 border-border focus:border-primary/40"
-                />
+                <label className="text-[10px] font-medium uppercase tracking-wider text-muted-foreground mb-1.5 block">E-post</label>
+                <Input type="email" placeholder="anna@foretaget.se" required className="bg-secondary/30 border-border text-sm" />
               </div>
               <div>
-                <label className="text-xs font-medium uppercase tracking-wider text-muted-foreground mb-2 block">
-                  Telefon (valfritt)
-                </label>
-                <Input
-                  type="tel"
-                  placeholder="070-123 45 67"
-                  className="bg-secondary/50 border-border focus:border-primary/40"
-                />
+                <label className="text-[10px] font-medium uppercase tracking-wider text-muted-foreground mb-1.5 block">Telefon (valfritt)</label>
+                <Input type="tel" placeholder="070-123 45 67" className="bg-secondary/30 border-border text-sm" />
               </div>
               <div>
-                <label className="text-xs font-medium uppercase tracking-wider text-muted-foreground mb-2 block">
-                  Berätta om er verksamhet
-                </label>
-                <Textarea
-                  placeholder="Vilken bransch? Hur många tekniker? Vilka utmaningar?"
-                  rows={4}
-                  className="bg-secondary/50 border-border focus:border-primary/40"
-                />
+                <label className="text-[10px] font-medium uppercase tracking-wider text-muted-foreground mb-1.5 block">Berätta</label>
+                <Textarea placeholder="Vilken bransch? Utmaningar? Antal tekniker?" rows={4} className="bg-secondary/30 border-border text-sm" />
               </div>
-              <Button
+              <button
                 type="submit"
-                size="lg"
-                className="w-full h-12 font-display font-semibold text-sm tracking-wide uppercase"
+                className="w-full py-3 rounded-xl bg-primary text-primary-foreground text-xs font-semibold uppercase tracking-wider hover:bg-primary/80 transition-colors"
               >
-                Boka demo <ArrowRight className="w-4 h-4 ml-2" />
-              </Button>
-              <p className="text-[11px] text-muted-foreground text-center">
-                Vi delar aldrig din information med tredje part.
+                Skicka
+              </button>
+              <p className="text-[10px] text-muted-foreground/50 text-center">
+                Vi delar aldrig din information.
               </p>
             </form>
           )}

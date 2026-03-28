@@ -1,10 +1,8 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
 import {
   Calendar, Route, MapPin, Users, Brain, Receipt,
-  ArrowRight, GripVertical, Cloud, Sun, Layers,
-  Shield, Palette, Server, Cpu, Bell
+  ArrowRight
 } from "lucide-react";
 
 const fadeIn = {
@@ -16,10 +14,7 @@ const fadeIn = {
 
 const sections = [
   {
-    id: "01",
-    title: "Planering",
-    icon: Calendar,
-    color: "primary",
+    id: "01", title: "Planering", icon: Calendar,
     items: [
       { t: "Drag-and-drop veckoplanerare", d: "Fördela jobb till rätt tekniker visuellt." },
       { t: "AI-autoschemaläggning", d: "Kompetens, geografi, arbetstid, fordonskapacitet." },
@@ -28,10 +23,7 @@ const sections = [
     ],
   },
   {
-    id: "02",
-    title: "Ruttoptimering",
-    icon: Route,
-    color: "accent",
+    id: "02", title: "Ruttoptimering", icon: Route,
     items: [
       { t: "Automatisk optimering", d: "Riktiga vägavstånd, inte fågelvägen." },
       { t: "Klusterbaserad planering", d: "Grupperar jobb geografiskt." },
@@ -40,10 +32,7 @@ const sections = [
     ],
   },
   {
-    id: "03",
-    title: "Realtid",
-    icon: MapPin,
-    color: "primary",
+    id: "03", title: "Realtid", icon: MapPin,
     items: [
       { t: "Live GPS-karta", d: "Förarpositioner uppdateras i realtid." },
       { t: "Pop-out kartfönster", d: "Separat skärm för kontrollrummet." },
@@ -52,10 +41,7 @@ const sections = [
     ],
   },
   {
-    id: "04",
-    title: "Kunder & Objekt",
-    icon: Users,
-    color: "accent",
+    id: "04", title: "Kunder & Objekt", icon: Users,
     items: [
       { t: "Objektregister med karta", d: "Alla serviceobjekt visualiserade." },
       { t: "Rita serviceområden", d: "Polygon/polyline direkt på kartan." },
@@ -64,10 +50,7 @@ const sections = [
     ],
   },
   {
-    id: "05",
-    title: "AI & Analys",
-    icon: Brain,
-    color: "primary",
+    id: "05", title: "AI & Analys", icon: Brain,
     items: [
       { t: "AI-assistent", d: "Fråga i naturligt språk om data & planering." },
       { t: "Prediktivt underhåll", d: "IoT-sensorer triggar schemalagda jobb." },
@@ -76,10 +59,7 @@ const sections = [
     ],
   },
   {
-    id: "06",
-    title: "Ekonomi & Admin",
-    icon: Receipt,
-    color: "accent",
+    id: "06", title: "Ekonomi & Admin", icon: Receipt,
     items: [
       { t: "Fakturering", d: "Generera med förhandsgranskning." },
       { t: "Fortnox-export", d: "Sömlös integration." },
@@ -93,38 +73,33 @@ const TraivoOne = () => {
   return (
     <>
       {/* Hero */}
-      <section className="relative min-h-[60vh] flex items-center overflow-hidden bg-noise">
-        <div className="absolute inset-0 bg-grid-pattern opacity-25" />
-        <div className="absolute top-0 left-0 w-[500px] h-[500px] rounded-full bg-primary/[0.04] blur-[150px]" />
+      <section className="relative min-h-[50vh] flex items-center overflow-hidden bg-noise">
+        <div className="absolute inset-0 bg-grid-pattern opacity-20" />
+        <div className="absolute top-0 left-0 w-[400px] h-[400px] rounded-full bg-primary/[0.03] blur-[150px]" />
 
         <div className="relative z-10 max-w-7xl mx-auto px-6 w-full py-28">
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mb-4">
-            <span className="text-xs font-medium uppercase tracking-[0.2em] text-primary">
-              Webb-plattform · Planerare & arbetsledare
+            <span className="text-[11px] font-medium uppercase tracking-[0.25em] text-primary">
+              Webb · Planerare & arbetsledare
             </span>
           </motion.div>
           <motion.h1
-            initial={{ opacity: 0, y: 40 }}
+            initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.1 }}
-            className="font-display text-5xl md:text-7xl font-bold leading-[0.95] tracking-tight mb-6"
+            transition={{ duration: 0.7 }}
+            className="font-display text-4xl md:text-6xl font-bold leading-[0.95] tracking-tight mb-5 max-w-2xl"
           >
-            <span className="text-gradient-ice">Traivo</span>{" "}
-            <span className="text-primary">One</span>
+            <span className="text-gradient-ice">Traivo One</span>
           </motion.h1>
           <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
-            className="text-lg text-muted-foreground max-w-xl mb-8"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.2 }}
+            className="text-muted-foreground max-w-xl leading-relaxed"
           >
-            Kontrollcentret där hela fältoperationen schemaläggas, optimeras och övervakas — i realtid.
+            Kontrollcentret för hela fältoperationen. Schemaläggning, ruttoptimering, 
+            GPS-karta, fakturering och AI — i en vy.
           </motion.p>
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }}>
-            <Button size="lg" className="h-12 px-8 font-display font-semibold text-sm tracking-wide uppercase" asChild>
-              <Link to="/kontakt">Boka demo <ArrowRight className="w-4 h-4 ml-2" /></Link>
-            </Button>
-          </motion.div>
         </div>
       </section>
 
@@ -132,18 +107,16 @@ const TraivoOne = () => {
       {sections.map((section, si) => (
         <section
           key={section.id}
-          className={`py-24 px-6 border-t border-border ${si % 2 === 1 ? "bg-noise" : ""}`}
+          className={`py-20 px-6 border-t border-border ${si % 2 === 1 ? "bg-noise" : ""}`}
         >
           <div className="max-w-7xl mx-auto">
-            <motion.div {...fadeIn} className="flex items-start gap-6 mb-12">
-              <span className="font-display text-6xl md:text-8xl font-bold text-border/60 leading-none select-none">
+            <motion.div {...fadeIn} className="flex items-start gap-5 mb-10">
+              <span className="font-display text-5xl md:text-7xl font-bold text-border/50 leading-none select-none">
                 {section.id}
               </span>
-              <div>
-                <div className="flex items-center gap-3 mb-2">
-                  <section.icon className={`w-5 h-5 ${section.color === "primary" ? "text-primary" : "text-accent"}`} />
-                  <h2 className="font-display text-2xl md:text-3xl font-bold">{section.title}</h2>
-                </div>
+              <div className="flex items-center gap-3 pt-3">
+                <section.icon className="w-5 h-5 text-primary opacity-60" />
+                <h2 className="font-display text-xl md:text-2xl font-bold">{section.title}</h2>
               </div>
             </motion.div>
 
@@ -151,13 +124,13 @@ const TraivoOne = () => {
               {section.items.map((item, fi) => (
                 <motion.div
                   key={item.t}
-                  initial={{ opacity: 0, y: 20 }}
+                  initial={{ opacity: 0, y: 16 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ delay: fi * 0.08 }}
-                  className="glass-subtle rounded-xl p-5 hover:border-primary/20 transition-all duration-300 group"
+                  transition={{ delay: fi * 0.06 }}
+                  className="glass-subtle rounded-xl p-5 group hover:border-primary/15 transition-all duration-300"
                 >
-                  <h3 className="text-sm font-semibold mb-2 group-hover:text-primary transition-colors">{item.t}</h3>
+                  <h3 className="text-sm font-semibold mb-1.5 group-hover:text-primary transition-colors">{item.t}</h3>
                   <p className="text-xs text-muted-foreground leading-relaxed">{item.d}</p>
                 </motion.div>
               ))}
@@ -166,23 +139,15 @@ const TraivoOne = () => {
         </section>
       ))}
 
-      {/* CTA */}
-      <section className="relative py-32 px-6 border-t border-border overflow-hidden">
-        <div className="absolute inset-0">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] rounded-full bg-primary/[0.06] blur-[120px]" />
-        </div>
-        <div className="relative z-10 max-w-3xl mx-auto text-center">
-          <motion.div {...fadeIn}>
-            <h2 className="font-display text-4xl md:text-5xl font-bold mb-6">
-              Se One i aktion
-            </h2>
-            <p className="text-muted-foreground mb-10">
-              Boka en personlig demo anpassad efter er verksamhet.
-            </p>
-            <Button size="lg" className="h-14 px-10 font-display font-semibold text-sm tracking-wide uppercase" asChild>
-              <Link to="/kontakt">Boka demo <ArrowRight className="w-4 h-4 ml-2" /></Link>
-            </Button>
-          </motion.div>
+      {/* Bottom */}
+      <section className="py-20 px-6 border-t border-border">
+        <div className="max-w-2xl mx-auto text-center">
+          <motion.p {...fadeIn} className="text-muted-foreground text-sm">
+            Vill du veta mer?{" "}
+            <Link to="/" className="text-primary hover:underline">Beskriv er verksamhet</Link>
+            {" "}eller{" "}
+            <Link to="/kontakt" className="text-primary hover:underline">kontakta oss</Link>.
+          </motion.p>
         </div>
       </section>
     </>
