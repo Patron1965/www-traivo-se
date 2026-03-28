@@ -24,8 +24,8 @@ const BrainHero = () => {
         <motion.img
           src={teamImage}
           alt="Erfaret fältserviceteam"
-          width={480}
-          height={280}
+          width={624}
+          height={364}
           className="relative z-10 drop-shadow-[0_0_30px_hsla(180,70%,50%,0.15)]"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
