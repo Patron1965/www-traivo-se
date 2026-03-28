@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,58 +6,100 @@
 
 @layer base {
   :root {
-    --background: 210 28% 28%;
-    --foreground: 195 30% 95%;
+    /* Traivo Brand — Light Mode (Arctic Nordic) */
+    --background: 195 52% 97%;
+    --foreground: 210 30% 18%;
 
-    --card: 210 28% 20%;
-    --card-foreground: 195 30% 95%;
+    --card: 0 0% 100%;
+    --card-foreground: 210 30% 18%;
 
-    --popover: 210 28% 20%;
-    --popover-foreground: 195 30% 95%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 210 30% 18%;
 
-    --primary: 178 72% 62%;
-    --primary-foreground: 210 35% 12%;
+    --primary: 202 60% 26%;
+    --primary-foreground: 195 52% 97%;
 
-    --secondary: 210 22% 24%;
-    --secondary-foreground: 195 25% 88%;
+    --secondary: 195 30% 92%;
+    --secondary-foreground: 210 30% 24%;
 
-    --muted: 210 18% 26%;
-    --muted-foreground: 205 14% 68%;
+    --muted: 195 20% 94%;
+    --muted-foreground: 209 14% 48%;
 
-    --accent: 35 92% 62%;
-    --accent-foreground: 210 35% 12%;
+    --accent: 160 32% 50%;
+    --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 210 14% 30%;
-    --input: 210 14% 30%;
-    --ring: 178 72% 62%;
+    --border: 195 20% 88%;
+    --input: 195 20% 88%;
+    --ring: 202 60% 26%;
 
     --radius: 0.75rem;
 
-    /* Custom Traivo tokens */
-    --neural-glow: 178 78% 70%;
-    --neural-pulse: 178 70% 56%;
-    --synapse: 35 92% 62%;
-    --deep-space: 210 32% 12%;
-    --nebula: 225 24% 24%;
+    /* Traivo custom tokens */
+    --ocean: 202 60% 26%;
+    --teal: 180 36% 45%;
+    --aurora: 160 32% 62%;
+    --ice: 195 52% 94%;
+    --navy: 210 30% 24%;
+    --mountain: 209 14% 48%;
 
-    --gradient-neural: linear-gradient(135deg, hsl(178 72% 62% / 0.24), hsl(225 24% 24% / 0.34));
-    --gradient-glow: radial-gradient(ellipse at center, hsl(178 78% 70% / 0.22), transparent 70%);
-    --shadow-neural: 0 0 40px hsl(178 72% 62% / 0.22), 0 0 80px hsl(178 72% 62% / 0.08);
-    --shadow-synapse: 0 0 20px hsl(35 92% 62% / 0.24);
+    --gradient-hero: linear-gradient(135deg, hsl(202 60% 26%), hsl(180 36% 45%));
+    --gradient-aurora: linear-gradient(135deg, hsl(160 32% 50%), hsl(180 36% 45%));
+    --shadow-card: 0 4px 24px -4px hsl(202 60% 26% / 0.08);
+    --shadow-card-hover: 0 8px 40px -8px hsl(202 60% 26% / 0.15);
 
-    --font-display: 'Space Grotesk', system-ui, sans-serif;
+    --sidebar-background: 0 0% 100%;
+    --sidebar-foreground: 210 30% 18%;
+    --sidebar-primary: 202 60% 26%;
+    --sidebar-primary-foreground: 195 52% 97%;
+    --sidebar-accent: 195 30% 92%;
+    --sidebar-accent-foreground: 210 30% 24%;
+    --sidebar-border: 195 20% 88%;
+    --sidebar-ring: 202 60% 26%;
+  }
 
-    --sidebar-background: 210 28% 18%;
+  .dark {
+    --background: 210 32% 10%;
+    --foreground: 195 30% 95%;
+
+    --card: 210 28% 14%;
+    --card-foreground: 195 30% 95%;
+
+    --popover: 210 28% 14%;
+    --popover-foreground: 195 30% 95%;
+
+    --primary: 180 36% 50%;
+    --primary-foreground: 210 32% 10%;
+
+    --secondary: 210 22% 18%;
+    --secondary-foreground: 195 25% 88%;
+
+    --muted: 210 18% 16%;
+    --muted-foreground: 209 14% 58%;
+
+    --accent: 160 32% 52%;
+    --accent-foreground: 210 32% 10%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 210 14% 22%;
+    --input: 210 14% 22%;
+    --ring: 180 36% 50%;
+
+    --shadow-card: 0 4px 24px -4px hsl(0 0% 0% / 0.3);
+    --shadow-card-hover: 0 8px 40px -8px hsl(180 36% 50% / 0.2);
+
+    --sidebar-background: 210 28% 12%;
     --sidebar-foreground: 195 30% 95%;
-    --sidebar-primary: 178 72% 62%;
-    --sidebar-primary-foreground: 210 35% 12%;
-    --sidebar-accent: 210 22% 24%;
+    --sidebar-primary: 180 36% 50%;
+    --sidebar-primary-foreground: 210 32% 10%;
+    --sidebar-accent: 210 22% 18%;
     --sidebar-accent-foreground: 195 30% 95%;
-    --sidebar-border: 210 14% 30%;
-    --sidebar-ring: 178 72% 62%;
+    --sidebar-border: 210 14% 22%;
+    --sidebar-ring: 180 36% 50%;
   }
 }
 
@@ -67,72 +109,27 @@
   }
 
   body {
-    @apply bg-background text-foreground;
-    font-family: var(--font-display);
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Inter', system-ui, sans-serif;
   }
 }
 
 @layer utilities {
-  .text-gradient-neural {
+  .text-gradient-ocean {
     @apply bg-clip-text text-transparent;
-    background-image: linear-gradient(135deg, hsl(180 70% 55%), hsl(180 80% 70%));
+    background-image: linear-gradient(135deg, hsl(202 60% 26%), hsl(180 36% 45%));
   }
 
-  .text-gradient-synapse {
+  .text-gradient-aurora {
     @apply bg-clip-text text-transparent;
-    background-image: linear-gradient(135deg, hsl(35 90% 55%), hsl(35 95% 65%));
+    background-image: linear-gradient(135deg, hsl(160 32% 50%), hsl(180 36% 50%));
   }
 
-  .glow-neural {
-    box-shadow: var(--shadow-neural);
+  .bg-hero-gradient {
+    background: linear-gradient(135deg, hsl(202 60% 22%), hsl(210 32% 14%));
   }
 
-  .glow-synapse {
-    box-shadow: var(--shadow-synapse);
+  .bg-section-alt {
+    background: hsl(var(--muted) / 0.4);
   }
-
-  .bg-neural-gradient {
-    background: var(--gradient-neural);
-  }
-
-  .bg-glow {
-    background: var(--gradient-glow);
-  }
-}
-
-@keyframes pulse-glow {
-  0%, 100% { opacity: 0.4; transform: scale(1); }
-  50% { opacity: 0.8; transform: scale(1.05); }
-}
-
-@keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-12px); }
-}
-
-@keyframes synapse-fire {
-  0% { opacity: 0; transform: scale(0.8); }
-  50% { opacity: 1; transform: scale(1); }
-  100% { opacity: 0; transform: scale(0.8); }
-}
-
-.animate-pulse-glow {
-  animation: pulse-glow 4s ease-in-out infinite;
-}
-
-.animate-float {
-  animation: float 6s ease-in-out infinite;
-}
-
-.animate-synapse {
-  animation: synapse-fire 3s ease-in-out infinite;
-}
-
-@keyframes border-pulse {
-  0%, 100% { border-color: hsl(180 70% 50% / 0.15); box-shadow: 0 0 8px hsl(180 70% 50% / 0.05); }
-  50% { border-color: hsl(180 70% 50% / 0.5); box-shadow: 0 0 20px hsl(180 70% 50% / 0.15), 0 0 40px hsl(180 70% 50% / 0.05); }
-}
-
-.animate-border-pulse {
-  animation: border-pulse 3s ease-in-out infinite;
 }
