@@ -52,6 +52,21 @@ const Index = () => {
           </motion.p>
 
           <AIInput />
+
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.7 }}
+            className="mt-8 flex flex-col items-center gap-2"
+          >
+            <div className="flex items-center gap-2 text-[11px] text-muted-foreground/60">
+              <div className="w-1 h-1 rounded-full bg-accent/50" />
+              <span>Inget loggas. Inga säljsamtal. Ingen spam.</span>
+            </div>
+            <p className="text-[11px] text-muted-foreground/40 max-w-sm leading-relaxed">
+              Gillar du det du ser? Hör av dig när du själv vill — så tittar vi på hur vi kan hjälpa just er verksamhet.
+            </p>
+          </motion.div>
         </div>
       </section>
 
@@ -190,17 +205,20 @@ const Index = () => {
             viewport={{ once: true }}
           >
             <p className="font-display text-2xl md:text-3xl font-medium leading-relaxed mb-6">
-              Har du frågor om er fältservice?
+              Vi loggar ingenting. Vi ringer aldrig.
               <br />
-              <span className="text-muted-foreground">Börja med att beskriva er verksamhet ovan.</span>
+              <span className="text-muted-foreground">Hör av dig när du själv vill.</span>
             </p>
-            <p className="text-sm text-muted-foreground">
-              Eller{" "}
-              <Link to="/kontakt" className="text-primary hover:underline">
-                kontakta oss direkt
-              </Link>{" "}
-              om ni vill prata med en person.
+            <p className="text-sm text-muted-foreground max-w-md mx-auto leading-relaxed mb-6">
+              Utforska plattformen i lugn och ro. När du känner att det finns något vi kan hjälpa er med — 
+              kontakta oss på dina villkor.
             </p>
+            <Link 
+              to="/kontakt" 
+              className="inline-flex items-center gap-2 text-xs font-medium text-primary hover:gap-3 transition-all uppercase tracking-wider"
+            >
+              Kontakta oss när du är redo <ArrowRight className="w-3 h-3" />
+            </Link>
           </motion.div>
         </div>
       </section>
