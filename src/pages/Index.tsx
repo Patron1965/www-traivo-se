@@ -55,18 +55,23 @@ const Index = () => {
           <AIInput />
 
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.7 }}
-            className="mt-8 flex flex-col items-center gap-2"
+            className="mt-10 max-w-md mx-auto glass rounded-xl border border-border p-5"
           >
-            <div className="flex items-center gap-2 text-[11px] text-muted-foreground/60">
-              <div className="w-1 h-1 rounded-full bg-accent/50" />
-              <span>Inget loggas. Inga säljsamtal. Ingen spam.</span>
+            <div className="flex items-start gap-3">
+              <div className="mt-0.5 w-7 h-7 rounded-lg bg-accent/10 border border-accent/20 flex items-center justify-center shrink-0">
+                <span className="text-accent text-sm">🔒</span>
+              </div>
+              <div>
+                <h4 className="text-xs font-semibold text-foreground mb-1">Helt anonymt — inga säljsamtal</h4>
+                <p className="text-[11px] text-muted-foreground leading-relaxed">
+                  Ingenting du skriver här loggas eller sparas. Vi ringer aldrig upp dig och skickar ingen spam. 
+                  Vill du gå vidare kontaktar du oss — på dina villkor, när du själv är redo.
+                </p>
+              </div>
             </div>
-            <p className="text-[11px] text-muted-foreground/40 max-w-sm leading-relaxed">
-              Gillar du det du ser? Hör av dig när du själv vill — så tittar vi på hur vi kan hjälpa just er verksamhet.
-            </p>
           </motion.div>
         </div>
       </section>
