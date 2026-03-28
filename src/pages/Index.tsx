@@ -47,8 +47,9 @@ const Index = () => {
             transition={{ delay: 0.3 }}
             className="text-muted-foreground text-sm md:text-base leading-relaxed max-w-lg mx-auto mb-10"
           >
-            Avfallshantering, fastighetsskötsel, snöröjning, teknisk service — 
-            berätta om era vardagliga utmaningar i fält så visar vi hur AI och smart planering kan hjälpa.
+            Bakom Traivo står ett team som jobbat med fältservice hela livet — 
+            avfallshantering, fastighetsskötsel, snöröjning, teknisk service. 
+            Berätta om era utmaningar så visar vi hur vår erfarenhet och AI kan hjälpa.
           </motion.p>
 
           <AIInput />
