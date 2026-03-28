@@ -3,6 +3,7 @@ import NeuralBackground from "@/components/NeuralBackground";
 import BrainHero from "@/components/BrainHero";
 import AIInput from "@/components/AIInput";
 import HowItWorks from "@/components/HowItWorks";
+import TeamSection from "@/components/TeamSection";
 
 const Index = () => {
   return (
@@ -24,7 +25,7 @@ const Index = () => {
           transition={{ delay: 0.5 }}
           className="text-xs text-muted-foreground"
         >
-          AI-driven fältservice
+          Mänsklig erfarenhet · AI-stöd
         </motion.span>
       </nav>
 
@@ -37,28 +38,34 @@ const Index = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
-            className="text-center mt-8 mb-10 max-w-xl"
+            className="text-center mt-8 mb-10 max-w-2xl"
           >
             <h1 className="text-3xl md:text-4xl font-display font-bold mb-4 leading-tight">
-              Vad kan <span className="text-gradient-neural">Traivo</span> göra
+              <span className="text-gradient-synapse">Mänsklig hjärna</span>
+              {" "}förstärkt med{" "}
+              <span className="text-gradient-neural">AI</span>
               <br />
-              för <span className="text-gradient-synapse">din</span> verksamhet?
+              <span className="text-foreground/80 text-2xl md:text-3xl">
+                — backat av ett erfaret team i fältservice
+              </span>
             </h1>
-            <p className="text-muted-foreground text-sm leading-relaxed">
-              Beskriv din verksamhet nedan. Vår AI analyserar och visar hur
-              Traivos plattform kan effektivisera just ditt företag.
+            <p className="text-muted-foreground text-sm leading-relaxed max-w-lg mx-auto mt-4">
+              Traivo kombinerar årtionden av fältserviceerfarenhet med intelligent AI. 
+              Vi bygger inte teknik som ersätter människor — vi förstärker dem. 
+              Beskriv din verksamhet nedan och se vad det kan betyda för dig.
             </p>
           </motion.div>
 
           <AIInput />
         </section>
 
+        <TeamSection />
         <HowItWorks />
 
         {/* Footer */}
         <footer className="relative z-10 text-center py-12 border-t border-border">
           <p className="text-xs text-muted-foreground">
-            © 2026 Traivo · AI-driven fältserviceplattform för Norden
+            © 2026 Traivo · Mänsklig erfarenhet förstärkt med AI
           </p>
         </footer>
       </main>
