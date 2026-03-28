@@ -6,58 +6,58 @@
 
 @layer base {
   :root {
-    --background: 220 25% 10%;
-    --foreground: 200 20% 92%;
+    --background: 210 35% 16%;
+    --foreground: 195 30% 95%;
 
-    --card: 220 20% 14%;
-    --card-foreground: 200 20% 92%;
+    --card: 210 28% 20%;
+    --card-foreground: 195 30% 95%;
 
-    --popover: 220 20% 14%;
-    --popover-foreground: 200 20% 92%;
+    --popover: 210 28% 20%;
+    --popover-foreground: 195 30% 95%;
 
-    --primary: 175 65% 55%;
-    --primary-foreground: 220 25% 8%;
+    --primary: 178 72% 62%;
+    --primary-foreground: 210 35% 12%;
 
-    --secondary: 220 18% 18%;
-    --secondary-foreground: 200 20% 85%;
+    --secondary: 210 22% 24%;
+    --secondary-foreground: 195 25% 88%;
 
-    --muted: 220 15% 20%;
-    --muted-foreground: 210 12% 55%;
+    --muted: 210 18% 26%;
+    --muted-foreground: 205 14% 68%;
 
-    --accent: 35 90% 58%;
-    --accent-foreground: 220 25% 8%;
+    --accent: 35 92% 62%;
+    --accent-foreground: 210 35% 12%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 220 12% 22%;
-    --input: 220 12% 22%;
-    --ring: 175 65% 55%;
+    --border: 210 14% 30%;
+    --input: 210 14% 30%;
+    --ring: 178 72% 62%;
 
     --radius: 0.75rem;
 
     /* Custom Traivo tokens */
-    --neural-glow: 175 75% 65%;
-    --neural-pulse: 175 65% 50%;
-    --synapse: 35 90% 58%;
-    --deep-space: 220 25% 7%;
-    --nebula: 240 25% 18%;
+    --neural-glow: 178 78% 70%;
+    --neural-pulse: 178 70% 56%;
+    --synapse: 35 92% 62%;
+    --deep-space: 210 32% 12%;
+    --nebula: 225 24% 24%;
 
-    --gradient-neural: linear-gradient(135deg, hsl(175 65% 55% / 0.18), hsl(240 25% 18% / 0.3));
-    --gradient-glow: radial-gradient(ellipse at center, hsl(175 75% 65% / 0.15), transparent 70%);
-    --shadow-neural: 0 0 40px hsl(175 65% 55% / 0.18), 0 0 80px hsl(175 65% 55% / 0.06);
-    --shadow-synapse: 0 0 20px hsl(35 90% 58% / 0.22);
+    --gradient-neural: linear-gradient(135deg, hsl(178 72% 62% / 0.24), hsl(225 24% 24% / 0.34));
+    --gradient-glow: radial-gradient(ellipse at center, hsl(178 78% 70% / 0.22), transparent 70%);
+    --shadow-neural: 0 0 40px hsl(178 72% 62% / 0.22), 0 0 80px hsl(178 72% 62% / 0.08);
+    --shadow-synapse: 0 0 20px hsl(35 92% 62% / 0.24);
 
     --font-display: 'Space Grotesk', system-ui, sans-serif;
 
-    --sidebar-background: 220 20% 12%;
-    --sidebar-foreground: 200 20% 92%;
-    --sidebar-primary: 175 65% 55%;
-    --sidebar-primary-foreground: 220 25% 8%;
-    --sidebar-accent: 220 18% 18%;
-    --sidebar-accent-foreground: 200 20% 92%;
-    --sidebar-border: 220 12% 22%;
-    --sidebar-ring: 175 65% 55%;
+    --sidebar-background: 210 28% 18%;
+    --sidebar-foreground: 195 30% 95%;
+    --sidebar-primary: 178 72% 62%;
+    --sidebar-primary-foreground: 210 35% 12%;
+    --sidebar-accent: 210 22% 24%;
+    --sidebar-accent-foreground: 195 30% 95%;
+    --sidebar-border: 210 14% 30%;
+    --sidebar-ring: 178 72% 62%;
   }
 }
 

@@ -57,19 +57,23 @@ const NeuralBackground = () => {
 
     const shuffled = [...QUESTIONS].sort(() => Math.random() - 0.5);
 
+    const readToken = (name: string) => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+    const primaryColor = `hsl(${readToken("--primary")})`;
+    const glowColor = `hsl(${readToken("--neural-glow")})`;
+
     for (let i = 0; i < count; i++) {
-      const fontSize = 11 + Math.random() * 4;
+      const fontSize = 12 + Math.random() * 5;
       items.push({
         text: shuffled[i % shuffled.length],
         x: Math.random() * canvas.width * 0.8 + canvas.width * 0.1,
         y: Math.random() * canvas.height * 0.8 + canvas.height * 0.1,
-        vx: (Math.random() - 0.5) * 0.25,
-        vy: (Math.random() - 0.5) * 0.15,
+        vx: (Math.random() - 0.5) * 0.22,
+        vy: (Math.random() - 0.5) * 0.12,
         alpha: 0,
         targetAlpha: 0,
-        fadeSpeed: 0.003 + Math.random() * 0.005,
-        timer: Math.random() * 400,
-        timerMax: 250 + Math.random() * 300,
+        fadeSpeed: 0.004 + Math.random() * 0.006,
+        timer: Math.random() * 320,
+        timerMax: 220 + Math.random() * 220,
         fontSize,
       });
     }
@@ -81,36 +85,37 @@ const NeuralBackground = () => {
         q.x += q.vx;
         q.y += q.vy;
 
-        // Bounce off edges with padding
-        if (q.x < 40 || q.x > canvas.width - 40) q.vx *= -1;
-        if (q.y < 30 || q.y > canvas.height - 30) q.vy *= -1;
+        if (q.x < 70 || q.x > canvas.width - 70) q.vx *= -1;
+        if (q.y < 40 || q.y > canvas.height - 40) q.vy *= -1;
 
-        // Timer controls fade in/out cycle
         q.timer += 1;
         if (q.timer > q.timerMax) {
           q.timer = 0;
           if (q.targetAlpha > 0) {
             q.targetAlpha = 0;
           } else {
-            q.targetAlpha = 0.12 + Math.random() * 0.18;
-            // Pick a new question
+            q.targetAlpha = 0.28 + Math.random() * 0.22;
             q.text = QUESTIONS[Math.floor(Math.random() * QUESTIONS.length)];
           }
         }
 
-        // Smooth fade
         if (q.alpha < q.targetAlpha) {
           q.alpha = Math.min(q.alpha + q.fadeSpeed, q.targetAlpha);
         } else if (q.alpha > q.targetAlpha) {
           q.alpha = Math.max(q.alpha - q.fadeSpeed, q.targetAlpha);
         }
 
-        if (q.alpha > 0.005) {
+        if (q.alpha > 0.01) {
           ctx.save();
           ctx.globalAlpha = q.alpha;
-          ctx.font = `300 ${q.fontSize}px 'Space Grotesk', system-ui, sans-serif`;
-          ctx.fillStyle = "hsl(175, 65%, 60%)";
+          ctx.font = `500 ${q.fontSize}px 'Space Grotesk', system-ui, sans-serif`;
           ctx.textAlign = "center";
+          ctx.shadowBlur = 18;
+          ctx.shadowColor = glowColor;
+          ctx.strokeStyle = primaryColor;
+          ctx.lineWidth = 0.75;
+          ctx.strokeText(q.text, q.x, q.y);
+          ctx.fillStyle = glowColor;
           ctx.fillText(q.text, q.x, q.y);
           ctx.restore();
         }
