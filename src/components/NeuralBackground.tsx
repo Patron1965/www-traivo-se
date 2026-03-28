@@ -66,7 +66,7 @@ const NeuralBackground = () => {
       items.push({
         text: shuffled[i % shuffled.length],
         x: Math.random() * canvas.width * 0.1 + 10,
-        y: Math.random() * canvas.height * 0.8 + canvas.height * 0.1,
+        y: Math.random() * 350 + 80,
         vx: (Math.random() - 0.5) * 0.08,
         vy: (Math.random() - 0.5) * 0.04,
         alpha: 0,
