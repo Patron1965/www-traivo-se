@@ -7,32 +7,32 @@
 @layer base {
   :root {
     /* Traivo — Dark Nordic Immersive */
-    --background: 210 35% 7%;
-    --foreground: 195 20% 92%;
+    --background: 210 30% 12%;
+    --foreground: 195 20% 93%;
 
-    --card: 210 30% 10%;
-    --card-foreground: 195 20% 92%;
+    --card: 210 26% 15%;
+    --card-foreground: 195 20% 93%;
 
-    --popover: 210 30% 10%;
-    --popover-foreground: 195 20% 92%;
+    --popover: 210 26% 15%;
+    --popover-foreground: 195 20% 93%;
 
     --primary: 180 36% 45%;
-    --primary-foreground: 210 35% 7%;
+    --primary-foreground: 210 30% 12%;
 
-    --secondary: 210 25% 13%;
-    --secondary-foreground: 195 20% 80%;
+    --secondary: 210 22% 18%;
+    --secondary-foreground: 195 20% 82%;
 
-    --muted: 210 20% 12%;
-    --muted-foreground: 209 14% 52%;
+    --muted: 210 18% 17%;
+    --muted-foreground: 209 14% 55%;
 
     --accent: 160 40% 55%;
-    --accent-foreground: 210 35% 7%;
+    --accent-foreground: 210 30% 12%;
 
     --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 210 18% 16%;
-    --input: 210 18% 16%;
+    --border: 210 16% 21%;
+    --input: 210 16% 21%;
     --ring: 180 36% 45%;
 
     --radius: 0.75rem;
@@ -42,16 +42,16 @@
     --teal: 180 36% 45%;
     --aurora: 160 40% 55%;
     --ice: 195 52% 94%;
-    --navy: 210 30% 8%;
+    --navy: 210 26% 13%;
     --mountain: 209 14% 48%;
 
-    --sidebar-background: 210 30% 8%;
-    --sidebar-foreground: 195 20% 92%;
+    --sidebar-background: 210 26% 13%;
+    --sidebar-foreground: 195 20% 93%;
     --sidebar-primary: 180 36% 45%;
-    --sidebar-primary-foreground: 210 35% 7%;
-    --sidebar-accent: 210 25% 13%;
-    --sidebar-accent-foreground: 195 20% 92%;
-    --sidebar-border: 210 18% 16%;
+    --sidebar-primary-foreground: 210 30% 12%;
+    --sidebar-accent: 210 22% 18%;
+    --sidebar-accent-foreground: 195 20% 93%;
+    --sidebar-border: 210 16% 21%;
     --sidebar-ring: 180 36% 45%;
   }
 }
