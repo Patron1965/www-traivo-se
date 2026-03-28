@@ -41,12 +41,12 @@ const Index = () => {
             className="text-center mt-8 mb-10 max-w-2xl"
           >
             <h1 className="text-3xl md:text-4xl font-display font-bold mb-4 leading-tight">
-              <span className="text-gradient-synapse">Mänsklig hjärna</span>
-              {" "}förstärkt med{" "}
-              <span className="text-gradient-neural">AI</span>
+              <span className="text-gradient-synapse">Erfaret team</span>
+              {" "}blir{" "}
+              <span className="text-gradient-neural">superhjärna</span>
               <br />
               <span className="text-foreground/80 text-2xl md:text-3xl">
-                — backat av ett erfaret team i fältservice
+                — erfarenhet förstärkt med AI
               </span>
             </h1>
             <p className="text-muted-foreground text-sm leading-relaxed max-w-lg mx-auto mt-4">
