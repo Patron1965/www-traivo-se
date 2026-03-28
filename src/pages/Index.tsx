@@ -41,7 +41,7 @@ const Index = () => {
             className="text-center mt-8 mb-10 max-w-2xl"
           >
             <h1 className="text-3xl md:text-4xl font-display font-bold mb-4 leading-tight">
-              <span className="text-gradient-synapse">Expertteamet</span>
+              <span className="text-gradient-synapse">Rutinerat team</span>
               {" "}blir{" "}
               <span className="text-gradient-neural">superhjärna</span>
               <br />
