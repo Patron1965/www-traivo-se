@@ -2,77 +2,89 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import {
-  Calendar, Route, MapPin, Users, Brain, BarChart3, Receipt,
-  Shield, Cloud, ArrowRight, GripVertical, Sun, Layers, Bell,
-  Globe, Palette, Server, Cpu
+  Calendar, Route, MapPin, Users, Brain, Receipt,
+  ArrowRight, GripVertical, Cloud, Sun, Layers,
+  Shield, Palette, Server, Cpu, Bell
 } from "lucide-react";
 
-const fadeUp = {
+const fadeIn = {
   initial: { opacity: 0, y: 24 },
   whileInView: { opacity: 1, y: 0 },
   viewport: { once: true },
   transition: { duration: 0.6 },
 };
 
-const featureGroups = [
+const sections = [
   {
-    title: "Planering & Schemaläggning",
+    id: "01",
+    title: "Planering",
     icon: Calendar,
-    features: [
-      { title: "Drag-and-drop veckoplanerare", desc: "Fördela jobb till rätt tekniker med en enkel dra-och-släpp." },
-      { title: "AI-autoschemaläggning", desc: "Tar hänsyn till kompetens, geografi, arbetstid och fordonskapacitet." },
-      { title: "Årsplanering", desc: "Sätt mål per kund och låt AI fördela över hela året." },
-      { title: "Väderplanering", desc: "Schemat anpassas automatiskt efter väderprognoser." },
+    color: "primary",
+    items: [
+      { t: "Drag-and-drop veckoplanerare", d: "Fördela jobb till rätt tekniker visuellt." },
+      { t: "AI-autoschemaläggning", d: "Kompetens, geografi, arbetstid, fordonskapacitet." },
+      { t: "Årsplanering", d: "Mål per kund med AI-driven fördelning." },
+      { t: "Väderplanering", d: "Schemat anpassas efter prognosen." },
     ],
   },
   {
+    id: "02",
     title: "Ruttoptimering",
     icon: Route,
-    features: [
-      { title: "Automatisk optimering", desc: "Optimerar körslingor med riktiga vägavstånd." },
-      { title: "Klusterbaserad planering", desc: "Grupperar jobb geografiskt för effektivare dagar." },
-      { title: "Fyll veckan-funktion", desc: "Geografisk dagsklustring som fyller ut tomma luckor." },
-      { title: "Flera optimeringsmotorer", desc: "Stöd för Geoapify, OR-Tools och fler." },
+    color: "accent",
+    items: [
+      { t: "Automatisk optimering", d: "Riktiga vägavstånd, inte fågelvägen." },
+      { t: "Klusterbaserad planering", d: "Grupperar jobb geografiskt." },
+      { t: "Fyll veckan", d: "Dagsklustring som fyller tomma luckor." },
+      { t: "Flera motorer", d: "Geoapify, OR-Tools och fler." },
     ],
   },
   {
-    title: "Realtidsövervakning",
+    id: "03",
+    title: "Realtid",
     icon: MapPin,
-    features: [
-      { title: "Live-karta med GPS", desc: "Se förarpositioner i realtid direkt i webbläsaren." },
-      { title: "Pop-out kartfönster", desc: "Separat skärm för kontrollrummet." },
-      { title: "Akut jobbhantering", desc: "Tilldela brådskande uppdrag till närmaste tekniker på sekunder." },
-      { title: "Störningshantering", desc: "Automatisk omplanering vid sjukdom, förseningar eller akutjobb." },
+    color: "primary",
+    items: [
+      { t: "Live GPS-karta", d: "Förarpositioner uppdateras i realtid." },
+      { t: "Pop-out kartfönster", d: "Separat skärm för kontrollrummet." },
+      { t: "Akutjobb", d: "Närmaste tekniker på sekunder." },
+      { t: "Störningshantering", d: "Automatisk omplanering vid sjukdom." },
     ],
   },
   {
-    title: "Kund- & Objekthantering",
+    id: "04",
+    title: "Kunder & Objekt",
     icon: Users,
-    features: [
-      { title: "Komplett objektregister", desc: "Alla serviceobjekt med kartvy." },
-      { title: "Polygon/polyline-stöd", desc: "Rita serviceområden direkt på kartan." },
-      { title: "Kundportal", desc: "Kunder kan boka, chatta och se besökshistorik." },
-      { title: "Automatiska notiser", desc: "SMS/e-post: 'Vi är på väg' skickas automatiskt." },
+    color: "accent",
+    items: [
+      { t: "Objektregister med karta", d: "Alla serviceobjekt visualiserade." },
+      { t: "Rita serviceområden", d: "Polygon/polyline direkt på kartan." },
+      { t: "Kundportal", d: "Boka, chatta, se besökshistorik." },
+      { t: "Automatiskt SMS", d: "'Vi är på väg' — utan manuell insats." },
     ],
   },
   {
+    id: "05",
     title: "AI & Analys",
     icon: Brain,
-    features: [
-      { title: "AI-assistent", desc: "Ställ frågor om planering och data i naturligt språk." },
-      { title: "Prediktivt underhåll", desc: "Planering baserat på IoT-sensorer." },
-      { title: "Avvikelsedetektering", desc: "Systemet flaggar anomalier automatiskt." },
-      { title: "ROI-rapportering", desc: "Per kund, område och tjänst. Beräknat vs faktiskt." },
+    color: "primary",
+    items: [
+      { t: "AI-assistent", d: "Fråga i naturligt språk om data & planering." },
+      { t: "Prediktivt underhåll", d: "IoT-sensorer triggar schemalagda jobb." },
+      { t: "Avvikelsedetektering", d: "Systemet flaggar anomalier." },
+      { t: "ROI-rapportering", d: "Beräknat vs faktiskt med feedback-loop." },
     ],
   },
   {
+    id: "06",
     title: "Ekonomi & Admin",
     icon: Receipt,
-    features: [
-      { title: "Fakturagenerering", desc: "Skapa fakturor med förhandsgranskning." },
-      { title: "Fortnox-export", desc: "Sömlös integration med Fortnox." },
-      { title: "Rollbaserad åtkomst", desc: "Admin, planerare, tekniker, kund." },
-      { title: "White-label", desc: "Anpassa logga, färger och domän per kund." },
+    color: "accent",
+    items: [
+      { t: "Fakturering", d: "Generera med förhandsgranskning." },
+      { t: "Fortnox-export", d: "Sömlös integration." },
+      { t: "White-label", d: "Logga, färger, domän per kund." },
+      { t: "Rollbaserad åtkomst", d: "Admin, planerare, tekniker, kund." },
     ],
   },
 ];
@@ -81,68 +93,94 @@ const TraivoOne = () => {
   return (
     <>
       {/* Hero */}
-      <section className="relative overflow-hidden bg-hero-gradient text-white py-24 md:py-32 px-6">
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-10 right-32 w-80 h-80 rounded-full bg-teal blur-[100px]" />
-        </div>
-        <div className="relative max-w-4xl mx-auto text-center">
-          <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
-            <span className="inline-block px-3 py-1 rounded-full text-xs font-medium bg-white/10 border border-white/20 mb-6">
-              Webb-plattform för planerare
+      <section className="relative min-h-[60vh] flex items-center overflow-hidden bg-noise">
+        <div className="absolute inset-0 bg-grid-pattern opacity-25" />
+        <div className="absolute top-0 left-0 w-[500px] h-[500px] rounded-full bg-primary/[0.04] blur-[150px]" />
+
+        <div className="relative z-10 max-w-7xl mx-auto px-6 w-full py-28">
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mb-4">
+            <span className="text-xs font-medium uppercase tracking-[0.2em] text-primary">
+              Webb-plattform · Planerare & arbetsledare
             </span>
-            <h1 className="text-4xl md:text-5xl font-extrabold leading-tight mb-6">
-              Traivo One
-            </h1>
-            <p className="text-lg text-white/75 max-w-2xl mx-auto mb-8">
-              Kontrollcentret där arbetsledare och planerare schemalägger, optimerar och 
-              övervakar hela fältoperationen i realtid.
-            </p>
-            <Button size="lg" variant="secondary" className="font-semibold" asChild>
-              <Link to="/kontakt">Boka demo <ArrowRight className="w-4 h-4 ml-1" /></Link>
+          </motion.div>
+          <motion.h1
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.1 }}
+            className="font-display text-5xl md:text-7xl font-bold leading-[0.95] tracking-tight mb-6"
+          >
+            <span className="text-gradient-ice">Traivo</span>{" "}
+            <span className="text-primary">One</span>
+          </motion.h1>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3 }}
+            className="text-lg text-muted-foreground max-w-xl mb-8"
+          >
+            Kontrollcentret där hela fältoperationen schemaläggas, optimeras och övervakas — i realtid.
+          </motion.p>
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }}>
+            <Button size="lg" className="h-12 px-8 font-display font-semibold text-sm tracking-wide uppercase" asChild>
+              <Link to="/kontakt">Boka demo <ArrowRight className="w-4 h-4 ml-2" /></Link>
             </Button>
           </motion.div>
         </div>
       </section>
 
-      {/* Feature groups */}
-      <section className="py-24 px-6">
-        <div className="max-w-7xl mx-auto space-y-24">
-          {featureGroups.map((group, gi) => (
-            <motion.div key={group.title} {...fadeUp} transition={{ delay: 0.1, duration: 0.6 }}>
-              <div className="flex items-center gap-3 mb-8">
-                <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
-                  <group.icon className="w-5 h-5 text-primary" />
+      {/* Feature sections */}
+      {sections.map((section, si) => (
+        <section
+          key={section.id}
+          className={`py-24 px-6 border-t border-border ${si % 2 === 1 ? "bg-noise" : ""}`}
+        >
+          <div className="max-w-7xl mx-auto">
+            <motion.div {...fadeIn} className="flex items-start gap-6 mb-12">
+              <span className="font-display text-6xl md:text-8xl font-bold text-border/60 leading-none select-none">
+                {section.id}
+              </span>
+              <div>
+                <div className="flex items-center gap-3 mb-2">
+                  <section.icon className={`w-5 h-5 ${section.color === "primary" ? "text-primary" : "text-accent"}`} />
+                  <h2 className="font-display text-2xl md:text-3xl font-bold">{section.title}</h2>
                 </div>
-                <h2 className="text-2xl font-bold">{group.title}</h2>
-              </div>
-              <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
-                {group.features.map((f, fi) => (
-                  <motion.div
-                    key={f.title}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: fi * 0.08, duration: 0.5 }}
-                    className="rounded-xl border border-border bg-card p-5 hover:shadow-md transition-shadow"
-                  >
-                    <h3 className="font-semibold text-sm mb-2">{f.title}</h3>
-                    <p className="text-sm text-muted-foreground leading-relaxed">{f.desc}</p>
-                  </motion.div>
-                ))}
               </div>
             </motion.div>
-          ))}
-        </div>
-      </section>
+
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
+              {section.items.map((item, fi) => (
+                <motion.div
+                  key={item.t}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: fi * 0.08 }}
+                  className="glass-subtle rounded-xl p-5 hover:border-primary/20 transition-all duration-300 group"
+                >
+                  <h3 className="text-sm font-semibold mb-2 group-hover:text-primary transition-colors">{item.t}</h3>
+                  <p className="text-xs text-muted-foreground leading-relaxed">{item.d}</p>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+      ))}
 
       {/* CTA */}
-      <section className="py-24 px-6 bg-hero-gradient text-white">
-        <div className="max-w-3xl mx-auto text-center">
-          <motion.div {...fadeUp}>
-            <h2 className="text-3xl font-bold mb-4">Vill du se Traivo One i aktion?</h2>
-            <p className="text-white/70 mb-8">Boka en personlig demo och se hur plattformen kan effektivisera er planering.</p>
-            <Button size="lg" variant="secondary" className="font-semibold" asChild>
-              <Link to="/kontakt">Boka demo <ArrowRight className="w-4 h-4 ml-1" /></Link>
+      <section className="relative py-32 px-6 border-t border-border overflow-hidden">
+        <div className="absolute inset-0">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] rounded-full bg-primary/[0.06] blur-[120px]" />
+        </div>
+        <div className="relative z-10 max-w-3xl mx-auto text-center">
+          <motion.div {...fadeIn}>
+            <h2 className="font-display text-4xl md:text-5xl font-bold mb-6">
+              Se One i aktion
+            </h2>
+            <p className="text-muted-foreground mb-10">
+              Boka en personlig demo anpassad efter er verksamhet.
+            </p>
+            <Button size="lg" className="h-14 px-10 font-display font-semibold text-sm tracking-wide uppercase" asChild>
+              <Link to="/kontakt">Boka demo <ArrowRight className="w-4 h-4 ml-2" /></Link>
             </Button>
           </motion.div>
         </div>
