@@ -4,23 +4,23 @@ import { Send, Loader2, Brain, ShieldCheck, RotateCcw } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 
 const TRAIVO_KNOWLEDGE = `
-Traivo är en AI-driven fältserviceplattform (SaaS) byggd för nordiska företag.
+Traivo är en planeringsplattform för fältserviceföretag i Norden.
 
 Kärnfunktioner:
-- AI-schemaläggning: Väderbaserad kapacitetsplanering
-- GPS-spårning i realtid med breadcrumb-historik
-- Ruttoptimering: Geografisk klusterplanering
-- Fortnox-integration: OAuth, kundsynk, artikelmappning, fakturaexport
-- Flerföretagsstöd med RBAC
-- Realtidsnotifieringar via WebSocket
-- Traivo Go: Offline-first mobilapp för fältpersonal
-- Hierarkisk objektstruktur: Område → Fastighet → Rum
-- Abonnemangshantering med automatisk ordergenerering
-- Anomaliövervakning och avvikelsedetektering
-- Fakturering med Fortnox-export
+- Smart schemaläggning med väderanpassning
+- Live-karta med körhistorik
+- Ruttplanering som grupperar jobb geografiskt
+- Fortnox-koppling: kundsynk, artiklar, fakturering
+- Stöd för flera bolag med rollstyrning
+- Direktnotiser
+- Traivo Go: Mobilapp som fungerar utan internet
+- Objektstruktur: Område → Fastighet → Rum
+- Abonnemang med automatiska jobb
+- Varningar vid avvikelser
+- Automatisk fakturering via Fortnox
 - Kundportal med bokning, chatt och besökshistorik
-- Digital signatur, fotodokumentation, materiallogg
-- Tidsrapportering med löneexport
+- Digital signatur, foton, materialåtgång
+- Tidrapportering med löneexport
 `;
 
 const getLocalResponse = (business: string): string => {
