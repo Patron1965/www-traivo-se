@@ -6,7 +6,30 @@ import teamImage from "@/assets/team-brain-hero.png";
 const BrainHero = () => {
   return (
     <div className="relative flex flex-col items-center justify-center">
-      {/* Team image — FIRST, the foundation */}
+      {/* Headline above team */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+        className="text-center mb-8 max-w-2xl"
+      >
+        <h1 className="text-3xl md:text-4xl font-display font-bold mb-4 leading-tight">
+          <span className="text-gradient-synapse">Rutinerat team</span>
+          {" "}blir{" "}
+          <span className="text-gradient-neural">superhjärna</span>
+          <br />
+          <span className="text-foreground/80 text-2xl md:text-3xl">
+            — erfarenhet förstärkt med AI
+          </span>
+        </h1>
+        <p className="text-muted-foreground text-sm leading-relaxed max-w-lg mx-auto mt-4">
+          Traivo kombinerar årtionden av fältserviceerfarenhet med intelligent AI. 
+          Vi bygger inte teknik som ersätter människor — vi förstärker dem. 
+          Beskriv din verksamhet nedan och se vad det kan betyda för dig.
+        </p>
+      </motion.div>
+
+      {/* Team image */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
