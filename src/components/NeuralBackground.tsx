@@ -46,7 +46,7 @@ const NeuralBackground = () => {
 
     let animId: number;
     const items: FloatingQuestion[] = [];
-    const count = 12;
+    const count = 7;
 
     const resize = () => {
       canvas.width = window.innerWidth;
@@ -94,7 +94,7 @@ const NeuralBackground = () => {
           if (q.targetAlpha > 0) {
             q.targetAlpha = 0;
           } else {
-            q.targetAlpha = 0.28 + Math.random() * 0.22;
+            q.targetAlpha = 0.15 + Math.random() * 0.12;
             q.text = QUESTIONS[Math.floor(Math.random() * QUESTIONS.length)];
           }
         }
