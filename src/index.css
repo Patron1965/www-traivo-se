@@ -127,3 +127,12 @@
 .animate-synapse {
   animation: synapse-fire 3s ease-in-out infinite;
 }
+
+@keyframes border-pulse {
+  0%, 100% { border-color: hsl(180 70% 50% / 0.15); box-shadow: 0 0 8px hsl(180 70% 50% / 0.05); }
+  50% { border-color: hsl(180 70% 50% / 0.5); box-shadow: 0 0 20px hsl(180 70% 50% / 0.15), 0 0 40px hsl(180 70% 50% / 0.05); }
+}
+
+.animate-border-pulse {
+  animation: border-pulse 3s ease-in-out infinite;
+}
