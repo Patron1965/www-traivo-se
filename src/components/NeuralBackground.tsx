@@ -46,7 +46,7 @@ const NeuralBackground = () => {
 
     let animId: number;
     const items: FloatingQuestion[] = [];
-    const count = 7;
+    const count = 4;
 
     const resize = () => {
       canvas.width = window.innerWidth;
@@ -71,9 +71,9 @@ const NeuralBackground = () => {
         vy: (Math.random() - 0.5) * 0.04,
         alpha: 0,
         targetAlpha: 0,
-        fadeSpeed: 0.0012 + Math.random() * 0.0015,
-        timer: Math.random() * 600,
-        timerMax: 600 + Math.random() * 500,
+        fadeSpeed: 0.0006 + Math.random() * 0.0008,
+        timer: i * 250,
+        timerMax: 900 + Math.random() * 600,
         fontSize,
       });
     }
