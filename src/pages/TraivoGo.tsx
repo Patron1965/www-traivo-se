@@ -2,56 +2,60 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import {
-  Smartphone, MapPin, Camera, Pen, Clock, WifiOff, Bell,
-  CheckSquare, Package, ArrowRight, Navigation, MessageSquare
+  Smartphone, MapPin, Camera, Clock, WifiOff, Bell,
+  CheckSquare, ArrowRight, Navigation, MessageSquare, Star
 } from "lucide-react";
 
-const fadeUp = {
+const fadeIn = {
   initial: { opacity: 0, y: 24 },
   whileInView: { opacity: 1, y: 0 },
   viewport: { once: true },
   transition: { duration: 0.6 },
 };
 
-const featureGroups = [
+const sections = [
   {
-    title: "Daglig jobbhantering",
+    id: "01",
+    title: "Jobbhantering",
     icon: Smartphone,
-    features: [
-      { title: "Tydlig jobblista", desc: "Dagens uppdrag med adresser, kundinfo och instruktioner." },
-      { title: "Ett-tryck navigation", desc: "Starta GPS-navigation till nästa stopp direkt." },
-      { title: "Restid per jobb", desc: "Se avstånd och beräknad restid för varje uppdrag." },
-      { title: "Akutjobb i realtid", desc: "Ta emot brådskande uppdrag med accept/avböj." },
+    items: [
+      { t: "Dagens uppdrag", d: "Tydlig lista med adresser, kundinfo och instruktioner." },
+      { t: "Ett-tryck navigation", d: "GPS-navigation till nästa stopp direkt." },
+      { t: "Restid per jobb", d: "Avstånd och beräknad restid synligt." },
+      { t: "Akutjobb", d: "Accept/avböj brådskande uppdrag i realtid." },
     ],
   },
   {
-    title: "Utförande & Rapportering",
+    id: "02",
+    title: "Rapportering",
     icon: CheckSquare,
-    features: [
-      { title: "Digitala protokoll", desc: "Checklistor anpassade per jobbtyp." },
-      { title: "Fotodokumentation", desc: "Ta bilder direkt i appen som bifogas jobbet." },
-      { title: "Digital signatur", desc: "Kunden signerar direkt på skärmen." },
-      { title: "Materiallogg", desc: "Registrera förbrukat material enkelt." },
+    items: [
+      { t: "Digitala protokoll", d: "Checklistor anpassade per jobbtyp." },
+      { t: "Fotodokumentation", d: "Bilder bifogas jobbet direkt." },
+      { t: "Digital signatur", d: "Kunden signerar på skärmen." },
+      { t: "Materiallogg", d: "Registrera förbrukat material." },
     ],
   },
   {
+    id: "03",
     title: "Tidsrapportering",
     icon: Clock,
-    features: [
-      { title: "In-/utcheckning", desc: "Automatisk tidsstämpling vid start och slut." },
-      { title: "Arbetspass (Snöret)", desc: "Komplett tidslogg för varje dag." },
-      { title: "Löneexport", desc: "Exportera till CSV för lönehantering." },
-      { title: "AI-kontrollmallar", desc: "AI föreslår steg baserat på jobbtyp." },
+    items: [
+      { t: "In-/utcheckning", d: "Automatisk tidsstämpling." },
+      { t: "Arbetspass (Snöret)", d: "Komplett tidslogg per dag." },
+      { t: "Löneexport", d: "CSV-export för lönehantering." },
+      { t: "AI-kontrollmallar", d: "AI föreslår steg per jobbtyp." },
     ],
   },
   {
-    title: "Offline & Kommunikation",
+    id: "04",
+    title: "Offline & Notiser",
     icon: WifiOff,
-    features: [
-      { title: "Fungerar utan internet", desc: "Sparar allt lokalt och synkar vid uppkoppling." },
-      { title: "Push-notiser", desc: "Nya jobb och schemaändringar direkt till telefonen." },
-      { title: "Meddelanden", desc: "Kommunicera med planerare utan att ringa." },
-      { title: "Ruttfeedback", desc: "Betygsätt dagens slinga och hjälp förbättra planeringen." },
+    items: [
+      { t: "Offline-first", d: "Sparar allt lokalt, synkar vid uppkoppling." },
+      { t: "Push-notiser", d: "Nya jobb och ändringar direkt." },
+      { t: "Meddelanden", d: "Kommunicera utan att ringa." },
+      { t: "Ruttfeedback", d: "Betygsätt och förbättra planeringen." },
     ],
   },
 ];
@@ -60,83 +64,122 @@ const TraivoGo = () => {
   return (
     <>
       {/* Hero */}
-      <section className="relative overflow-hidden bg-hero-gradient text-white py-24 md:py-32 px-6">
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute bottom-10 left-20 w-80 h-80 rounded-full bg-aurora blur-[100px]" />
-        </div>
-        <div className="relative max-w-4xl mx-auto text-center">
-          <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
-            <span className="inline-block px-3 py-1 rounded-full text-xs font-medium bg-white/10 border border-white/20 mb-6">
-              Mobilapp för fältpersonal
+      <section className="relative min-h-[60vh] flex items-center overflow-hidden bg-noise">
+        <div className="absolute inset-0 bg-grid-pattern opacity-25" />
+        <div className="absolute bottom-0 right-0 w-[500px] h-[500px] rounded-full bg-accent/[0.04] blur-[150px]" />
+
+        <div className="relative z-10 max-w-7xl mx-auto px-6 w-full py-28">
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mb-4">
+            <span className="text-xs font-medium uppercase tracking-[0.2em] text-accent">
+              Mobilapp · Tekniker i fält
             </span>
-            <h1 className="text-4xl md:text-5xl font-extrabold leading-tight mb-6">
-              Traivo Go
-            </h1>
-            <p className="text-lg text-white/75 max-w-2xl mx-auto mb-8">
-              Teknikerns digitala arbetsverktyg. Ersätter pappersprotokoll och telefonsamtal 
-              med en app som fungerar — även utan uppkoppling.
-            </p>
-            <Button size="lg" variant="secondary" className="font-semibold" asChild>
-              <Link to="/kontakt">Boka demo <ArrowRight className="w-4 h-4 ml-1" /></Link>
+          </motion.div>
+          <motion.h1
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.1 }}
+            className="font-display text-5xl md:text-7xl font-bold leading-[0.95] tracking-tight mb-6"
+          >
+            <span className="text-gradient-ice">Traivo</span>{" "}
+            <span className="text-accent">Go</span>
+          </motion.h1>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3 }}
+            className="text-lg text-muted-foreground max-w-xl mb-8"
+          >
+            Teknikerns digitala arbetsverktyg. Ersätter pappersprotokoll 
+            med en app som fungerar — även utan uppkoppling.
+          </motion.p>
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }}>
+            <Button
+              size="lg"
+              className="h-12 px-8 font-display font-semibold text-sm tracking-wide uppercase bg-accent text-accent-foreground hover:bg-accent/90"
+              asChild
+            >
+              <Link to="/kontakt">Boka demo <ArrowRight className="w-4 h-4 ml-2" /></Link>
             </Button>
           </motion.div>
         </div>
       </section>
 
-      {/* Feature groups */}
-      <section className="py-24 px-6">
-        <div className="max-w-7xl mx-auto space-y-24">
-          {featureGroups.map((group) => (
-            <motion.div key={group.title} {...fadeUp}>
-              <div className="flex items-center gap-3 mb-8">
-                <div className="w-10 h-10 rounded-lg bg-accent/10 flex items-center justify-center">
-                  <group.icon className="w-5 h-5 text-accent" />
-                </div>
-                <h2 className="text-2xl font-bold">{group.title}</h2>
-              </div>
-              <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
-                {group.features.map((f, fi) => (
-                  <motion.div
-                    key={f.title}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: fi * 0.08, duration: 0.5 }}
-                    className="rounded-xl border border-border bg-card p-5 hover:shadow-md transition-shadow"
-                  >
-                    <h3 className="font-semibold text-sm mb-2">{f.title}</h3>
-                    <p className="text-sm text-muted-foreground leading-relaxed">{f.desc}</p>
-                  </motion.div>
-                ))}
+      {/* Feature sections */}
+      {sections.map((section, si) => (
+        <section
+          key={section.id}
+          className={`py-24 px-6 border-t border-border ${si % 2 === 1 ? "bg-noise" : ""}`}
+        >
+          <div className="max-w-7xl mx-auto">
+            <motion.div {...fadeIn} className="flex items-start gap-6 mb-12">
+              <span className="font-display text-6xl md:text-8xl font-bold text-border/60 leading-none select-none">
+                {section.id}
+              </span>
+              <div className="flex items-center gap-3">
+                <section.icon className="w-5 h-5 text-accent" />
+                <h2 className="font-display text-2xl md:text-3xl font-bold">{section.title}</h2>
               </div>
             </motion.div>
-          ))}
-        </div>
-      </section>
+
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
+              {section.items.map((item, fi) => (
+                <motion.div
+                  key={item.t}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: fi * 0.08 }}
+                  className="glass-subtle rounded-xl p-5 hover:border-accent/20 transition-all duration-300 group"
+                >
+                  <h3 className="text-sm font-semibold mb-2 group-hover:text-accent transition-colors">{item.t}</h3>
+                  <p className="text-xs text-muted-foreground leading-relaxed">{item.d}</p>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+      ))}
 
       {/* Offline highlight */}
-      <section className="py-24 px-6 bg-section-alt">
-        <div className="max-w-3xl mx-auto text-center">
-          <motion.div {...fadeUp}>
-            <WifiOff className="w-12 h-12 text-primary mx-auto mb-6" />
-            <h2 className="text-3xl font-bold mb-4">Offline-first</h2>
-            <p className="text-muted-foreground text-lg leading-relaxed">
-              Traivo Go fungerar i skogen, i källaren och på plats utan mobiltäckning. 
-              Protokoll, foton och statusändringar sparas lokalt och synkas automatiskt 
-              när uppkopplingen är tillbaka.
+      <section className="py-28 px-6 border-t border-border relative overflow-hidden">
+        <div className="absolute inset-0">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] rounded-full bg-accent/[0.06] blur-[100px]" />
+        </div>
+        <div className="relative z-10 max-w-2xl mx-auto text-center">
+          <motion.div {...fadeIn}>
+            <WifiOff className="w-12 h-12 text-accent mx-auto mb-6 opacity-60" />
+            <h2 className="font-display text-3xl md:text-4xl font-bold mb-4">
+              Offline-first
+            </h2>
+            <p className="text-muted-foreground leading-relaxed text-lg">
+              Fungerar i skogen, i källaren och på plats utan mobiltäckning. 
+              Allt sparas lokalt och synkas automatiskt.
             </p>
           </motion.div>
         </div>
       </section>
 
       {/* CTA */}
-      <section className="py-24 px-6 bg-hero-gradient text-white">
-        <div className="max-w-3xl mx-auto text-center">
-          <motion.div {...fadeUp}>
-            <h2 className="text-3xl font-bold mb-4">Ge era tekniker rätt verktyg</h2>
-            <p className="text-white/70 mb-8">Se hur Traivo Go kan förenkla vardagen för er fältpersonal.</p>
-            <Button size="lg" variant="secondary" className="font-semibold" asChild>
-              <Link to="/kontakt">Boka demo <ArrowRight className="w-4 h-4 ml-1" /></Link>
+      <section className="relative py-32 px-6 border-t border-border overflow-hidden">
+        <div className="absolute inset-0">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] rounded-full bg-accent/[0.06] blur-[120px]" />
+        </div>
+        <div className="relative z-10 max-w-3xl mx-auto text-center">
+          <motion.div {...fadeIn}>
+            <h2 className="font-display text-4xl md:text-5xl font-bold mb-6">
+              Ge era tekniker
+              <br />
+              <span className="text-gradient-aurora">rätt verktyg</span>
+            </h2>
+            <p className="text-muted-foreground mb-10">
+              Se hur Traivo Go förenklar vardagen i fält.
+            </p>
+            <Button
+              size="lg"
+              className="h-14 px-10 font-display font-semibold text-sm tracking-wide uppercase bg-accent text-accent-foreground hover:bg-accent/90"
+              asChild
+            >
+              <Link to="/kontakt">Boka demo <ArrowRight className="w-4 h-4 ml-2" /></Link>
             </Button>
           </motion.div>
         </div>
