@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import NeuralBackground from "@/components/NeuralBackground";
+
 import BrainHero from "@/components/BrainHero";
 import AIInput from "@/components/AIInput";
 import HowItWorks from "@/components/HowItWorks";
@@ -8,7 +8,7 @@ import TeamSection from "@/components/TeamSection";
 const Index = () => {
   return (
     <div className="min-h-screen relative overflow-hidden">
-      <NeuralBackground />
+      
 
       {/* Nav */}
       <nav className="relative z-10 flex items-center justify-between px-8 py-5">
