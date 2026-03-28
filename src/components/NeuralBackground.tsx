@@ -62,18 +62,18 @@ const NeuralBackground = () => {
     const glowColor = `hsl(${readToken("--neural-glow")})`;
 
     for (let i = 0; i < count; i++) {
-      const fontSize = 12 + Math.random() * 5;
+      const fontSize = 12 + Math.random() * 4;
       items.push({
         text: shuffled[i % shuffled.length],
         x: Math.random() * canvas.width * 0.8 + canvas.width * 0.1,
         y: Math.random() * canvas.height * 0.8 + canvas.height * 0.1,
-        vx: (Math.random() - 0.5) * 0.22,
-        vy: (Math.random() - 0.5) * 0.12,
+        vx: (Math.random() - 0.5) * 0.08,
+        vy: (Math.random() - 0.5) * 0.04,
         alpha: 0,
         targetAlpha: 0,
-        fadeSpeed: 0.004 + Math.random() * 0.006,
-        timer: Math.random() * 320,
-        timerMax: 220 + Math.random() * 220,
+        fadeSpeed: 0.0012 + Math.random() * 0.0015,
+        timer: Math.random() * 600,
+        timerMax: 600 + Math.random() * 500,
         fontSize,
       });
     }
