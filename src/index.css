@@ -6,44 +6,44 @@
 
 @layer base {
   :root {
-    /* Traivo — Dark Nordic Immersive (lightened) */
-    --background: 210 20% 28%;
-    --foreground: 195 20% 93%;
+    /* Traivo — Teal-forward colorful */
+    --background: 190 30% 14%;
+    --foreground: 180 15% 93%;
 
-    --card: 210 18% 31%;
-    --card-foreground: 195 20% 93%;
+    --card: 190 28% 17%;
+    --card-foreground: 180 15% 93%;
 
-    --popover: 210 18% 31%;
-    --popover-foreground: 195 20% 93%;
+    --popover: 190 28% 17%;
+    --popover-foreground: 180 15% 93%;
 
-    --primary: 180 36% 48%;
-    --primary-foreground: 210 30% 12%;
+    --primary: 180 55% 42%;
+    --primary-foreground: 190 40% 8%;
 
-    --secondary: 210 16% 32%;
-    --secondary-foreground: 195 20% 85%;
+    --secondary: 190 24% 22%;
+    --secondary-foreground: 180 20% 85%;
 
-    --muted: 210 12% 31%;
-    --muted-foreground: 209 14% 70%;
+    --muted: 190 18% 20%;
+    --muted-foreground: 185 16% 58%;
 
-    --accent: 160 40% 55%;
-    --accent-foreground: 210 30% 12%;
+    --accent: 160 50% 48%;
+    --accent-foreground: 190 40% 8%;
 
     --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 210 10% 36%;
-    --input: 210 10% 36%;
-    --ring: 180 36% 48%;
+    --border: 185 18% 25%;
+    --input: 185 18% 25%;
+    --ring: 180 55% 42%;
 
     --radius: 0.75rem;
 
     /* Traivo brand tokens */
-    --ocean: 202 55% 30%;
-    --teal: 180 36% 48%;
-    --aurora: 160 40% 55%;
-    --ice: 195 52% 94%;
-    --navy: 210 20% 28%;
-    --mountain: 209 14% 52%;
+    --ocean: 195 50% 28%;
+    --teal: 180 55% 42%;
+    --aurora: 160 50% 48%;
+    --ice: 180 45% 92%;
+    --navy: 190 30% 14%;
+    --mountain: 185 16% 50%;
 
     --sidebar-background: 210 26% 13%;
     --sidebar-foreground: 195 20% 93%;
