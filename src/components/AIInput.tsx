@@ -1,54 +1,72 @@
-import { useState, FormEvent } from "react";
+import { useState, FormEvent, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Send, Loader2, Brain, ShieldCheck } from "lucide-react";
+import { Send, Loader2, Brain, ShieldCheck, RotateCcw } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 
-// Traivo knowledge for local fallback responses
 const TRAIVO_KNOWLEDGE = `
-Traivo är en AI-driven fältserviceplattform (SaaS) byggd för nordiska företag, med fokus på avfallshantering och fältservice.
+Traivo är en AI-driven fältserviceplattform (SaaS) byggd för nordiska företag.
 
 Kärnfunktioner:
-- AI-schemaläggning: Väderbaserad kapacitetsplanering med 7-dagars prognos
-- GPS-spårning i realtid: Följ resurser live med breadcrumb-historik
-- Ruttoptimering: Geografisk klusterplanering med interaktiv kartvy
-- Fortnox-integration: OAuth, kundsynk, artikelmappning och automatisk fakturaexport
-- Flerföretagsstöd: Varje kund får egen separata miljö med RBAC
-- Realtidsnotifieringar: WebSocket-baserade push-notiser
-- Traivo Go: Mobilapp för fältpersonal
+- AI-schemaläggning: Väderbaserad kapacitetsplanering
+- GPS-spårning i realtid med breadcrumb-historik
+- Ruttoptimering: Geografisk klusterplanering
+- Fortnox-integration: OAuth, kundsynk, artikelmappning, fakturaexport
+- Flerföretagsstöd med RBAC
+- Realtidsnotifieringar via WebSocket
+- Traivo Go: Offline-first mobilapp för fältpersonal
 - Hierarkisk objektstruktur: Område → Fastighet → Rum
-- Abonnemangshantering: Återkommande tjänster med automatisk ordergenerering
-- Anomaliövervakning: Automatisk detektering av avvikelser
-
-Branscher som gynnas mest: Avfallshantering, fastighetsservice, VVS, el, städ, trädgård, snöröjning, skadedjursbekämpning, hissservice, brandskydd.
+- Abonnemangshantering med automatisk ordergenerering
+- Anomaliövervakning och avvikelsedetektering
+- Fakturering med Fortnox-export
+- Kundportal med bokning, chatt och besökshistorik
+- Digital signatur, fotodokumentation, materiallogg
+- Tidsrapportering med löneexport
 `;
 
 const getLocalResponse = (business: string): string => {
   const b = business.toLowerCase();
-  
+
   if (b.includes("avfall") || b.includes("sopor") || b.includes("återvinning") || b.includes("renhållning")) {
-    return `## Perfekt matchning för ${business}! 🎯\n\nTraivo är **specialbyggt** för avfallshantering:\n\n- **AI-optimerade rutter** – Spara 20-30% bränsle med smart klusterplanering\n- **Väderbaserad schemaläggning** – Automatisk kapacitetsanpassning vid regn/snö\n- **GPS i realtid** – Följ varje fordon live med breadcrumb-historik\n- **Fortnox-integration** – Automatisk fakturaexport direkt från fältet\n- **Abonnemangshantering** – Automatisera återkommande tömningar\n\n> Helt anonymt. Inga samtal. Inga mail. Utforska i din egen takt.`;
+    return `## Avfallshantering\n\nDet här är ett område vi kan väldigt väl. Här är hur Traivo adresserar vanliga utmaningar:\n\n- **Ruttoptimering** — Klusterbaserad planering som grupperar tömningar geografiskt. Typiskt 20-30% kortare körsträckor.\n- **Väderbaserad schemaläggning** — AI anpassar kapacitet vid regn, snö och storm automatiskt.\n- **GPS i realtid** — Följ varje fordon live. Breadcrumb-historik för uppföljning.\n- **Abonnemangshantering** — Återkommande tömningar schemaläggs automatiskt.\n- **Fortnox-export** — Fakturor genereras direkt från utförda jobb.\n\nHar du fler specifika frågor om er situation? Beskriv gärna mer.`;
   }
-  
+
   if (b.includes("vvs") || b.includes("rör") || b.includes("vatten")) {
-    return `## Traivo för VVS-företag 🔧\n\nSå kan Traivo effektivisera er verksamhet:\n\n- **Smart schemaläggning** – AI planerar jobb baserat på geografi och prioritet\n- **Ruttoptimering** – Minimera körsträckor mellan jobb\n- **Realtidsspårning** – Se var teknikerna är, alltid\n- **Fortnox-synk** – Fakturor skapas automatiskt efter utfört jobb\n- **Mobilapp (Traivo Go)** – Tekniker uppdaterar status och lägger anteckningar direkt\n\n> Helt anonymt. Inga samtal. Utforska fritt.`;
+    return `## VVS & Rörservice\n\nVanliga utmaningar vi löser:\n\n- **Schemaläggning** — AI planerar utifrån kompetens, geografi och prioritet. Rätt tekniker på rätt jobb.\n- **Ruttoptimering** — Minimera körning mellan akutjobb och planerade servicebesök.\n- **Realtidskarta** — Se var teknikerna är. Skicka akutjobb till närmaste lediga.\n- **Protokoll & dokumentation** — Digitala checklistor med foton, direkt från fältet.\n- **Fortnox-synk** — Fakturan skapas automatiskt efter utfört arbete.\n\nBeskriv gärna er specifika situation så kan jag gå djupare.`;
   }
 
   if (b.includes("städ") || b.includes("rengöring") || b.includes("cleaning")) {
-    return `## Traivo för städföretag ✨\n\nOptimera er städverksamhet:\n\n- **Schemaläggning** – AI hanterar återkommande och engångs-uppdrag\n- **Hierarkisk struktur** – Område → Fastighet → Rum, perfekt för era objekt\n- **GPS & tidrapport** – Automatisk dokumentation av utförda jobb\n- **Kundportal** – Era kunder ser status i realtid\n- **Fortnox** – Fakturering på autopilot\n\n> Helt anonymt. Inga samtal. Inga mail.`;
+    return `## Städ & Facility\n\nSå hanterar Traivo städbranschens utmaningar:\n\n- **Schemaläggning** — Hantera återkommande och engångsuppdrag med AI.\n- **Hierarkisk struktur** — Område → Fastighet → Rum. Perfekt för era objekt.\n- **Tidrapportering** — Automatisk in-/utcheckning. Löneexport till CSV.\n- **Kundportal** — Era kunder ser utfört arbete i realtid.\n- **Fakturering** — Fortnox-export på autopilot.\n\nVilka specifika utmaningar har ni idag?`;
   }
 
   if (b.includes("el") || b.includes("elektri")) {
-    return `## Traivo för elföretag ⚡\n\nEffektivisera fältservicen:\n\n- **AI-planering** – Optimala rutter och scheman för era tekniker\n- **Realtidsspårning** – Följ pågående jobb och resurser live\n- **Mobilapp** – Statusuppdateringar, foton och anteckningar från fältet\n- **Automatisk fakturering** – Fortnox-integration hela vägen\n- **Anomalidetektering** – Få varningar vid avvikelser\n\n> Helt anonymt. Utforska fritt.`;
+    return `## El & Installation\n\nVanliga utmaningar vi adresserar:\n\n- **AI-planering** — Scheman baserade på teknikerkompetens och geografi.\n- **Akutjobbshantering** — Närmaste lediga tekniker identifieras direkt.\n- **Mobilapp** — Protokoll, foton och materiallogg direkt från fältet.\n- **Anomalidetektering** — Systemet varnar vid avvikelser.\n- **Fakturering** — Fortnox-integration hela kedjan.\n\nBerätta mer om er verksamhet så kan jag vara mer specifik.`;
   }
 
-  return `## Traivo för ${business} 🚀\n\nBaserat på er verksamhet kan Traivo hjälpa med:\n\n- **AI-schemaläggning** – Intelligent planering av fältpersonal och resurser\n- **Ruttoptimering** – Spara tid och bränsle med smart klusterplanering\n- **GPS i realtid** – Full översikt av alla resurser i fält\n- **Fortnox-integration** – Automatisk fakturering och kundsynk\n- **Mobilapp (Traivo Go)** – Era medarbetare uppdaterar direkt från fältet\n- **Väderbaserad planering** – AI anpassar kapacitet efter väderprognoser\n\nTraivo är byggt för nordiska fältserviceföretag och anpassar sig efter era specifika behov.\n\n> Helt anonymt. Inga samtal. Inga mail. Utforska i er egen takt.`;
+  if (b.includes("snö") || b.includes("plog") || b.includes("vinter")) {
+    return `## Snöröjning & Vinterväghållning\n\nEn bransch med extrema krav på snabb respons:\n\n- **Väderbaserad planering** — AI aktiverar resurser automatiskt baserat på väderprognoser.\n- **GPS & realtidskarta** — Se alla fordon live. Dokumentera utfört arbete med breadcrumbs.\n- **Akutmobilisering** — Aktivera hela flottan med ett klick vid snöfall.\n- **Tidrapportering** — Automatisk logg av arbetspass.\n- **Kundrapportering** — Visa kunder exakt vad som utförts, med kartbevis.\n\nVilka delar är mest relevanta för er?`;
+  }
+
+  if (b.includes("fastighet") || b.includes("drift") || b.includes("förvalt")) {
+    return `## Fastighetsskötsel & Drift\n\nTraivo hanterar komplexiteten i fastighetsdrift:\n\n- **Hierarkisk objektstruktur** — Område → Fastighet → Rum. Mappar direkt mot era objekt.\n- **Planering** — Schemalägg tillsyn, underhåll och rondering med AI.\n- **Felanmälan & kundportal** — Hyresgäster/kunder rapporterar direkt i portalen.\n- **Protokoll** — Digitala checklistor per jobbtyp med fotodokumentation.\n- **IoT-integration** — Sensorer triggar automatiska arbetsordrar.\n\nBerätta mer om er specifika situation.`;
+  }
+
+  return `## ${business}\n\nBaserat på det du beskriver kan Traivo hjälpa med:\n\n- **AI-schemaläggning** — Intelligent planering av fältpersonal baserat på kompetens och geografi.\n- **Ruttoptimering** — Klusterbaserad planering som minskar körsträckor.\n- **GPS-spårning** — Realtidsöversikt av alla resurser i fält.\n- **Mobilapp** — Offline-first. Protokoll, foton, signatur och materiallogg.\n- **Fakturering** — Fortnox-export direkt från utförda jobb.\n- **Väderplanering** — AI anpassar kapacitet efter prognoser.\n\nTraivo är byggt för nordiska fältserviceföretag. Beskriv gärna mer om era specifika utmaningar.`;
 };
+
+const suggestedQuestions = [
+  "Vi kör avfallshantering med 15 bilar i Stockholm",
+  "Hur fungerar ruttoptimeringen?",
+  "Vi har problem med akutjobb och omplanering",
+  "Kan appen fungera utan internet?",
+  "Vi använder Fortnox idag",
+];
 
 const AIInput = () => {
   const [input, setInput] = useState("");
   const [response, setResponse] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [hasAsked, setHasAsked] = useState(false);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -57,30 +75,42 @@ const AIInput = () => {
     setIsLoading(true);
     setHasAsked(true);
 
-    // Simulate brief thinking delay for UX
     await new Promise((r) => setTimeout(r, 1200));
-    
+
     const result = getLocalResponse(input.trim());
     setResponse(result);
     setIsLoading(false);
   };
 
+  const handleSuggestion = (q: string) => {
+    setInput(q);
+    textareaRef.current?.focus();
+  };
+
+  const handleReset = () => {
+    setInput("");
+    setResponse("");
+    setHasAsked(false);
+    textareaRef.current?.focus();
+  };
+
   return (
     <div className="w-full max-w-2xl mx-auto">
-      {/* Input area */}
+      {/* Input */}
       <motion.form
         onSubmit={handleSubmit}
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.6, duration: 0.8 }}
+        transition={{ delay: 0.4, duration: 0.6 }}
         className="relative"
       >
-        <div className="relative rounded-xl border border-border bg-secondary/50 backdrop-blur-sm glow-neural overflow-hidden transition-all focus-within:border-primary/50">
+        <div className="relative rounded-2xl glass glow-teal overflow-hidden transition-all focus-within:border-primary/40">
           <textarea
+            ref={textareaRef}
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            placeholder="Beskriv din verksamhet... t.ex. 'Vi är ett avfallshanteringsföretag med 12 fordon i Göteborg'"
-            className="w-full bg-transparent px-5 py-4 pr-14 text-foreground placeholder:text-muted-foreground focus:outline-none resize-none min-h-[80px] font-display text-sm"
+            placeholder="Beskriv er verksamhet eller ställ en fråga..."
+            className="w-full bg-transparent px-6 py-5 pr-16 text-foreground placeholder:text-muted-foreground focus:outline-none resize-none min-h-[100px] text-sm leading-relaxed"
             rows={3}
             onKeyDown={(e) => {
               if (e.key === "Enter" && !e.shiftKey) {
@@ -92,7 +122,7 @@ const AIInput = () => {
           <button
             type="submit"
             disabled={!input.trim() || isLoading}
-            className="absolute right-3 bottom-3 p-2.5 rounded-lg bg-primary text-primary-foreground disabled:opacity-30 hover:opacity-90 transition-opacity"
+            className="absolute right-4 bottom-4 p-3 rounded-xl bg-primary text-primary-foreground disabled:opacity-20 hover:bg-primary/80 transition-all"
           >
             {isLoading ? (
               <Loader2 className="w-4 h-4 animate-spin" />
@@ -103,35 +133,61 @@ const AIInput = () => {
         </div>
       </motion.form>
 
-      {/* Anonymous badge */}
+      {/* Suggested questions — only before first ask */}
+      <AnimatePresence>
+        {!hasAsked && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ delay: 0.6 }}
+            className="mt-4 flex flex-wrap gap-2"
+          >
+            {suggestedQuestions.map((q, i) => (
+              <motion.button
+                key={q}
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.7 + i * 0.08 }}
+                onClick={() => handleSuggestion(q)}
+                className="px-3 py-1.5 rounded-lg text-xs text-muted-foreground glass-subtle hover:text-foreground hover:border-primary/20 transition-all"
+              >
+                {q}
+              </motion.button>
+            ))}
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Privacy note */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 1 }}
-        className="flex items-center justify-center gap-2 mt-4 text-muted-foreground text-xs"
+        transition={{ delay: 0.8 }}
+        className="flex items-center justify-center gap-2 mt-4 text-muted-foreground/60 text-[11px]"
       >
-        <ShieldCheck className="w-3.5 h-3.5 text-primary/60" />
-        <span>Helt anonymt · Ingen data sparas · Inga samtal</span>
+        <ShieldCheck className="w-3 h-3" />
+        <span>Helt anonymt · Ingen data sparas</span>
       </motion.div>
 
       {/* Response */}
       <AnimatePresence>
         {(isLoading || response) && hasAsked && (
           <motion.div
-            initial={{ opacity: 0, y: 20, height: 0 }}
-            animate={{ opacity: 1, y: 0, height: "auto" }}
-            exit={{ opacity: 0, y: -10 }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0 }}
             transition={{ duration: 0.5 }}
             className="mt-8"
           >
-            <div className="rounded-xl border border-border bg-card/80 backdrop-blur-sm p-6 glow-neural">
+            <div className="rounded-2xl glass p-6 md:p-8">
               {isLoading ? (
                 <div className="flex items-center gap-3 text-muted-foreground">
                   <Brain className="w-5 h-5 animate-pulse text-primary" />
-                  <span className="text-sm">Traivo AI analyserar din verksamhet...</span>
+                  <span className="text-sm">Analyserar er verksamhet...</span>
                 </div>
               ) : (
-                <div className="prose prose-invert prose-sm max-w-none prose-headings:text-foreground prose-headings:font-display prose-p:text-secondary-foreground prose-strong:text-primary prose-li:text-secondary-foreground prose-blockquote:text-muted-foreground prose-blockquote:border-primary/30">
+                <div className="prose prose-invert prose-sm max-w-none prose-headings:text-foreground prose-headings:font-display prose-p:text-foreground/75 prose-strong:text-primary prose-li:text-foreground/75 prose-blockquote:text-muted-foreground prose-blockquote:border-primary/20">
                   <ReactMarkdown>{response}</ReactMarkdown>
                 </div>
               )}
@@ -141,15 +197,12 @@ const AIInput = () => {
               <motion.button
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                transition={{ delay: 0.5 }}
-                onClick={() => {
-                  setInput("");
-                  setResponse("");
-                  setHasAsked(false);
-                }}
-                className="mt-4 text-xs text-muted-foreground hover:text-primary transition-colors mx-auto block"
+                transition={{ delay: 0.3 }}
+                onClick={handleReset}
+                className="mt-4 flex items-center gap-2 text-xs text-muted-foreground hover:text-primary transition-colors mx-auto"
               >
-                Fråga om en annan verksamhet →
+                <RotateCcw className="w-3 h-3" />
+                Ställ en ny fråga
               </motion.button>
             )}
           </motion.div>
