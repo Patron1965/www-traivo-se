@@ -7,13 +7,13 @@
 @layer base {
   :root {
     /* Traivo — Dark Nordic Immersive (lightened) */
-    --background: 210 22% 26%;
+    --background: 210 20% 28%;
     --foreground: 195 20% 93%;
 
-    --card: 210 20% 29%;
+    --card: 210 18% 31%;
     --card-foreground: 195 20% 93%;
 
-    --popover: 210 20% 29%;
+    --popover: 210 18% 31%;
     --popover-foreground: 195 20% 93%;
 
     --primary: 180 36% 48%;
@@ -42,7 +42,7 @@
     --teal: 180 36% 48%;
     --aurora: 160 40% 55%;
     --ice: 195 52% 94%;
-    --navy: 210 20% 27%;
+    --navy: 210 20% 28%;
     --mountain: 209 14% 52%;
 
     --sidebar-background: 210 26% 13%;
