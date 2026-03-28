@@ -94,7 +94,7 @@ const NeuralBackground = () => {
           if (q.targetAlpha > 0) {
             q.targetAlpha = 0;
           } else {
-            q.targetAlpha = 0.15 + Math.random() * 0.12;
+            q.targetAlpha = 0.35 + Math.random() * 0.15;
             q.text = QUESTIONS[Math.floor(Math.random() * QUESTIONS.length)];
           }
         }
