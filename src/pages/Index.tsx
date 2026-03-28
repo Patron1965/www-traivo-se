@@ -48,8 +48,8 @@ const Index = () => {
             className="text-muted-foreground text-sm md:text-base leading-relaxed max-w-lg mx-auto mb-10"
           >
             Traivo är byggt av ett team med djup erfarenhet av verkligheten i fält — 
-            inte av folk som bara sett den på avstånd. Berätta om era utmaningar 
-            så visar vi vad vi kan göra åt dem.
+            inte av folk som bara sett den på avstånd. Nu med AI:s nya möjligheter 
+            kan vi äntligen lösa det som inte gick förut. Berätta om era utmaningar.
           </motion.p>
 
           <AIInput />
