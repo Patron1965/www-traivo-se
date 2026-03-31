@@ -76,10 +76,13 @@ const Navbar = () => {
               {links.map((link) => (
                 <Link
                   key={link.to}
-                  to={link.to}
-                  onClick={() => setMobileOpen(false)}
+                  to={link.isAnchor ? "/" : link.to}
+                  onClick={(e) => {
+                    setMobileOpen(false);
+                    handleNavClick(link, e);
+                  }}
                   className={`block px-4 py-2.5 rounded-lg text-sm font-medium transition-colors ${
-                    location.pathname === link.to
+                    (location.pathname === "/" && link.isAnchor) || (location.pathname === link.to && !link.isAnchor)
                       ? "text-primary"
                       : "text-muted-foreground hover:text-foreground"
                   }`}
@@ -87,6 +90,7 @@ const Navbar = () => {
                   {link.label}
                 </Link>
               ))}
+
             </div>
           </motion.div>
         )}
