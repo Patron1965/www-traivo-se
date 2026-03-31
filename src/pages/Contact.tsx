@@ -33,14 +33,6 @@ const Contact = () => {
             Fyll i formuläret så återkommer vi.
           </p>
 
-          <div className="space-y-3 text-sm mb-10">
-            {["Personlig genomgång av plattformen", "Anpassat efter er bransch", "Ingen bindningstid"].map((item) => (
-              <div key={item} className="flex items-center gap-3">
-                <div className="w-1 h-1 rounded-full bg-primary" />
-                <span className="text-foreground/70">{item}</span>
-              </div>
-            ))}
-          </div>
 
           <div className="space-y-2.5 text-xs text-muted-foreground">
             <div className="flex items-center gap-2">
