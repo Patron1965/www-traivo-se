@@ -27,10 +27,9 @@ const Contact = () => {
             Kontakt
           </span>
           <h1 className="font-display text-3xl md:text-4xl font-bold leading-[0.95] tracking-tight mb-5">
-            <span className="text-gradient-ice">Hör av dig</span>
+            <span className="text-gradient-ice">Har ni frågor om plattformen, vill se en demo eller bara prata fältservice?</span>
           </h1>
           <p className="text-sm text-muted-foreground mb-8 leading-relaxed max-w-sm">
-            Har ni frågor om plattformen, vill se en demo eller bara prata fältservice? 
             Fyll i formuläret så återkommer vi.
           </p>
 
