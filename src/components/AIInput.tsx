@@ -330,9 +330,11 @@ const AIInput = () => {
                   <span className="text-sm">Analyserar er verksamhet...</span>
                 </div>
               ) : (
-                <div className="prose prose-invert prose-sm max-w-none prose-headings:text-foreground prose-headings:font-display prose-p:text-foreground/75 prose-strong:text-primary prose-li:text-foreground/75 prose-blockquote:text-muted-foreground prose-blockquote:border-primary/20">
+                <div className="prose prose-invert prose-sm max-w-none prose-headings:text-primary prose-headings:font-display prose-p:text-foreground/75 prose-strong:text-primary prose-li:text-foreground/75 prose-blockquote:text-muted-foreground prose-blockquote:border-primary/20">
                   <ReactMarkdown
                     components={{
+                      h2: ({ children }) => <h2 className="text-primary border-b border-primary/20 pb-1">{children}</h2>,
+                      h3: ({ children }) => <h3 className="text-primary/80">{children}</h3>,
                       p: ({ children }) => <p>{highlightDemo(children)}</p>,
                       li: ({ children }) => <li>{highlightDemo(children)}</li>,
                     }}
