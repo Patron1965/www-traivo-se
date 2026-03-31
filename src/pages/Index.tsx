@@ -118,6 +118,42 @@ const Index = () => {
         </div>
       </section>
 
+      {/* ─── TARGET AUDIENCE POPUP ─── */}
+      <section className="py-16 md:py-20 px-6 border-t border-border">
+        <div className="max-w-2xl mx-auto text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            <Dialog>
+              <DialogTrigger asChild>
+                <button className="inline-flex items-center gap-2.5 px-7 py-3.5 rounded-full border border-primary/20 text-sm font-medium text-foreground/90 hover:border-primary/40 hover:bg-primary/[0.04] transition-all duration-300">
+                  <Users className="w-4 h-4 text-primary/60" />
+                  Vem är Traivo till för?
+                </button>
+              </DialogTrigger>
+              <DialogContent className="sm:max-w-lg">
+                <DialogHeader>
+                  <DialogTitle className="font-display text-xl font-bold">
+                    Vem är Traivo till för?
+                  </DialogTitle>
+                </DialogHeader>
+                <div className="text-sm text-muted-foreground leading-relaxed space-y-4 pt-2">
+                  <p>
+                    Traivo är till för dig som driver serviceverksamhet där tekniker åker ut till kund –
+                    VVS, el, kyla, hissar, fastighet, IT, säkerhet, vitvaror, maskinservice eller sophantering.
+                  </p>
+                  <p>
+                    Om dina tekniker kör rutter och du schemalägger uppdrag varje dag, är Traivo byggt för dig.
+                  </p>
+                </div>
+              </DialogContent>
+            </Dialog>
+          </motion.div>
+        </div>
+      </section>
+
       {/* ─── SOLUTION / FEATURES ─── */}
       <section className="py-24 md:py-28 px-6 border-t border-border">
         <div className="max-w-5xl mx-auto">
