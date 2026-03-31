@@ -37,7 +37,7 @@ const Contact = () => {
           <div className="space-y-2.5 text-xs text-muted-foreground">
             <div className="flex items-center gap-2">
               <Mail className="w-3.5 h-3.5 text-primary/50" />
-              <span>hello@traivo.se</span>
+              <span>info@traivo.se</span>
             </div>
             <div className="flex items-center gap-2">
               <MapPin className="w-3.5 h-3.5 text-primary/50" />
