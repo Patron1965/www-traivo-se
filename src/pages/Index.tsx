@@ -3,13 +3,22 @@ import { Link } from "react-router-dom";
 import AIInput from "@/components/AIInput";
 import {
   Calendar, Smartphone, Route, MapPin, Brain, WifiOff,
-  ArrowRight, Users
+  ArrowRight, Users, FileText, CreditCard
 } from "lucide-react";
+
+const features = [
+  { icon: Calendar, title: "Schemaläggning", desc: "Automatisk planering som tar hänsyn till kompetens, geografi och kapacitet." },
+  { icon: Route, title: "Smartare rutter", desc: "Ruttoptimering baserad på riktiga vägar – inte fågelvägen." },
+  { icon: Smartphone, title: "Mobilapp offline", desc: "Fungerar utan nät, med protokoll och foto. Synkar automatiskt." },
+  { icon: MapPin, title: "GPS & akuttilldelning", desc: "Realtidskarta med positioner. Akutjobb till närmaste tekniker." },
+  { icon: Brain, title: "AI-analys", desc: "Hittar avvikelser innan de blir problem. Prediktivt underhåll." },
+  { icon: CreditCard, title: "Fakturering & kundportal", desc: "Faktura, bokning och besökshistorik – i samma system." },
+];
 
 const Index = () => {
   return (
     <>
-      {/* ─── HERO: "Rak kommunikation" ─── */}
+      {/* ─── HERO ─── */}
       <section className="relative min-h-[85vh] flex flex-col items-center justify-center overflow-hidden bg-noise px-6 py-20">
         <div className="absolute top-0 right-0 w-[500px] h-[500px] rounded-full bg-primary/[0.03] blur-[150px]" />
         <div className="absolute bottom-0 left-0 w-[300px] h-[300px] rounded-full bg-accent/[0.03] blur-[100px]" />
@@ -31,191 +40,158 @@ const Index = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.1 }}
-            className="font-display text-4xl sm:text-5xl md:text-6xl font-bold leading-[1.05] tracking-tight mb-5"
+            className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.08] tracking-tight mb-5"
           >
-            <span className="text-gradient-ice">Fältservice utan kaos.</span>
+            <span className="text-gradient-ice">Dina tekniker kör.</span>{" "}
+            <span className="text-gradient-ice">Dina planerare släcker bränder.</span>
+            <br />
+            <span className="text-gradient-ice">Dina kunder väntar.</span>
           </motion.h1>
 
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.3 }}
-            className="text-muted-foreground text-sm md:text-base leading-relaxed max-w-xl mx-auto mb-12"
+            className="text-muted-foreground text-sm md:text-base leading-relaxed max-w-xl mx-auto mb-10"
           >
-            AI-driven planering som faktiskt fungerar – byggd av branschfolk, för branschfolk.
+            Vi har levt samma vardag. Så vi byggde systemet som faktiskt löser den.
           </motion.p>
 
-          {/* Story body */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5 }}
-            className="glass rounded-2xl p-8 md:p-10 text-left max-w-2xl mx-auto mb-10"
           >
-            <p className="text-sm md:text-base text-foreground/85 leading-[1.8] mb-5">
-              Om du fortfarande planerar med Excel, ringer runt för att omfördela jobb, och fakturerar dagar efter utfört arbete – då vet du att det finns bättre sätt. Du har bara inte hittat ett system som förstår din verklighet.
-            </p>
-            <p className="text-sm md:text-base text-foreground/85 leading-[1.8] mb-6">
-              Traivo är byggt av ett team som jobbat operativt i fältservice i över 15 år. Vi har kombinerat den erfarenheten med djup AI-kompetens och skapat en plattform som löser hela kedjan:
-            </p>
-            <div className="space-y-2.5 mb-6">
-              {[
-                "Automatisk schemaläggning som tar hänsyn till kompetens, geografi och kapacitet",
-                "Ruttoptimering baserad på riktiga vägar – inte fågelvägen",
-                "Mobilapp som fungerar offline, med protokoll och foto",
-                "Realtidskarta med GPS och akuttilldelning",
-                "AI-analys som hittar avvikelser innan de blir problem",
-                "Fakturering och kundportal – i samma system",
-              ].map((item) => (
-                <div key={item} className="flex items-start gap-3">
-                  <ArrowRight className="w-3.5 h-3.5 text-primary mt-1 shrink-0" />
-                  <p className="text-sm md:text-base text-foreground/80 leading-relaxed">{item}</p>
-                </div>
-              ))}
-            </div>
-            <p className="text-sm md:text-base text-foreground/80 leading-[1.8] font-medium">
-              Inget mer klipp-och-klistra mellan fem olika verktyg.
-            </p>
+            <Link
+              to="/kontakt"
+              className="inline-flex items-center gap-2.5 px-7 py-3.5 rounded-full bg-primary text-primary-foreground text-sm font-medium hover:opacity-90 transition-opacity"
+            >
+              Berätta om er vardag – vi visar vad som går att förändra
+              <ArrowRight className="w-4 h-4" />
+            </Link>
           </motion.div>
-
-          {/* CTA label + AI input */}
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.7 }}
-            className="text-sm text-foreground/70 font-medium mb-4"
-          >
-            Nyfiken? Hör av dig – vi säljer inte, vi lyssnar.
-          </motion.p>
-
-          <AIInput />
         </div>
       </section>
 
-      {/* ─── WHAT IS TRAIVO (subtle) ─── */}
-      <section className="py-28 px-6 border-t border-border">
+      {/* ─── PROBLEM RECOGNITION ─── */}
+      <section className="py-24 md:py-28 px-6 border-t border-border">
+        <div className="max-w-2xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+          >
+            <span className="text-[11px] font-medium uppercase tracking-[0.25em] text-primary mb-4 block">
+              Låter det bekant?
+            </span>
+            <p className="font-display text-xl md:text-2xl font-medium leading-relaxed text-foreground/90 mb-6">
+              Om du fortfarande planerar med Excel, ringer runt för att omfördela jobb, och fakturerar dagar efter utfört arbete – då vet du att det finns bättre sätt. Du har bara inte hittat ett system som förstår din verklighet.
+            </p>
+            <p className="text-sm md:text-base text-muted-foreground leading-relaxed">
+              Fältservice är en av de mest komplexa operativa verksamheterna som finns. Ändå drivs den ofta med verktyg som inte pratar med varandra – eller med ren magkänsla.
+            </p>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ─── CREDIBILITY ─── */}
+      <section className="py-24 md:py-28 px-6 border-t border-border bg-noise relative">
+        <div className="absolute inset-0 bg-grid-pattern opacity-15" />
+        <div className="relative z-10 max-w-2xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+          >
+            <span className="text-[11px] font-medium uppercase tracking-[0.25em] text-primary mb-4 block">
+              Vår bakgrund
+            </span>
+            <h2 className="font-display text-2xl md:text-3xl font-bold mb-8">
+              Byggt av folk som suttit i bilen
+            </h2>
+            <div className="space-y-5 text-sm md:text-base text-foreground/85 leading-[1.8]">
+              <p>
+                De flesta planeringssystem är byggda av folk som aldrig suttit i en servicebil en hel dag.
+              </p>
+              <p>
+                Vi har. Vi har planerat rutter för hand i Excel. Ringt tekniker mitt i lunchen för att flytta om jobb. Försökt fakturera från handskrivna protokoll. Vi vet exakt var det brister – för vi har levt med bristerna.
+              </p>
+              <p>
+                Vi startade Traivo för att vi själva var frustrerade. Vi visste att AI kunde lösa planering, optimering och analys på ett sätt som inte var möjligt för fem år sedan. Men vi visste också att tekniken är värdelös om den inte förstår verkligheten: att en tekniker inte kan vara på två ställen samtidigt, att akutjobb inte väntar, och att en app som kräver 4G i ett garage är meningslös.
+              </p>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ─── SOLUTION / FEATURES ─── */}
+      <section className="py-24 md:py-28 px-6 border-t border-border">
         <div className="max-w-5xl mx-auto">
           <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            className="max-w-2xl mb-20"
+            className="max-w-2xl mb-8"
           >
             <span className="text-[11px] font-medium uppercase tracking-[0.25em] text-primary mb-4 block">
               Plattformen
             </span>
-            <p className="font-display text-2xl md:text-3xl font-medium leading-relaxed text-foreground/90">
-              Traivo ersätter Excel-planering, pappersprotokoll och separata system med 
-              <span className="text-primary"> en sammanhållen plattform</span> för fältservice.
+            <h2 className="font-display text-2xl md:text-3xl font-bold mb-5">
+              En plattform. Hela kedjan.
+            </h2>
+            <p className="text-sm md:text-base text-muted-foreground leading-relaxed">
+              Traivo är resultatet av operativ erfarenhet kombinerad med det AI faktiskt kan göra idag. Inte buzzwords. Inte en demo som ser bra ut men faller ihop i verkligheten. Utan ett system som hanterar det som händer på riktigt.
             </p>
           </motion.div>
 
-          <div className="grid md:grid-cols-2 gap-4">
-            {/* One */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="group rounded-2xl glass p-8 hover:border-primary/20 transition-all duration-500"
-            >
-              <div className="flex items-center gap-3 mb-5">
-                <div className="w-9 h-9 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center">
-                  <Calendar className="w-4 h-4 text-primary" />
-                </div>
-                <div>
-                  <h3 className="font-display text-lg font-bold">Traivo One</h3>
-                  <p className="text-[11px] text-muted-foreground uppercase tracking-wider">Webb · Planerare</p>
-                </div>
-              </div>
-              <p className="text-sm text-muted-foreground leading-relaxed mb-6">
-                Schemaläggning, ruttoptimering, GPS-karta, fakturering och AI-analys — 
-                för den som planerar och leder.
-              </p>
-              <Link
-                to="/traivo-one"
-                className="inline-flex items-center gap-2 text-xs font-medium text-primary hover:gap-3 transition-all uppercase tracking-wider"
-              >
-                Läs mer <ArrowRight className="w-3 h-3" />
-              </Link>
-            </motion.div>
-
-            {/* Go */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.1 }}
-              className="group rounded-2xl glass p-8 hover:border-accent/20 transition-all duration-500"
-            >
-              <div className="flex items-center gap-3 mb-5">
-                <div className="w-9 h-9 rounded-lg bg-accent/10 border border-accent/20 flex items-center justify-center">
-                  <Smartphone className="w-4 h-4 text-accent" />
-                </div>
-                <div>
-                  <h3 className="font-display text-lg font-bold">Traivo Go</h3>
-                  <p className="text-[11px] text-muted-foreground uppercase tracking-wider">Mobil · Tekniker</p>
-                </div>
-              </div>
-              <p className="text-sm text-muted-foreground leading-relaxed mb-6">
-                Jobb, navigation, protokoll, foton och signatur — 
-                fungerar offline.
-              </p>
-              <Link
-                to="/traivo-go"
-                className="inline-flex items-center gap-2 text-xs font-medium text-accent hover:gap-3 transition-all uppercase tracking-wider"
-              >
-                Läs mer <ArrowRight className="w-3 h-3" />
-              </Link>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* ─── CAPABILITIES GRID ─── */}
-      <section className="py-28 px-6 border-t border-border bg-noise relative">
-        <div className="absolute inset-0 bg-grid-pattern opacity-15" />
-        <div className="relative z-10 max-w-5xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            className="mb-16"
-          >
-            <span className="text-[11px] font-medium uppercase tracking-[0.25em] text-primary mb-4 block">
-              Kapacitet
-            </span>
-            <h2 className="font-display text-3xl md:text-4xl font-bold">
-              Vad plattformen hanterar
-            </h2>
-          </motion.div>
-
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
-            {[
-              { icon: Calendar, title: "AI-schemaläggning", desc: "Kompetens, geografi, väder och kapacitet i varje beslut." },
-              { icon: Route, title: "Ruttoptimering", desc: "Klusterbaserad planering. Riktiga vägavstånd, inte fågelvägen." },
-              { icon: MapPin, title: "GPS i realtid", desc: "Live-karta med förarpositioner. Akutjobb till närmaste tekniker." },
-              { icon: Brain, title: "AI-analys", desc: "Avvikelsedetektering, prediktivt underhåll, ROI-rapportering." },
-              { icon: WifiOff, title: "Offline-first", desc: "Mobilappen fungerar utan nät. Synkar automatiskt." },
-              { icon: Users, title: "Kundportal", desc: "Bokning, chatt och besökshistorik för era kunder." },
-            ].map((cap, i) => (
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 mb-10">
+            {features.map((f, i) => (
               <motion.div
-                key={cap.title}
+                key={f.title}
                 initial={{ opacity: 0, y: 16 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.06 }}
                 className="glass-subtle rounded-xl p-5 group hover:border-primary/15 transition-all duration-300"
               >
-                <cap.icon className="w-4 h-4 text-primary mb-3 opacity-60 group-hover:opacity-100 transition-opacity" />
-                <h3 className="text-sm font-semibold mb-1.5">{cap.title}</h3>
-                <p className="text-xs text-muted-foreground leading-relaxed">{cap.desc}</p>
+                <f.icon className="w-4 h-4 text-primary mb-3 opacity-60 group-hover:opacity-100 transition-opacity" />
+                <h3 className="text-sm font-semibold mb-1.5">{f.title}</h3>
+                <p className="text-xs text-muted-foreground leading-relaxed">{f.desc}</p>
               </motion.div>
             ))}
           </div>
+
+          <motion.p
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            className="text-sm md:text-base text-foreground/80 font-medium max-w-2xl leading-relaxed"
+          >
+            Inget mer klipp-och-klistra mellan fem olika verktyg. Planering, rutt, jobb, protokoll, faktura, analys – ihopkopplat så att ingenting faller mellan stolarna.
+          </motion.p>
         </div>
       </section>
 
-      {/* ─── BOTTOM: Soft invitation ─── */}
+      {/* ─── CLOSING STATEMENT ─── */}
+      <section className="py-20 px-6 border-t border-border bg-noise relative">
+        <div className="absolute inset-0 bg-grid-pattern opacity-10" />
+        <div className="relative z-10 max-w-2xl mx-auto text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            <p className="font-display text-xl md:text-2xl font-medium leading-relaxed text-foreground/90 mb-4">
+              Det är ingen magi. Det är erfarenhet plus teknik, ihopsatt på rätt sätt.
+            </p>
+            <p className="text-sm text-muted-foreground leading-relaxed max-w-lg mx-auto">
+              Vi har kombinerat över 15 års operativ fältserviceerfarenhet med djup AI-kompetens. Inte för att revolutionera en bransch – utan för att äntligen ge den ett verktyg som håller hela dagen.
+            </p>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ─── FOOTER CTA ─── */}
       <section className="relative py-28 px-6 border-t border-border overflow-hidden">
         <div className="absolute inset-0">
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] rounded-full bg-primary/[0.04] blur-[120px]" />
@@ -226,21 +202,20 @@ const Index = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            <p className="font-display text-2xl md:text-3xl font-medium leading-relaxed mb-6">
-              Vi loggar ingenting. Vi ringer aldrig.
-              <br />
-              <span className="text-muted-foreground">Hör av dig när du själv vill.</span>
+            <p className="font-display text-2xl md:text-3xl font-medium leading-relaxed mb-8">
+              Nyfiken? Hör av dig –<br />vi säljer inte, vi lyssnar.
             </p>
-            <p className="text-sm text-muted-foreground max-w-md mx-auto leading-relaxed mb-6">
-              Utforska plattformen i lugn och ro. När du känner att det finns något vi kan hjälpa er med — 
-              kontakta oss på dina villkor.
-            </p>
-            <Link 
-              to="/kontakt" 
-              className="inline-flex items-center gap-2 text-xs font-medium text-primary hover:gap-3 transition-all uppercase tracking-wider"
+
+            <Link
+              to="/kontakt"
+              className="inline-flex items-center gap-2.5 px-7 py-3.5 rounded-full bg-primary text-primary-foreground text-sm font-medium hover:opacity-90 transition-opacity mb-8"
             >
-              Kontakta oss när du är redo <ArrowRight className="w-3 h-3" />
+              Hör av dig när det passar <ArrowRight className="w-4 h-4" />
             </Link>
+
+            <p className="text-xs text-muted-foreground">
+              Vi loggar ingenting. Vi ringer aldrig. Hör av dig när du själv vill.
+            </p>
           </motion.div>
         </div>
       </section>
