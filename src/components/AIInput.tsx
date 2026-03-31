@@ -1,7 +1,8 @@
-import { useState, FormEvent, useRef } from "react";
+import { useState, FormEvent, useRef, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Send, Loader2, Brain, Lock, RotateCcw, X } from "lucide-react";
 import ReactMarkdown from "react-markdown";
+import { useNavigate } from "react-router-dom";
 
 const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/chat`;
 
