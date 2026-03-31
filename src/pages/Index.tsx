@@ -31,8 +31,8 @@ const Index = () => {
             className="flex items-center justify-center gap-3 mb-8"
           >
             <div className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse-slow" />
-            <span className="text-[11px] font-medium uppercase tracking-[0.25em] text-muted-foreground">
-              AI-plattform för fältservice · Norden
+            <span className="font-medium uppercase tracking-[0.25em] text-muted-foreground text-sm">
+              Plattform för fältservice · Norden
             </span>
           </motion.div>
 

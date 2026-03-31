@@ -20,7 +20,7 @@ const Navbar = () => {
     <nav className="fixed top-0 left-0 right-0 z-50 glass">
       <div className="max-w-7xl mx-auto px-6 flex items-center justify-between h-14">
         <Link to="/" className="font-display font-bold text-[1.375rem] tracking-tight">
-          <span className="text-gradient-ocean">traivo</span>
+          <span className="text-gradient-ocean text-base rounded-none">{"traivo \n"}</span>
         </Link>
 
         {/* Desktop */}
