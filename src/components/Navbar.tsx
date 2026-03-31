@@ -15,6 +15,21 @@ const links = [
 const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
+
+  const handleNavClick = (link: typeof links[0], e: React.MouseEvent) => {
+    if (link.isAnchor) {
+      e.preventDefault();
+      if (location.pathname !== "/") {
+        navigate("/");
+        setTimeout(() => {
+          document.getElementById("ai-chat")?.scrollIntoView({ behavior: "smooth" });
+        }, 100);
+      } else {
+        document.getElementById("ai-chat")?.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+  };
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 glass">
@@ -28,9 +43,12 @@ const Navbar = () => {
           {links.map((link) => (
             <Link
               key={link.to}
-              to={link.to}
+              to={link.isAnchor ? "/" : link.to}
+              onClick={(e) => handleNavClick(link, e)}
               className={`px-3.5 py-2 rounded-lg text-[12px] font-medium tracking-wide uppercase transition-all duration-300 ${
-                location.pathname === link.to
+                location.pathname === "/" && link.isAnchor
+                  ? "text-primary"
+                  : location.pathname === link.to && !link.isAnchor
                   ? "text-primary"
                   : "text-muted-foreground hover:text-foreground"
               }`}
