@@ -103,6 +103,31 @@ const AIInput = () => {
   const [error, setError] = useState("");
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
+  const highlightDemo = (children: React.ReactNode): React.ReactNode => {
+    return Array.isArray(children)
+      ? children.map((child, i) => {
+          if (typeof child === "string") {
+            const parts = child.split(/(demo)/gi);
+            if (parts.length === 1) return child;
+            return parts.map((part, j) =>
+              /^demo$/i.test(part) ? (
+                <a
+                  key={`${i}-${j}`}
+                  href="/kontakt"
+                  className="text-primary font-semibold underline underline-offset-2 hover:text-primary/80 transition-colors"
+                >
+                  {part}
+                </a>
+              ) : (
+                part
+              )
+            );
+          }
+          return child;
+        })
+      : children;
+  };
+
   const latestResponse = messages.filter((m) => m.role === "assistant").pop();
 
   const handleSubmit = async (e: FormEvent) => {
