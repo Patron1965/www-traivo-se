@@ -344,6 +344,16 @@ const AIInput = () => {
                   )}
                 </div>
               )}
+              {latestResponse && !isLoading && (
+                <div className="flex justify-end mt-4">
+                  <a
+                    href="/kontakt"
+                    className="text-sm font-semibold text-yellow-500 hover:text-yellow-400 transition-colors"
+                  >
+                    Boka demo →
+                  </a>
+                </div>
+              )}
             </div>
 
             {latestResponse && !isLoading && (
