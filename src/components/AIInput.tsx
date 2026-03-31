@@ -166,7 +166,12 @@ const AIInput = () => {
         transition={{ delay: 0.8 }}
         className="flex items-center justify-center gap-2 mt-4 text-muted-foreground/60 text-[11px]"
       >
-        <ShieldCheck className="w-3 h-3 animate-pulse-slow" />
+        <motion.div
+          animate={{ scale: [1, 1.25, 1], opacity: [0.5, 1, 0.5] }}
+          transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
+        >
+          <ShieldCheck className="w-3 h-3" />
+        </motion.div>
         <span>Helt anonymt · Ingen data sparas</span>
       </motion.div>
 
