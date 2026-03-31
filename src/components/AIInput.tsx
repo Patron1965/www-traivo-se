@@ -103,6 +103,31 @@ const AIInput = () => {
   const [error, setError] = useState("");
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
+  const highlightDemo = (children: React.ReactNode): React.ReactNode => {
+    return Array.isArray(children)
+      ? children.map((child, i) => {
+          if (typeof child === "string") {
+            const parts = child.split(/(demo)/gi);
+            if (parts.length === 1) return child;
+            return parts.map((part, j) =>
+              /^demo$/i.test(part) ? (
+                <a
+                  key={`${i}-${j}`}
+                  href="/kontakt"
+                  className="text-primary font-semibold underline underline-offset-2 hover:text-primary/80 transition-colors"
+                >
+                  {part}
+                </a>
+              ) : (
+                part
+              )
+            );
+          }
+          return child;
+        })
+      : children;
+  };
+
   const latestResponse = messages.filter((m) => m.role === "assistant").pop();
 
   const handleSubmit = async (e: FormEvent) => {
@@ -306,7 +331,14 @@ const AIInput = () => {
                 </div>
               ) : (
                 <div className="prose prose-invert prose-sm max-w-none prose-headings:text-foreground prose-headings:font-display prose-p:text-foreground/75 prose-strong:text-primary prose-li:text-foreground/75 prose-blockquote:text-muted-foreground prose-blockquote:border-primary/20">
-                  <ReactMarkdown>{latestResponse?.content || ""}</ReactMarkdown>
+                  <ReactMarkdown
+                    components={{
+                      p: ({ children }) => <p>{highlightDemo(children)}</p>,
+                      li: ({ children }) => <li>{highlightDemo(children)}</li>,
+                    }}
+                  >
+                    {latestResponse?.content || ""}
+                  </ReactMarkdown>
                   {isLoading && (
                     <span className="inline-block w-2 h-4 bg-primary/60 animate-pulse ml-0.5" />
                   )}
