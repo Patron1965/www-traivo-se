@@ -32,13 +32,12 @@ const Index = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.1 }}
-            className="font-display text-4xl sm:text-5xl md:text-6xl font-bold leading-[0.95] tracking-tight mb-5"
+            className="font-display text-4xl sm:text-5xl md:text-6xl font-bold leading-[1.05] tracking-tight mb-5"
           >
-            <span className="text-gradient-ice">Smartare fältservice.</span>
+            <span className="text-gradient-ice">Mindre Excel.</span>{" "}
+            <span className="text-gradient-ice">Mindre brandsläckning.</span>
             <br />
-            <span className="text-muted-foreground text-2xl sm:text-3xl md:text-4xl font-medium">
-              Beskriv era utmaningar — vi visar lösningen.
-            </span>
+            <span className="text-gradient-ice">Smartare fältservice.</span>
           </motion.h1>
 
           <motion.p
@@ -47,9 +46,9 @@ const Index = () => {
             transition={{ delay: 0.3 }}
             className="text-muted-foreground text-sm md:text-base leading-relaxed max-w-lg mx-auto mb-10"
           >
-            Traivo är byggt av ett team med djup erfarenhet av verkligheten i fält — 
-            inte av folk som bara sett den på avstånd. Nu med AI:s nya möjligheter 
-            kan vi äntligen lösa det som inte gick förut. Berätta om era utmaningar.
+            För företag som vill få bättre kontroll på planering, tekniker och akutjobb — 
+            utan att byta mellan flera olika system.{" "}
+            <span className="text-foreground/80 font-medium">Beskriv era utmaningar nedan — AI:n visar vad Traivo kan göra för just er.</span>
           </motion.p>
 
           <AIInput />
