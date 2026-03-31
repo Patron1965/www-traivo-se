@@ -79,10 +79,10 @@ const Index = () => {
               Låter det bekant?
             </span>
             <p className="font-display text-xl md:text-2xl font-medium leading-relaxed text-foreground/90 mb-6">
-              Om du fortfarande planerar med Excel, ringer runt för att omfördela jobb, och fakturerar dagar efter utfört arbete – då vet du att det finns bättre sätt. Du har bara inte hittat ett system som förstår din verklighet.
+              Du har redan system – kanske flera. Ett för planering, ett för fakturering, ett för kundkontakt. Problemet är att inget av dem täcker hela kedjan. Så du hoppar mellan plattformar, dubbelregistrerar och tappar tid varje dag.
             </p>
             <p className="text-sm md:text-base text-muted-foreground leading-relaxed">
-              Fältservice är en av de mest komplexa operativa verksamheterna som finns. Ändå drivs den ofta med verktyg som inte pratar med varandra – eller med ren magkänsla.
+              Fältservice är en av de mest komplexa operativa verksamheterna som finns. Ändå tvingas den ofta ihop av verktyg som inte pratar med varandra – och ingen av dem är byggd för din verklighet.
             </p>
           </motion.div>
         </div>
