@@ -1,86 +1,150 @@
-import { useState, FormEvent, useRef, useEffect } from "react";
+import { useState, FormEvent, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Send, Loader2, Brain, Lock, RotateCcw, X } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 
-const TRAIVO_KNOWLEDGE = `
-Traivo är en planeringsplattform för fältserviceföretag i Norden.
+const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/chat`;
 
-Kärnfunktioner:
-- Smart schemaläggning med väderanpassning
-- Live-karta med körhistorik
-- Ruttplanering som grupperar jobb geografiskt
-- Fortnox-koppling: kundsynk, artiklar, fakturering
-- Stöd för flera bolag med rollstyrning
-- Direktnotiser
-- Traivo Go: Mobilapp som fungerar utan internet
-- Objektstruktur: Område → Fastighet → Rum
-- Abonnemang med automatiska jobb
-- Varningar vid avvikelser
-- Automatisk fakturering via Fortnox
-- Kundportal med bokning, chatt och besökshistorik
-- Digital signatur, foton, materialåtgång
-- Tidrapportering med löneexport
-`;
-
-const getLocalResponse = (business: string): string => {
-  const b = business.toLowerCase();
-
-  if (b.includes("avfall") || b.includes("sopor") || b.includes("återvinning") || b.includes("renhållning")) {
-    return `## Avfallshantering\n\nDet här är ett område vi kan väldigt väl. Här är hur Traivo löser vanliga utmaningar:\n\n- **Smartare rutter** — Systemet grupperar tömningar i samma område så bilarna kör kortare. Typiskt 20-30% mindre körsträcka.\n- **Väderanpassning** — Vid regn, snö eller storm justeras planeringen automatiskt.\n- **Live-karta** — Se var varje bil befinner sig just nu. Hela körhistoriken sparas för uppföljning.\n- **Återkommande jobb** — Abonnemang schemaläggs automatiskt, inga manuella listor.\n- **Fakturering** — Fakturan skapas direkt i Fortnox när jobbet är klart.\n\nHar du fler specifika frågor om er situation? Beskriv gärna mer.`;
-  }
-
-  if (b.includes("vvs") || b.includes("rör") || b.includes("vatten")) {
-    return `## VVS & Rörservice\n\nVanliga utmaningar vi löser:\n\n- **Smart planering** — Systemet matchar rätt tekniker till rätt jobb baserat på kompetens och var de befinner sig.\n- **Mindre körning** — Rutterna planeras så teknikerna slipper köra kors och tvärs mellan jobb.\n- **Live-karta** — Se var alla tekniker är just nu. Skicka akutjobb till den som är närmast.\n- **Digitala protokoll** — Checklistor, foton och noteringar direkt från mobilen i fält.\n- **Automatisk fakturering** — Fakturan skapas i Fortnox direkt när jobbet är klart.\n\nBeskriv gärna er specifika situation så kan jag gå djupare.`;
-  }
-
-  if (b.includes("städ") || b.includes("rengöring") || b.includes("cleaning")) {
-    return `## Städ & Facility\n\nSå hanterar Traivo städbranschens utmaningar:\n\n- **Planering** — Hantera både fasta och tillfälliga uppdrag. Systemet lägger schemat åt dig.\n- **Objektstruktur** — Organisera efter Område → Fastighet → Rum, precis som ni redan tänker.\n- **Tidrapportering** — Personalen checkar in och ut automatiskt. Löneunderlaget är klart direkt.\n- **Kundportal** — Era kunder kan följa utfört arbete i realtid.\n- **Fakturering** — Fakturorna skickas till Fortnox automatiskt.\n\nVilka specifika utmaningar har ni idag?`;
-  }
-
-  if (b.includes("el") || b.includes("elektri")) {
-    return `## El & Installation\n\nVanliga utmaningar vi löser:\n\n- **Smart planering** — Rätt tekniker på rätt jobb, baserat på behörighet och var de befinner sig.\n- **Akutjobb** — Se direkt vem som är närmast och ledig. Skicka ut med ett klick.\n- **Mobilapp** — Protokoll, foton och materialåtgång fylls i direkt på plats.\n- **Varningar** — Systemet flaggar om något ser konstigt ut, t.ex. ovanligt lång tid på ett jobb.\n- **Fakturering** — Hela kedjan från utfört jobb till faktura i Fortnox.\n\nBerätta mer om er verksamhet så kan jag vara mer specifik.`;
-  }
-
-  if (b.includes("snö") || b.includes("plog") || b.includes("vinter")) {
-    return `## Snöröjning & Vinterväghållning\n\nEn bransch med extrema krav på snabb respons:\n\n- **Väderanpassning** — Systemet kollar vädret och föreslår bemanning automatiskt.\n- **Live-karta** — Se var alla fordon är just nu. Hela körhistoriken sparas som bevis.\n- **Snabbmobilisering** — Aktivera hela flottan med ett klick när det börjar snöa.\n- **Tidrapportering** — Arbetspass loggas automatiskt.\n- **Kundrapporter** — Visa kunder exakt vad som gjorts, med karta som bevis.\n\nVilka delar är mest relevanta för er?`;
-  }
-
-  if (b.includes("fastighet") || b.includes("drift") || b.includes("förvalt")) {
-    return `## Fastighetsskötsel & Drift\n\nTraivo hanterar komplexiteten i fastighetsdrift:\n\n- **Objektstruktur** — Organisera efter Område → Fastighet → Rum, precis som ni redan jobbar.\n- **Planering** — Schemalägg tillsyn, underhåll och rondering. Systemet optimerar åt er.\n- **Felanmälan** — Hyresgäster och kunder rapporterar direkt i portalen.\n- **Digitala checklistor** — Varje jobbtyp har sin checklista med foton.\n- **Sensorer** — Koppla på mätare som automatiskt skapar jobb vid behov.\n\nBerätta mer om er specifika situation.`;
-  }
-
-  return `## ${business}\n\nBaserat på det du beskriver kan Traivo hjälpa med:\n\n- **Smart planering** — Systemet schemalägger rätt person på rätt jobb baserat på kompetens och plats.\n- **Kortare körsträckor** — Jobben grupperas geografiskt så ni slipper köra i onödan.\n- **Live-karta** — Se var alla befinner sig just nu.\n- **Mobilapp** — Fungerar även utan internet. Protokoll, foton, signatur och materialåtgång.\n- **Automatisk fakturering** — Fakturan skapas i Fortnox direkt när jobbet är klart.\n- **Väderanpassning** — Planeringen justeras automatiskt efter vädret.\n\nTraivo är byggt för nordiska fältserviceföretag. Beskriv gärna mer om era specifika utmaningar.`;
-};
+type Msg = { role: "user" | "assistant"; content: string };
 
 const suggestedQuestions = [
   "Vi kör avfallshantering med 15 bilar i Stockholm",
-  "Hur fungerar ruttoptimeringen?",
+  "Vi rengör soptunnor och soprum men lönsamheten per tekniker är dålig",
   "Vi har problem med akutjobb och omplanering",
   "Kan appen fungera utan internet?",
   "Vi använder Fortnox idag",
 ];
 
+async function streamChat({
+  messages,
+  onDelta,
+  onDone,
+  onError,
+}: {
+  messages: Msg[];
+  onDelta: (text: string) => void;
+  onDone: () => void;
+  onError: (msg: string) => void;
+}) {
+  const resp = await fetch(CHAT_URL, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
+    },
+    body: JSON.stringify({ messages }),
+  });
+
+  if (!resp.ok) {
+    const err = await resp.json().catch(() => ({ error: "Något gick fel" }));
+    onError(err.error || "Något gick fel");
+    return;
+  }
+
+  if (!resp.body) {
+    onError("Ingen data mottagen");
+    return;
+  }
+
+  const reader = resp.body.getReader();
+  const decoder = new TextDecoder();
+  let buffer = "";
+
+  while (true) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    buffer += decoder.decode(value, { stream: true });
+
+    let newlineIndex: number;
+    while ((newlineIndex = buffer.indexOf("\n")) !== -1) {
+      let line = buffer.slice(0, newlineIndex);
+      buffer = buffer.slice(newlineIndex + 1);
+      if (line.endsWith("\r")) line = line.slice(0, -1);
+      if (line.startsWith(":") || line.trim() === "") continue;
+      if (!line.startsWith("data: ")) continue;
+      const jsonStr = line.slice(6).trim();
+      if (jsonStr === "[DONE]") break;
+      try {
+        const parsed = JSON.parse(jsonStr);
+        const content = parsed.choices?.[0]?.delta?.content as string | undefined;
+        if (content) onDelta(content);
+      } catch {
+        buffer = line + "\n" + buffer;
+        break;
+      }
+    }
+  }
+
+  // Flush remaining
+  if (buffer.trim()) {
+    for (let raw of buffer.split("\n")) {
+      if (!raw) continue;
+      if (raw.endsWith("\r")) raw = raw.slice(0, -1);
+      if (!raw.startsWith("data: ")) continue;
+      const jsonStr = raw.slice(6).trim();
+      if (jsonStr === "[DONE]") continue;
+      try {
+        const parsed = JSON.parse(jsonStr);
+        const content = parsed.choices?.[0]?.delta?.content as string | undefined;
+        if (content) onDelta(content);
+      } catch { /* ignore */ }
+    }
+  }
+
+  onDone();
+}
+
 const AIInput = () => {
   const [input, setInput] = useState("");
-  const [response, setResponse] = useState("");
+  const [messages, setMessages] = useState<Msg[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [hasAsked, setHasAsked] = useState(false);
   const [showPrivacy, setShowPrivacy] = useState(false);
+  const [error, setError] = useState("");
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  const latestResponse = messages.filter((m) => m.role === "assistant").pop();
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     if (!input.trim() || isLoading) return;
 
+    const userMsg: Msg = { role: "user", content: input.trim() };
+    const allMessages = [...messages, userMsg];
+
+    setMessages(allMessages);
     setIsLoading(true);
     setHasAsked(true);
+    setError("");
+    setInput("");
 
-    await new Promise((r) => setTimeout(r, 1200));
+    let assistantSoFar = "";
 
-    const result = getLocalResponse(input.trim());
-    setResponse(result);
-    setIsLoading(false);
+    try {
+      await streamChat({
+        messages: allMessages,
+        onDelta: (chunk) => {
+          assistantSoFar += chunk;
+          setMessages((prev) => {
+            const last = prev[prev.length - 1];
+            if (last?.role === "assistant") {
+              return prev.map((m, i) =>
+                i === prev.length - 1 ? { ...m, content: assistantSoFar } : m
+              );
+            }
+            return [...prev, { role: "assistant", content: assistantSoFar }];
+          });
+        },
+        onDone: () => setIsLoading(false),
+        onError: (msg) => {
+          setError(msg);
+          setIsLoading(false);
+        },
+      });
+    } catch {
+      setError("Kunde inte ansluta. Försök igen.");
+      setIsLoading(false);
+    }
   };
 
   const handleSuggestion = (q: string) => {
@@ -90,8 +154,9 @@ const AIInput = () => {
 
   const handleReset = () => {
     setInput("");
-    setResponse("");
+    setMessages([]);
     setHasAsked(false);
+    setError("");
     textareaRef.current?.focus();
   };
 
@@ -134,7 +199,7 @@ const AIInput = () => {
         </div>
       </motion.form>
 
-      {/* Suggested questions — only before first ask */}
+      {/* Suggested questions */}
       <AnimatePresence>
         {!hasAsked && (
           <motion.div
@@ -197,9 +262,14 @@ const AIInput = () => {
             <div className="flex items-start gap-3">
               <Lock className="w-5 h-5 text-yellow-500 mt-0.5 shrink-0" />
               <div>
-                <h4 className="text-sm font-semibold text-foreground mb-2">Full integritet – på dina villkor</h4>
+                <h4 className="text-sm font-semibold text-foreground mb-2">
+                  Full integritet – på dina villkor
+                </h4>
                 <p className="text-xs text-muted-foreground leading-relaxed">
-                  Hos oss är du helt anonym. Vi sparar aldrig personuppgifter eller det du skriver i verktyget, och vi kommer aldrig att störa dig med säljsamtal eller spam. Vi använder endast anonymiserad data för att optimera hemsidan och nå rätt målgrupp. Vill du gå vidare? Då är det du som kontaktar oss när du är redo.
+                  Hos oss är du helt anonym. Vi sparar aldrig personuppgifter eller det du skriver i
+                  verktyget, och vi kommer aldrig att störa dig med säljsamtal eller spam. Vi
+                  använder endast anonymiserad data för att optimera hemsidan och nå rätt målgrupp.
+                  Vill du gå vidare? Då är det du som kontaktar oss när du är redo.
                 </p>
               </div>
             </div>
@@ -207,8 +277,20 @@ const AIInput = () => {
         )}
       </AnimatePresence>
 
+      {/* Error */}
+      {error && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="mt-4 p-4 rounded-2xl glass text-sm text-destructive"
+        >
+          {error}
+        </motion.div>
+      )}
+
+      {/* Response */}
       <AnimatePresence>
-        {(isLoading || response) && hasAsked && (
+        {(isLoading || latestResponse) && hasAsked && (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -217,19 +299,22 @@ const AIInput = () => {
             className="mt-8"
           >
             <div className="rounded-2xl glass p-6 md:p-8">
-              {isLoading ? (
+              {isLoading && !latestResponse ? (
                 <div className="flex items-center gap-3 text-muted-foreground">
                   <Brain className="w-5 h-5 animate-pulse text-primary" />
                   <span className="text-sm">Analyserar er verksamhet...</span>
                 </div>
               ) : (
                 <div className="prose prose-invert prose-sm max-w-none prose-headings:text-foreground prose-headings:font-display prose-p:text-foreground/75 prose-strong:text-primary prose-li:text-foreground/75 prose-blockquote:text-muted-foreground prose-blockquote:border-primary/20">
-                  <ReactMarkdown>{response}</ReactMarkdown>
+                  <ReactMarkdown>{latestResponse?.content || ""}</ReactMarkdown>
+                  {isLoading && (
+                    <span className="inline-block w-2 h-4 bg-primary/60 animate-pulse ml-0.5" />
+                  )}
                 </div>
               )}
             </div>
 
-            {response && !isLoading && (
+            {latestResponse && !isLoading && (
               <motion.button
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
