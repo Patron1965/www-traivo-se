@@ -2,8 +2,11 @@ import { useState, FormEvent } from "react";
 import { motion } from "framer-motion";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { CheckCircle2, Mail, MapPin } from "lucide-react";
+import { CheckCircle2, Mail, MapPin, Users } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import {
+  Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger
+} from "@/components/ui/dialog";
 
 const Contact = () => {
   const [submitted, setSubmitted] = useState(false);
