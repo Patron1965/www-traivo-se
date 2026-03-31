@@ -1,6 +1,6 @@
 import { useState, FormEvent, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Send, Loader2, Brain, Lock, RotateCcw, X } from "lucide-react";
+import { Send, Loader2, Brain, RotateCcw } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 
 const TRAIVO_KNOWLEDGE = `
