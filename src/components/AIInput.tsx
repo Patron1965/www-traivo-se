@@ -307,7 +307,14 @@ const AIInput = () => {
                 </div>
               ) : (
                 <div className="prose prose-invert prose-sm max-w-none prose-headings:text-foreground prose-headings:font-display prose-p:text-foreground/75 prose-strong:text-primary prose-li:text-foreground/75 prose-blockquote:text-muted-foreground prose-blockquote:border-primary/20">
-                  <ReactMarkdown>{latestResponse?.content || ""}</ReactMarkdown>
+                  <ReactMarkdown
+                    components={{
+                      p: ({ children }) => <p>{highlightDemo(children)}</p>,
+                      li: ({ children }) => <li>{highlightDemo(children)}</li>,
+                    }}
+                  >
+                    {latestResponse?.content || ""}
+                  </ReactMarkdown>
                   {isLoading && (
                     <span className="inline-block w-2 h-4 bg-primary/60 animate-pulse ml-0.5" />
                   )}
