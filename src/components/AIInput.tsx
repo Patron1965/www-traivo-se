@@ -174,7 +174,7 @@ const AIInput = () => {
           className="p-2 rounded-full hover:bg-muted/20 transition-colors cursor-pointer"
           aria-label="Integritetsinformation"
         >
-          <Lock className="w-4 h-4 text-yellow-500" />
+          <Lock className="w-6 h-6 text-yellow-500" />
         </motion.button>
       </motion.div>
 
