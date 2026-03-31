@@ -1,10 +1,14 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import AIInput from "@/components/AIInput";
 import {
   Calendar, Smartphone, Route, MapPin, Brain, WifiOff,
-  ArrowRight, Users, FileText, CreditCard
+  ArrowRight, Users, FileText, CreditCard, X
 } from "lucide-react";
+import {
+  Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger
+} from "@/components/ui/dialog";
 
 const features = [
   { icon: Calendar, title: "Schemaläggning", desc: "Automatisk planering som tar hänsyn till kompetens, geografi och kapacitet." },
@@ -110,6 +114,42 @@ const Index = () => {
                 Vi startade Traivo för att vi själva var frustrerade. Vi visste att AI kunde lösa planering, optimering och analys på ett sätt som inte var möjligt för fem år sedan. Men vi visste också att tekniken är värdelös om den inte förstår verkligheten: att en tekniker inte kan vara på två ställen samtidigt, att akutjobb inte väntar, och att en app som kräver 4G i ett garage är meningslös.
               </p>
             </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ─── TARGET AUDIENCE POPUP ─── */}
+      <section className="py-16 md:py-20 px-6 border-t border-border">
+        <div className="max-w-2xl mx-auto text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            <Dialog>
+              <DialogTrigger asChild>
+                <button className="inline-flex items-center gap-2.5 px-7 py-3.5 rounded-full border border-primary/20 text-sm font-medium text-foreground/90 hover:border-primary/40 hover:bg-primary/[0.04] transition-all duration-300">
+                  <Users className="w-4 h-4 text-primary/60" />
+                  Vem är Traivo till för?
+                </button>
+              </DialogTrigger>
+              <DialogContent className="sm:max-w-lg">
+                <DialogHeader>
+                  <DialogTitle className="font-display text-xl font-bold">
+                    Vem är Traivo till för?
+                  </DialogTitle>
+                </DialogHeader>
+                <div className="text-sm text-muted-foreground leading-relaxed space-y-4 pt-2">
+                  <p>
+                    Traivo är till för dig som driver serviceverksamhet där tekniker åker ut till kund –
+                    VVS, el, kyla, hissar, fastighet, IT, säkerhet, vitvaror, maskinservice eller sophantering.
+                  </p>
+                  <p>
+                    Om dina tekniker kör rutter och du schemalägger uppdrag varje dag, är Traivo byggt för dig.
+                  </p>
+                </div>
+              </DialogContent>
+            </Dialog>
           </motion.div>
         </div>
       </section>
