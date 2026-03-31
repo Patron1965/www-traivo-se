@@ -1,6 +1,6 @@
 import { useState, FormEvent, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Send, Loader2, Brain, RotateCcw } from "lucide-react";
+import { Send, Loader2, Brain, Lock, RotateCcw, X } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 
 const TRAIVO_KNOWLEDGE = `
@@ -66,7 +66,7 @@ const AIInput = () => {
   const [response, setResponse] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [hasAsked, setHasAsked] = useState(false);
-  
+  const [showPrivacy, setShowPrivacy] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const handleSubmit = async (e: FormEvent) => {
@@ -160,8 +160,53 @@ const AIInput = () => {
         )}
       </AnimatePresence>
 
+      {/* Privacy icon */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.8 }}
+        className="flex items-center justify-center mt-4"
+      >
+        <motion.button
+          animate={{ scale: [1, 1.2, 1], opacity: [0.5, 1, 0.5] }}
+          transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
+          onClick={() => setShowPrivacy((v) => !v)}
+          className="p-2 rounded-full hover:bg-muted/20 transition-colors cursor-pointer"
+          aria-label="Integritetsinformation"
+        >
+          <Lock className="w-4 h-4 text-yellow-500" />
+        </motion.button>
+      </motion.div>
 
-      {/* Response */}
+      {/* Privacy popover */}
+      <AnimatePresence>
+        {showPrivacy && (
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 10 }}
+            transition={{ duration: 0.3 }}
+            className="mt-3 rounded-2xl glass p-5 relative"
+          >
+            <button
+              onClick={() => setShowPrivacy(false)}
+              className="absolute top-3 right-3 text-muted-foreground hover:text-foreground transition-colors"
+            >
+              <X className="w-4 h-4" />
+            </button>
+            <div className="flex items-start gap-3">
+              <Lock className="w-5 h-5 text-yellow-500 mt-0.5 shrink-0" />
+              <div>
+                <h4 className="text-sm font-semibold text-foreground mb-2">Full integritet – på dina villkor</h4>
+                <p className="text-xs text-muted-foreground leading-relaxed">
+                  Hos oss är du helt anonym. Vi sparar aldrig personuppgifter eller det du skriver i verktyget, och vi kommer aldrig att störa dig med säljsamtal eller spam. Vi använder endast anonymiserad data för att optimera hemsidan och nå rätt målgrupp. Vill du gå vidare? Då är det du som kontaktar oss när du är redo.
+                </p>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       <AnimatePresence>
         {(isLoading || response) && hasAsked && (
           <motion.div

@@ -54,25 +54,6 @@ const Index = () => {
 
           <AIInput />
 
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.7 }}
-            className="mt-10 max-w-md mx-auto glass rounded-xl border border-border p-5"
-          >
-            <div className="flex items-start gap-3">
-              <div className="mt-0.5 w-7 h-7 rounded-lg bg-accent/10 border border-accent/20 flex items-center justify-center shrink-0">
-                <span className="text-accent text-sm">🔒</span>
-              </div>
-              <div>
-                <h4 className="text-xs font-semibold text-foreground mb-1">Helt anonymt — inga säljsamtal</h4>
-                <p className="text-[11px] text-muted-foreground leading-relaxed">
-                  Ingenting du skriver här loggas eller sparas. Vi ringer aldrig upp dig och skickar ingen spam. 
-                  Vill du gå vidare kontaktar du oss — på dina villkor, när du själv är redo.
-                </p>
-              </div>
-            </div>
-          </motion.div>
         </div>
       </section>
 
