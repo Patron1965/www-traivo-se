@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 
 const links = [
-  { to: "/", label: "Utforska" },
+  { to: "/#ai-chat", label: "Utforska", isAnchor: true },
   { to: "/traivo-one", label: "Traivo One" },
   { to: "/traivo-go", label: "Traivo Go" },
   
