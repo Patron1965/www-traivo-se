@@ -9,9 +9,8 @@ import {
 const Index = () => {
   return (
     <>
-      {/* ─── HERO: "Vi har varit där" ─── */}
+      {/* ─── HERO: "Rak kommunikation" ─── */}
       <section className="relative min-h-[85vh] flex flex-col items-center justify-center overflow-hidden bg-noise px-6 py-20">
-        {/* Ambient */}
         <div className="absolute top-0 right-0 w-[500px] h-[500px] rounded-full bg-primary/[0.03] blur-[150px]" />
         <div className="absolute bottom-0 left-0 w-[300px] h-[300px] rounded-full bg-accent/[0.03] blur-[100px]" />
         <div className="absolute inset-0 bg-grid-pattern opacity-30" />
@@ -32,11 +31,9 @@ const Index = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.1 }}
-            className="font-display text-3xl sm:text-4xl md:text-5xl font-bold leading-[1.1] tracking-tight mb-5"
+            className="font-display text-4xl sm:text-5xl md:text-6xl font-bold leading-[1.05] tracking-tight mb-5"
           >
-            <span className="text-gradient-ice">Vi har kört rutterna.</span>
-            <br />
-            <span className="text-gradient-ice">Nu har vi byggt systemet.</span>
+            <span className="text-gradient-ice">Fältservice utan kaos.</span>
           </motion.h1>
 
           <motion.p
@@ -45,7 +42,7 @@ const Index = () => {
             transition={{ delay: 0.3 }}
             className="text-muted-foreground text-sm md:text-base leading-relaxed max-w-xl mx-auto mb-12"
           >
-            Traivo är AI-driven fältplanering – byggt av folk som faktiskt vet hur det ser ut i bilen, på kontoret och hos kunden.
+            AI-driven planering som faktiskt fungerar – byggd av branschfolk, för branschfolk.
           </motion.p>
 
           {/* Story body */}
@@ -56,16 +53,28 @@ const Index = () => {
             className="glass rounded-2xl p-8 md:p-10 text-left max-w-2xl mx-auto mb-10"
           >
             <p className="text-sm md:text-base text-foreground/85 leading-[1.8] mb-5">
-              De flesta planeringssystem är byggda av folk som aldrig suttit i en servicebil en hel dag.
+              Om du fortfarande planerar med Excel, ringer runt för att omfördela jobb, och fakturerar dagar efter utfört arbete – då vet du att det finns bättre sätt. Du har bara inte hittat ett system som förstår din verklighet.
             </p>
-            <p className="text-sm md:text-base text-foreground/85 leading-[1.8] mb-5">
-              Vi har. Vi har planerat rutter för hand i Excel. Ringt tekniker mitt i lunchen för att flytta om jobb. Försökt fakturera från handskrivna protokoll. Vi vet exakt var det brister – för vi har levt med bristerna.
+            <p className="text-sm md:text-base text-foreground/85 leading-[1.8] mb-6">
+              Traivo är byggt av ett team som jobbat operativt i fältservice i över 15 år. Vi har kombinerat den erfarenheten med djup AI-kompetens och skapat en plattform som löser hela kedjan:
             </p>
-            <p className="text-sm md:text-base text-foreground/85 leading-[1.8] mb-5">
-              Traivo är resultatet av den erfarenheten, kombinerad med det AI faktiskt kan göra idag. Inte buzzwords. Inte en demo som ser bra ut men faller ihop i verkligheten. Utan ett system som hanterar det som händer på riktigt: akutjobb som dyker upp, tekniker som blir sjuka, kunder som ändrar sig, och vägar som inte ser ut som på kartan.
-            </p>
+            <div className="space-y-2.5 mb-6">
+              {[
+                "Automatisk schemaläggning som tar hänsyn till kompetens, geografi och kapacitet",
+                "Ruttoptimering baserad på riktiga vägar – inte fågelvägen",
+                "Mobilapp som fungerar offline, med protokoll och foto",
+                "Realtidskarta med GPS och akuttilldelning",
+                "AI-analys som hittar avvikelser innan de blir problem",
+                "Fakturering och kundportal – i samma system",
+              ].map((item) => (
+                <div key={item} className="flex items-start gap-3">
+                  <ArrowRight className="w-3.5 h-3.5 text-primary mt-1 shrink-0" />
+                  <p className="text-sm md:text-base text-foreground/80 leading-relaxed">{item}</p>
+                </div>
+              ))}
+            </div>
             <p className="text-sm md:text-base text-foreground/80 leading-[1.8] font-medium">
-              En plattform. Planering, ruttoptimering, jobbhantering, protokoll, fakturering och analys – ihopkopplat så att ingenting faller mellan stolarna.
+              Inget mer klipp-och-klistra mellan fem olika verktyg.
             </p>
           </motion.div>
 
@@ -76,7 +85,7 @@ const Index = () => {
             transition={{ delay: 0.7 }}
             className="text-sm text-foreground/70 font-medium mb-4"
           >
-            Berätta om era utmaningar – vi visar hur det kan se ut
+            Nyfiken? Hör av dig – vi säljer inte, vi lyssnar.
           </motion.p>
 
           <AIInput />
