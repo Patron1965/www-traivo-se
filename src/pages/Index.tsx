@@ -1,10 +1,14 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import AIInput from "@/components/AIInput";
 import {
   Calendar, Smartphone, Route, MapPin, Brain, WifiOff,
-  ArrowRight, Users, FileText, CreditCard
+  ArrowRight, Users, FileText, CreditCard, X
 } from "lucide-react";
+import {
+  Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger
+} from "@/components/ui/dialog";
 
 const features = [
   { icon: Calendar, title: "Schemaläggning", desc: "Automatisk planering som tar hänsyn till kompetens, geografi och kapacitet." },
