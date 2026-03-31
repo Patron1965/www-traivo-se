@@ -57,19 +57,9 @@ const Index = () => {
             Vi har levt samma vardag. Så vi byggde systemet som faktiskt löser den.
           </motion.p>
 
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5 }}
-          >
-            <Link
-              to="/kontakt"
-              className="inline-flex items-center gap-2.5 px-7 py-3.5 rounded-full bg-primary text-primary-foreground text-sm font-medium hover:opacity-90 transition-opacity"
-            >
-              Berätta om er vardag – vi visar vad som går att förändra
-              <ArrowRight className="w-4 h-4" />
-            </Link>
-          </motion.div>
+          <div id="ai-chat" className="w-full max-w-2xl mx-auto">
+            <AIInput />
+          </div>
         </div>
       </section>
 
