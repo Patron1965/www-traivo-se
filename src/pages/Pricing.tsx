@@ -45,6 +45,7 @@ const proPlan = {
 
 const Pricing = () => {
   const [users, setUsers] = useState(10);
+  const [onboardingDays, setOnboardingDays] = useState(2);
 
   const formatPrice = (price: number) =>
     new Intl.NumberFormat("sv-SE").format(price);
@@ -94,6 +95,26 @@ const Pricing = () => {
             <span>1</span>
             <span>100</span>
           </div>
+        </motion.div>
+
+        <motion.div {...fadeIn} className="max-w-md mx-auto text-center mb-12 mt-10">
+          <p className="text-sm text-muted-foreground mb-2">Onboarding (dagar)</p>
+          <p className="text-4xl font-bold text-foreground mb-6">{onboardingDays}</p>
+          <Slider
+            value={[onboardingDays]}
+            onValueChange={(v) => setOnboardingDays(v[0])}
+            min={1}
+            max={10}
+            step={1}
+            className="w-full"
+          />
+          <div className="flex justify-between text-xs text-muted-foreground mt-2">
+            <span>1</span>
+            <span>10</span>
+          </div>
+          <p className="text-sm text-muted-foreground mt-4">
+            {formatPrice(onboardingDays * 8900)} kr <span className="text-xs">(8 900 kr/dag)</span>
+          </p>
         </motion.div>
       </section>
 
