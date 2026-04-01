@@ -28,7 +28,7 @@ const standardPlan = {
 
 const proPlan = {
   name: "Pro",
-  base: 5000,
+  base: 7500,
   perUser: 149,
   desc: "Avancerade funktioner för växande organisationer.",
   features: [
