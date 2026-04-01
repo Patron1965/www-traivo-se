@@ -11,8 +11,8 @@ const fadeIn = {
 
 const plans = [
   {
-    name: "Basic",
-    tag: "Kom igång",
+    name: "Nivå 1",
+    tag: "",
     desc: "För mindre team som vill digitalisera.",
     features: [
       { name: "Traivo One (basplanering)", ok: true },
@@ -27,8 +27,8 @@ const plans = [
     highlight: false,
   },
   {
-    name: "Standard",
-    tag: "Populärast",
+    name: "Nivå 2",
+    tag: "",
     desc: "AI-optimering och integrationer.",
     features: [
       { name: "Allt i Basic", ok: true },
@@ -40,11 +40,11 @@ const plans = [
       { name: "Upp till 50 tekniker", ok: true },
       { name: "Prioriterad support", ok: true },
     ],
-    highlight: true,
+    highlight: false,
   },
   {
-    name: "Premium",
-    tag: "Enterprise",
+    name: "Nivå 3",
+    tag: "",
     desc: "Stora organisationer, avancerade behov.",
     features: [
       { name: "Allt i Standard", ok: true },
