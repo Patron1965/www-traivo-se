@@ -11,8 +11,8 @@ const fadeIn = {
 
 const plans = [
   {
-    name: "Basic",
-    tag: "Kom igång",
+    name: "Nivå 1",
+    tag: "",
     desc: "För mindre team som vill digitalisera.",
     features: [
       { name: "Traivo One (basplanering)", ok: true },
