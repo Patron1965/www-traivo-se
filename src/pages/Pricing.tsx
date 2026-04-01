@@ -40,7 +40,7 @@ const plans = [
       { name: "Upp till 50 tekniker", ok: true },
       { name: "Prioriterad support", ok: true },
     ],
-    highlight: true,
+    highlight: false,
   },
   {
     name: "Premium",
