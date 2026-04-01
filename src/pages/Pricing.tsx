@@ -27,8 +27,8 @@ const plans = [
     highlight: false,
   },
   {
-    name: "Standard",
-    tag: "Populärast",
+    name: "Nivå 2",
+    tag: "",
     desc: "AI-optimering och integrationer.",
     features: [
       { name: "Allt i Basic", ok: true },
