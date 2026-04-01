@@ -43,8 +43,8 @@ const plans = [
     highlight: false,
   },
   {
-    name: "Premium",
-    tag: "Enterprise",
+    name: "Nivå 3",
+    tag: "",
     desc: "Stora organisationer, avancerade behov.",
     features: [
       { name: "Allt i Standard", ok: true },
