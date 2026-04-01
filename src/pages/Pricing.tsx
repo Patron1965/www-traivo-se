@@ -33,6 +33,8 @@ const proPlan = {
   base: 7500,
   perUser: 149,
   desc: "Avancerade funktioner för växande organisationer.",
+  savingsPercent: 30,
+  savingsLabel: "Uppskattad kostnadsreduktion genom AI-driven optimering, prediktivt underhåll och automation.",
   features: [
     "Allt i Standard",
     "Fortnox-integration",
