@@ -1,6 +1,7 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
 import { CheckCircle2, Minus } from "lucide-react";
+import { Slider } from "@/components/ui/slider";
 
 const fadeIn = {
   initial: { opacity: 0, y: 24 },
@@ -9,58 +10,45 @@ const fadeIn = {
   transition: { duration: 0.6 },
 };
 
-const plans = [
-  {
-    name: "Nivå 1",
-    tag: "",
-    desc: "För mindre team som vill digitalisera.",
-    features: [
-      { name: "Traivo One (basplanering)", ok: true },
-      { name: "Traivo Go (mobilapp)", ok: true },
-      { name: "Upp till 10 tekniker", ok: true },
-      { name: "GPS-spårning", ok: true },
-      { name: "Digitala protokoll", ok: true },
-      { name: "E-post-support", ok: true },
-      { name: "AI-schemaläggning", ok: false },
-      { name: "Ruttoptimering", ok: false },
-    ],
-    highlight: false,
-  },
-  {
-    name: "Nivå 2",
-    tag: "",
-    desc: "AI-optimering och integrationer.",
-    features: [
-      { name: "Allt i Basic", ok: true },
-      { name: "AI-schemaläggning", ok: true },
-      { name: "Ruttoptimering", ok: true },
-      { name: "Fortnox-integration", ok: true },
-      { name: "Kundportal", ok: true },
-      { name: "Väderplanering", ok: true },
-      { name: "Upp till 50 tekniker", ok: true },
-      { name: "Prioriterad support", ok: true },
-    ],
-    highlight: false,
-  },
-  {
-    name: "Nivå 3",
-    tag: "",
-    desc: "Stora organisationer, avancerade behov.",
-    features: [
-      { name: "Allt i Standard", ok: true },
-      { name: "Obegränsat tekniker", ok: true },
-      { name: "Multi-tenant", ok: true },
-      { name: "White-label", ok: true },
-      { name: "IoT-integration", ok: true },
-      { name: "Prediktivt underhåll", ok: true },
-      { name: "AI-assistent", ok: true },
-      { name: "Dedikerad kundansvarig", ok: true },
-    ],
-    highlight: false,
-  },
-];
+const standardPlan = {
+  name: "Standard",
+  base: 990,
+  perUser: 99,
+  desc: "AI-optimering, digitala protokoll och integrationer.",
+  features: [
+    "Traivo One (planering)",
+    "Traivo Go (mobilapp)",
+    "GPS-spårning",
+    "Digitala protokoll",
+    "AI-schemaläggning",
+    "Ruttoptimering",
+    "E-post-support",
+  ],
+};
+
+const proPlan = {
+  name: "Pro",
+  base: 2490,
+  perUser: 149,
+  desc: "Avancerade funktioner för växande organisationer.",
+  features: [
+    "Allt i Standard",
+    "Fortnox-integration",
+    "Kundportal",
+    "Väderplanering",
+    "Prediktivt underhåll",
+    "AI-assistent",
+    "Prioriterad support",
+    "Dedikerad kundansvarig",
+  ],
+};
 
 const Pricing = () => {
+  const [users, setUsers] = useState(10);
+
+  const formatPrice = (price: number) =>
+    new Intl.NumberFormat("sv-SE").format(price);
+
   return (
     <>
       {/* Hero */}
@@ -76,7 +64,7 @@ const Pricing = () => {
             transition={{ duration: 0.7 }}
             className="font-display text-4xl md:text-6xl font-bold leading-[0.95] tracking-tight mb-5"
           >
-            <span className="text-gradient-ice">Modulbaserade paket</span>
+            <span className="text-gradient-ice">Transparent prissättning</span>
           </motion.h1>
           <motion.p
             initial={{ opacity: 0 }}
@@ -84,19 +72,73 @@ const Pricing = () => {
             transition={{ delay: 0.2 }}
             className="text-muted-foreground max-w-md mx-auto"
           >
-            Välj det som passar er storlek och behov. Alla planer inkluderar Traivo One och Go.
+            Grundpris + kostnad per användare. Dra i reglaget för att se er månadskostnad.
           </motion.p>
         </div>
       </section>
 
+      {/* Slider */}
+      <section className="px-6 -mt-4">
+        <motion.div {...fadeIn} className="max-w-md mx-auto text-center mb-12">
+          <p className="text-sm text-muted-foreground mb-2">Antal användare</p>
+          <p className="text-4xl font-bold text-foreground mb-6">{users}</p>
+          <Slider
+            value={[users]}
+            onValueChange={(v) => setUsers(v[0])}
+            min={1}
+            max={100}
+            step={1}
+            className="w-full"
+          />
+          <div className="flex justify-between text-xs text-muted-foreground mt-2">
+            <span>1</span>
+            <span>100</span>
+          </div>
+        </motion.div>
+      </section>
+
       {/* Cards */}
-      <section className="px-6 pb-28 -mt-4 border-solid">
-        <div className="max-w-5xl mx-auto grid md:grid-cols-3 gap-4">
-...
+      <section className="px-6 pb-28">
+        <div className="max-w-3xl mx-auto grid md:grid-cols-2 gap-6">
+          {[standardPlan, proPlan].map((plan) => {
+            const total = plan.base + plan.perUser * users;
+            return (
+              <motion.div
+                key={plan.name}
+                {...fadeIn}
+                className="rounded-2xl border border-border bg-card p-8 flex flex-col"
+              >
+                <h3 className="text-lg font-semibold text-foreground">{plan.name}</h3>
+                <p className="text-sm text-muted-foreground mt-1 mb-6">{plan.desc}</p>
+
+                <div className="mb-6">
+                  <span className="text-3xl font-bold text-foreground">
+                    {formatPrice(total)} kr
+                  </span>
+                  <span className="text-sm text-muted-foreground"> /månad</span>
+                </div>
+
+                <p className="text-xs text-muted-foreground mb-1">
+                  Grund: {formatPrice(plan.base)} kr + {plan.perUser} kr × {users} användare
+                </p>
+
+                <hr className="border-border my-5" />
+
+                <ul className="space-y-3 flex-1">
+                  {plan.features.map((f) => (
+                    <li key={f} className="flex items-start gap-2 text-sm text-foreground">
+                      <CheckCircle2 className="w-4 h-4 text-primary mt-0.5 shrink-0" />
+                      {f}
+                    </li>
+                  ))}
+                </ul>
+              </motion.div>
+            );
+          })}
         </div>
 
-        <motion.p {...fadeIn} className="text-center mt-14 max-w-sm mx-auto text-sm text-primary border-solid">
-          Priser anpassas efter antal användare och moduler. Vi sätter ihop en offert som passar er.
+        <motion.p {...fadeIn} className="text-center mt-14 max-w-sm mx-auto text-sm text-primary">
+          Priserna är exklusive moms. Kontakta oss för skräddarsydd offert.
         </motion.p>
       </section>
     </>
