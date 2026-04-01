@@ -15,6 +15,8 @@ const standardPlan = {
   base: 3500,
   perUser: 99,
   desc: "AI-optimering, digitala protokoll och integrationer.",
+  savingsPercent: 15,
+  savingsLabel: "Uppskattad kostnadsreduktion genom effektivare planering och digitala flöden.",
   features: [
     "Traivo One (planering)",
     "Traivo Go (mobilapp)",
