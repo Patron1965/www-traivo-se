@@ -157,6 +157,13 @@ const Pricing = () => {
                     </li>
                   ))}
                 </ul>
+
+                <hr className="border-border my-5" />
+
+                <div className="rounded-xl bg-primary/10 p-4 text-center">
+                  <p className="text-2xl font-bold text-primary">{plan.savingsPercent}%</p>
+                  <p className="text-xs text-muted-foreground mt-1">{plan.savingsLabel}</p>
+                </div>
               </motion.div>
             );
           })}
