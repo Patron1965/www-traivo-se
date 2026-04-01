@@ -45,6 +45,7 @@ const proPlan = {
 
 const Pricing = () => {
   const [users, setUsers] = useState(10);
+  const [onboardingDays, setOnboardingDays] = useState(2);
 
   const formatPrice = (price: number) =>
     new Intl.NumberFormat("sv-SE").format(price);
