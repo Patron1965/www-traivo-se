@@ -12,7 +12,7 @@ const fadeIn = {
 
 const standardPlan = {
   name: "Standard",
-  base: 2500,
+  base: 3500,
   perUser: 99,
   desc: "AI-optimering, digitala protokoll och integrationer.",
   features: [
@@ -28,7 +28,7 @@ const standardPlan = {
 
 const proPlan = {
   name: "Pro",
-  base: 5000,
+  base: 7500,
   perUser: 149,
   desc: "Avancerade funktioner för växande organisationer.",
   features: [
