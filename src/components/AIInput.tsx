@@ -196,17 +196,6 @@ const AIInput = () => {
         className="relative"
       >
         <div className="relative rounded-2xl glass glow-teal overflow-hidden transition-all focus-within:border-primary/40">
-          {/* Pulserande glow i vänster nedre hörn, inuti fältet */}
-          <motion.div
-            aria-hidden
-            animate={{ opacity: [0.4, 0.85, 0.4], scale: [0.9, 1.1, 0.9] }}
-            transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-            className="pointer-events-none absolute -bottom-10 -left-10 w-48 h-48 rounded-full blur-2xl"
-            style={{
-              background:
-                "radial-gradient(circle at center, hsl(var(--primary) / 0.6), hsl(var(--primary) / 0.2) 40%, transparent 70%)",
-            }}
-          />
           <textarea
             ref={textareaRef}
             value={input}
