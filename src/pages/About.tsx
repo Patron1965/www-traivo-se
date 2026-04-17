@@ -10,10 +10,10 @@ const fadeIn = {
 };
 
 const values = [
-  { icon: Users, title: "Erfarenhet från fältet", desc: "Vi har arbetat i fältservicebranschen. Vi förstår verkligheten." },
-  { icon: Brain, title: "AI som förstärker", desc: "Vi ersätter inte människor. Vi förstärker dem med data och mönster." },
-  { icon: Wrench, title: "Byggt med kunderna", desc: "Utvecklat i samarbete med riktiga fältserviceföretag." },
-  { icon: Globe, title: "Nordisk design", desc: "Byggt för skandinaviska villkor, regelverk och arbetskultur." },
+  { icon: Users, title: "Erfarenhet från fältet", desc: "Vi har planerat rutter, kört bilen och fakturerat på kvällen. Vi vet var det skaver." },
+  { icon: Brain, title: "AI som förstärker", desc: "AI tar det repetitiva. Människan tar besluten. Inte tvärtom." },
+  { icon: Wrench, title: "Byggt med kunderna", desc: "Utvecklat sida vid sida med riktiga fältserviceföretag, inte i en pitchdeck." },
+  { icon: Globe, title: "Nordiska villkor", desc: "Långa avstånd, hård vinter, lokala regelverk – grundförutsättningar, inte tilläggsfunktioner." },
 ];
 
 const About = () => {
@@ -44,8 +44,7 @@ const About = () => {
             transition={{ delay: 0.2 }}
             className="text-muted-foreground max-w-xl leading-relaxed"
           >
-            Traivo kombinerar branscherfarenhet med modern AI — för en plattform 
-            som fungerar i fält, på kontoret och däremellan.
+            Vi byggde Traivo för att vi själva var trötta på att hoppa mellan system. Idag är det en plattform för dem som driver fältservice på riktigt – i bilen, på kontoret och däremellan.
           </motion.p>
         </div>
       </section>
@@ -56,9 +55,8 @@ const About = () => {
           <motion.div {...fadeIn} className="max-w-2xl mb-20">
             <span className="text-[11px] font-medium uppercase tracking-[0.25em] text-primary mb-4 block">Vision</span>
             <p className="font-display text-xl md:text-2xl font-medium leading-relaxed text-foreground/85">
-              Framtidens fältservice handlar inte om att ersätta erfarna tekniker 
-              med maskiner — utan om att ge dem verktygen att bli{" "}
-              <span className="text-primary">ännu bättre</span>.
+              Framtidens fältservice handlar inte om att ersätta erfarna tekniker med maskiner. Det handlar om att ge dem verktygen att slippa det som aldrig borde vara{" "}
+              <span className="text-primary">deras problem</span>.
             </p>
           </motion.div>
 
@@ -98,12 +96,10 @@ const About = () => {
             </h2>
             <div className="space-y-4 text-sm text-muted-foreground leading-relaxed">
               <p>
-                Extremt väder, långa avstånd, höga lönekostnader och strikta dokumentationskrav. 
-                Traivo är byggt från grunden för dessa utmaningar.
+                Hård vinter, långa avstånd mellan jobben, höga lönekostnader och dokumentationskrav som inte tål genvägar. Det är inte specialfall för oss – det är utgångsläget.
               </p>
               <p>
-                Lokalt språk, lokala integrationer, lokal logik. 
-                Inte anpassat i efterhand.
+                Svenska, norska, finska, danska. Lokala integrationer. Logik som förstår att en plogbil inte fungerar som en hisstekniker. Byggt in från början, inte tillagt i efterhand.
               </p>
             </div>
           </motion.div>
@@ -111,12 +107,16 @@ const About = () => {
       </section>
 
       {/* Bottom */}
-      <section className="py-20 px-6 border-t border-border">
-        <div className="max-w-2xl mx-auto text-center">
-          <motion.p {...fadeIn} className="text-muted-foreground text-sm">
-            Nyfiken?{" "}
+      <section className="py-24 px-6 border-t border-border bg-noise relative">
+        <div className="absolute inset-0 bg-grid-pattern opacity-10" />
+        <div className="relative z-10 max-w-2xl mx-auto text-center">
+          <motion.p {...fadeIn} className="font-display text-xl md:text-2xl font-medium leading-relaxed text-foreground/90 mb-6">
+            Vi byggde Traivo för folk som oss själva. Förhoppningsvis känner du igen dig.
+          </motion.p>
+          <motion.p {...fadeIn} className="text-sm text-muted-foreground">
             <Link to="/" className="text-primary hover:underline">Beskriv er verksamhet</Link>
-            {" "}och se vad Traivo kan göra för er.
+            {" "}eller{" "}
+            <Link to="/kontakt" className="text-primary hover:underline">hör av dig</Link>.
           </motion.p>
         </div>
       </section>
