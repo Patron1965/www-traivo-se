@@ -195,18 +195,19 @@ const AIInput = () => {
         transition={{ delay: 0.4, duration: 0.6 }}
         className="relative"
       >
-        <div className="relative rounded-2xl glass glow-teal overflow-hidden transition-all focus-within:border-primary/40">
-          {/* Diskret pulserande glow */}
+        <div className="relative">
+          {/* Diskret pulserande glow runt fältet */}
           <motion.div
             aria-hidden
-            animate={{ opacity: [0.35, 0.7, 0.35] }}
-            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-            className="pointer-events-none absolute -inset-px rounded-2xl"
+            animate={{ opacity: [0.4, 0.9, 0.4] }}
+            transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut" }}
+            className="pointer-events-none absolute -inset-2 rounded-3xl blur-xl"
             style={{
-              boxShadow:
-                "0 0 0 1px hsl(var(--primary) / 0.18), 0 0 24px hsl(var(--primary) / 0.18), inset 0 0 18px hsl(var(--primary) / 0.06)",
+              background:
+                "radial-gradient(ellipse at center, hsl(var(--primary) / 0.35), transparent 70%)",
             }}
           />
+          <div className="relative rounded-2xl glass glow-teal overflow-hidden transition-all focus-within:border-primary/40">
           <textarea
             ref={textareaRef}
             value={input}
@@ -232,6 +233,7 @@ const AIInput = () => {
               <Send className="w-4 h-4" />
             )}
           </button>
+          </div>
         </div>
       </motion.form>
 
