@@ -236,7 +236,7 @@ const Index = () => {
             viewport={{ once: true }}
           >
             <p className="font-display text-2xl md:text-3xl font-medium leading-relaxed mb-8">
-              Nyfiken? Hör av dig –<br />vi säljer inte, vi lyssnar.
+              Nyfiken? Hör av dig –<br /> vi lyssnar.
             </p>
 
             <Link
