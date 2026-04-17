@@ -196,6 +196,17 @@ const AIInput = () => {
         className="relative"
       >
         <div className="relative rounded-2xl glass glow-teal overflow-hidden transition-all focus-within:border-primary/40">
+          {/* Diskret pulserande glow */}
+          <motion.div
+            aria-hidden
+            animate={{ opacity: [0.35, 0.7, 0.35] }}
+            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+            className="pointer-events-none absolute -inset-px rounded-2xl"
+            style={{
+              boxShadow:
+                "0 0 0 1px hsl(var(--primary) / 0.18), 0 0 24px hsl(var(--primary) / 0.18), inset 0 0 18px hsl(var(--primary) / 0.06)",
+            }}
+          />
           <textarea
             ref={textareaRef}
             value={input}
