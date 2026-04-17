@@ -218,7 +218,7 @@ const Index = () => {
               Det är ingen magi. Det är 15 års vardag, översatt till mjukvara.
             </p>
             <p className="text-sm text-muted-foreground leading-relaxed max-w-lg mx-auto">
-              Vi har kombinerat över 15 års operativ fältserviceerfarenhet med djup AI-kompetens. Inte för att revolutionera en bransch – utan för att äntligen ge den ett verktyg som håller hela dagen.
+              Operativ fältserviceerfarenhet kombinerad med djup AI-kompetens. Inte för att revolutionera en bransch – utan för att äntligen ge den ett verktyg som håller hela dagen.
             </p>
           </motion.div>
         </div>
