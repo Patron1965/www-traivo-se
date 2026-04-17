@@ -38,12 +38,12 @@ const Navbar = () => {
           {/* Pulserande glow runt loggan */}
           <motion.span
             aria-hidden
-            animate={{ opacity: [0.4, 0.9, 0.4], scale: [0.9, 1.15, 0.9] }}
+            animate={{ opacity: [0.48, 1, 0.48], scale: [0.9, 1.15, 0.9] }}
             transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-            className="pointer-events-none absolute inset-0 -m-3 rounded-full blur-xl"
+            className="pointer-events-none absolute inset-0 -m-4 rounded-full blur-xl"
             style={{
               background:
-                "radial-gradient(ellipse at center, hsl(var(--primary) / 0.6), hsl(var(--primary) / 0.2) 50%, transparent 75%)",
+                "radial-gradient(ellipse at center, hsl(var(--primary) / 0.72), hsl(var(--primary) / 0.24) 50%, transparent 75%)",
             }}
           />
           <span className="relative text-gradient-ocean rounded-none shadow-none text-3xl">{"Traivo \n"}</span>
