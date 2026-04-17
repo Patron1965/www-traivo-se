@@ -58,7 +58,7 @@ const Index = () => {
             transition={{ delay: 0.3 }}
             className="text-muted-foreground text-sm md:text-base leading-relaxed max-w-xl mx-auto mb-10"
           >
-            Vi har levt samma vardag. Så vi byggde systemet som faktiskt löser den.
+            Vi byggde det vi själva saknade i 15 år i fält.
           </motion.p>
 
           <div id="ai-chat" className="w-full max-w-2xl mx-auto">
@@ -82,7 +82,7 @@ const Index = () => {
               Du har redan system – kanske flera. Ett för planering, ett för fakturering, ett för kundkontakt. Problemet är att inget av dem täcker hela kedjan. Så du hoppar mellan plattformar, dubbelregistrerar och tappar tid varje dag.
             </p>
             <p className="text-sm md:text-base text-muted-foreground leading-relaxed">
-              Fältservice är en av de mest komplexa operativa verksamheterna som finns. Ändå tvingas den ofta ihop av verktyg som inte pratar med varandra – och ingen av dem är byggd för din verklighet.
+              Resultatet: information faller mellan stolarna, tekniker väntar på besked, och du lägger kvällarna på att rätta till det som systemen borde ha löst.
             </p>
           </motion.div>
         </div>
@@ -112,6 +112,9 @@ const Index = () => {
               </p>
               <p>
                 Vi startade Traivo för att vi själva var frustrerade. Vi visste att AI kunde lösa planering, optimering och analys på ett sätt som inte var möjligt för fem år sedan. Men vi visste också att tekniken är värdelös om den inte förstår verkligheten: att en tekniker inte kan vara på två ställen samtidigt, att akutjobb inte väntar, och att en app som kräver 4G i ett garage är meningslös.
+              </p>
+              <p>
+                Traivo är inte byggt för demos. Det är byggt för måndag morgon kl 06:30.
               </p>
             </div>
           </motion.div>
@@ -170,7 +173,7 @@ const Index = () => {
               En plattform. Hela kedjan.
             </h2>
             <p className="text-sm md:text-base text-muted-foreground leading-relaxed">
-              Traivo är resultatet av operativ erfarenhet kombinerad med det AI faktiskt kan göra idag. Inte buzzwords. Inte en demo som ser bra ut men faller ihop i verkligheten. Utan ett system som hanterar det som händer på riktigt.
+              Ett system som håller hela dagen – från första jobbet kl 07:00 till sista fakturan kl 17:00. Byggt på operativ erfarenhet, inte på demos.
             </p>
           </motion.div>
 
@@ -197,7 +200,7 @@ const Index = () => {
             viewport={{ once: true }}
             className="text-sm md:text-base text-foreground/80 font-medium max-w-2xl leading-relaxed"
           >
-            Inget mer klipp-och-klistra mellan fem olika verktyg. Planering, rutt, jobb, protokoll, faktura, analys – ihopkopplat så att ingenting faller mellan stolarna.
+            Slut på att jaga information mellan fem system. Planering, rutt, jobb, protokoll, faktura, analys – samma plattform, samma data, samma sanning.
           </motion.p>
         </div>
       </section>
@@ -212,7 +215,7 @@ const Index = () => {
             viewport={{ once: true }}
           >
             <p className="font-display text-xl md:text-2xl font-medium leading-relaxed text-foreground/90 mb-4">
-              Det är ingen magi. Det är erfarenhet plus teknik, ihopsatt på rätt sätt.
+              Det är ingen magi. Det är 15 års vardag, översatt till mjukvara.
             </p>
             <p className="text-sm text-muted-foreground leading-relaxed max-w-lg mx-auto">
               Vi har kombinerat över 15 års operativ fältserviceerfarenhet med djup AI-kompetens. Inte för att revolutionera en bransch – utan för att äntligen ge den ett verktyg som håller hela dagen.
