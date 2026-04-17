@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
+import AIChatLink from "@/components/AIChatLink";
 import {
   Smartphone, CheckSquare, Clock, WifiOff, ArrowRight
 } from "lucide-react";
@@ -155,7 +156,7 @@ const TraivoGo = () => {
           </motion.p>
           <motion.p {...fadeIn} className="text-sm text-muted-foreground">
             Vill du se hur den skulle fungera för era tekniker?{" "}
-            <Link to="/" className="text-accent hover:underline">Beskriv er verksamhet</Link>
+            <AIChatLink className="text-accent hover:underline">Beskriv er verksamhet</AIChatLink>
             {" "}eller{" "}
             <Link to="/kontakt" className="text-accent hover:underline">hör av dig</Link>.
           </motion.p>

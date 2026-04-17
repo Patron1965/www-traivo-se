@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
+import AIChatLink from "@/components/AIChatLink";
 import {
   Calendar, Route, MapPin, Users, Brain, Receipt,
   ArrowRight
@@ -160,7 +161,7 @@ const TraivoOne = () => {
           </motion.p>
           <motion.p {...fadeIn} className="text-sm text-muted-foreground">
             Vill du se hur det skulle se ut för er?{" "}
-            <Link to="/" className="text-primary hover:underline">Beskriv er verksamhet</Link>
+            <AIChatLink className="text-primary hover:underline">Beskriv er verksamhet</AIChatLink>
             {" "}eller{" "}
             <Link to="/kontakt" className="text-primary hover:underline">hör av dig</Link>.
           </motion.p>

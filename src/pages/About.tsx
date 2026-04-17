@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Users, Brain, Wrench, Globe } from "lucide-react";
+import AIChatLink from "@/components/AIChatLink";
 
 const fadeIn = {
   initial: { opacity: 0, y: 24 },
@@ -114,7 +115,7 @@ const About = () => {
             Vi byggde Traivo för folk som oss själva. Förhoppningsvis känner du igen dig.
           </motion.p>
           <motion.p {...fadeIn} className="text-sm text-muted-foreground">
-            <Link to="/" className="text-primary hover:underline">Beskriv er verksamhet</Link>
+            <AIChatLink className="text-primary hover:underline">Beskriv er verksamhet</AIChatLink>
             {" "}eller{" "}
             <Link to="/kontakt" className="text-primary hover:underline">hör av dig</Link>.
           </motion.p>
