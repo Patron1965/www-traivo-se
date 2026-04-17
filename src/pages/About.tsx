@@ -34,9 +34,9 @@ const About = () => {
             transition={{ duration: 0.7 }}
             className="font-display text-4xl md:text-6xl font-bold leading-[0.95] tracking-tight mb-5 max-w-3xl"
           >
-            <span className="text-gradient-ice">Mänsklig erfarenhet</span>
+            <span className="text-gradient-ice">Vi har suttit</span>
             <br />
-            <span className="text-gradient-aurora">förstärkt med AI</span>
+            <span className="text-gradient-aurora">i samma bil som du.</span>
           </motion.h1>
           <motion.p
             initial={{ opacity: 0 }}
