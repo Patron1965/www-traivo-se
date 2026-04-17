@@ -90,7 +90,7 @@ const Contact = () => {
               <p className="text-sm text-muted-foreground">Vi hör av oss inom 24 timmar.</p>
             </div>
           ) : (
-            <form onSubmit={handleSubmit} className="glass rounded-2xl p-7 space-y-4">
+            <form onSubmit={handleSubmit} noValidate className="glass rounded-2xl p-7 space-y-4">
               <div className="grid sm:grid-cols-2 gap-3">
                 <div>
                   <label className="text-[10px] font-medium uppercase tracking-wider text-muted-foreground mb-1.5 block">Namn</label>
