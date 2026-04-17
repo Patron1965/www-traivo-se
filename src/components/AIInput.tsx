@@ -233,7 +233,6 @@ const AIInput = () => {
             )}
           </button>
         </div>
-        </div>
       </motion.form>
 
       {/* Suggested questions */}
