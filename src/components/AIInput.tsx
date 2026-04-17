@@ -201,7 +201,7 @@ const AIInput = () => {
             aria-hidden
             animate={{ opacity: [0.5, 1, 0.5], scale: [0.95, 1.05, 0.95] }}
             transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-            className="pointer-events-none absolute -top-8 -left-8 w-48 h-48 rounded-full blur-2xl"
+            className="pointer-events-none absolute -top-20 -left-20 w-56 h-56 rounded-full blur-2xl"
             style={{
               background:
                 "radial-gradient(circle at center, hsl(var(--primary) / 0.7), hsl(var(--primary) / 0.25) 40%, transparent 70%)",
