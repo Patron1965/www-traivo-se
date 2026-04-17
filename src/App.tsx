@@ -5,8 +5,8 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import Layout from "./components/Layout";
 import Index from "./pages/Index";
-import TraivoOne from "./pages/TraivoOne";
-import TraivoGo from "./pages/TraivoGo";
+import PlannixOne from "./pages/PlannixOne";
+import PlannixGo from "./pages/PlannixGo";
 import Pricing from "./pages/Pricing";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
@@ -23,8 +23,8 @@ const App = () => (
         <Routes>
           <Route element={<Layout />}>
             <Route path="/" element={<Index />} />
-            <Route path="/traivo-one" element={<TraivoOne />} />
-            <Route path="/traivo-go" element={<TraivoGo />} />
+            <Route path="/plannix-one" element={<PlannixOne />} />
+            <Route path="/plannix-go" element={<PlannixGo />} />
             <Route path="/priser" element={<Pricing />} />
             <Route path="/om-oss" element={<About />} />
             <Route path="/kontakt" element={<Contact />} />

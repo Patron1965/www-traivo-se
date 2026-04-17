@@ -6,7 +6,7 @@
 
 @layer base {
   :root {
-    /* Traivo — Deep teal with elevated surfaces (Alternative B) */
+    /* Plannix — Deep teal with elevated surfaces (Alternative B) */
     --background: 195 35% 9%;
     --foreground: 180 15% 95%;
 
@@ -37,7 +37,7 @@
 
     --radius: 0.75rem;
 
-    /* Traivo brand tokens */
+    /* Plannix brand tokens */
     --ocean: 195 50% 38%;
     --teal: 180 55% 47%;
     --aurora: 160 50% 53%;
