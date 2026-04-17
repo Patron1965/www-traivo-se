@@ -6,33 +6,33 @@
 
 @layer base {
   :root {
-    /* Traivo — Teal-forward colorful (lightened 10%) */
-    --background: 190 27% 31%;
+    /* Traivo — Deep teal with elevated surfaces (Alternative B) */
+    --background: 195 35% 9%;
     --foreground: 180 15% 95%;
 
-    --card: 190 24% 35%;
+    --card: 195 30% 14%;
     --card-foreground: 180 15% 95%;
 
-    --popover: 190 24% 35%;
+    --popover: 195 30% 14%;
     --popover-foreground: 180 15% 95%;
 
     --primary: 180 55% 47%;
-    --primary-foreground: 190 40% 8%;
+    --primary-foreground: 195 40% 6%;
 
-    --secondary: 190 21% 41%;
+    --secondary: 195 22% 18%;
     --secondary-foreground: 180 20% 90%;
 
-    --muted: 190 15% 39%;
-    --muted-foreground: 185 16% 72%;
+    --muted: 195 18% 16%;
+    --muted-foreground: 185 14% 65%;
 
     --accent: 160 50% 53%;
-    --accent-foreground: 190 40% 8%;
+    --accent-foreground: 195 40% 6%;
 
     --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 185 15% 46%;
-    --input: 185 15% 46%;
+    --border: 195 15% 22%;
+    --input: 195 15% 22%;
     --ring: 180 55% 47%;
 
     --radius: 0.75rem;
@@ -42,7 +42,7 @@
     --teal: 180 55% 47%;
     --aurora: 160 50% 53%;
     --ice: 180 45% 94%;
-    --navy: 190 27% 31%;
+    --navy: 195 35% 9%;
     --mountain: 185 16% 60%;
 
     --sidebar-background: 210 26% 23%;
@@ -94,8 +94,8 @@
 
   .bg-grid-pattern {
     background-image:
-      linear-gradient(hsl(210 18% 16% / 0.5) 1px, transparent 1px),
-      linear-gradient(90deg, hsl(210 18% 16% / 0.5) 1px, transparent 1px);
+      linear-gradient(hsl(180 35% 50% / 0.06) 1px, transparent 1px),
+      linear-gradient(90deg, hsl(180 35% 50% / 0.06) 1px, transparent 1px);
     background-size: 64px 64px;
   }
 
@@ -113,15 +113,15 @@
   }
 
   .glass {
-    background: hsl(210 30% 10% / 0.6);
+    background: hsl(195 28% 18% / 0.7);
     backdrop-filter: blur(20px) saturate(1.5);
-    border: 1px solid hsl(210 18% 20% / 0.6);
+    border: 1px solid hsl(180 35% 50% / 0.12);
   }
 
   .glass-subtle {
-    background: hsl(210 30% 12% / 0.4);
+    background: hsl(195 28% 16% / 0.5);
     backdrop-filter: blur(12px);
-    border: 1px solid hsl(210 18% 18% / 0.4);
+    border: 1px solid hsl(180 35% 50% / 0.12);
   }
 
   .glow-teal {
