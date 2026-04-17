@@ -14,6 +14,7 @@ const fadeIn = {
 const sections = [
   {
     id: "01", title: "Jobbhantering", icon: Smartphone,
+    intro: "Dagens jobb, i ordning, med allt teknikern behöver. Inga papper, inga samtal till kontoret.",
     items: [
       { t: "Dagens uppdrag", d: "Tydlig lista med adresser, kundinfo och instruktioner." },
       { t: "Ett-tryck navigation", d: "GPS-navigation till nästa stopp direkt." },
@@ -23,6 +24,7 @@ const sections = [
   },
   {
     id: "02", title: "Rapportering", icon: CheckSquare,
+    intro: "Protokoll fylls i på plats – inte i bilen efter sista jobbet.",
     items: [
       { t: "Digitala protokoll", d: "Checklistor anpassade per jobbtyp." },
       { t: "Fotodokumentation", d: "Bilder bifogas jobbet direkt." },
@@ -32,6 +34,7 @@ const sections = [
   },
   {
     id: "03", title: "Tidsrapportering", icon: Clock,
+    intro: "Tid, pass och löneunderlag – utan att någon behöver räkna timmar i efterhand.",
     items: [
       { t: "In-/utcheckning", d: "Automatisk tidsstämpling." },
       { t: "Arbetspass (Snöret)", d: "Komplett tidslogg per dag." },
@@ -41,6 +44,7 @@ const sections = [
   },
   {
     id: "04", title: "Offline & Kommunikation", icon: WifiOff,
+    intro: "Fungerar i källaren, i skogen och på taket. Synkar när nätet kommer tillbaka.",
     items: [
       { t: "Offline-first", d: "Sparar allt lokalt, synkar vid uppkoppling." },
       { t: "Push-notiser", d: "Nya jobb och ändringar direkt." },
@@ -78,8 +82,7 @@ const TraivoGo = () => {
             transition={{ delay: 0.2 }}
             className="text-muted-foreground max-w-xl leading-relaxed"
           >
-            Teknikerns arbetsverktyg. Jobb, navigation, protokoll, foton och signatur — 
-            fungerar även utan uppkoppling.
+            Teknikerns arbetsverktyg. Jobb, rutt, protokoll och signatur i fickan – och allt fungerar även när nätet inte gör det.
           </motion.p>
         </div>
       </section>
@@ -91,7 +94,7 @@ const TraivoGo = () => {
           className={`py-20 px-6 border-t border-border ${si % 2 === 1 ? "bg-noise" : ""}`}
         >
           <div className="max-w-7xl mx-auto">
-            <motion.div {...fadeIn} className="flex items-start gap-5 mb-10">
+            <motion.div {...fadeIn} className="flex items-start gap-5 mb-6">
               <span className="font-display text-5xl md:text-7xl font-bold text-border/50 leading-none select-none">
                 {section.id}
               </span>
@@ -100,6 +103,13 @@ const TraivoGo = () => {
                 <h2 className="font-display text-xl md:text-2xl font-bold">{section.title}</h2>
               </div>
             </motion.div>
+
+            <motion.p
+              {...fadeIn}
+              className="text-sm md:text-base text-muted-foreground max-w-2xl mb-10 leading-relaxed"
+            >
+              {section.intro}
+            </motion.p>
 
             <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
               {section.items.map((item, fi) => (
@@ -138,13 +148,17 @@ const TraivoGo = () => {
       </section>
 
       {/* Bottom */}
-      <section className="py-20 px-6 border-t border-border">
-        <div className="max-w-2xl mx-auto text-center">
-          <motion.p {...fadeIn} className="text-muted-foreground text-sm">
-            Vill du veta mer?{" "}
+      <section className="py-24 px-6 border-t border-border bg-noise relative">
+        <div className="absolute inset-0 bg-grid-pattern opacity-10" />
+        <div className="relative z-10 max-w-2xl mx-auto text-center">
+          <motion.p {...fadeIn} className="font-display text-xl md:text-2xl font-medium leading-relaxed text-foreground/90 mb-6">
+            Byggt för dem som faktiskt jobbar i fält – inte för demos i ett konferensrum.
+          </motion.p>
+          <motion.p {...fadeIn} className="text-sm text-muted-foreground">
+            Vill du se hur den skulle fungera för era tekniker?{" "}
             <Link to="/" className="text-accent hover:underline">Beskriv er verksamhet</Link>
             {" "}eller{" "}
-            <Link to="/kontakt" className="text-accent hover:underline">kontakta oss</Link>.
+            <Link to="/kontakt" className="text-accent hover:underline">hör av dig</Link>.
           </motion.p>
         </div>
       </section>
