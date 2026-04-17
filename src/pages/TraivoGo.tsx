@@ -140,7 +140,7 @@ const TraivoGo = () => {
             <WifiOff className="w-10 h-10 text-accent mx-auto mb-5 opacity-50" />
             <h2 className="font-display text-2xl md:text-3xl font-bold mb-4">Bygger inte på täckning</h2>
             <p className="text-muted-foreground leading-relaxed">
-              En app som kräver 4G i ett garage är meningslös. Traivo Go sparar lokalt och synkar när nätet kommer tillbaka – utan att teknikern behöver tänka på det.
+              Källaren, hisschaktet, skogsvägen utan en stapel – där ute hjälper det inte att appen "borde" fungera. Traivo Go sparar lokalt, jobbar vidare och synkar tyst när nätet kommer tillbaka.
             </p>
           </motion.div>
         </div>
