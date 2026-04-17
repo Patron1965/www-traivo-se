@@ -111,10 +111,10 @@ const Index = () => {
                 Vi har. Vi har planerat rutter för hand i Excel. Ringt tekniker mitt i lunchen för att flytta om jobb. Försökt fakturera från handskrivna protokoll. Vi vet exakt var det brister – för vi har levt med bristerna.
               </p>
               <p>
-                Vi startade Traivo för att vi själva var frustrerade. Vi visste att AI kunde lösa planering, optimering och analys på ett sätt som inte var möjligt för fem år sedan. Men vi visste också att tekniken är värdelös om den inte förstår verkligheten: att en tekniker inte kan vara på två ställen samtidigt, att akutjobb inte väntar, och att en app som kräver 4G i ett garage är meningslös.
+                Vi startade Plannix för att vi själva var frustrerade. Vi visste att AI kunde lösa planering, optimering och analys på ett sätt som inte var möjligt för fem år sedan. Men vi visste också att tekniken är värdelös om den inte förstår verkligheten: att en tekniker inte kan vara på två ställen samtidigt, att akutjobb inte väntar, och att en app som kräver 4G i ett garage är meningslös.
               </p>
               <p>
-                Traivo är inte byggt för demos. Det är byggt för måndag morgon kl 06:30.
+                Plannix är inte byggt för demos. Det är byggt för måndag morgon kl 06:30.
               </p>
             </div>
           </motion.div>
@@ -133,22 +133,22 @@ const Index = () => {
               <DialogTrigger asChild>
                 <button className="inline-flex items-center gap-2.5 px-7 py-3.5 rounded-full border border-primary/20 text-sm font-medium text-foreground/90 hover:border-primary/40 hover:bg-primary/[0.04] transition-all duration-300">
                   <Users className="w-4 h-4 text-primary/60" />
-                  Vem är Traivo till för?
+                  Vem är Plannix till för?
                 </button>
               </DialogTrigger>
               <DialogContent className="sm:max-w-lg">
                 <DialogHeader>
                   <DialogTitle className="font-display text-xl font-bold">
-                    Vem är Traivo till för?
+                    Vem är Plannix till för?
                   </DialogTitle>
                 </DialogHeader>
                 <div className="text-sm text-muted-foreground leading-relaxed space-y-4 pt-2">
                   <p>
-                    Traivo är till för dig som driver serviceverksamhet där tekniker åker ut till kund –
+                    Plannix är till för dig som driver serviceverksamhet där tekniker åker ut till kund –
                     VVS, el, kyla, hissar, fastighet, IT, säkerhet, vitvaror, maskinservice eller sophantering.
                   </p>
                   <p>
-                    Om dina tekniker kör rutter och du schemalägger uppdrag varje dag, är Traivo byggt för dig.
+                    Om dina tekniker kör rutter och du schemalägger uppdrag varje dag, är Plannix byggt för dig.
                   </p>
                 </div>
               </DialogContent>

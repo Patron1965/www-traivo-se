@@ -55,7 +55,7 @@ const sections = [
   },
 ];
 
-const TraivoGo = () => {
+const PlannixGo = () => {
   return (
     <>
       {/* Hero */}
@@ -75,7 +75,7 @@ const TraivoGo = () => {
             transition={{ duration: 0.7 }}
             className="font-display text-4xl md:text-6xl font-bold leading-[0.95] tracking-tight mb-5 max-w-2xl"
           >
-            <span className="text-gradient-ice">Traivo Go</span>
+            <span className="text-gradient-ice">Plannix Go</span>
           </motion.h1>
           <motion.p
             initial={{ opacity: 0 }}
@@ -141,7 +141,7 @@ const TraivoGo = () => {
             <WifiOff className="w-10 h-10 text-accent mx-auto mb-5 opacity-50" />
             <h2 className="font-display text-2xl md:text-3xl font-bold mb-4">Bygger inte på täckning</h2>
             <p className="text-muted-foreground leading-relaxed">
-              Källaren, hisschaktet, skogsvägen utan en stapel – där ute hjälper det inte att appen "borde" fungera. Traivo Go sparar lokalt, jobbar vidare och synkar tyst när nätet kommer tillbaka.
+              Källaren, hisschaktet, skogsvägen utan en stapel – där ute hjälper det inte att appen "borde" fungera. Plannix Go sparar lokalt, jobbar vidare och synkar tyst när nätet kommer tillbaka.
             </p>
           </motion.div>
         </div>
@@ -166,4 +166,4 @@ const TraivoGo = () => {
   );
 };
 
-export default TraivoGo;
+export default PlannixGo;

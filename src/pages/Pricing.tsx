@@ -18,8 +18,8 @@ const standardPlan = {
   savingsPercent: 15,
   savingsLabel: "Uppskattad kostnadsreduktion genom effektivare planering och digitala flöden.",
   features: [
-    "Traivo One (planering)",
-    "Traivo Go (mobilapp)",
+    "Plannix One (planering)",
+    "Plannix Go (mobilapp)",
     "GPS-spårning",
     "Digitala protokoll",
     "AI-schemaläggning",
