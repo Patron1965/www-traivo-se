@@ -195,25 +195,24 @@ const AIInput = () => {
         transition={{ delay: 0.4, duration: 0.6 }}
         className="relative"
       >
-        <div className="relative">
-          {/* Pulserande glow i vänster övre hörn */}
+        <div className="relative rounded-2xl glass glow-teal overflow-hidden transition-all focus-within:border-primary/40">
+          {/* Pulserande glow i vänster nedre hörn, inuti fältet */}
           <motion.div
             aria-hidden
-            animate={{ opacity: [0.5, 1, 0.5], scale: [0.95, 1.05, 0.95] }}
+            animate={{ opacity: [0.4, 0.85, 0.4], scale: [0.9, 1.1, 0.9] }}
             transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-            className="pointer-events-none absolute -top-20 left-1/2 -translate-x-1/2 w-56 h-56 rounded-full blur-2xl"
+            className="pointer-events-none absolute -bottom-10 -left-10 w-48 h-48 rounded-full blur-2xl"
             style={{
               background:
-                "radial-gradient(circle at center, hsl(var(--primary) / 0.7), hsl(var(--primary) / 0.25) 40%, transparent 70%)",
+                "radial-gradient(circle at center, hsl(var(--primary) / 0.6), hsl(var(--primary) / 0.2) 40%, transparent 70%)",
             }}
           />
-          <div className="relative rounded-2xl glass glow-teal overflow-hidden transition-all focus-within:border-primary/40">
           <textarea
             ref={textareaRef}
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="Beskriv er verksamhet eller ställ en fråga..."
-            className="w-full bg-transparent px-6 py-5 pr-16 text-foreground placeholder:text-muted-foreground focus:outline-none resize-none min-h-[100px] text-sm leading-relaxed"
+            className="relative w-full bg-transparent px-6 py-5 pr-16 text-foreground placeholder:text-muted-foreground focus:outline-none resize-none min-h-[100px] text-sm leading-relaxed"
             rows={3}
             onKeyDown={(e) => {
               if (e.key === "Enter" && !e.shiftKey) {
@@ -233,7 +232,7 @@ const AIInput = () => {
               <Send className="w-4 h-4" />
             )}
           </button>
-          </div>
+        </div>
         </div>
       </motion.form>
 
