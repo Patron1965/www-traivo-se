@@ -34,15 +34,15 @@ const Index = () => {
             animate={{ opacity: 1, y: 0 }}
             className="relative inline-flex items-center justify-center gap-3 mb-8 mx-auto px-5 py-2 rounded-full"
           >
-            {/* Diskret pulserande glow runt pillen */}
+            {/* Pulserande glow runt pillen */}
             <motion.div
               aria-hidden
-              animate={{ opacity: [0.4, 0.9, 0.4], scale: [0.95, 1.08, 0.95] }}
+              animate={{ opacity: [0.5, 1, 0.5], scale: [0.9, 1.15, 0.9] }}
               transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-              className="pointer-events-none absolute inset-0 -m-4 rounded-full blur-2xl"
+              className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[140%] h-[400%] rounded-full blur-2xl"
               style={{
                 background:
-                  "radial-gradient(ellipse at center, hsl(var(--primary) / 0.45), hsl(var(--primary) / 0.15) 50%, transparent 75%)",
+                  "radial-gradient(ellipse at center, hsl(var(--primary) / 0.7), hsl(var(--primary) / 0.25) 40%, transparent 70%)",
               }}
             />
             <div className="relative w-1.5 h-1.5 rounded-full bg-primary animate-pulse-slow" />
