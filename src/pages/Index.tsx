@@ -32,21 +32,10 @@ const Index = () => {
           <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="relative inline-flex items-center justify-center gap-3 mb-8 mx-auto px-5 py-2 rounded-full"
+            className="flex items-center justify-center gap-3 mb-8"
           >
-            {/* Pulserande glow runt pillen */}
-            <motion.div
-              aria-hidden
-              animate={{ opacity: [0.5, 1, 0.5], scale: [0.9, 1.15, 0.9] }}
-              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-              className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[140%] h-[400%] rounded-full blur-2xl"
-              style={{
-                background:
-                  "radial-gradient(ellipse at center, hsl(var(--primary) / 0.7), hsl(var(--primary) / 0.25) 40%, transparent 70%)",
-              }}
-            />
-            <div className="relative w-1.5 h-1.5 rounded-full bg-primary animate-pulse-slow" />
-            <span className="relative font-medium uppercase tracking-[0.25em] text-muted-foreground text-sm">
+            <div className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse-slow" />
+            <span className="font-medium uppercase tracking-[0.25em] text-muted-foreground text-sm">
               Plattform för fältservice · Norden
             </span>
           </motion.div>
