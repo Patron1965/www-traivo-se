@@ -196,15 +196,15 @@ const AIInput = () => {
         className="relative"
       >
         <div className="relative">
-          {/* Diskret pulserande glow runt fältet */}
+          {/* Pulserande glow runt fältet */}
           <motion.div
             aria-hidden
-            animate={{ opacity: [0.4, 0.9, 0.4] }}
-            transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut" }}
-            className="pointer-events-none absolute -inset-2 rounded-3xl blur-xl"
+            animate={{ opacity: [0.5, 1, 0.5], scale: [0.98, 1.02, 0.98] }}
+            transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+            className="pointer-events-none absolute -inset-4 rounded-3xl blur-2xl"
             style={{
               background:
-                "radial-gradient(ellipse at center, hsl(var(--primary) / 0.35), transparent 70%)",
+                "radial-gradient(ellipse at center, hsl(var(--primary) / 0.7), hsl(var(--primary) / 0.25) 45%, transparent 75%)",
             }}
           />
           <div className="relative rounded-2xl glass glow-teal overflow-hidden transition-all focus-within:border-primary/40">
