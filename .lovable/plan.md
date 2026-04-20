@@ -1,46 +1,53 @@
 
 
-## Skärp copyn på landningssidan – behåll tonen, höj slagkraften
+## Plan: Lägg till "Marknader vi vänder oss till"-sektion
 
 ### Mål
-Behålla Traivos ärliga, icke-säljiga ton, men skärpa formuleringarna så att vinsten för användaren framgår tydligare. Inga SaaS-klyschor, inga löften vi inte kan hålla.
+Skapa en ny sektion på startsidan som tydligt presenterar de fem primära branscherna Plannix riktar sig till, samt motivera varför Plannix passar just dem.
 
-### Ändringar i `src/pages/Index.tsx`
+### Var det placeras
+Ny sektion på `src/pages/Index.tsx`, infogad **efter** "SOLUTION / FEATURES"-sektionen och **före** "CLOSING STATEMENT". Det skapar en logisk flow: problem → bakgrund → lösning → **för vem konkret** → avslut.
 
-**1. Hero – underrubrik (rad ~63)**
-- Idag: *"Vi har levt samma vardag. Så vi byggde systemet som faktiskt löser den."*
-- Ny: *"Vi byggde det vi själva saknade i 15 år i fält."*
+### Innehåll
 
-**2. Problemsektion – understycke (rad ~86)**
-- Idag: *"Fältservice är en av de mest komplexa operativa verksamheterna som finns. Ändå tvingas den ofta ihop av verktyg som inte pratar med varandra – och ingen av dem är byggd för din verklighet."*
-- Ny: *"Resultatet: information faller mellan stolarna, tekniker väntar på besked, och du lägger kvällarna på att rätta till det som systemen borde ha löst."*
+**Sektionsrubrik:**
+- Eyebrow: "Branscher"
+- Rubrik: "Byggt för verksamheter med många stopp"
+- Ingress (kort): "Plannix passar bäst där geografi, tid och kompetens måste pussla ihop varje dag. Här är branscherna där vi gör störst skillnad."
 
-**3. Credibility – sista stycket (rad ~115)**
-- Lägg till en avslutande mening efter nuvarande text: *"Traivo är inte byggt för demos. Det är byggt för måndag morgon kl 06:30."*
+**Fem branschkort (grid 2 kolumner desktop, 1 mobil):**
 
-**4. Lösning/Features – ingress (rad ~166)**
-- Idag: *"Traivo är resultatet av operativ erfarenhet kombinerad med det AI faktiskt kan göra idag. Inte buzzwords. Inte en demo som ser bra ut men faller ihop i verkligheten. Utan ett system som hanterar det som händer på riktigt."*
-- Ny: *"Ett system som håller hela dagen – från första jobbet kl 07:00 till sista fakturan kl 17:00. Byggt på operativ erfarenhet, inte på demos."*
+| # | Bransch | Ikon (lucide) | Kort beskrivning (ca 2 rader) |
+|---|---------|---------------|-------------------------------|
+| 1 | Miljö, återvinning & avfall | `Recycle` | Geofencing av tömningsställen, ruttoptimering för tunga fordon, snabb hantering av budningar och extratömningar. |
+| 2 | Tekniska installationer & service | `Wrench` | Vitvaror, fiber, hiss, kyla. Koppling mellan avtal, artiklar och teknikerns kompetens – med snabb dokumentation i fält. |
+| 3 | Fastighet & facility management | `Building2` | Yttre skötsel, trappstädning, snöröjning, rondering. Årsplanering, QR-kvitto på utfört arbete och prediktivt underhåll. |
+| 4 | Transport & last mile | `Truck` | Distribution där rutter ändras dagligen. What-if-analys, automatisk omplanering och kundportal med live-leveransstatus. |
+| 5 | Hemtjänst & mobil vård | `HeartPulse` | Hårda tidsfönster och slotpreferenser per brukare. Heatmaps som visar belastning per område innan personalen blir överkörd. |
 
-**5. Lösning – avslutningsmening (rad ~196)**
-- Idag: *"Inget mer klipp-och-klistra mellan fem olika verktyg. Planering, rutt, jobb, protokoll, faktura, analys – ihopkopplat så att ingenting faller mellan stolarna."*
-- Ny: *"Slut på att jaga information mellan fem system. Planering, rutt, jobb, protokoll, faktura, analys – samma plattform, samma data, samma sanning."*
+**Avslutande textblock (under korten):**
+Kort stycke som förklarar varför Plannix sticker ut – fokus på kombinationen geografi + AI:
+> "Det som gör skillnad är kombinationen geografi och AI. Klustervalidering hindrar att jobb säljs där de inte kan utföras lönsamt. Ruttoptimering med riktiga vägdata sparar bränsle och timmar varje dag. Och beslutsstödet förklarar *varför* AI:n placerade jobbet just där – så planeraren behåller kontrollen."
 
-**6. Closing statement (rad ~213)**
-- Idag: *"Det är ingen magi. Det är erfarenhet plus teknik, ihopsatt på rätt sätt."*
-- Ny: *"Det är ingen magi. Det är 15 års vardag, översatt till mjukvara."*
+### Stilval (följer befintlig design)
+- `border-t border-border`, `py-24 md:py-28 px-6`
+- `max-w-5xl mx-auto`
+- Branschkort: `glass-subtle rounded-xl p-6`, ikon i `bg-primary/10` cirkel (likt About-sidans value-cards)
+- Eyebrow `text-[11px] uppercase tracking-[0.25em] text-primary`
+- Rubrik: `font-display text-2xl md:text-3xl font-bold`
+- Animationer: `motion.div` med `whileInView` + staggered delay (`i * 0.07`) – samma mönster som features-griden
 
-### Vad vi INTE rör
-- Hero-rubriken ("Dina tekniker kör...") – den är redan stark.
-- "En plattform. Hela kedjan." – kärnfullt och tydligt.
-- Footer-CTA ("Vi säljer inte, vi lyssnar.") – signaturmening, behålls.
-- Feature-korten – fungerar som de är.
+### Ton
+- Naturlig talad svenska, inga buzzwords ("revolutionerande", "game-changer" etc.)
+- Industritermer används rakt: budning, rondering, tömningsställe, slot, last mile
+- Objektiv, beskrivande – inte säljig
 
-### Princip
-Varje skärpning gör en av tre saker:
-1. **Konkretiserar tiden** ("06:30", "07:00–17:00", "15 år") – trovärdighet via specificitet.
-2. **Beskriver konsekvensen** ("kvällarna på att rätta till") – vinsten i känsla utan att lova.
-3. **Komprimerar budskapet** – färre ord, mer tyngd.
+### Tekniska detaljer
+- Endast en fil ändras: `src/pages/Index.tsx`
+- Inga nya komponenter, inga nya routes, inga nya beroenden
+- Lägga till ikoner i befintlig `lucide-react`-import: `Recycle`, `Wrench`, `Building2`, `Truck`, `HeartPulse`
+- Definiera `industries`-array nära toppen av filen (parallellt med befintlig `features`-array)
 
-Inga "Sluta gissa", inga "15 minuter", inga ROI-löften.
+### Memory-uppdatering
+Uppdatera `mem://strategy/malgrupp-industrier` med den slutliga listan på fem branscher och deras värdeprop, så att framtida sessioner är konsekventa.
 
