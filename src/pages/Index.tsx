@@ -20,6 +20,14 @@ const features = [
   { icon: CreditCard, title: "Fakturering & kundportal", desc: "Faktura, bokning och besökshistorik – i samma system." },
 ];
 
+const industries = [
+  { icon: Recycle, title: "Miljö, återvinning & avfall", desc: "Geofencing av tömningsställen, ruttoptimering för tunga fordon, snabb hantering av budningar och extratömningar." },
+  { icon: Wrench, title: "Tekniska installationer & service", desc: "Vitvaror, fiber, hiss, kyla. Koppling mellan avtal, artiklar och teknikerns kompetens – med snabb dokumentation i fält." },
+  { icon: Building2, title: "Fastighet & facility management", desc: "Yttre skötsel, trappstädning, snöröjning, rondering. Årsplanering, QR-kvitto på utfört arbete och prediktivt underhåll." },
+  { icon: Truck, title: "Transport & last mile", desc: "Distribution där rutter ändras dagligen. What-if-analys, automatisk omplanering och kundportal med live-leveransstatus." },
+  { icon: HeartPulse, title: "Hemtjänst & mobil vård", desc: "Hårda tidsfönster och slotpreferenser per brukare. Heatmaps som visar belastning per område innan personalen blir överkörd." },
+];
+
 const Index = () => {
   return (
     <>
