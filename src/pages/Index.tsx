@@ -4,7 +4,8 @@ import { Link } from "react-router-dom";
 import AIInput from "@/components/AIInput";
 import {
   Calendar, Smartphone, Route, MapPin, Brain, WifiOff,
-  ArrowRight, Users, FileText, CreditCard, X
+  ArrowRight, Users, FileText, CreditCard, X,
+  Recycle, Wrench, Building2, Truck, HeartPulse
 } from "lucide-react";
 import {
   Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger
@@ -17,6 +18,14 @@ const features = [
   { icon: MapPin, title: "GPS & akuttilldelning", desc: "Realtidskarta med positioner. Akutjobb till närmaste tekniker." },
   { icon: Brain, title: "AI-analys", desc: "Hittar avvikelser innan de blir problem. Prediktivt underhåll." },
   { icon: CreditCard, title: "Fakturering & kundportal", desc: "Faktura, bokning och besökshistorik – i samma system." },
+];
+
+const industries = [
+  { icon: Recycle, title: "Miljö, återvinning & avfall", desc: "Geofencing av tömningsställen, ruttoptimering för tunga fordon, snabb hantering av budningar och extratömningar." },
+  { icon: Wrench, title: "Tekniska installationer & service", desc: "Vitvaror, fiber, hiss, kyla. Koppling mellan avtal, artiklar och teknikerns kompetens – med snabb dokumentation i fält." },
+  { icon: Building2, title: "Fastighet & facility management", desc: "Yttre skötsel, trappstädning, snöröjning, rondering. Årsplanering, QR-kvitto på utfört arbete och prediktivt underhåll." },
+  { icon: Truck, title: "Transport & last mile", desc: "Distribution där rutter ändras dagligen. What-if-analys, automatisk omplanering och kundportal med live-leveransstatus." },
+  { icon: HeartPulse, title: "Hemtjänst & mobil vård", desc: "Hårda tidsfönster och slotpreferenser per brukare. Heatmaps som visar belastning per område innan personalen blir överkörd." },
 ];
 
 const Index = () => {
@@ -201,6 +210,60 @@ const Index = () => {
             className="text-sm md:text-base text-foreground/80 font-medium max-w-2xl leading-relaxed"
           >
             Slut på att jaga information mellan fem system. Planering, rutt, jobb, protokoll, faktura, analys – samma plattform, samma data, samma sanning.
+          </motion.p>
+        </div>
+      </section>
+
+      {/* ─── INDUSTRIES ─── */}
+      <section className="py-24 md:py-28 px-6 border-t border-border">
+        <div className="max-w-5xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            className="max-w-2xl mb-10"
+          >
+            <span className="text-[11px] font-medium uppercase tracking-[0.25em] text-primary mb-4 block">
+              Branscher
+            </span>
+            <h2 className="font-display text-2xl md:text-3xl font-bold mb-5">
+              Byggt för verksamheter med många stopp
+            </h2>
+            <p className="text-sm md:text-base text-muted-foreground leading-relaxed">
+              Plannix passar bäst där geografi, tid och kompetens måste pussla ihop varje dag. Här är branscherna där vi gör störst skillnad.
+            </p>
+          </motion.div>
+
+          <div className="grid md:grid-cols-2 gap-3 mb-10">
+            {industries.map((ind, i) => (
+              <motion.div
+                key={ind.title}
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.07 }}
+                className="glass-subtle rounded-xl p-6 group hover:border-primary/15 transition-all duration-300"
+              >
+                <div className="flex items-start gap-4">
+                  <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center shrink-0 group-hover:bg-primary/15 transition-colors">
+                    <ind.icon className="w-4 h-4 text-primary" />
+                  </div>
+                  <div>
+                    <h3 className="text-sm font-semibold mb-1.5">{ind.title}</h3>
+                    <p className="text-xs text-muted-foreground leading-relaxed">{ind.desc}</p>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+
+          <motion.p
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            className="text-sm md:text-base text-foreground/80 max-w-2xl leading-relaxed"
+          >
+            Det som gör skillnad är kombinationen geografi och AI. Klustervalidering hindrar att jobb säljs där de inte kan utföras lönsamt. Ruttoptimering med riktiga vägdata sparar bränsle och timmar varje dag. Och beslutsstödet förklarar <em>varför</em> AI:n placerade jobbet just där – så planeraren behåller kontrollen.
           </motion.p>
         </div>
       </section>
