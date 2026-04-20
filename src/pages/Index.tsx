@@ -4,7 +4,8 @@ import { Link } from "react-router-dom";
 import AIInput from "@/components/AIInput";
 import {
   Calendar, Smartphone, Route, MapPin, Brain, WifiOff,
-  ArrowRight, Users, FileText, CreditCard, X
+  ArrowRight, Users, FileText, CreditCard, X,
+  Recycle, Wrench, Building2, Truck, HeartPulse
 } from "lucide-react";
 import {
   Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger
