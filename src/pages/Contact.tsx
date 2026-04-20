@@ -2,18 +2,54 @@ import { useState, FormEvent } from "react";
 import { motion } from "framer-motion";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { CheckCircle2, Mail, MapPin, Users } from "lucide-react";
+import { CheckCircle2, Mail, MapPin, Users, Loader2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 import {
   Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger
 } from "@/components/ui/dialog";
 
 const Contact = () => {
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
   const { toast } = useToast();
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (submitting) return;
+
+    const formData = new FormData(e.currentTarget);
+    const payload = {
+      name: String(formData.get("name") ?? "").trim(),
+      company: String(formData.get("company") ?? "").trim(),
+      email: String(formData.get("email") ?? "").trim(),
+      phone: String(formData.get("phone") ?? "").trim() || null,
+      message: String(formData.get("message") ?? "").trim() || null,
+    };
+
+    if (!payload.name || !payload.company || !payload.email) {
+      toast({
+        title: "Fyll i obligatoriska fält",
+        description: "Namn, företag och e-post behövs.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setSubmitting(true);
+    const { error } = await supabase.from("contact_submissions").insert(payload);
+    setSubmitting(false);
+
+    if (error) {
+      console.error("Contact submission failed:", error);
+      toast({
+        title: "Något gick fel",
+        description: "Försök igen om en stund eller mejla info@plannix.se.",
+        variant: "destructive",
+      });
+      return;
+    }
+
     setSubmitted(true);
     toast({ title: "Tack!", description: "Vi återkommer inom kort." });
   };
@@ -93,31 +129,39 @@ const Contact = () => {
             <form onSubmit={handleSubmit} noValidate className="glass rounded-2xl p-7 space-y-4">
               <div className="grid sm:grid-cols-2 gap-3">
                 <div>
-                  <label className="text-[10px] font-medium uppercase tracking-wider text-muted-foreground mb-1.5 block">Namn</label>
-                  <Input placeholder="Anna Andersson" required className="bg-secondary/30 border-border text-sm" />
+                  <label htmlFor="name" className="text-[10px] font-medium uppercase tracking-wider text-muted-foreground mb-1.5 block">Namn</label>
+                  <Input id="name" name="name" placeholder="Anna Andersson" required minLength={2} className="bg-secondary/30 border-border text-sm" />
                 </div>
                 <div>
-                  <label className="text-[10px] font-medium uppercase tracking-wider text-muted-foreground mb-1.5 block">Företag</label>
-                  <Input placeholder="Ert företag" required className="bg-secondary/30 border-border text-sm" />
+                  <label htmlFor="company" className="text-[10px] font-medium uppercase tracking-wider text-muted-foreground mb-1.5 block">Företag</label>
+                  <Input id="company" name="company" placeholder="Ert företag" required minLength={2} className="bg-secondary/30 border-border text-sm" />
                 </div>
               </div>
               <div>
-                <label className="text-[10px] font-medium uppercase tracking-wider text-muted-foreground mb-1.5 block">E-post</label>
-                <Input type="email" placeholder="anna@foretaget.se" required className="bg-secondary/30 border-border text-sm" />
+                <label htmlFor="email" className="text-[10px] font-medium uppercase tracking-wider text-muted-foreground mb-1.5 block">E-post</label>
+                <Input id="email" name="email" type="email" placeholder="anna@foretaget.se" required className="bg-secondary/30 border-border text-sm" />
               </div>
               <div>
-                <label className="text-[10px] font-medium uppercase tracking-wider text-muted-foreground mb-1.5 block">Telefon (valfritt)</label>
-                <Input type="tel" placeholder="070-123 45 67" className="bg-secondary/30 border-border text-sm" />
+                <label htmlFor="phone" className="text-[10px] font-medium uppercase tracking-wider text-muted-foreground mb-1.5 block">Telefon (valfritt)</label>
+                <Input id="phone" name="phone" type="tel" placeholder="070-123 45 67" className="bg-secondary/30 border-border text-sm" />
               </div>
               <div>
-                <label className="text-[10px] font-medium uppercase tracking-wider text-muted-foreground mb-1.5 block">Berätta</label>
-                <Textarea placeholder="Vilken bransch? Utmaningar? Antal tekniker?" rows={4} className="bg-secondary/30 border-border text-sm" />
+                <label htmlFor="message" className="text-[10px] font-medium uppercase tracking-wider text-muted-foreground mb-1.5 block">Berätta</label>
+                <Textarea id="message" name="message" placeholder="Vilken bransch? Utmaningar? Antal tekniker?" rows={4} maxLength={5000} className="bg-secondary/30 border-border text-sm" />
               </div>
               <button
                 type="submit"
-                className="w-full py-3 rounded-xl bg-primary text-primary-foreground text-xs font-semibold uppercase tracking-wider hover:bg-primary/80 transition-colors"
+                disabled={submitting}
+                className="w-full py-3 rounded-xl bg-primary text-primary-foreground text-xs font-semibold uppercase tracking-wider hover:bg-primary/80 transition-colors disabled:opacity-60 disabled:cursor-not-allowed inline-flex items-center justify-center gap-2"
               >
-                Skicka
+                {submitting ? (
+                  <>
+                    <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                    Skickar...
+                  </>
+                ) : (
+                  "Skicka"
+                )}
               </button>
               <p className="text-[10px] text-muted-foreground/50 text-center">
                 Vi delar aldrig din information.
