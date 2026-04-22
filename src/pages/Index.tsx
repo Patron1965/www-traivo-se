@@ -303,7 +303,7 @@ const Index = () => {
             {activeIndustry !== null && (
               <button
                 onClick={() => setActiveIndustry(null)}
-                className="inline-flex items-center gap-1.5 px-3 py-2 rounded-full text-xs font-medium text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-all duration-200"
+                className="inline-flex items-center gap-1.5 px-3 py-2 rounded-full text-xs font-medium text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-all duration-200 outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
                 aria-label="Återställ filter"
               >
                 <X className="w-3.5 h-3.5" />
