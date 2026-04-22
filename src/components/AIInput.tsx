@@ -213,12 +213,13 @@ const AIInput = () => {
           <button
             type="submit"
             disabled={!input.trim() || isLoading}
-            className="absolute right-4 bottom-4 p-3 rounded-xl bg-primary text-primary-foreground disabled:opacity-20 hover:bg-primary/80 transition-all"
+            aria-label="Skicka"
+            className="absolute right-3 bottom-3 inline-flex items-center justify-center w-11 h-11 rounded-xl bg-primary text-primary-foreground border border-primary-foreground/20 shadow-[0_0_0_3px_hsl(var(--primary)/0.25),0_4px_14px_hsl(var(--primary)/0.35)] hover:bg-primary/90 hover:scale-[1.05] active:scale-95 disabled:opacity-40 disabled:cursor-not-allowed disabled:shadow-none disabled:hover:scale-100 transition-all duration-200 outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
           >
             {isLoading ? (
-              <Loader2 className="w-4 h-4 animate-spin" />
+              <Loader2 className="w-5 h-5 animate-spin" strokeWidth={2.5} />
             ) : (
-              <Send className="w-4 h-4" />
+              <Send className="w-5 h-5" strokeWidth={2.5} />
             )}
           </button>
         </div>
