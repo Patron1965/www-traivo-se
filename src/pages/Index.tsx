@@ -227,6 +227,32 @@ const Index = () => {
             </p>
           </motion.div>
 
+          {/* Selection banner */}
+          <div
+            aria-live="polite"
+            className="mb-4 flex items-center gap-3 rounded-lg border border-primary/15 bg-primary/[0.04] px-4 py-3"
+          >
+            {(() => {
+              const selected = industries.find((i) => i.id === activeIndustry);
+              const Icon = selected?.icon;
+              return (
+                <>
+                  {Icon ? (
+                    <Icon className="w-4 h-4 text-primary shrink-0" />
+                  ) : (
+                    <div className="w-1.5 h-1.5 rounded-full bg-primary shrink-0" />
+                  )}
+                  <span className="text-xs text-muted-foreground">
+                    Visar:{" "}
+                    <span className="text-foreground font-semibold">
+                      {selected ? selected.title : "Alla branscher"}
+                    </span>
+                  </span>
+                </>
+              );
+            })()}
+          </div>
+
           {/* Filter chips */}
           <div className="flex flex-wrap gap-2 mb-6">
             <button
@@ -266,14 +292,6 @@ const Index = () => {
                 <X className="w-3.5 h-3.5" />
                 Återställ
               </button>
-            )}
-          </div>
-
-          <div className="mb-4 text-xs text-muted-foreground" aria-live="polite">
-            {activeIndustry === null ? (
-              <>Visar: <span className="text-foreground font-medium">Alla branscher</span></>
-            ) : (
-              <>Visar: <span className="text-foreground font-medium">{industries.find((i) => i.id === activeIndustry)?.title}</span></>
             )}
           </div>
 
