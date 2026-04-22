@@ -257,10 +257,10 @@ const Index = () => {
           <div className="flex flex-wrap gap-2 mb-6">
             <button
               onClick={() => setActiveIndustry(null)}
-              className={`px-4 py-2 rounded-full text-xs font-medium border transition-all duration-200 ${
+              className={`px-4 py-2 rounded-full text-xs font-medium border transition-all duration-200 outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background ${
                 activeIndustry === null
                   ? "bg-primary text-primary-foreground border-primary shadow-[0_0_0_3px_hsl(var(--primary)/0.15)]"
-                  : "border-border text-muted-foreground hover:border-primary/40 hover:text-foreground"
+                  : "border-border text-muted-foreground hover:border-primary/40 hover:text-foreground hover:bg-primary/[0.04]"
               }`}
             >
               Alla branscher
@@ -273,10 +273,10 @@ const Index = () => {
                   key={ind.id}
                   onClick={() => setActiveIndustry(isActive ? null : ind.id)}
                   aria-pressed={isActive}
-                  className={`relative inline-flex items-center gap-2 rounded-full text-xs font-medium border transition-all duration-200 ${
+                  className={`relative inline-flex items-center gap-2 rounded-full text-xs font-medium border transition-all duration-200 outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background ${
                     isActive
                       ? "bg-primary text-primary-foreground border-primary shadow-[0_0_0_3px_hsl(var(--primary)/0.22)] scale-[1.04] pl-2 pr-4 py-2"
-                      : "border-border text-muted-foreground hover:border-primary/40 hover:text-foreground hover:bg-primary/[0.04] px-4 py-2"
+                      : "border-border text-muted-foreground hover:border-primary/40 hover:text-foreground hover:bg-primary/[0.04] hover:scale-[1.02] px-4 py-2"
                   }`}
                 >
                   <span
@@ -303,7 +303,7 @@ const Index = () => {
             {activeIndustry !== null && (
               <button
                 onClick={() => setActiveIndustry(null)}
-                className="inline-flex items-center gap-1.5 px-3 py-2 rounded-full text-xs font-medium text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-all duration-200"
+                className="inline-flex items-center gap-1.5 px-3 py-2 rounded-full text-xs font-medium text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-all duration-200 outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
                 aria-label="Återställ filter"
               >
                 <X className="w-3.5 h-3.5" />
