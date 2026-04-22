@@ -169,27 +169,83 @@ const Index = () => {
             </p>
           </motion.div>
 
+          {/* Filter chips */}
+          <div className="flex flex-wrap gap-2 mb-6">
+            <button
+              onClick={() => setActiveIndustry(null)}
+              className={`px-4 py-2 rounded-full text-xs font-medium border transition-all duration-200 ${
+                activeIndustry === null
+                  ? "bg-primary text-primary-foreground border-primary"
+                  : "border-border text-muted-foreground hover:border-primary/40 hover:text-foreground"
+              }`}
+            >
+              Alla branscher
+            </button>
+            {industries.map((ind) => {
+              const Icon = ind.icon;
+              const isActive = activeIndustry === ind.id;
+              return (
+                <button
+                  key={ind.id}
+                  onClick={() => setActiveIndustry(ind.id)}
+                  className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-medium border transition-all duration-200 ${
+                    isActive
+                      ? "bg-primary text-primary-foreground border-primary"
+                      : "border-border text-muted-foreground hover:border-primary/40 hover:text-foreground"
+                  }`}
+                >
+                  <Icon className="w-3.5 h-3.5" />
+                  {ind.title}
+                </button>
+              );
+            })}
+          </div>
+
           <div className="grid md:grid-cols-2 gap-3 mb-10">
-            {industries.map((ind, i) => (
-              <motion.div
-                key={ind.title}
-                initial={{ opacity: 0, y: 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.07 }}
-                className="glass-subtle rounded-xl p-6 group hover:border-primary/15 transition-all duration-300"
-              >
-                <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center shrink-0 group-hover:bg-primary/15 transition-colors">
-                    <ind.icon className="w-4 h-4 text-primary" />
-                  </div>
-                  <div>
-                    <h3 className="text-sm font-semibold mb-1.5">{ind.title}</h3>
-                    <p className="text-xs text-muted-foreground leading-relaxed">{ind.desc}</p>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
+            {industries
+              .filter((ind) => activeIndustry === null || ind.id === activeIndustry)
+              .map((ind, i) => {
+                const expanded = activeIndustry === ind.id;
+                return (
+                  <motion.div
+                    key={ind.id}
+                    layout
+                    initial={{ opacity: 0, y: 16 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: i * 0.05 }}
+                    className={`glass-subtle rounded-xl p-6 group hover:border-primary/15 transition-all duration-300 ${
+                      expanded ? "md:col-span-2 border-primary/25" : ""
+                    }`}
+                  >
+                    <div className="flex items-start gap-4">
+                      <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center shrink-0 group-hover:bg-primary/15 transition-colors">
+                        <ind.icon className="w-4 h-4 text-primary" />
+                      </div>
+                      <div className="flex-1">
+                        <h3 className="text-sm font-semibold mb-1.5">{ind.title}</h3>
+                        <p className="text-xs text-muted-foreground leading-relaxed">{ind.desc}</p>
+
+                        {expanded && (
+                          <motion.ul
+                            initial={{ opacity: 0, height: 0 }}
+                            animate={{ opacity: 1, height: "auto" }}
+                            transition={{ duration: 0.3 }}
+                            className="mt-4 pt-4 border-t border-border/60 space-y-2.5"
+                          >
+                            {ind.examples.map((ex) => (
+                              <li key={ex} className="flex items-start gap-2.5 text-xs text-foreground/85 leading-relaxed">
+                                <span className="mt-1.5 w-1 h-1 rounded-full bg-primary shrink-0" />
+                                <span>{ex}</span>
+                              </li>
+                            ))}
+                          </motion.ul>
+                        )}
+                      </div>
+                    </div>
+                  </motion.div>
+                );
+              })}
           </div>
 
           <motion.p
