@@ -256,6 +256,7 @@ const Index = () => {
                   {ind.title}
                 </button>
               );
+            })}
             {activeIndustry !== null && (
               <button
                 onClick={() => setActiveIndustry(null)}
