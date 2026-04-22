@@ -187,7 +187,7 @@ const Index = () => {
               return (
                 <button
                   key={ind.id}
-                  onClick={() => setActiveIndustry(ind.id)}
+                  onClick={() => setActiveIndustry(isActive ? null : ind.id)}
                   className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-medium border transition-all duration-200 ${
                     isActive
                       ? "bg-primary text-primary-foreground border-primary"
