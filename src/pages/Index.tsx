@@ -79,6 +79,8 @@ const industries = [
 ];
 
 const Index = () => {
+  const [activeIndustry, setActiveIndustry] = useState<string | null>(null);
+
   return (
     <>
       {/* ─── HERO ─── */}
