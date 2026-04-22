@@ -273,25 +273,28 @@ const Index = () => {
                   key={ind.id}
                   onClick={() => setActiveIndustry(isActive ? null : ind.id)}
                   aria-pressed={isActive}
-                  className={`relative inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-medium border transition-all duration-200 ${
+                  className={`relative inline-flex items-center gap-2 rounded-full text-xs font-medium border transition-all duration-200 ${
                     isActive
-                      ? "bg-primary text-primary-foreground border-primary shadow-[0_0_0_3px_hsl(var(--primary)/0.18)] scale-[1.02]"
-                      : "border-border text-muted-foreground hover:border-primary/40 hover:text-foreground hover:bg-primary/[0.04]"
+                      ? "bg-primary text-primary-foreground border-primary shadow-[0_0_0_3px_hsl(var(--primary)/0.22)] scale-[1.04] pl-2 pr-4 py-2"
+                      : "border-border text-muted-foreground hover:border-primary/40 hover:text-foreground hover:bg-primary/[0.04] px-4 py-2"
                   }`}
                 >
                   <span
-                    className={`flex items-center justify-center w-5 h-5 rounded-full transition-colors ${
-                      isActive ? "bg-primary-foreground/20" : "bg-primary/10"
+                    className={`flex items-center justify-center rounded-full transition-all ${
+                      isActive
+                        ? "w-7 h-7 bg-primary-foreground text-primary ring-2 ring-primary-foreground/30"
+                        : "w-5 h-5 bg-primary/10"
                     }`}
                   >
                     <Icon
-                      className={`w-3 h-3 ${isActive ? "text-primary-foreground" : "text-primary"}`}
+                      className={`${isActive ? "w-4 h-4 text-primary" : "w-3 h-3 text-primary"}`}
+                      strokeWidth={isActive ? 2.5 : 2}
                     />
                   </span>
-                  {ind.title}
+                  <span className={isActive ? "font-semibold" : ""}>{ind.title}</span>
                   {isActive && (
-                    <span className="ml-0.5 inline-flex items-center justify-center w-4 h-4 rounded-full bg-primary-foreground/20">
-                      <X className="w-2.5 h-2.5" />
+                    <span className="ml-0.5 inline-flex items-center justify-center w-4 h-4 rounded-full bg-primary-foreground/25">
+                      <X className="w-2.5 h-2.5" strokeWidth={2.5} />
                     </span>
                   )}
                 </button>
