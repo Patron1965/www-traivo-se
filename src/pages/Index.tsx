@@ -21,11 +21,61 @@ const features = [
 ];
 
 const industries = [
-  { icon: Recycle, title: "Miljö, återvinning & avfall", desc: "Geofencing av tömningsställen, ruttoptimering för tunga fordon, snabb hantering av budningar och extratömningar." },
-  { icon: Wrench, title: "Tekniska installationer & service", desc: "Vitvaror, fiber, hiss, kyla. Koppling mellan avtal, artiklar och teknikerns kompetens – med snabb dokumentation i fält." },
-  { icon: Building2, title: "Fastighet & facility management", desc: "Yttre skötsel, trappstädning, snöröjning, rondering. Årsplanering, QR-kvitto på utfört arbete och prediktivt underhåll." },
-  { icon: Truck, title: "Transport & last mile", desc: "Distribution där rutter ändras dagligen. What-if-analys, automatisk omplanering och kundportal med live-leveransstatus." },
-  { icon: HeartPulse, title: "Hemtjänst & mobil vård", desc: "Hårda tidsfönster och slotpreferenser per brukare. Heatmaps som visar belastning per område innan personalen blir överkörd." },
+  {
+    id: "miljo",
+    icon: Recycle,
+    title: "Miljö, återvinning & avfall",
+    desc: "Geofencing av tömningsställen, ruttoptimering för tunga fordon, snabb hantering av budningar och extratömningar.",
+    examples: [
+      "Automatisk omplanering när en kund bokar extratömning kl 09:14",
+      "Geofence runt varje tömningsställe – verifierar att jobbet faktiskt utfördes",
+      "Ruttcache för tunga fordon som tar hänsyn till broar, vikt och vändzoner",
+    ],
+  },
+  {
+    id: "teknisk-service",
+    icon: Wrench,
+    title: "Tekniska installationer & service",
+    desc: "Vitvaror, fiber, hiss, kyla. Koppling mellan avtal, artiklar och teknikerns kompetens – med snabb dokumentation i fält.",
+    examples: [
+      "Matchar jobbet mot tekniker med rätt certifikat och reservdelar i bilen",
+      "Protokoll med foto signeras i appen – även utan täckning i källaren",
+      "Avtalskoppling: rätt artikel, rätt pris, rätt garanti automatiskt på fakturan",
+    ],
+  },
+  {
+    id: "fastighet",
+    icon: Building2,
+    title: "Fastighet & facility management",
+    desc: "Yttre skötsel, trappstädning, snöröjning, rondering. Årsplanering, QR-kvitto på utfört arbete och prediktivt underhåll.",
+    examples: [
+      "Årshjul för rondering – systemet skapar veckans jobb automatiskt",
+      "QR-kod vid varje objekt: skanna för att kvittera utfört arbete",
+      "Snöröjning aktiveras av väderdata – jobb pushas innan kunden hinner ringa",
+    ],
+  },
+  {
+    id: "transport",
+    icon: Truck,
+    title: "Transport & last mile",
+    desc: "Distribution där rutter ändras dagligen. What-if-analys, automatisk omplanering och kundportal med live-leveransstatus.",
+    examples: [
+      "What-if: \"Vad händer om bil 4 går sönder kl 11?\" – ny plan på sekunder",
+      "Live-spårning för slutkund med ETA – färre samtal till kundtjänst",
+      "Optimering tar hänsyn till lossningstid, inte bara körsträcka",
+    ],
+  },
+  {
+    id: "hemtjanst",
+    icon: HeartPulse,
+    title: "Hemtjänst & mobil vård",
+    desc: "Hårda tidsfönster och slotpreferenser per brukare. Heatmaps som visar belastning per område innan personalen blir överkörd.",
+    examples: [
+      "Slotpreferenser per brukare respekteras – samma personal så långt det går",
+      "Heatmap visar överbelastade områden innan schemat publiceras",
+      "Akut sjukfrånvaro: AI föreslår omfördelning som håller tidsfönstren",
+    ],
+  },
 ];
 
 const Index = () => {
