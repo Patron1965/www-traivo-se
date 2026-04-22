@@ -257,10 +257,10 @@ const Index = () => {
           <div className="flex flex-wrap gap-2 mb-6">
             <button
               onClick={() => setActiveIndustry(null)}
-              className={`px-4 py-2 rounded-full text-xs font-medium border transition-all duration-200 ${
+              className={`px-4 py-2 rounded-full text-xs font-medium border transition-all duration-200 outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background ${
                 activeIndustry === null
                   ? "bg-primary text-primary-foreground border-primary shadow-[0_0_0_3px_hsl(var(--primary)/0.15)]"
-                  : "border-border text-muted-foreground hover:border-primary/40 hover:text-foreground"
+                  : "border-border text-muted-foreground hover:border-primary/40 hover:text-foreground hover:bg-primary/[0.04]"
               }`}
             >
               Alla branscher
