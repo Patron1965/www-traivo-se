@@ -115,13 +115,13 @@
   .glass {
     background: hsl(195 28% 18% / 0.7);
     backdrop-filter: blur(20px) saturate(1.5);
-    border: 1px solid hsl(180 55% 47% / 0.25);
+    border: 1px solid hsl(180 55% 55% / 0.55);
   }
 
   .glass-subtle {
     background: hsl(195 28% 16% / 0.5);
     backdrop-filter: blur(12px);
-    border: 1px solid hsl(180 55% 47% / 0.25);
+    border: 1px solid hsl(180 55% 55% / 0.55);
   }
 
   .glow-teal {
