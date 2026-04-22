@@ -269,6 +269,14 @@ const Index = () => {
             )}
           </div>
 
+          <div className="mb-4 text-xs text-muted-foreground" aria-live="polite">
+            {activeIndustry === null ? (
+              <>Visar: <span className="text-foreground font-medium">Alla branscher</span></>
+            ) : (
+              <>Visar: <span className="text-foreground font-medium">{industries.find((i) => i.id === activeIndustry)?.title}</span></>
+            )}
+          </div>
+
           <div className="grid md:grid-cols-2 gap-3 mb-10">
             {industries
               .filter((ind) => activeIndustry === null || ind.id === activeIndustry)
