@@ -3,7 +3,7 @@
 ## Plan: Lägg till "Marknader vi vänder oss till"-sektion
 
 ### Mål
-Skapa en ny sektion på startsidan som tydligt presenterar de fem primära branscherna Plannix riktar sig till, samt motivera varför Plannix passar just dem.
+Skapa en ny sektion på startsidan som tydligt presenterar de fem primära branscherna Traivo riktar sig till, samt motivera varför Traivo passar just dem.
 
 ### Var det placeras
 Ny sektion på `src/pages/Index.tsx`, infogad **efter** "SOLUTION / FEATURES"-sektionen och **före** "CLOSING STATEMENT". Det skapar en logisk flow: problem → bakgrund → lösning → **för vem konkret** → avslut.
@@ -13,7 +13,7 @@ Ny sektion på `src/pages/Index.tsx`, infogad **efter** "SOLUTION / FEATURES"-se
 **Sektionsrubrik:**
 - Eyebrow: "Branscher"
 - Rubrik: "Byggt för verksamheter med många stopp"
-- Ingress (kort): "Plannix passar bäst där geografi, tid och kompetens måste pussla ihop varje dag. Här är branscherna där vi gör störst skillnad."
+- Ingress (kort): "Traivo passar bäst där geografi, tid och kompetens måste pussla ihop varje dag. Här är branscherna där vi gör störst skillnad."
 
 **Fem branschkort (grid 2 kolumner desktop, 1 mobil):**
 
@@ -26,7 +26,7 @@ Ny sektion på `src/pages/Index.tsx`, infogad **efter** "SOLUTION / FEATURES"-se
 | 5 | Hemtjänst & mobil vård | `HeartPulse` | Hårda tidsfönster och slotpreferenser per brukare. Heatmaps som visar belastning per område innan personalen blir överkörd. |
 
 **Avslutande textblock (under korten):**
-Kort stycke som förklarar varför Plannix sticker ut – fokus på kombinationen geografi + AI:
+Kort stycke som förklarar varför Traivo sticker ut – fokus på kombinationen geografi + AI:
 > "Det som gör skillnad är kombinationen geografi och AI. Klustervalidering hindrar att jobb säljs där de inte kan utföras lönsamt. Ruttoptimering med riktiga vägdata sparar bränsle och timmar varje dag. Och beslutsstödet förklarar *varför* AI:n placerade jobbet just där – så planeraren behåller kontrollen."
 
 ### Stilval (följer befintlig design)
