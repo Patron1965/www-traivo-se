@@ -76,7 +76,7 @@ const sections = [
   },
 ];
 
-const PlannixOne = () => {
+const TraivoOne = () => {
   return (
     <>
       {/* Hero */}
@@ -96,7 +96,7 @@ const PlannixOne = () => {
             transition={{ duration: 0.7 }}
             className="font-display text-4xl md:text-6xl font-bold leading-[0.95] tracking-tight mb-5 max-w-2xl"
           >
-            <span className="text-gradient-ice">Plannix One</span>
+            <span className="text-gradient-ice">Traivo One</span>
           </motion.h1>
           <motion.p
             initial={{ opacity: 0 }}
@@ -171,4 +171,4 @@ const PlannixOne = () => {
   );
 };
 
-export default PlannixOne;
+export default TraivoOne;

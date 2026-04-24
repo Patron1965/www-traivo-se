@@ -44,7 +44,7 @@ const Contact = () => {
       console.error("Contact submission failed:", error);
       toast({
         title: "Något gick fel",
-        description: "Försök igen om en stund eller mejla info@plannix.se.",
+        description: "Försök igen om en stund eller mejla info@traivo.se.",
         variant: "destructive",
       });
       return;
@@ -76,7 +76,7 @@ const Contact = () => {
           <div className="space-y-2.5 text-xs text-muted-foreground">
             <div className="flex items-center gap-2">
               <Mail className="w-3.5 h-3.5 text-primary/50" />
-              <span>info@plannix.se</span>
+              <span>info@traivo.se</span>
             </div>
             <div className="flex items-center gap-2">
               <MapPin className="w-3.5 h-3.5 text-primary/50" />
@@ -88,22 +88,22 @@ const Contact = () => {
               <DialogTrigger asChild>
                 <button className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-primary/20 text-xs font-medium text-foreground/90 hover:border-primary/40 hover:bg-primary/[0.04] transition-all duration-300">
                   <Users className="w-3.5 h-3.5 text-primary/60" />
-                  Vem är Plannix till för?
+                  Vem är Traivo till för?
                 </button>
               </DialogTrigger>
               <DialogContent className="sm:max-w-lg">
                 <DialogHeader>
                   <DialogTitle className="font-display text-xl font-bold">
-                    Vem är Plannix till för?
+                    Vem är Traivo till för?
                   </DialogTitle>
                 </DialogHeader>
                 <div className="text-sm text-muted-foreground leading-relaxed space-y-4 pt-2">
                   <p>
-                    Plannix är till för dig som driver serviceverksamhet där tekniker åker ut till kund –
+                    Traivo är till för dig som driver serviceverksamhet där tekniker åker ut till kund –
                     VVS, el, kyla, hissar, fastighet, IT, säkerhet, vitvaror, maskinservice eller sophantering.
                   </p>
                   <p>
-                    Om dina tekniker kör rutter och du schemalägger uppdrag varje dag, är Plannix byggt för dig.
+                    Om dina tekniker kör rutter och du schemalägger uppdrag varje dag, är Traivo byggt för dig.
                   </p>
                 </div>
               </DialogContent>

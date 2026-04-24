@@ -5,8 +5,8 @@ import { Menu, X } from "lucide-react";
 
 const links = [
   { to: "/#ai-chat", label: "Utforska", isAnchor: true },
-  { to: "/plannix-one", label: "Plannix One" },
-  { to: "/plannix-go", label: "Plannix Go" },
+  { to: "/traivo-one", label: "Traivo One" },
+  { to: "/traivo-go", label: "Traivo Go" },
   
   { to: "/om-oss", label: "Om oss" },
   { to: "/kontakt", label: "Kontakt" },
@@ -46,7 +46,7 @@ const Navbar = () => {
                 "radial-gradient(ellipse at center, hsl(var(--primary) / 0.72), hsl(var(--primary) / 0.24) 50%, transparent 75%)",
             }}
           />
-          <span className="relative text-gradient-ocean rounded-none shadow-none text-3xl">{"Plannix \n"}</span>
+          <span className="relative text-gradient-ocean rounded-none shadow-none text-3xl">{"Traivo \n"}</span>
         </Link>
 
         {/* Desktop */}
