@@ -15,7 +15,7 @@ const values = [
   {
     icon: Wrench,
     title: "Byggt i fält",
-    desc: "Plannix är utvecklat tillsammans med riktiga fältserviceföretag — inte i ett labb.",
+    desc: "Traivo är utvecklat tillsammans med riktiga fältserviceföretag — inte i ett labb.",
   },
   {
     icon: TrendingUp,
@@ -39,7 +39,7 @@ const TeamSection = () => {
             <span className="text-gradient-neural">intelligens</span>
           </h2>
           <p className="text-muted-foreground text-sm max-w-md mx-auto">
-            Vi tror inte på teknik utan förståelse. Plannix är byggt av människor 
+            Vi tror inte på teknik utan förståelse. Traivo är byggt av människor 
             som levt i fältservicens vardag.
           </p>
         </motion.div>

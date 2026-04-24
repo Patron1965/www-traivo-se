@@ -6,7 +6,7 @@ const Footer = () => {
       <div className="relative z-10 max-w-7xl mx-auto px-6 py-20">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-10">
           <div className="col-span-2 md:col-span-1">
-            <span className="font-display font-bold text-2xl text-gradient-ocean">plannix</span>
+            <span className="font-display font-bold text-2xl text-gradient-ocean">traivo</span>
             <p className="text-sm text-muted-foreground mt-4 leading-relaxed max-w-[240px]">
               AI-driven fältserviceplattform byggd för nordiska villkor.
             </p>
@@ -19,8 +19,8 @@ const Footer = () => {
           <div>
             <h4 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-4">Plattform</h4>
             <div className="space-y-3 text-sm">
-              <Link to="/plannix-one" className="block text-foreground/70 hover:text-primary transition-colors">Plannix One</Link>
-              <Link to="/plannix-go" className="block text-foreground/70 hover:text-primary transition-colors">Plannix Go</Link>
+              <Link to="/traivo-one" className="block text-foreground/70 hover:text-primary transition-colors">Traivo One</Link>
+              <Link to="/traivo-go" className="block text-foreground/70 hover:text-primary transition-colors">Traivo Go</Link>
               <Link to="/priser" className="block text-foreground/70 hover:text-primary transition-colors">Priser</Link>
             </div>
           </div>
@@ -47,7 +47,7 @@ const Footer = () => {
 
         <div className="border-t border-border mt-16 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-xs text-muted-foreground">
-            © 2026 Plannix AB · Byggd i Skandinavien
+            © 2026 Traivo AB · Byggd i Skandinavien
           </p>
           <div className="flex items-center gap-6 text-xs text-muted-foreground">
             <span>🇸🇪 Sverige</span>

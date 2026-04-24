@@ -27,7 +27,7 @@ const About = () => {
 
         <div className="relative z-10 max-w-7xl mx-auto px-6 w-full py-28">
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mb-4">
-            <span className="text-[11px] font-medium uppercase tracking-[0.25em] text-primary">Om Plannix</span>
+            <span className="text-[11px] font-medium uppercase tracking-[0.25em] text-primary">Om Traivo</span>
           </motion.div>
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
@@ -45,7 +45,7 @@ const About = () => {
             transition={{ delay: 0.2 }}
             className="text-muted-foreground max-w-xl leading-relaxed"
           >
-            Vi byggde Plannix för att vi själva var trötta på att hoppa mellan system. Idag är det en plattform för dem som driver fältservice på riktigt – i bilen, på kontoret och däremellan.
+            Vi byggde Traivo för att vi själva var trötta på att hoppa mellan system. Idag är det en plattform för dem som driver fältservice på riktigt – i bilen, på kontoret och däremellan.
           </motion.p>
         </div>
       </section>
@@ -112,7 +112,7 @@ const About = () => {
         <div className="absolute inset-0 bg-grid-pattern opacity-10" />
         <div className="relative z-10 max-w-2xl mx-auto text-center">
           <motion.p {...fadeIn} className="font-display text-xl md:text-2xl font-medium leading-relaxed text-foreground/90 mb-6">
-            Vi byggde Plannix för folk som oss själva. Förhoppningsvis känner du igen dig.
+            Vi byggde Traivo för folk som oss själva. Förhoppningsvis känner du igen dig.
           </motion.p>
           <motion.p {...fadeIn} className="text-sm text-muted-foreground">
             <AIChatLink className="text-primary hover:underline">Beskriv er verksamhet</AIChatLink>

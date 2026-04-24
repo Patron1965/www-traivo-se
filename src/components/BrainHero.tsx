@@ -23,7 +23,7 @@ const BrainHero = () => {
           </span>
         </h1>
         <p className="text-muted-foreground text-sm leading-relaxed max-w-lg mx-auto mt-4">
-          Plannix kombinerar årtionden av fältserviceerfarenhet med intelligent AI. 
+          Traivo kombinerar årtionden av fältserviceerfarenhet med intelligent AI. 
           Vi bygger inte teknik som ersätter människor — vi förstärker dem. 
           Beskriv din verksamhet nedan och se vad det kan betyda för dig.
         </p>

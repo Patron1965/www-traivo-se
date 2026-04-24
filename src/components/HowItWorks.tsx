@@ -10,12 +10,12 @@ const steps = [
   {
     icon: Brain,
     title: "AI analyserar",
-    desc: "Plannixs AI matchar era behov mot plattformens kapacitet.",
+    desc: "Traivos AI matchar era behov mot plattformens kapacitet.",
   },
   {
     icon: Sparkles,
     title: "Få insikter",
-    desc: "Se konkret hur Plannix kan effektivisera just er verksamhet.",
+    desc: "Se konkret hur Traivo kan effektivisera just er verksamhet.",
   },
 ];
 
