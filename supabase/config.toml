@@ -14,3 +14,6 @@ verify_jwt = false
 
 [functions.setup-deep-analysis-product]
 verify_jwt = false
+
+[functions.get-stripe-golive-status]
+verify_jwt = false
