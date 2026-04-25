@@ -227,6 +227,69 @@ const Brain_Page = () => {
       {/* Form + response */}
       <section className="relative pb-24 px-6 -mt-4">
         <div className="relative z-10 max-w-2xl mx-auto">
+          {/* Privacy banner – ovanför textfältet */}
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3, duration: 0.5 }}
+            className="mb-4 rounded-2xl border border-yellow-500/25 bg-yellow-500/[0.04] p-4 relative overflow-hidden"
+          >
+            {/* Subtil gul glow till vänster */}
+            <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-yellow-500/0 via-yellow-500/60 to-yellow-500/0" />
+
+            <div className="flex items-center gap-4">
+              {/* Ikon-cirkel */}
+              <div className="relative flex-shrink-0">
+                <span className="absolute inset-0 rounded-full bg-yellow-500/20 blur-md animate-pulse" />
+                <div className="relative w-10 h-10 rounded-full bg-yellow-500/15 border border-yellow-500/40 flex items-center justify-center">
+                  <Lock className="w-4 h-4 text-yellow-500" strokeWidth={2.5} />
+                </div>
+              </div>
+
+              {/* Tre punkter på rad */}
+              <div className="flex-1 min-w-0 grid grid-cols-3 gap-3">
+                <div className="flex items-center gap-1.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-yellow-500 shadow-[0_0_6px_hsl(var(--primary))]" />
+                  <span className="text-[11px] font-semibold text-foreground">Anonymt</span>
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-yellow-500 shadow-[0_0_6px_hsl(var(--primary))]" />
+                  <span className="text-[11px] font-semibold text-foreground">Inget sparas</span>
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-yellow-500 shadow-[0_0_6px_hsl(var(--primary))]" />
+                  <span className="text-[11px] font-semibold text-foreground">Ingen spam</span>
+                </div>
+              </div>
+
+              {/* Läs-mer toggle */}
+              <button
+                onClick={() => setShowPrivacy((v) => !v)}
+                className="flex-shrink-0 text-[10px] uppercase tracking-wider text-muted-foreground hover:text-foreground transition-colors font-semibold"
+              >
+                {showPrivacy ? "Dölj" : "Läs mer"}
+              </button>
+            </div>
+
+            {/* Expanderbar förklaring */}
+            <AnimatePresence>
+              {showPrivacy && (
+                <motion.div
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: "auto" }}
+                  exit={{ opacity: 0, height: 0 }}
+                  transition={{ duration: 0.25 }}
+                  className="overflow-hidden"
+                >
+                  <p className="text-xs text-muted-foreground leading-relaxed mt-4 pt-4 border-t border-yellow-500/15">
+                    Vi sparar aldrig det du skriver här. Inga personuppgifter, ingen IP, inget företagsnamn.
+                    Du är helt anonym tills du själv väljer att höra av dig.
+                  </p>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </motion.div>
+
           {/* Input */}
           <motion.form
             onSubmit={handleSubmit}
@@ -310,54 +373,6 @@ const Brain_Page = () => {
             )}
           </AnimatePresence>
 
-          {/* Privacy */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.8 }}
-            className="flex items-center justify-center mt-6"
-          >
-            <button
-              onClick={() => setShowPrivacy((v) => !v)}
-              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-[11px] text-muted-foreground hover:text-foreground hover:bg-muted/20 transition-all"
-              aria-label="Integritetsinformation"
-            >
-              <Lock className="w-3 h-3 text-yellow-500" />
-              <span>Helt anonymt – inget sparas</span>
-            </button>
-          </motion.div>
-
-          <AnimatePresence>
-            {showPrivacy && (
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 10 }}
-                transition={{ duration: 0.3 }}
-                className="mt-3 rounded-2xl glass p-5 relative"
-              >
-                <button
-                  onClick={() => setShowPrivacy(false)}
-                  className="absolute top-3 right-3 text-muted-foreground hover:text-foreground transition-colors"
-                  aria-label="Stäng"
-                >
-                  <X className="w-4 h-4" />
-                </button>
-                <div className="flex items-start gap-3">
-                  <Lock className="w-5 h-5 text-yellow-500 mt-0.5 shrink-0" />
-                  <div>
-                    <h4 className="text-sm font-semibold text-foreground mb-2">
-                      Full integritet – på dina villkor
-                    </h4>
-                    <p className="text-xs text-muted-foreground leading-relaxed">
-                      Vi sparar aldrig det du skriver här. Inga personuppgifter, ingen IP, inget företagsnamn.
-                      Du är helt anonym tills du själv väljer att höra av dig. Inga säljsamtal, ingen spam.
-                    </p>
-                  </div>
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
 
           {/* Error */}
           {error && (
