@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X } from "lucide-react";
+import { Menu, X, ArrowUpRight } from "lucide-react";
 
 const links = [
   { to: "/hjarna", label: "Hjärnan" },
@@ -10,6 +10,9 @@ const links = [
   { to: "/om-oss", label: "Om oss" },
   { to: "/kontakt", label: "Kontakt" },
 ];
+
+// Tillfällig länk till systemet – byt ut här när den permanenta URL:en är klar.
+const SYSTEM_URL = "https://kinab-core-concepts--tomas155.replit.app";
 
 const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -37,6 +40,17 @@ const Navbar = () => {
               {link.label}
             </Link>
           ))}
+
+          <a
+            href={SYSTEM_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Logga in i Traivo-systemet (öppnas i ny flik)"
+            className="ml-3 inline-flex items-center gap-1.5 px-4 py-2 rounded-lg text-[12px] font-semibold uppercase tracking-wide bg-primary text-primary-foreground shadow-[0_0_0_3px_hsl(var(--primary)/0.18),0_4px_14px_hsl(var(--primary)/0.30)] hover:bg-primary/90 transition-all outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+          >
+            Logga in
+            <ArrowUpRight className="w-3.5 h-3.5" strokeWidth={2.5} />
+          </a>
         </div>
 
         {/* Mobile */}
@@ -68,6 +82,18 @@ const Navbar = () => {
                   {link.label}
                 </Link>
               ))}
+
+              <a
+                href={SYSTEM_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => setMobileOpen(false)}
+                aria-label="Logga in i Traivo-systemet (öppnas i ny flik)"
+                className="mt-2 flex items-center justify-center gap-1.5 px-4 py-3 rounded-lg text-sm font-semibold bg-primary text-primary-foreground shadow-[0_0_0_3px_hsl(var(--primary)/0.18),0_4px_14px_hsl(var(--primary)/0.30)] hover:bg-primary/90 transition-all"
+              >
+                Logga in i systemet
+                <ArrowUpRight className="w-4 h-4" strokeWidth={2.5} />
+              </a>
             </div>
           </motion.div>
         )}
