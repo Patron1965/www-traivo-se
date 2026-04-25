@@ -188,6 +188,7 @@ const Index = () => {
           >
             <Link
               to="/hjarna#brain-input"
+              aria-label="Öppna Hjärnan och hoppa direkt till inmatningsfältet — fältet får fokus automatiskt"
               className="group block rounded-2xl glass glow-teal p-6 md:p-7 text-left transition-all duration-300 hover:border-primary/40 hover:scale-[1.01] outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
             >
               <div className="flex items-start gap-4">
