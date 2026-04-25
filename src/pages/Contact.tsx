@@ -59,7 +59,7 @@ const Contact = () => {
       <div className="absolute inset-0 bg-grid-pattern opacity-10" />
       <div className="absolute top-20 right-20 w-[300px] h-[300px] rounded-full bg-primary/[0.03] blur-[100px]" />
 
-      <div className="relative z-10 max-w-5xl mx-auto px-6 py-28 grid md:grid-cols-2 gap-16 items-start">
+      <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 py-20 sm:py-28 grid md:grid-cols-2 gap-10 md:gap-16 items-start">
         {/* Left */}
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
           <span className="text-[11px] font-medium uppercase tracking-[0.25em] text-primary mb-4 block">

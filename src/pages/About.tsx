@@ -26,7 +26,7 @@ const About = () => {
         <div className="absolute inset-0 bg-grid-pattern opacity-15" />
         <div className="absolute top-0 left-1/3 w-[400px] h-[400px] rounded-full bg-primary/[0.03] blur-[150px]" />
 
-        <div className="relative z-10 max-w-7xl mx-auto px-6 w-full py-28 grid lg:grid-cols-2 gap-12 items-center">
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 w-full py-28 grid lg:grid-cols-2 gap-12 items-center">
           <div>
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mb-4">
               <span className="text-[11px] font-medium uppercase tracking-[0.25em] text-primary">Om Traivo</span>
@@ -57,7 +57,7 @@ const About = () => {
       </section>
 
       {/* Vision */}
-      <section className="py-28 px-6 border-t border-border">
+      <section className="py-28 px-4 sm:px-6 border-t border-border">
         <div className="max-w-4xl mx-auto">
           <motion.div {...fadeIn} className="max-w-2xl mb-20">
             <span className="text-[11px] font-medium uppercase tracking-[0.25em] text-primary mb-4 block">Vision</span>
@@ -91,7 +91,7 @@ const About = () => {
       </section>
 
       {/* Why Nordics */}
-      <section className="py-28 px-6 border-t border-border bg-noise relative">
+      <section className="py-28 px-4 sm:px-6 border-t border-border bg-noise relative">
         <div className="absolute inset-0 bg-grid-pattern opacity-10" />
         <div className="relative z-10 max-w-2xl mx-auto">
           <motion.div {...fadeIn}>
@@ -114,7 +114,7 @@ const About = () => {
       </section>
 
       {/* Bottom */}
-      <section className="py-24 px-6 border-t border-border bg-noise relative">
+      <section className="py-24 px-4 sm:px-6 border-t border-border bg-noise relative">
         <div className="absolute inset-0 bg-grid-pattern opacity-10" />
         <div className="relative z-10 max-w-2xl mx-auto text-center">
           <motion.p {...fadeIn} className="font-display text-xl md:text-2xl font-medium leading-relaxed text-foreground/90 mb-6">

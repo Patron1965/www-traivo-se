@@ -241,7 +241,7 @@ const Brain_Page = () => {
         {/* Glow */}
         <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[500px] h-[500px] rounded-full bg-primary/[0.06] blur-[140px]" />
 
-        <div className="relative z-10 max-w-3xl mx-auto px-6 w-full text-center">
+        <div className="relative z-10 max-w-3xl mx-auto px-4 sm:px-6 w-full text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -280,7 +280,7 @@ const Brain_Page = () => {
       </section>
 
       {/* Form + response */}
-      <section className="relative pb-24 px-6 -mt-4">
+      <section className="relative pb-24 px-4 sm:px-6 -mt-4">
         <div className="relative z-10 max-w-2xl mx-auto">
           {/* Privacy banner – ovanför textfältet */}
           <motion.div
@@ -292,17 +292,17 @@ const Brain_Page = () => {
             {/* Subtil gul glow till vänster */}
             <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-yellow-500/0 via-yellow-500/60 to-yellow-500/0" />
 
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-3 sm:gap-4">
               {/* Ikon-cirkel */}
               <div className="relative flex-shrink-0">
                 <span className="absolute inset-0 rounded-full bg-yellow-500/20 blur-md animate-pulse" />
-                <div className="relative w-10 h-10 rounded-full bg-yellow-500/15 border border-yellow-500/40 flex items-center justify-center">
+                <div className="relative w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-yellow-500/15 border border-yellow-500/40 flex items-center justify-center">
                   <Lock className="w-4 h-4 text-yellow-500" strokeWidth={2.5} />
                 </div>
               </div>
 
-              {/* Tre punkter på rad */}
-              <div className="flex-1 min-w-0 grid grid-cols-3 gap-3">
+              {/* Tre punkter – stapel på små skärmar, rad från sm */}
+              <div className="flex-1 min-w-0 flex flex-wrap items-center gap-x-3 gap-y-1 sm:grid sm:grid-cols-3 sm:gap-3">
                 <div className="flex items-center gap-1.5">
                   <span className="w-1.5 h-1.5 rounded-full bg-yellow-500 shadow-[0_0_6px_hsl(var(--primary))]" />
                   <span className="text-[11px] font-semibold text-foreground">Anonymt</span>

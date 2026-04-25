@@ -85,7 +85,7 @@ const TraivoOne = () => {
         <div className="absolute inset-0 bg-grid-pattern opacity-20" />
         <div className="absolute top-0 left-0 w-[400px] h-[400px] rounded-full bg-primary/[0.03] blur-[150px]" />
 
-        <div className="relative z-10 max-w-7xl mx-auto px-6 w-full py-28 grid lg:grid-cols-2 gap-12 items-center">
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 w-full py-28 grid lg:grid-cols-2 gap-12 items-center">
           <div>
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mb-4">
               <span className="text-[11px] font-medium uppercase tracking-[0.25em] text-primary">
@@ -119,16 +119,16 @@ const TraivoOne = () => {
       {sections.map((section, si) => (
         <section
           key={section.id}
-          className={`py-20 px-6 border-t border-border ${si % 2 === 1 ? "bg-noise" : ""}`}
+          className={`py-20 px-4 sm:px-6 border-t border-border ${si % 2 === 1 ? "bg-noise" : ""}`}
         >
           <div className="max-w-7xl mx-auto">
-            <motion.div {...fadeIn} className="flex items-start gap-5 mb-6">
-              <span className="font-display text-5xl md:text-7xl font-bold text-border/50 leading-none select-none">
+            <motion.div {...fadeIn} className="flex items-start gap-3 sm:gap-5 mb-6">
+              <span className="font-display text-4xl sm:text-5xl md:text-7xl font-bold text-border/50 leading-none select-none">
                 {section.id}
               </span>
-              <div className="flex items-center gap-3 pt-3">
+              <div className="flex items-center gap-3 pt-2 sm:pt-3 flex-wrap">
                 <section.icon className="w-5 h-5 text-primary opacity-60" />
-                <h2 className="font-display text-xl md:text-2xl font-bold">{section.title}</h2>
+                <h2 className="font-display text-lg sm:text-xl md:text-2xl font-bold">{section.title}</h2>
               </div>
             </motion.div>
 
@@ -159,7 +159,7 @@ const TraivoOne = () => {
       ))}
 
       {/* Bottom */}
-      <section className="py-24 px-6 border-t border-border bg-noise relative">
+      <section className="py-24 px-4 sm:px-6 border-t border-border bg-noise relative">
         <div className="absolute inset-0 bg-grid-pattern opacity-10" />
         <div className="relative z-10 max-w-2xl mx-auto text-center">
           <motion.p {...fadeIn} className="font-display text-xl md:text-2xl font-medium leading-relaxed text-foreground/90 mb-6">

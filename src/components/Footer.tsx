@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 const Footer = () => {
   return (
     <footer className="relative border-t border-border bg-noise">
-      <div className="relative z-10 max-w-7xl mx-auto px-6 py-20">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 py-20">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-10">
           <div className="col-span-2 md:col-span-1">
             <span className="font-display font-bold text-2xl text-gradient-ocean">traivo</span>
@@ -45,11 +45,11 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="border-t border-border mt-16 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+        <div className="border-t border-border mt-12 sm:mt-16 pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-center md:text-left">
           <p className="text-xs text-muted-foreground">
             © 2026 Traivo AB · Byggd i Skandinavien
           </p>
-          <div className="flex items-center gap-6 text-xs text-muted-foreground">
+          <div className="flex items-center justify-center flex-wrap gap-x-6 gap-y-2 text-xs text-muted-foreground">
             <span>🇸🇪 Sverige</span>
             <span>🇳🇴 Norge</span>
             <span>🇫🇮 Finland</span>

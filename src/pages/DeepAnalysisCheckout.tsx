@@ -110,7 +110,7 @@ const DeepAnalysisCheckout = () => {
   return (
     <>
       <PaymentTestModeBanner />
-      <section className="relative min-h-screen pt-28 pb-24 px-6 bg-noise">
+      <section className="relative min-h-screen pt-28 pb-24 px-4 sm:px-6 bg-noise">
         <div className="absolute inset-0 bg-grid-pattern opacity-15 pointer-events-none" />
         <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[500px] h-[500px] rounded-full bg-primary/[0.05] blur-[140px] pointer-events-none" />
 
@@ -149,7 +149,7 @@ const DeepAnalysisCheckout = () => {
             {step === "form" && (
               <form onSubmit={handleSubmit} className="space-y-5">
                 {/* Trust row */}
-                <div className="grid grid-cols-3 gap-2 p-4 rounded-xl glass-subtle">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 p-4 rounded-xl glass-subtle">
                   <div className="flex items-center gap-2">
                     <CheckCircle2 className="w-3.5 h-3.5 text-primary flex-shrink-0" />
                     <span className="text-[11px] text-foreground/80">3-5 sidor PDF</span>

@@ -141,7 +141,7 @@ const Index = () => {
   return (
     <>
       {/* ─── HERO ─── */}
-      <section className="relative min-h-[85vh] flex flex-col items-center justify-center overflow-hidden bg-noise px-6 py-20">
+      <section className="relative min-h-[85vh] flex flex-col items-center justify-center overflow-hidden bg-noise px-4 sm:px-6 py-20">
         <div className="absolute top-0 right-0 w-[500px] h-[500px] rounded-full bg-primary/[0.03] blur-[150px]" />
         <div className="absolute bottom-0 left-0 w-[300px] h-[300px] rounded-full bg-accent/[0.03] blur-[100px]" />
         <div className="absolute inset-0 bg-grid-pattern opacity-30" />
@@ -227,7 +227,7 @@ const Index = () => {
       </section>
 
       {/* ─── PROBLEM RECOGNITION ─── */}
-      <section className="py-24 md:py-28 px-6 border-t border-border">
+      <section className="py-24 md:py-28 px-4 sm:px-6 border-t border-border">
         <div className="max-w-2xl mx-auto">
           <motion.div
             initial={{ opacity: 0 }}
@@ -248,7 +248,7 @@ const Index = () => {
       </section>
 
       {/* ─── INDUSTRIES ─── */}
-      <section className="py-24 md:py-28 px-6 border-t border-border">
+      <section className="py-24 md:py-28 px-4 sm:px-6 border-t border-border">
         <div className="max-w-5xl mx-auto">
           <motion.div
             initial={{ opacity: 0 }}
@@ -372,7 +372,7 @@ const Index = () => {
       </section>
 
       {/* ─── CREDIBILITY ─── */}
-      <section className="py-24 md:py-28 px-6 border-t border-border bg-noise relative">
+      <section className="py-24 md:py-28 px-4 sm:px-6 border-t border-border bg-noise relative">
         <div className="absolute inset-0 bg-grid-pattern opacity-15" />
         <div className="relative z-10 max-w-2xl mx-auto">
           <motion.div
@@ -405,7 +405,7 @@ const Index = () => {
       </section>
 
       {/* ─── TARGET AUDIENCE POPUP ─── */}
-      <section className="py-16 md:py-20 px-6 border-t border-border">
+      <section className="py-16 md:py-20 px-4 sm:px-6 border-t border-border">
         <div className="max-w-2xl mx-auto text-center">
           <motion.div
             initial={{ opacity: 0, y: 12 }}
@@ -441,7 +441,7 @@ const Index = () => {
       </section>
 
       {/* ─── SOLUTION / FEATURES ─── */}
-      <section className="py-24 md:py-28 px-6 border-t border-border">
+      <section className="py-24 md:py-28 px-4 sm:px-6 border-t border-border">
         <div className="max-w-5xl mx-auto">
           <motion.div
             initial={{ opacity: 0 }}
@@ -489,7 +489,7 @@ const Index = () => {
       </section>
 
       {/* ─── CLOSING STATEMENT ─── */}
-      <section className="py-20 px-6 border-t border-border bg-noise relative">
+      <section className="py-20 px-4 sm:px-6 border-t border-border bg-noise relative">
         <div className="absolute inset-0 bg-grid-pattern opacity-10" />
         <div className="relative z-10 max-w-2xl mx-auto text-center">
           <motion.div
@@ -508,7 +508,7 @@ const Index = () => {
       </section>
 
       {/* ─── FOOTER CTA ─── */}
-      <section className="relative py-28 px-6 border-t border-border overflow-hidden">
+      <section className="relative py-28 px-4 sm:px-6 border-t border-border overflow-hidden">
         <div className="absolute inset-0">
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] rounded-full bg-primary/[0.04] blur-[120px]" />
         </div>
