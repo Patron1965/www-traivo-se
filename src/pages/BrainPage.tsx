@@ -414,6 +414,52 @@ const Brain_Page = () => {
             </div>
           </motion.form>
 
+          {/* Hitta din bransch — exempel som fyller i textfältet */}
+          <AnimatePresence>
+            {!hasAsked && (
+              <motion.div
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{ delay: 0.45, duration: 0.5 }}
+                className="mt-8"
+              >
+                <div className="text-center mb-4">
+                  <p className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground/70 font-medium mb-1.5">
+                    Snabbstart
+                  </p>
+                  <h2 className="font-display text-lg md:text-xl font-bold text-foreground">
+                    Hitta din bransch — fyller i åt dig
+                  </h2>
+                  <p className="text-xs text-muted-foreground mt-1.5 max-w-md mx-auto leading-relaxed">
+                    Klicka på det område som liknar er verksamhet mest. Texten fylls i ovan så kan du justera den innan du skickar.
+                  </p>
+                </div>
+                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2.5">
+                  {examples.map((ex, i) => (
+                    <motion.button
+                      key={ex.label}
+                      type="button"
+                      initial={{ opacity: 0, y: 8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.5 + i * 0.03 }}
+                      onClick={() => handleExample(ex.text)}
+                      title={ex.text}
+                      className="min-w-0 text-left px-3 py-2.5 rounded-lg glass-subtle hover:border-primary/50 hover:bg-primary/[0.05] hover:-translate-y-0.5 transition-all group flex items-center gap-2.5"
+                    >
+                      <div className="w-7 h-7 rounded-md bg-primary/10 border border-primary/20 flex items-center justify-center flex-shrink-0 group-hover:bg-primary/20 transition-colors">
+                        <ex.icon className="w-3.5 h-3.5 text-primary" strokeWidth={2.25} />
+                      </div>
+                      <span className="min-w-0 text-xs font-semibold text-foreground/90 leading-tight">
+                        {ex.label}
+                      </span>
+                    </motion.button>
+                  ))}
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+
           {/* Värdefull botten-sektion när inget svar finns ännu */}
           <AnimatePresence>
             {!hasAsked && (
