@@ -44,6 +44,75 @@ export type Database = {
         }
         Relationships: []
       }
+      deep_analyses: {
+        Row: {
+          amount_paid_cents: number | null
+          business_description: string
+          company: string
+          contact_name: string
+          created_at: string
+          currency: string | null
+          email: string
+          environment: string
+          generation_error: string | null
+          id: string
+          org_number: string | null
+          paid_at: string | null
+          payment_status: string
+          pdf_storage_path: string | null
+          quick_response: string | null
+          report_content: string | null
+          report_generated_at: string | null
+          report_status: string
+          stripe_session_id: string | null
+          updated_at: string
+        }
+        Insert: {
+          amount_paid_cents?: number | null
+          business_description: string
+          company: string
+          contact_name: string
+          created_at?: string
+          currency?: string | null
+          email: string
+          environment?: string
+          generation_error?: string | null
+          id?: string
+          org_number?: string | null
+          paid_at?: string | null
+          payment_status?: string
+          pdf_storage_path?: string | null
+          quick_response?: string | null
+          report_content?: string | null
+          report_generated_at?: string | null
+          report_status?: string
+          stripe_session_id?: string | null
+          updated_at?: string
+        }
+        Update: {
+          amount_paid_cents?: number | null
+          business_description?: string
+          company?: string
+          contact_name?: string
+          created_at?: string
+          currency?: string | null
+          email?: string
+          environment?: string
+          generation_error?: string | null
+          id?: string
+          org_number?: string | null
+          paid_at?: string | null
+          payment_status?: string
+          pdf_storage_path?: string | null
+          quick_response?: string | null
+          report_content?: string | null
+          report_generated_at?: string | null
+          report_status?: string
+          stripe_session_id?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
