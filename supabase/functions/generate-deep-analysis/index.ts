@@ -81,15 +81,91 @@ Var ärlig. 2-3 saker som Traivo inte adresserar i deras case (om relevant).
 ---
 *Denna analys är genererad av AI baserat på er beskrivning. Den ersätter inte en personlig dialog - boka gärna en demo för djupare diskussion.*`;
 
-async function generateReport(businessDescription: string, quickResponse: string | null, company: string): Promise<string> {
+async function scrapeWebsite(url: string): Promise<{ ok: boolean; content: string; note: string }> {
+  try {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 12000);
+    const res = await fetch(url, {
+      signal: controller.signal,
+      redirect: "follow",
+      headers: {
+        "User-Agent": "Mozilla/5.0 (compatible; TraivoBot/1.0; +https://traivo.se)",
+        "Accept": "text/html,application/xhtml+xml",
+      },
+    });
+    clearTimeout(timeout);
+    if (!res.ok) {
+      return { ok: false, content: "", note: `Webbplatsen svarade med status ${res.status}.` };
+    }
+    const html = await res.text();
+    // Ta bort script/style/noscript
+    const cleaned = html
+      .replace(/<script[\s\S]*?<\/script>/gi, " ")
+      .replace(/<style[\s\S]*?<\/style>/gi, " ")
+      .replace(/<noscript[\s\S]*?<\/noscript>/gi, " ")
+      .replace(/<!--[\s\S]*?-->/g, " ");
+
+    // Plocka ut title + meta description
+    const titleMatch = cleaned.match(/<title[^>]*>([\s\S]*?)<\/title>/i);
+    const descMatch = cleaned.match(/<meta[^>]+name=["']description["'][^>]*content=["']([^"']+)["']/i)
+      || cleaned.match(/<meta[^>]+content=["']([^"']+)["'][^>]*name=["']description["']/i);
+    const ogDescMatch = cleaned.match(/<meta[^>]+property=["']og:description["'][^>]*content=["']([^"']+)["']/i);
+
+    const title = titleMatch?.[1]?.trim() || "";
+    const description = descMatch?.[1]?.trim() || ogDescMatch?.[1]?.trim() || "";
+
+    // Plocka ut all synlig text
+    const text = cleaned
+      .replace(/<[^>]+>/g, " ")
+      .replace(/&nbsp;/g, " ")
+      .replace(/&amp;/g, "&")
+      .replace(/&lt;/g, "<")
+      .replace(/&gt;/g, ">")
+      .replace(/&quot;/g, '"')
+      .replace(/&#39;/g, "'")
+      .replace(/\s+/g, " ")
+      .trim();
+
+    // Begränsa storleken (~ 8000 tecken text räcker långt för en analys)
+    const truncated = text.length > 8000 ? text.slice(0, 8000) + " ...[trunkerat]" : text;
+
+    const parts: string[] = [];
+    if (title) parts.push(`Title: ${title}`);
+    if (description) parts.push(`Meta description: ${description}`);
+    parts.push(`Sidinnehåll:\n${truncated}`);
+
+    return { ok: true, content: parts.join("\n\n"), note: "" };
+  } catch (e) {
+    return {
+      ok: false,
+      content: "",
+      note: `Kunde inte läsa webbplatsen automatiskt (${e instanceof Error ? e.message : "okänt fel"}). Basera analysen på beskrivningen.`,
+    };
+  }
+}
+
+async function generateReport(
+  businessDescription: string,
+  quickResponse: string | null,
+  company: string,
+  websiteUrl: string | null,
+  websiteContent: string,
+  websiteNote: string,
+): Promise<string> {
   const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
   if (!LOVABLE_API_KEY) throw new Error("LOVABLE_API_KEY not set");
 
   const today = new Date().toLocaleDateString("sv-SE", { year: "numeric", month: "long", day: "numeric" });
 
+  const websiteSection = websiteUrl
+    ? (websiteContent
+        ? `\nKundens webbplats: ${websiteUrl}\nFöljande innehåll har hämtats automatiskt från sajten - använd det aktivt för att göra analysen mer konkret (referera till tjänster, värdeord, segment de själva lyfter fram):\n---\n${websiteContent}\n---\n`
+        : `\nKundens webbplats: ${websiteUrl}\nObs: ${websiteNote}\n`)
+    : "";
+
   const userMessage = `Företag: ${company}
 Dagens datum: ${today}
-
+${websiteSection}
 Verksamhetsbeskrivning från kunden:
 ${businessDescription}
 
@@ -142,7 +218,7 @@ Deno.serve(async (req) => {
 
     const { data: order, error } = await supabase
       .from("deep_analyses")
-      .select("id, company, business_description, quick_response, payment_status, report_status")
+      .select("id, company, business_description, quick_response, website_url, payment_status, report_status")
       .eq("id", orderId)
       .single();
 
@@ -173,10 +249,18 @@ Deno.serve(async (req) => {
       .eq("id", orderId);
 
     try {
+      const websiteUrl = (order.website_url as string | null) ?? null;
+      const scraped = websiteUrl
+        ? await scrapeWebsite(websiteUrl)
+        : { ok: false, content: "", note: "Webbplats saknas." };
+
       const content = await generateReport(
         order.business_description as string,
         order.quick_response as string | null,
-        order.company as string
+        order.company as string,
+        websiteUrl,
+        scraped.content,
+        scraped.note,
       );
 
       await supabase
