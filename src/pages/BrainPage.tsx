@@ -236,16 +236,16 @@ const Brain_Page = () => {
   return (
     <>
       {/* Hero */}
-      <section className="relative min-h-[60vh] flex items-center overflow-hidden bg-noise pt-24 pb-12">
+      <section className="relative overflow-hidden bg-noise pt-20 pb-4">
         <div className="absolute inset-0 bg-grid-pattern opacity-15" />
         {/* Glow */}
-        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[min(500px,100vw)] h-[min(500px,100vw)] rounded-full bg-primary/[0.06] blur-[140px]" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[min(420px,100vw)] h-[min(420px,100vw)] rounded-full bg-primary/[0.06] blur-[120px]" />
 
         <div className="relative z-10 max-w-3xl mx-auto px-4 sm:px-6 w-full text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="mb-6 inline-flex max-w-full items-center gap-2 px-3 py-1.5 rounded-full glass-subtle"
+            className="mb-3 inline-flex max-w-full items-center gap-2 px-3 py-1 rounded-full glass-subtle"
           >
             <span className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75" />
@@ -260,7 +260,7 @@ const Brain_Page = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7 }}
-            className="font-display text-4xl md:text-6xl font-bold leading-[0.95] tracking-tight mb-5"
+            className="font-display text-3xl md:text-5xl font-bold leading-[0.95] tracking-tight mb-3"
           >
             Beskriv er verksamhet.<br />
             <span className="text-gradient-ocean">Få ett ärligt råd.</span>
@@ -270,17 +270,17 @@ const Brain_Page = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.2 }}
-            className="text-muted-foreground max-w-xl mx-auto leading-relaxed"
+            className="text-sm text-muted-foreground max-w-xl mx-auto leading-relaxed"
           >
             Berätta hur ni jobbar idag – utan att lämna namn, e-post eller företag.
-            Hjärnan föreslår vilka delar av Traivo som faktiskt skulle göra skillnad,
+            Hjärnan föreslår vilka delar av Traivo som skulle göra skillnad,
             eller säger ärligt om vi inte är rätt för er.
           </motion.p>
         </div>
       </section>
 
       {/* Form + response */}
-      <section className="relative pb-24 px-4 sm:px-6 -mt-4">
+      <section className="relative pb-12 px-4 sm:px-6 pt-4">
         <div className="relative z-10 max-w-2xl mx-auto">
           {/* Privacy banner – ovanför textfältet */}
           <motion.div
