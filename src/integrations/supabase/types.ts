@@ -66,6 +66,7 @@ export type Database = {
           report_status: string
           stripe_session_id: string | null
           updated_at: string
+          website_url: string | null
         }
         Insert: {
           amount_paid_cents?: number | null
@@ -88,6 +89,7 @@ export type Database = {
           report_status?: string
           stripe_session_id?: string | null
           updated_at?: string
+          website_url?: string | null
         }
         Update: {
           amount_paid_cents?: number | null
@@ -110,6 +112,7 @@ export type Database = {
           report_status?: string
           stripe_session_id?: string | null
           updated_at?: string
+          website_url?: string | null
         }
         Relationships: []
       }
