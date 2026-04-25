@@ -57,7 +57,7 @@ const Pricing = () => {
   return (
     <>
       {/* Hero */}
-      <section className="relative py-28 px-6 overflow-hidden bg-noise">
+      <section className="relative py-28 px-4 sm:px-6 overflow-hidden bg-noise">
         <div className="absolute inset-0 bg-grid-pattern opacity-15" />
         <div className="relative z-10 max-w-4xl mx-auto text-center">
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mb-4">
@@ -83,7 +83,7 @@ const Pricing = () => {
       </section>
 
       {/* Slider */}
-      <section className="px-6 -mt-4">
+      <section className="px-4 sm:px-6 -mt-4">
         <motion.div {...fadeIn} className="max-w-md mx-auto text-center mb-12">
           <p className="text-sm text-muted-foreground mb-2">Antal användare</p>
           <p className="text-4xl font-bold text-foreground mb-6">{users}</p>
@@ -123,7 +123,7 @@ const Pricing = () => {
       </section>
 
       {/* Cards */}
-      <section className="px-6 pb-28">
+      <section className="px-4 sm:px-6 pb-28">
         <div className="max-w-3xl mx-auto grid md:grid-cols-2 gap-6">
           {[standardPlan, proPlan].map((plan) => {
             const total = plan.base + plan.perUser * users;

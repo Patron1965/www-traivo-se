@@ -64,7 +64,7 @@ const TraivoGo = () => {
         <div className="absolute inset-0 bg-grid-pattern opacity-20" />
         <div className="absolute bottom-0 right-0 w-[400px] h-[400px] rounded-full bg-accent/[0.03] blur-[150px]" />
 
-        <div className="relative z-10 max-w-7xl mx-auto px-6 w-full py-28 grid lg:grid-cols-2 gap-12 items-center">
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 w-full py-28 grid lg:grid-cols-2 gap-12 items-center">
           <div>
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mb-4">
               <span className="text-[11px] font-medium uppercase tracking-[0.25em] text-accent">
@@ -98,7 +98,7 @@ const TraivoGo = () => {
       {sections.map((section, si) => (
         <section
           key={section.id}
-          className={`py-20 px-6 border-t border-border ${si % 2 === 1 ? "bg-noise" : ""}`}
+          className={`py-20 px-4 sm:px-6 border-t border-border ${si % 2 === 1 ? "bg-noise" : ""}`}
         >
           <div className="max-w-7xl mx-auto">
             <motion.div {...fadeIn} className="flex items-start gap-5 mb-6">
@@ -138,7 +138,7 @@ const TraivoGo = () => {
       ))}
 
       {/* Offline highlight */}
-      <section className="py-24 px-6 border-t border-border relative overflow-hidden">
+      <section className="py-24 px-4 sm:px-6 border-t border-border relative overflow-hidden">
         <div className="absolute inset-0">
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[250px] h-[250px] rounded-full bg-accent/[0.05] blur-[80px]" />
         </div>
@@ -154,7 +154,7 @@ const TraivoGo = () => {
       </section>
 
       {/* Bottom */}
-      <section className="py-24 px-6 border-t border-border bg-noise relative">
+      <section className="py-24 px-4 sm:px-6 border-t border-border bg-noise relative">
         <div className="absolute inset-0 bg-grid-pattern opacity-10" />
         <div className="relative z-10 max-w-2xl mx-auto text-center">
           <motion.p {...fadeIn} className="font-display text-xl md:text-2xl font-medium leading-relaxed text-foreground/90 mb-6">
