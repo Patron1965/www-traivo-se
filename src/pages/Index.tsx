@@ -7,6 +7,7 @@ import {
   Recycle, Wrench, Building2, Truck, HeartPulse, Lock, Sparkles,
   Check, Minus
 } from "lucide-react";
+import MondayHero from "@/components/MondayHero";
 import {
   Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger
 } from "@/components/ui/dialog";
@@ -142,90 +143,7 @@ const Index = () => {
   return (
     <>
       {/* ─── HERO ─── */}
-      <section className="relative min-h-[85vh] flex flex-col items-center justify-center overflow-hidden bg-noise px-4 sm:px-6 py-20">
-        <div className="absolute top-0 right-0 w-[min(500px,90vw)] h-[min(500px,90vw)] rounded-full bg-primary/[0.03] blur-[150px]" />
-        <div className="absolute bottom-0 left-0 w-[min(300px,80vw)] h-[min(300px,80vw)] rounded-full bg-accent/[0.03] blur-[100px]" />
-        <div className="absolute inset-0 bg-grid-pattern opacity-30" />
-
-        <div className="relative z-10 w-full max-w-3xl mx-auto text-center">
-          <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="flex items-center justify-center gap-3 mb-8"
-          >
-            <div className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse-slow" />
-            <span className="font-medium uppercase tracking-[0.25em] text-muted-foreground text-sm">
-              Plattform för fältservice · Norden
-            </span>
-          </motion.div>
-
-          <motion.h1
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.1 }}
-            className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.08] tracking-tight mb-5"
-          >
-            <span className="text-gradient-ice">Dina tekniker kör.</span>{" "}
-            <span className="text-gradient-ice">Dina planerare släcker bränder.</span>
-            <br />
-            <span className="text-gradient-ice">Dina kunder väntar.</span>
-          </motion.h1>
-
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.3 }}
-            className="text-muted-foreground text-sm md:text-base leading-relaxed max-w-xl mx-auto mb-10"
-          >
-            Vi byggde det vi själva saknade i 15 år i fält.
-          </motion.p>
-
-          <motion.div
-            id="ai-chat"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4, duration: 0.6 }}
-            className="w-full max-w-2xl mx-auto"
-          >
-            <Link
-              to="/hjarna#brain-input"
-              aria-label="Öppna Hjärnan och hoppa direkt till inmatningsfältet — fältet får fokus automatiskt"
-              className="group block rounded-2xl glass glow-teal p-4 sm:p-6 md:p-7 text-left transition-all duration-300 hover:border-primary/40 hover:scale-[1.01] outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
-            >
-              <div className="flex items-start gap-3 sm:gap-4">
-                <div className="shrink-0 w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center group-hover:bg-primary/15 transition-colors">
-                  <Brain className="w-5 h-5 sm:w-6 sm:h-6 text-primary" strokeWidth={2} />
-                </div>
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-2 mb-1.5">
-                    <Sparkles className="w-3.5 h-3.5 text-primary" />
-                    <span className="text-[11px] font-semibold uppercase tracking-[0.2em] text-primary">
-                      Prova Hjärnan
-                    </span>
-                  </div>
-                  <h2 className="font-display text-base sm:text-lg md:text-xl font-semibold text-foreground mb-2 leading-snug">
-                    Beskriv din verksamhet anonymt – få konkreta rekommendationer på 20 sekunder.
-                  </h2>
-                  <p className="text-xs md:text-sm text-muted-foreground leading-relaxed mb-5">
-                    Vår AI-rådgivare läser din situation och föreslår vad som faktiskt skulle göra skillnad i din vardag. Ingen inloggning. Inget sparas. Inga säljsamtal.
-                  </p>
-
-                  <div className="flex flex-wrap items-center gap-x-5 gap-y-3">
-                    <span className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-primary text-primary-foreground text-sm font-semibold shadow-[0_0_0_3px_hsl(var(--primary)/0.18),0_4px_14px_hsl(var(--primary)/0.30)] group-hover:bg-primary/90 transition-all">
-                      Öppna Hjärnan
-                      <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" strokeWidth={2.5} />
-                    </span>
-                    <span className="inline-flex items-center gap-1.5 text-[11px] text-muted-foreground">
-                      <Lock className="w-3 h-3 text-yellow-500" />
-                      Helt anonymt · Inget loggas · Inga säljsamtal
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </Link>
-          </motion.div>
-        </div>
-      </section>
+      <MondayHero />
 
       {/* ─── TRUST: VAD VI ÄR / INTE ÄR ─── */}
       <section className="py-20 md:py-24 px-4 sm:px-6 border-t border-border">
