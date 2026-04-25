@@ -421,12 +421,12 @@ const Brain_Page = () => {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0, height: 0 }}
                 transition={{ delay: 0.5 }}
-                className="mt-6"
+                className="mt-4"
               >
-                <p className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground/70 mb-3 text-center">
+                <p className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground/70 mb-2 text-center">
                   Eller välj ett exempel för en träffsäker rekommendation
                 </p>
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2">
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2">
                   {examples.map((ex, i) => (
                     <motion.button
                       key={ex.label}
