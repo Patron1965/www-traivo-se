@@ -84,6 +84,7 @@ Deno.serve(async (req) => {
         company: body.company,
         contact_name: body.contactName,
         org_number: body.orgNumber || null,
+        website_url: body.websiteUrl,
         business_description: body.businessDescription,
         quick_response: body.quickResponse || null,
         environment: body.environment,
