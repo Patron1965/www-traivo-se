@@ -5,26 +5,26 @@ import teamImage from "@/assets/team-brain-hero.png";
 
 const BrainHero = () => {
   return (
-    <div className="relative flex flex-col items-center justify-center">
+    <div className="relative flex flex-col items-center justify-center w-full max-w-full overflow-hidden">
       {/* Headline above team */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
-        className="text-center mb-8 max-w-2xl"
+        className="text-center mb-8 max-w-2xl px-2"
       >
-        <h1 className="text-3xl md:text-4xl font-display font-bold mb-4 leading-tight">
+        <h1 className="text-2xl sm:text-3xl md:text-4xl font-display font-bold mb-4 leading-tight">
           <span className="text-gradient-synapse">Rutinerat team</span>
           {" "}blir{" "}
           <span className="text-gradient-neural">superhjärna</span>
           <br />
-          <span className="text-foreground/80 text-2xl md:text-3xl">
+          <span className="text-foreground/80 text-xl sm:text-2xl md:text-3xl">
             — erfarenhet förstärkt med AI
           </span>
         </h1>
         <p className="text-muted-foreground text-sm leading-relaxed max-w-lg mx-auto mt-4">
-          Traivo kombinerar årtionden av fältserviceerfarenhet med intelligent AI. 
-          Vi bygger inte teknik som ersätter människor — vi förstärker dem. 
+          Traivo kombinerar årtionden av fältserviceerfarenhet med intelligent AI.
+          Vi bygger inte teknik som ersätter människor — vi förstärker dem.
           Beskriv din verksamhet nedan och se vad det kan betyda för dig.
         </p>
       </motion.div>
@@ -34,7 +34,7 @@ const BrainHero = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1 }}
-        className="relative z-10 text-center mb-2"
+        className="relative z-10 text-center mb-2 w-full max-w-[624px] px-4"
       >
         <motion.p
           initial={{ opacity: 0 }}
@@ -49,7 +49,7 @@ const BrainHero = () => {
           alt="Erfaret fältserviceteam"
           width={624}
           height={364}
-          className="relative z-10 drop-shadow-[0_0_30px_hsla(180,70%,50%,0.15)]"
+          className="relative z-10 w-full h-auto drop-shadow-[0_0_30px_hsla(180,70%,50%,0.15)]"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1 }}
@@ -58,12 +58,12 @@ const BrainHero = () => {
 
       {/* Connection beams going UP from team to brain */}
       <motion.div
-        className="relative z-10 w-[500px] h-[80px] -mt-2 -mb-2"
+        className="relative z-10 w-full max-w-[500px] h-[80px] -mt-2 -mb-2"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.8, duration: 1 }}
       >
-        <svg className="w-full h-full" viewBox="0 0 500 80" fill="none">
+        <svg className="w-full h-full" viewBox="0 0 500 80" fill="none" preserveAspectRatio="xMidYMid meet">
           <defs>
             <linearGradient id="beam-grad-up" x1="0" y1="1" x2="0" y2="0">
               <stop offset="0%" stopColor="hsl(180 70% 50%)" stopOpacity="0.5" />
@@ -100,7 +100,6 @@ const BrainHero = () => {
                 animate={{ pathLength: 1, opacity: 1 }}
                 transition={{ delay: 1 + beam.delay + i * 0.08, duration: 0.6 }}
               />
-              {/* Pulsing node at team connection */}
               <motion.circle
                 cx={beam.x}
                 cy={5}
@@ -111,7 +110,6 @@ const BrainHero = () => {
                 animate={{ opacity: [0, 0.8, 0.4], scale: [0, 1.2, 1] }}
                 transition={{ delay: 1.5 + i * 0.1, duration: 0.8, repeat: Infinity, repeatType: "reverse", repeatDelay: 3 }}
               />
-              {/* Energy pulse traveling up */}
               <motion.circle
                 cx={250}
                 cy={75}
@@ -135,17 +133,17 @@ const BrainHero = () => {
         </svg>
       </motion.div>
 
-      {/* Glow backdrop behind brain */}
-      <div className="absolute bottom-[80px] w-[420px] h-[420px] rounded-full bg-glow animate-pulse-glow" />
+      {/* Glow backdrop behind brain — constrained to viewport */}
+      <div className="absolute bottom-[80px] w-[min(420px,90vw)] h-[min(420px,90vw)] rounded-full bg-glow animate-pulse-glow" />
 
       {/* Brain — the RESULT of collective experience + AI */}
-      <motion.div className="relative z-10 flex flex-col items-center">
+      <motion.div className="relative z-10 flex flex-col items-center w-full">
         <motion.img
           src={brainImage}
           alt="Superhjärna — teamets erfarenhet förstärkt med AI"
           width={280}
           height={280}
-          className="relative z-10 drop-shadow-[0_0_60px_hsla(180,70%,50%,0.4)]"
+          className="relative z-10 w-[60vw] max-w-[280px] h-auto drop-shadow-[0_0_60px_hsla(180,70%,50%,0.4)]"
           initial={{ opacity: 0, scale: 0.7 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.6, duration: 1.2, ease: "easeOut" }}
@@ -155,7 +153,7 @@ const BrainHero = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.8 }}
-          className="relative z-10 mt-2 text-[11px] tracking-widest uppercase text-muted-foreground/60 font-display"
+          className="relative z-10 mt-2 text-[11px] tracking-widest uppercase text-muted-foreground/60 font-display text-center px-4"
         >
           Erfarenhet + AI = Superhjärna
         </motion.p>
@@ -201,9 +199,9 @@ const BrainHero = () => {
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 2, duration: 0.8 }}
-        className="relative z-20 mt-4 lg:hidden"
+        className="relative z-20 mt-4 lg:hidden w-full max-w-[280px] mx-auto px-2"
       >
-        <div className="w-[280px] rounded-xl border border-primary/20 bg-card/90 backdrop-blur-md p-3 animate-border-pulse">
+        <div className="w-full rounded-xl border border-primary/20 bg-card/90 backdrop-blur-md p-3 animate-border-pulse">
           <div className="flex items-start gap-2">
             <ShieldCheck className="w-4 h-4 text-primary mt-0.5 shrink-0" />
             <p className="text-[11px] text-muted-foreground leading-relaxed">
