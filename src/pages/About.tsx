@@ -24,9 +24,9 @@ const About = () => {
       {/* Hero */}
       <section className="relative min-h-[50vh] flex items-center overflow-hidden bg-noise">
         <div className="absolute inset-0 bg-grid-pattern opacity-15" />
-        <div className="absolute top-0 left-1/3 w-[400px] h-[400px] rounded-full bg-primary/[0.03] blur-[150px]" />
+        <div className="absolute top-0 left-1/3 w-[min(400px,90vw)] h-[min(400px,90vw)] rounded-full bg-primary/[0.03] blur-[150px]" />
 
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 w-full py-28 grid lg:grid-cols-2 gap-12 items-center">
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 w-full py-20 sm:py-28 grid lg:grid-cols-2 gap-12 items-center">
           <div>
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mb-4">
               <span className="text-[11px] font-medium uppercase tracking-[0.25em] text-primary">Om Traivo</span>
@@ -35,7 +35,7 @@ const About = () => {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7 }}
-              className="font-display text-4xl md:text-6xl font-bold leading-[0.95] tracking-tight mb-5 max-w-2xl"
+              className="font-display text-3xl sm:text-4xl md:text-6xl font-bold leading-[0.95] tracking-tight mb-5 max-w-2xl"
             >
               <span className="text-gradient-ice">Vi byggde det</span>
               <br />

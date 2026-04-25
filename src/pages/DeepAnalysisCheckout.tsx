@@ -126,7 +126,7 @@ const DeepAnalysisCheckout = () => {
       <PaymentTestModeBanner />
       <section className="relative min-h-screen pt-28 pb-24 px-4 sm:px-6 bg-noise">
         <div className="absolute inset-0 bg-grid-pattern opacity-15 pointer-events-none" />
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[500px] h-[500px] rounded-full bg-primary/[0.05] blur-[140px] pointer-events-none" />
+        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[min(500px,90vw)] h-[min(500px,90vw)] rounded-full bg-primary/[0.05] blur-[140px] pointer-events-none" />
 
         <div className="relative z-10 max-w-2xl mx-auto">
           <button
@@ -150,7 +150,7 @@ const DeepAnalysisCheckout = () => {
                 </span>
               </div>
 
-              <h1 className="font-display text-3xl md:text-4xl font-bold leading-tight mb-3">
+              <h1 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold leading-tight mb-3">
                 {step === "form" ? "Beställ er djupanalys" : "Slutför betalning"}
               </h1>
               <p className="text-sm text-muted-foreground">

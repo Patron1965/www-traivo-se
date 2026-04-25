@@ -67,7 +67,7 @@ const Pricing = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7 }}
-            className="font-display text-4xl md:text-6xl font-bold leading-[0.95] tracking-tight mb-5"
+            className="font-display text-3xl sm:text-4xl md:text-6xl font-bold leading-[0.95] tracking-tight mb-5"
           >
             <span className="text-gradient-ice">Transparent prissättning</span>
           </motion.h1>
@@ -131,19 +131,19 @@ const Pricing = () => {
               <motion.div
                 key={plan.name}
                 {...fadeIn}
-                className="rounded-2xl border border-border bg-card p-8 flex flex-col"
+                className="rounded-2xl border border-border bg-card p-6 sm:p-8 flex flex-col"
               >
                 <h3 className="text-lg font-semibold text-foreground">{plan.name}</h3>
                 <p className="text-sm text-muted-foreground mt-1 mb-6">{plan.desc}</p>
 
                 <div className="mb-6">
-                  <span className="text-3xl font-bold text-foreground">
+                  <span className="text-2xl sm:text-3xl font-bold text-foreground break-words">
                     {formatPrice(total)} kr
                   </span>
                   <span className="text-sm text-muted-foreground"> /månad</span>
                 </div>
 
-                <p className="text-xs text-muted-foreground mb-1">
+                <p className="text-xs text-muted-foreground mb-1 break-words">
                   Grund: {formatPrice(plan.base)} kr + {plan.perUser} kr × {users} användare
                 </p>
 

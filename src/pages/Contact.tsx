@@ -57,7 +57,7 @@ const Contact = () => {
   return (
     <section className="relative min-h-screen bg-noise">
       <div className="absolute inset-0 bg-grid-pattern opacity-10" />
-      <div className="absolute top-20 right-20 w-[300px] h-[300px] rounded-full bg-primary/[0.03] blur-[100px]" />
+      <div className="absolute top-20 right-20 w-[min(300px,80vw)] h-[min(300px,80vw)] rounded-full bg-primary/[0.03] blur-[100px]" />
 
       <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 py-20 sm:py-28 grid md:grid-cols-2 gap-10 md:gap-16 items-start">
         {/* Left */}
@@ -65,7 +65,7 @@ const Contact = () => {
           <span className="text-[11px] font-medium uppercase tracking-[0.25em] text-primary mb-4 block">
             Kontakt
           </span>
-          <h1 className="font-display text-3xl md:text-4xl font-bold leading-[0.95] tracking-tight mb-5">
+          <h1 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold leading-[1.05] tracking-tight mb-5">
             <span className="text-gradient-ice">Har ni frågor om plattformen, vill se en demo eller bara prata fältservice?</span>
           </h1>
           <p className="text-sm text-muted-foreground mb-8 leading-relaxed max-w-sm">
