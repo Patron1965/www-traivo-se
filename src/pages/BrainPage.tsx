@@ -6,6 +6,7 @@ import {
   Send, Loader2, Brain, Lock, RotateCcw, X,
   Trash2, Building2, Users, MapPin, Sparkles,
   Wrench, Snowflake, Zap, Leaf, Truck, HardHat,
+  PenLine, Lightbulb, Compass, ShieldCheck, Clock,
 } from "lucide-react";
 import DeepAnalysisUpsell from "@/components/DeepAnalysisUpsell";
 
@@ -449,6 +450,104 @@ const Brain_Page = () => {
             )}
           </AnimatePresence>
 
+          {/* Värdefull botten-sektion när inget svar finns ännu */}
+          <AnimatePresence>
+            {!hasAsked && (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0 }}
+                transition={{ delay: 0.7, duration: 0.6 }}
+                className="mt-10"
+              >
+                {/* Så funkar Hjärnan – 3 steg */}
+                <div className="text-center mb-5">
+                  <p className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground/70 font-medium">
+                    Så funkar Hjärnan
+                  </p>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-8">
+                  {[
+                    {
+                      icon: PenLine,
+                      step: "01",
+                      title: "Beskriv er vardag",
+                      text: "Bransch, antal tekniker, vad som skaver. Inga uppgifter sparas.",
+                    },
+                    {
+                      icon: Lightbulb,
+                      step: "02",
+                      title: "Få ärlig analys",
+                      text: "Hjärnan pekar ut konkreta flaskhalsar och vilka delar av Traivo som faktiskt löser dem.",
+                    },
+                    {
+                      icon: Compass,
+                      step: "03",
+                      title: "Bestäm själv",
+                      text: "Läs vidare, beställ djupanalys eller boka demo. Du hör av dig — inte tvärtom.",
+                    },
+                  ].map((s, i) => (
+                    <motion.div
+                      key={s.step}
+                      initial={{ opacity: 0, y: 12 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.8 + i * 0.08 }}
+                      className="relative p-4 rounded-xl glass-subtle"
+                    >
+                      <div className="flex items-center gap-2 mb-2">
+                        <div className="w-7 h-7 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center">
+                          <s.icon className="w-3.5 h-3.5 text-primary" strokeWidth={2.25} />
+                        </div>
+                        <span className="text-[10px] tracking-[0.2em] text-muted-foreground/60 font-mono">
+                          {s.step}
+                        </span>
+                      </div>
+                      <h3 className="text-sm font-semibold text-foreground mb-1">{s.title}</h3>
+                      <p className="text-xs text-muted-foreground leading-relaxed">{s.text}</p>
+                    </motion.div>
+                  ))}
+                </div>
+
+                {/* Förtroende-rad */}
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 1.1 }}
+                  className="rounded-xl glass-subtle p-4 sm:p-5 flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="w-9 h-9 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center flex-shrink-0">
+                      <ShieldCheck className="w-4 h-4 text-primary" strokeWidth={2.25} />
+                    </div>
+                    <div>
+                      <p className="text-xs font-semibold text-foreground">Inget kontoslag, inga säljmejl</p>
+                      <p className="text-[11px] text-muted-foreground">Hjärnan svarar direkt — ingen registrering krävs.</p>
+                    </div>
+                  </div>
+                  <div className="hidden sm:block w-px h-10 bg-border/40" />
+                  <div className="flex items-center gap-3">
+                    <div className="w-9 h-9 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center flex-shrink-0">
+                      <Clock className="w-4 h-4 text-primary" strokeWidth={2.25} />
+                    </div>
+                    <div>
+                      <p className="text-xs font-semibold text-foreground">Svar på under en minut</p>
+                      <p className="text-[11px] text-muted-foreground">Lika ärligt som ett samtal med en kollega.</p>
+                    </div>
+                  </div>
+                </motion.div>
+
+                {/* Liten avslutande hint */}
+                <motion.p
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 1.3 }}
+                  className="text-center text-[11px] text-muted-foreground/60 mt-6"
+                >
+                  Hjärnan säger nej om Traivo inte är rätt för er. Det är hela poängen.
+                </motion.p>
+              </motion.div>
+            )}
+          </AnimatePresence>
 
           {/* Error */}
           {error && (
