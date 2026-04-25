@@ -287,7 +287,7 @@ const Brain_Page = () => {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 0.5 }}
-            className="mb-4 rounded-2xl border border-yellow-500/25 bg-yellow-500/[0.04] p-4 relative overflow-hidden"
+            className="mb-3 rounded-xl border border-yellow-500/25 bg-yellow-500/[0.04] px-4 py-2.5 relative overflow-hidden"
           >
             {/* Subtil gul glow till vänster */}
             <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-yellow-500/0 via-yellow-500/60 to-yellow-500/0" />
