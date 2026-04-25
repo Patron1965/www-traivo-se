@@ -241,7 +241,7 @@ const Brain_Page = () => {
         {/* Glow */}
         <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[500px] h-[500px] rounded-full bg-primary/[0.06] blur-[140px]" />
 
-        <div className="relative z-10 max-w-3xl mx-auto px-6 w-full text-center">
+        <div className="relative z-10 max-w-3xl mx-auto px-4 sm:px-6 w-full text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
