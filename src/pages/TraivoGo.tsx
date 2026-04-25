@@ -101,13 +101,13 @@ const TraivoGo = () => {
           className={`py-20 px-4 sm:px-6 border-t border-border ${si % 2 === 1 ? "bg-noise" : ""}`}
         >
           <div className="max-w-7xl mx-auto">
-            <motion.div {...fadeIn} className="flex items-start gap-5 mb-6">
-              <span className="font-display text-5xl md:text-7xl font-bold text-border/50 leading-none select-none">
+            <motion.div {...fadeIn} className="flex items-start gap-3 sm:gap-5 mb-6">
+              <span className="font-display text-4xl sm:text-5xl md:text-7xl font-bold text-border/50 leading-none select-none">
                 {section.id}
               </span>
-              <div className="flex items-center gap-3 pt-3">
+              <div className="flex items-center gap-3 pt-2 sm:pt-3 flex-wrap">
                 <section.icon className="w-5 h-5 text-accent opacity-60" />
-                <h2 className="font-display text-xl md:text-2xl font-bold">{section.title}</h2>
+                <h2 className="font-display text-lg sm:text-xl md:text-2xl font-bold">{section.title}</h2>
               </div>
             </motion.div>
 
