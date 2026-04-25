@@ -1,0 +1,212 @@
+// Generates the deep analysis report (Markdown) using Lovable AI, then stores it
+// alongside the order. The PDF is rendered client-side from the markdown content
+// when the user lands on the thank-you page.
+import { createClient } from "npm:@supabase/supabase-js@2";
+
+const corsHeaders = {
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+};
+
+const SYSTEM_PROMPT = `Du är Traivos seniora analytiker. Du levererar en utförlig, ärlig och konkret djupanalys (3-5 sidor) av en verksamhet baserat på kundens beskrivning. Tonalitet: nordisk, saklig, jordnära, aldrig säljig. Inga entusiasm-fraser ("Vad spännande!"). Använd ALLTID svenska om kunden inte uttryckligen skriver på annat språk.
+
+## Plattformens delar att referera till
+
+**Traivo One** (webb, för planerare och arbetsledare)
+- Drag-and-drop veckoplanering
+- AI-autoschemaläggning (kompetens, geografi, arbetstid, fordon)
+- Ruttoptimering med riktiga vägavstånd
+- Live GPS-karta och störningshantering
+- Kund- och objektregister med karta + serviceområden
+- Kundportal med automatiska SMS
+- AI-assistent och prediktivt underhåll (IoT)
+- Fakturering, Fortnox-export, white-label
+
+**Traivo Go** (mobil, för tekniker i fält)
+- Dagens uppdrag med ett-tryck navigation
+- Digitala protokoll, foto, signatur, materiallogg
+- In-/utcheckning och löneunderlag
+- Offline-first - synkar när nätet kommer tillbaka
+- Push-notiser och meddelanden
+
+## Format
+
+Producera EXAKT denna struktur i markdown. Skriv djupgående, konkret och baserat på vad kunden faktiskt beskrivit. Antaganden ska vara explicita.
+
+# Djupanalys för {Företag}
+*Levererad av Traivo - {dagens datum}*
+
+## 1. Sammanfattning
+3-5 meningar: kärnproblem, vår bedömning, vad vi rekommenderar.
+
+## 2. Vad vi förstår om er verksamhet
+4-6 meningar som speglar tillbaka deras verksamhet konkret. Visa att ni läst noggrant. Lyft tekniker, fordon, geografi, kundtyp, nuvarande verktyg.
+
+## 3. Risker och flaskhalsar
+Punktlista med 4-6 specifika risker. För varje:
+- **Risk:** kort namn
+- **Konsekvens:** vad det kostar dem (tid, pengar, kvalitet, kundnöjdhet)
+- **Sannolikhet:** låg/medel/hög baserat på vad de beskrivit
+
+## 4. Möjligheter
+4-6 konkreta förbättringsområden. För varje:
+- **Möjlighet:** vad
+- **Värde:** uppskattad effekt (i tid sparad, fakturerbar tid återvunnen, färre missade jobb, etc.)
+
+## 5. ROI-uppskattning
+Räkna ut grovt utifrån de siffror kunden nämnt (antal tekniker, bilar, jobb/vecka). Visa beräkningen transparent. Var ärlig med antaganden.
+
+Exempel-struktur:
+- **Idag:** X tim/vecka på planering manuellt = Y kr/år
+- **Med Traivo:** estimerad besparing Z kr/år
+- **Återbetalning:** N månader
+
+## 6. Rekommenderade Traivo-moduler
+Prioriterad lista (viktigast först). För varje modul:
+- **Modulnamn**
+- Vilket problem den löser för dem specifikt
+- Bedömd nytta: hög/medel/låg
+
+## 7. Vad vi INTE löser
+Var ärlig. 2-3 saker som Traivo inte adresserar i deras case (om relevant).
+
+## 8. Prioriterad åtgärdsplan
+- **30 dagar:** vad som ska vara på plats
+- **60 dagar:** nästa steg
+- **90 dagar:** full effekt
+
+## 9. Nästa steg
+2-3 meningar om hur de tar det vidare med en demo.
+
+---
+*Denna analys är genererad av AI baserat på er beskrivning. Den ersätter inte en personlig dialog - boka gärna en demo för djupare diskussion.*`;
+
+async function generateReport(businessDescription: string, quickResponse: string | null, company: string): Promise<string> {
+  const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
+  if (!LOVABLE_API_KEY) throw new Error("LOVABLE_API_KEY not set");
+
+  const today = new Date().toLocaleDateString("sv-SE", { year: "numeric", month: "long", day: "numeric" });
+
+  const userMessage = `Företag: ${company}
+Dagens datum: ${today}
+
+Verksamhetsbeskrivning från kunden:
+${businessDescription}
+
+${quickResponse ? `\nVår tidigare snabbrekommendation till kunden var:\n${quickResponse}\n\nByg vidare på det och gå djupare.` : ""}
+
+Producera nu den fullständiga djupanalysen enligt mallen.`;
+
+  const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${LOVABLE_API_KEY}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      model: "google/gemini-2.5-pro",
+      messages: [
+        { role: "system", content: SYSTEM_PROMPT },
+        { role: "user", content: userMessage },
+      ],
+    }),
+  });
+
+  if (!response.ok) {
+    const text = await response.text();
+    throw new Error(`AI gateway error ${response.status}: ${text}`);
+  }
+
+  const data = await response.json();
+  const content = data.choices?.[0]?.message?.content;
+  if (!content) throw new Error("No content in AI response");
+  return content;
+}
+
+Deno.serve(async (req) => {
+  if (req.method === "OPTIONS") return new Response("ok", { headers: corsHeaders });
+
+  try {
+    const { orderId } = await req.json();
+    if (!orderId) {
+      return new Response(JSON.stringify({ error: "orderId required" }), {
+        status: 400,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
+    const supabase = createClient(
+      Deno.env.get("SUPABASE_URL")!,
+      Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!
+    );
+
+    const { data: order, error } = await supabase
+      .from("deep_analyses")
+      .select("id, company, business_description, quick_response, payment_status, report_status")
+      .eq("id", orderId)
+      .single();
+
+    if (error || !order) {
+      return new Response(JSON.stringify({ error: "Order not found" }), {
+        status: 404,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
+    if (order.payment_status !== "paid") {
+      return new Response(JSON.stringify({ error: "Order not paid" }), {
+        status: 402,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
+    if (order.report_status === "ready") {
+      return new Response(JSON.stringify({ success: true, alreadyReady: true }), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
+    // Mark as generating
+    await supabase
+      .from("deep_analyses")
+      .update({ report_status: "generating" })
+      .eq("id", orderId);
+
+    try {
+      const content = await generateReport(
+        order.business_description as string,
+        order.quick_response as string | null,
+        order.company as string
+      );
+
+      await supabase
+        .from("deep_analyses")
+        .update({
+          report_content: content,
+          report_status: "ready",
+          report_generated_at: new Date().toISOString(),
+        })
+        .eq("id", orderId);
+
+      return new Response(JSON.stringify({ success: true }), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    } catch (genError) {
+      console.error("Generation failed:", genError);
+      await supabase
+        .from("deep_analyses")
+        .update({
+          report_status: "failed",
+          generation_error: genError instanceof Error ? genError.message : "Unknown error",
+        })
+        .eq("id", orderId);
+      throw genError;
+    }
+  } catch (e) {
+    console.error("generate-deep-analysis error:", e);
+    return new Response(
+      JSON.stringify({ error: e instanceof Error ? e.message : "Okänt fel" }),
+      { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+    );
+  }
+});

@@ -1,1 +1,16 @@
 project_id = "getqyueldupqxrfillcu"
+
+[functions.create-deep-analysis-checkout]
+verify_jwt = false
+
+[functions.payments-webhook]
+verify_jwt = false
+
+[functions.generate-deep-analysis]
+verify_jwt = false
+
+[functions.get-deep-analysis]
+verify_jwt = false
+
+[functions.setup-deep-analysis-product]
+verify_jwt = false
