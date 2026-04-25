@@ -201,7 +201,7 @@ const AIInput = () => {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="Beskriv er verksamhet eller ställ en fråga..."
-            className="relative w-full bg-transparent px-6 py-5 pr-16 text-foreground placeholder:text-muted-foreground focus:outline-none resize-none min-h-[100px] text-sm leading-relaxed"
+            className="relative w-full bg-transparent px-5 sm:px-6 py-5 pr-16 text-foreground placeholder:text-muted-foreground focus:outline-none resize-none min-h-[100px] text-base leading-relaxed"
             rows={3}
             onKeyDown={(e) => {
               if (e.key === "Enter" && !e.shiftKey) {
