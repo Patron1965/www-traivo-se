@@ -382,8 +382,8 @@ const Brain_Page = () => {
                 placeholder="Vi är ett företag inom… Vi har X tekniker… Vårt största problem är…"
                 aria-label="Beskriv er verksamhet för Hjärnans AI-rådgivare"
                 aria-describedby="brain-input-help brain-input-counter"
-                className="relative w-full bg-transparent px-5 sm:px-6 py-5 pr-16 text-foreground placeholder:text-muted-foreground focus:outline-none focus-visible:outline-none resize-none min-h-[140px] text-base leading-relaxed"
-                rows={5}
+                className="relative w-full bg-transparent px-5 sm:px-6 py-4 pr-16 text-foreground placeholder:text-muted-foreground focus:outline-none focus-visible:outline-none resize-none min-h-[110px] text-base leading-relaxed"
+                rows={4}
                 maxLength={2000}
                 onKeyDown={(e) => {
                   if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) {
