@@ -414,42 +414,6 @@ const Brain_Page = () => {
             </div>
           </motion.form>
 
-          {/* Examples */}
-          <AnimatePresence>
-            {!hasAsked && (
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0, height: 0 }}
-                transition={{ delay: 0.5 }}
-                className="mt-4"
-              >
-                <p className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground/70 mb-2 text-center">
-                  Eller välj ett exempel för en träffsäker rekommendation
-                </p>
-                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2">
-                  {examples.map((ex, i) => (
-                    <motion.button
-                      key={ex.label}
-                      type="button"
-                      initial={{ opacity: 0, y: 8 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.5 + i * 0.03 }}
-                      onClick={() => handleExample(ex.text)}
-                      title={ex.text}
-                      className="min-w-0 text-left px-2.5 py-2 rounded-lg glass-subtle hover:border-primary/40 hover:bg-primary/[0.03] transition-all group flex items-center gap-2"
-                    >
-                      <ex.icon className="w-3.5 h-3.5 text-primary opacity-80 group-hover:opacity-100 transition-opacity flex-shrink-0" strokeWidth={2.25} />
-                      <span className="min-w-0 text-[10.5px] font-semibold uppercase tracking-wider text-foreground/90 truncate">
-                        {ex.label}
-                      </span>
-                    </motion.button>
-                  ))}
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
-
           {/* Värdefull botten-sektion när inget svar finns ännu */}
           <AnimatePresence>
             {!hasAsked && (
@@ -457,56 +421,94 @@ const Brain_Page = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0 }}
-                transition={{ delay: 0.7, duration: 0.6 }}
+                transition={{ delay: 0.5, duration: 0.6 }}
                 className="mt-10"
               >
                 {/* Så funkar Hjärnan – 3 steg */}
-                <div className="text-center mb-5">
-                  <p className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground/70 font-medium">
+                <div className="text-center mb-6">
+                  <p className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground/70 font-medium mb-2">
                     Så funkar Hjärnan
                   </p>
+                  <h2 className="font-display text-xl md:text-2xl font-bold text-foreground">
+                    Tre minuter. Noll förpliktelser.
+                  </h2>
                 </div>
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-8">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-10">
                   {[
                     {
                       icon: PenLine,
                       step: "01",
                       title: "Beskriv er vardag",
-                      text: "Bransch, antal tekniker, vad som skaver. Inga uppgifter sparas.",
+                      text: "Bransch, antal tekniker, vad som skaver mest. Skriv som du pratar — vi behöver inte siffror på decimalen.",
+                      hint: "T.ex. \"15 rörmokare, akutjobb krockar med planering\"",
                     },
                     {
                       icon: Lightbulb,
                       step: "02",
                       title: "Få ärlig analys",
-                      text: "Hjärnan pekar ut konkreta flaskhalsar och vilka delar av Traivo som faktiskt löser dem.",
+                      text: "Hjärnan pekar ut konkreta flaskhalsar och vilka delar av Traivo som faktiskt löser dem — eller säger ärligt om vi inte passar.",
+                      hint: "Svar på under en minut, formulerat på er nivå",
                     },
                     {
                       icon: Compass,
                       step: "03",
                       title: "Bestäm själv",
-                      text: "Läs vidare, beställ djupanalys eller boka demo. Du hör av dig — inte tvärtom.",
+                      text: "Läs vidare på egen hand, beställ en djupanalys för 399 kr, eller boka demo. Vi ringer aldrig — du hör av dig när du är redo.",
+                      hint: "Inget konto, inga uppgifter, ingen säljpitch",
                     },
                   ].map((s, i) => (
                     <motion.div
                       key={s.step}
                       initial={{ opacity: 0, y: 12 }}
                       animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.8 + i * 0.08 }}
-                      className="relative p-4 rounded-xl glass-subtle"
+                      transition={{ delay: 0.6 + i * 0.08 }}
+                      className="relative p-4 sm:p-5 rounded-xl glass-subtle flex flex-col"
                     >
-                      <div className="flex items-center gap-2 mb-2">
-                        <div className="w-7 h-7 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center">
-                          <s.icon className="w-3.5 h-3.5 text-primary" strokeWidth={2.25} />
+                      <div className="flex items-center gap-2 mb-3">
+                        <div className="w-8 h-8 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center">
+                          <s.icon className="w-4 h-4 text-primary" strokeWidth={2.25} />
                         </div>
                         <span className="text-[10px] tracking-[0.2em] text-muted-foreground/60 font-mono">
                           {s.step}
                         </span>
                       </div>
-                      <h3 className="text-sm font-semibold text-foreground mb-1">{s.title}</h3>
-                      <p className="text-xs text-muted-foreground leading-relaxed">{s.text}</p>
+                      <h3 className="text-sm font-semibold text-foreground mb-1.5">{s.title}</h3>
+                      <p className="text-xs text-muted-foreground leading-relaxed mb-3 flex-1">{s.text}</p>
+                      <p className="text-[10.5px] text-foreground/50 italic border-t border-border/30 pt-2.5 leading-snug">
+                        {s.hint}
+                      </p>
                     </motion.div>
                   ))}
                 </div>
+
+                {/* Vad du får tillbaka */}
+                <motion.div
+                  initial={{ opacity: 0, y: 12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.95 }}
+                  className="rounded-2xl glass p-5 sm:p-6 mb-6 relative overflow-hidden"
+                >
+                  <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent" />
+                  <div className="flex items-center gap-2 mb-4">
+                    <Sparkles className="w-4 h-4 text-primary" />
+                    <span className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground font-medium">
+                      Vad du får tillbaka
+                    </span>
+                  </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3">
+                    {[
+                      "En oberoende second opinion på er nuvarande process",
+                      "Konkreta flaskhalsar — inte allmänna fraser",
+                      "Förslag på vilka Traivo-moduler som löser exakt vad",
+                      "Ett tydligt nästa steg — eller ett ärligt nej",
+                    ].map((item, i) => (
+                      <div key={i} className="flex items-start gap-2.5">
+                        <div className="w-1.5 h-1.5 rounded-full bg-primary mt-1.5 flex-shrink-0" />
+                        <p className="text-xs text-foreground/80 leading-relaxed">{item}</p>
+                      </div>
+                    ))}
+                  </div>
+                </motion.div>
 
                 {/* Förtroende-rad */}
                 <motion.div
@@ -520,8 +522,8 @@ const Brain_Page = () => {
                       <ShieldCheck className="w-4 h-4 text-primary" strokeWidth={2.25} />
                     </div>
                     <div>
-                      <p className="text-xs font-semibold text-foreground">Inget kontoslag, inga säljmejl</p>
-                      <p className="text-[11px] text-muted-foreground">Hjärnan svarar direkt — ingen registrering krävs.</p>
+                      <p className="text-xs font-semibold text-foreground">Helt anonymt</p>
+                      <p className="text-[11px] text-muted-foreground">Inga uppgifter sparas. Ingen registrering.</p>
                     </div>
                   </div>
                   <div className="hidden sm:block w-px h-10 bg-border/40" />
