@@ -3,9 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Link, useLocation } from "react-router-dom";
 import ReactMarkdown from "react-markdown";
 import {
-  Send, Loader2, Brain, Lock, RotateCcw, X,
-  Trash2, Building2, Users, MapPin, Sparkles,
-  Wrench, Snowflake, Zap, Leaf, Truck, HardHat,
+  Send, Loader2, Brain, Lock, RotateCcw, X, Sparkles,
   PenLine, Lightbulb, Compass, ShieldCheck, Clock,
 } from "lucide-react";
 import DeepAnalysisUpsell from "@/components/DeepAnalysisUpsell";
@@ -13,59 +11,6 @@ import DeepAnalysisUpsell from "@/components/DeepAnalysisUpsell";
 const BRAIN_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/brain`;
 
 type Msg = { role: "user" | "assistant"; content: string };
-
-const examples = [
-  {
-    icon: Trash2,
-    label: "Avfall & sanering",
-    text: "Vi rengör soptunnor och soprum åt 80 BRF:er i Mälardalen. 8 tekniker, 6 bilar. Akutjobb varje vecka rubbar rutterna och vid sjukdom blir det kaos. Planeringen sker i Excel och dagboken är pappersburen.",
-  },
-  {
-    icon: Building2,
-    label: "Fastighetsdrift",
-    text: "Vi sköter teknisk fastighetsdrift för 200 fastigheter i Stockholm. Tekniker får jobb via SMS, kvitterar i Excel och felanmälningar kommer in via mejl. Vi tappar tid på dubbelarbete och fakturaunderlagen är ofullständiga.",
-  },
-  {
-    icon: Snowflake,
-    label: "Värme & kyla",
-    text: "25 servicetekniker som installerar och servar värmepumpar och kylanläggningar i Mellansverige. Mycket körtid mellan jobb, pappersprotokoll skannas på kontoret och garantiärenden är svåra att spåra tillbaka.",
-  },
-  {
-    icon: Wrench,
-    label: "VVS-företag",
-    text: "Vi är 15 rörmokare som gör både service och nyinstallation. Akutjobb krockar ofta med planerade jobb och vi hinner inte fakturera i tid. Material registreras på papperslappar i bilen.",
-  },
-  {
-    icon: Zap,
-    label: "Elinstallation",
-    text: "Elfirma med 30 montörer som jobbar mot både privatkund och företag. Vi har problem att hålla koll på vilka jobb som är klara, signaturer från kund och vilka delar som gått åt per jobb.",
-  },
-  {
-    icon: Leaf,
-    label: "Mark & trädgård",
-    text: "Vi gör grönyteskötsel åt kommuner och fastighetsbolag. 40 personer i fält under sommarhalvåret. Säsongsplanering är ett pussel och vi behöver bevis på utfört arbete för att få betalt.",
-  },
-  {
-    icon: HardHat,
-    label: "Bygg & hantverk",
-    text: "Byggfirma med 50 hantverkare på flera projekt parallellt. Tidsrapportering sker på papper, ÄTA-arbeten dokumenteras dåligt och projektledarna har svårt att se vilka som är var.",
-  },
-  {
-    icon: Truck,
-    label: "Transport & logistik",
-    text: "Lokalt åkeri med 20 bilar som kör schemalagda och akuta uppdrag. Vi behöver bättre koll på var bilarna är, digitala körorder och att kunder kan följa leveransen.",
-  },
-  {
-    icon: Users,
-    label: "Hemtjänst & vård",
-    text: "Privat hemtjänst med 35 medarbetare. Schemaläggning är komplex pga kompetenskrav och kontinuitet hos brukare. Vi vill också få in tidsrapportering och avvikelser digitalt.",
-  },
-  {
-    icon: MapPin,
-    label: "Endast fältstöd",
-    text: "Vi har bara 3 tekniker men de behöver bättre verktyg i bilen – navigation, checklistor, foto och digitala protokoll. Planeringen funkar redan i ett befintligt system.",
-  },
-];
 
 async function streamBrain({
   messages,
