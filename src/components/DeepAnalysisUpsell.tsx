@@ -25,9 +25,9 @@ const DeepAnalysisUpsell = ({ businessDescription, quickResponse }: DeepAnalysis
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.4, duration: 0.5 }}
-      className="mt-6"
+      className="mt-4"
     >
-      <div className="relative rounded-2xl overflow-hidden border-2 border-primary/30 bg-gradient-to-br from-primary/[0.08] via-card to-card p-6 md:p-7 shadow-[0_0_40px_-12px_hsl(var(--primary)/0.4)]">
+      <div className="relative rounded-2xl overflow-hidden border-2 border-primary/30 bg-gradient-to-br from-primary/[0.08] via-card to-card p-5 md:p-6 shadow-[0_0_40px_-12px_hsl(var(--primary)/0.4)]">
         {/* Glow accent */}
         <div className="absolute -top-12 -right-12 w-48 h-48 rounded-full bg-primary/15 blur-3xl pointer-events-none" />
         <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/60 to-transparent" />

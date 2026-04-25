@@ -236,16 +236,16 @@ const Brain_Page = () => {
   return (
     <>
       {/* Hero */}
-      <section className="relative min-h-[60vh] flex items-center overflow-hidden bg-noise pt-24 pb-12">
+      <section className="relative overflow-hidden bg-noise pt-20 pb-4">
         <div className="absolute inset-0 bg-grid-pattern opacity-15" />
         {/* Glow */}
-        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[min(500px,100vw)] h-[min(500px,100vw)] rounded-full bg-primary/[0.06] blur-[140px]" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[min(420px,100vw)] h-[min(420px,100vw)] rounded-full bg-primary/[0.06] blur-[120px]" />
 
         <div className="relative z-10 max-w-3xl mx-auto px-4 sm:px-6 w-full text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="mb-6 inline-flex max-w-full items-center gap-2 px-3 py-1.5 rounded-full glass-subtle"
+            className="mb-3 inline-flex max-w-full items-center gap-2 px-3 py-1 rounded-full glass-subtle"
           >
             <span className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75" />
@@ -260,7 +260,7 @@ const Brain_Page = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7 }}
-            className="font-display text-4xl md:text-6xl font-bold leading-[0.95] tracking-tight mb-5"
+            className="font-display text-3xl md:text-5xl font-bold leading-[0.95] tracking-tight mb-3"
           >
             Beskriv er verksamhet.<br />
             <span className="text-gradient-ocean">Få ett ärligt råd.</span>
@@ -270,24 +270,24 @@ const Brain_Page = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.2 }}
-            className="text-muted-foreground max-w-xl mx-auto leading-relaxed"
+            className="text-sm text-muted-foreground max-w-xl mx-auto leading-relaxed"
           >
             Berätta hur ni jobbar idag – utan att lämna namn, e-post eller företag.
-            Hjärnan föreslår vilka delar av Traivo som faktiskt skulle göra skillnad,
+            Hjärnan föreslår vilka delar av Traivo som skulle göra skillnad,
             eller säger ärligt om vi inte är rätt för er.
           </motion.p>
         </div>
       </section>
 
       {/* Form + response */}
-      <section className="relative pb-24 px-4 sm:px-6 -mt-4">
+      <section className="relative pb-12 px-4 sm:px-6 pt-4">
         <div className="relative z-10 max-w-2xl mx-auto">
           {/* Privacy banner – ovanför textfältet */}
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 0.5 }}
-            className="mb-4 rounded-2xl border border-yellow-500/25 bg-yellow-500/[0.04] p-4 relative overflow-hidden"
+            className="mb-3 rounded-xl border border-yellow-500/25 bg-yellow-500/[0.04] px-4 py-2.5 relative overflow-hidden"
           >
             {/* Subtil gul glow till vänster */}
             <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-yellow-500/0 via-yellow-500/60 to-yellow-500/0" />
@@ -382,8 +382,8 @@ const Brain_Page = () => {
                 placeholder="Vi är ett företag inom… Vi har X tekniker… Vårt största problem är…"
                 aria-label="Beskriv er verksamhet för Hjärnans AI-rådgivare"
                 aria-describedby="brain-input-help brain-input-counter"
-                className="relative w-full bg-transparent px-5 sm:px-6 py-5 pr-16 text-foreground placeholder:text-muted-foreground focus:outline-none focus-visible:outline-none resize-none min-h-[140px] text-base leading-relaxed"
-                rows={5}
+                className="relative w-full bg-transparent px-5 sm:px-6 py-4 pr-16 text-foreground placeholder:text-muted-foreground focus:outline-none focus-visible:outline-none resize-none min-h-[110px] text-base leading-relaxed"
+                rows={4}
                 maxLength={2000}
                 onKeyDown={(e) => {
                   if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) {
@@ -421,31 +421,27 @@ const Brain_Page = () => {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0, height: 0 }}
                 transition={{ delay: 0.5 }}
-                className="mt-6"
+                className="mt-4"
               >
-                <p className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground/70 mb-3 text-center">
+                <p className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground/70 mb-2 text-center">
                   Eller välj ett exempel för en träffsäker rekommendation
                 </p>
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2">
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2">
                   {examples.map((ex, i) => (
                     <motion.button
                       key={ex.label}
                       type="button"
                       initial={{ opacity: 0, y: 8 }}
                       animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.5 + i * 0.04 }}
+                      transition={{ delay: 0.5 + i * 0.03 }}
                       onClick={() => handleExample(ex.text)}
-                      className="min-w-0 text-left p-3 rounded-xl glass-subtle hover:border-primary/40 hover:bg-primary/[0.03] transition-all group"
+                      title={ex.text}
+                      className="min-w-0 text-left px-2.5 py-2 rounded-lg glass-subtle hover:border-primary/40 hover:bg-primary/[0.03] transition-all group flex items-center gap-2"
                     >
-                      <div className="flex items-center gap-2 mb-1.5">
-                        <ex.icon className="w-3.5 h-3.5 text-primary opacity-80 group-hover:opacity-100 transition-opacity flex-shrink-0" strokeWidth={2.25} />
-                        <span className="min-w-0 text-[10.5px] font-semibold uppercase tracking-wider text-foreground/90 truncate">
-                          {ex.label}
-                        </span>
-                      </div>
-                      <p className="text-[11px] text-muted-foreground leading-relaxed line-clamp-2">
-                        {ex.text}
-                      </p>
+                      <ex.icon className="w-3.5 h-3.5 text-primary opacity-80 group-hover:opacity-100 transition-opacity flex-shrink-0" strokeWidth={2.25} />
+                      <span className="min-w-0 text-[10.5px] font-semibold uppercase tracking-wider text-foreground/90 truncate">
+                        {ex.label}
+                      </span>
                     </motion.button>
                   ))}
                 </div>
@@ -473,9 +469,9 @@ const Brain_Page = () => {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.5 }}
-                className="mt-8"
+                className="mt-5"
               >
-                <div className="rounded-2xl glass p-6 md:p-8 relative overflow-hidden">
+                <div className="rounded-2xl glass p-5 md:p-6 relative overflow-hidden">
                   {/* Subtle accent stripe */}
                   <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent" />
 
