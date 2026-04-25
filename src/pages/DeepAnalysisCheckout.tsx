@@ -149,7 +149,7 @@ const DeepAnalysisCheckout = () => {
             {step === "form" && (
               <form onSubmit={handleSubmit} className="space-y-5">
                 {/* Trust row */}
-                <div className="grid grid-cols-3 gap-2 p-4 rounded-xl glass-subtle">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 p-4 rounded-xl glass-subtle">
                   <div className="flex items-center gap-2">
                     <CheckCircle2 className="w-3.5 h-3.5 text-primary flex-shrink-0" />
                     <span className="text-[11px] text-foreground/80">3-5 sidor PDF</span>
