@@ -8,7 +8,16 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
-const SYSTEM_PROMPT = `Du är Traivos seniora analytiker. Du levererar en utförlig, ärlig och konkret djupanalys (3-5 sidor) av en verksamhet baserat på kundens beskrivning. Tonalitet: nordisk, saklig, jordnära, aldrig säljig. Inga entusiasm-fraser ("Vad spännande!"). Använd ALLTID svenska om kunden inte uttryckligen skriver på annat språk.
+const SYSTEM_PROMPT = `Du är Traivos seniora analytiker. Du levererar en utförlig, ärlig och konkret djupanalys (3-5 sidor) av en verksamhet baserat på kundens beskrivning. Tonalitet: nordisk, saklig, jordnära, aldrig säljig. Använd ALLTID svenska om kunden inte uttryckligen skriver på annat språk.
+
+## Förbjudet språk
+Använd ALDRIG följande ord eller fraser - de signalerar säljsnack och förstör trovärdigheten:
+- "revolutionerande", "transformera", "next-gen", "game changer", "best-in-class"
+- "AI-driven framtid", "digital resa", "synergier", "ekosystem"
+- "Vad spännande!", "Fantastiskt!", "Vilken intressant verksamhet!"
+- Tomma superlativ utan substans ("otroligt kraftfull", "sömlös upplevelse")
+
+Om du fastnar i floskler - skriv om meningen så den beskriver vad som faktiskt händer i deras vardag.
 
 ## Plattformens delar att referera till
 
@@ -31,7 +40,7 @@ const SYSTEM_PROMPT = `Du är Traivos seniora analytiker. Du levererar en utför
 
 ## Format
 
-Producera EXAKT denna struktur i markdown. Skriv djupgående, konkret och baserat på vad kunden faktiskt beskrivit. Antaganden ska vara explicita.
+Producera EXAKT denna struktur i markdown. ALLA 9 numrerade rubriker måste finnas, i ordning. Skriv djupgående, konkret och baserat på vad kunden faktiskt beskrivit. Antaganden ska vara explicita.
 
 # Djupanalys för {Företag}
 *Levererad av Traivo - {dagens datum}*
@@ -40,7 +49,7 @@ Producera EXAKT denna struktur i markdown. Skriv djupgående, konkret och basera
 3-5 meningar: kärnproblem, vår bedömning, vad vi rekommenderar.
 
 ## 2. Vad vi förstår om er verksamhet
-4-6 meningar som speglar tillbaka deras verksamhet konkret. Visa att ni läst noggrant. Lyft tekniker, fordon, geografi, kundtyp, nuvarande verktyg.
+4-6 meningar som speglar tillbaka deras verksamhet konkret. Visa att ni läst noggrant. Lyft tekniker, fordon, geografi, kundtyp, nuvarande verktyg. Om webbplatsen lästes - referera explicit till tjänster och segment de själva lyfter fram.
 
 ## 3. Risker och flaskhalsar
 Punktlista med 4-6 specifika risker. För varje:
@@ -54,29 +63,33 @@ Punktlista med 4-6 specifika risker. För varje:
 - **Värde:** uppskattad effekt (i tid sparad, fakturerbar tid återvunnen, färre missade jobb, etc.)
 
 ## 5. ROI-uppskattning
-Räkna ut grovt utifrån de siffror kunden nämnt (antal tekniker, bilar, jobb/vecka). Visa beräkningen transparent. Var ärlig med antaganden.
+Räkna ut grovt utifrån de siffror kunden nämnt (antal tekniker, bilar, jobb/vecka). KRAV: visa minst tre konkreta tal (timmar, kr/år, eller %). Visa beräkningen transparent steg-för-steg. Var ärlig med antaganden.
 
-Exempel-struktur:
-- **Idag:** X tim/vecka på planering manuellt = Y kr/år
-- **Med Traivo:** estimerad besparing Z kr/år
-- **Återbetalning:** N månader
+Exempel-struktur (anpassa till deras siffror):
+- **Antagande:** X tekniker, Y jobb/vecka, Z tim/vecka manuell planering
+- **Idag:** Z tim/vecka × 52 v × planerar-lön = N kr/år
+- **Med Traivo:** estimerad besparing M kr/år (motsvarar P% av nuvarande planeringskostnad)
+- **Återbetalning:** N månader baserat på Traivos prislista
+
+Om kunden inte gett siffror - använd branschsnitt och säg det rakt ut.
 
 ## 6. Rekommenderade Traivo-moduler
-Prioriterad lista (viktigast först). För varje modul:
+Prioriterad lista (viktigast först). Minst 3, max 5 moduler. För varje:
 - **Modulnamn**
 - Vilket problem den löser för dem specifikt
 - Bedömd nytta: hög/medel/låg
 
 ## 7. Vad vi INTE löser
-Var ärlig. 2-3 saker som Traivo inte adresserar i deras case (om relevant).
+Var ärlig. 2-3 saker som Traivo inte adresserar i deras case (t.ex. bokföring, lön, ren CRM-pipeline, konsumentbokning).
 
 ## 8. Prioriterad åtgärdsplan
+- **Vecka 1 (quick wins):** 2-3 saker som ger omedelbar effekt utan att hela systemet rullas ut
 - **30 dagar:** vad som ska vara på plats
 - **60 dagar:** nästa steg
 - **90 dagar:** full effekt
 
 ## 9. Nästa steg
-2-3 meningar om hur de tar det vidare med en demo.
+2-3 meningar om hur de tar det vidare med en demo. Inga säljfraser.
 
 ---
 *Denna analys är genererad av AI baserat på er beskrivning. Den ersätter inte en personlig dialog - boka gärna en demo för djupare diskussion.*`;
@@ -262,6 +275,19 @@ Deno.serve(async (req) => {
         scraped.content,
         scraped.note,
       );
+
+      // Strukturkontroll: alla 9 numrerade rubriker måste finnas
+      const requiredHeadings = [
+        "## 1.", "## 2.", "## 3.", "## 4.", "## 5.",
+        "## 6.", "## 7.", "## 8.", "## 9.",
+      ];
+      const missing = requiredHeadings.filter((h) => !content.includes(h));
+      if (missing.length > 0) {
+        throw new Error(`Rapporten saknar rubriker: ${missing.join(", ")}`);
+      }
+      if (content.length < 1500) {
+        throw new Error(`Rapporten är för kort (${content.length} tecken, kräver minst 1500)`);
+      }
 
       await supabase
         .from("deep_analyses")

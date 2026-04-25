@@ -4,7 +4,8 @@ import { Link } from "react-router-dom";
 import {
   Calendar, Smartphone, Route, MapPin, Brain, WifiOff,
   ArrowRight, Users, FileText, CreditCard, X, ChevronDown,
-  Recycle, Wrench, Building2, Truck, HeartPulse, Lock, Sparkles
+  Recycle, Wrench, Building2, Truck, HeartPulse, Lock, Sparkles,
+  Check, Minus
 } from "lucide-react";
 import {
   Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger
@@ -223,6 +224,97 @@ const Index = () => {
               </div>
             </Link>
           </motion.div>
+        </div>
+      </section>
+
+      {/* ─── TRUST: VAD VI ÄR / INTE ÄR ─── */}
+      <section className="py-20 md:py-24 px-4 sm:px-6 border-t border-border">
+        <div className="max-w-5xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="max-w-2xl mb-10"
+          >
+            <span className="text-[11px] font-medium uppercase tracking-[0.25em] text-primary mb-4 block">
+              Ärligt om Traivo
+            </span>
+            <h2 className="font-display text-2xl md:text-3xl font-bold mb-3">
+              Det här är vi. Det här är vi inte.
+            </h2>
+            <p className="text-sm md:text-base text-muted-foreground leading-relaxed">
+              Vi vet att ni redan har system. Här är exakt vad Traivo täcker — och vad ni ska fortsätta göra någon annanstans.
+            </p>
+          </motion.div>
+
+          <div className="grid md:grid-cols-2 gap-4 md:gap-6">
+            {/* IS */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.05 }}
+              className="rounded-2xl border border-primary/20 bg-card/40 p-6 md:p-7"
+            >
+              <div className="flex items-center gap-2 mb-5">
+                <div className="w-8 h-8 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center">
+                  <Check className="w-4 h-4 text-primary" strokeWidth={2.5} />
+                </div>
+                <h3 className="font-display text-base md:text-lg font-semibold text-foreground">
+                  Det här är Traivo
+                </h3>
+              </div>
+              <ul className="space-y-3">
+                {[
+                  "Planering, ruttoptimering och daglig schemaläggning för fält.",
+                  "Mobilapp för tekniker som funkar offline – protokoll, foto, signatur.",
+                  "Kund- och objektregister med karta och serviceområden.",
+                  "Kundportal med automatiska SMS, bokning och historik.",
+                  "Fakturering och Fortnox-export i samma flöde.",
+                  "AI som föreslår omplanering, akuttilldelning och prediktivt underhåll.",
+                ].map((item) => (
+                  <li key={item} className="flex items-start gap-3 text-sm text-foreground/85 leading-relaxed">
+                    <Check className="w-4 h-4 text-primary mt-0.5 shrink-0" strokeWidth={2.5} />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </motion.div>
+
+            {/* IS NOT */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+              className="rounded-2xl border border-border bg-card/20 p-6 md:p-7"
+            >
+              <div className="flex items-center gap-2 mb-5">
+                <div className="w-8 h-8 rounded-lg bg-muted/40 border border-border flex items-center justify-center">
+                  <Minus className="w-4 h-4 text-muted-foreground" strokeWidth={2.5} />
+                </div>
+                <h3 className="font-display text-base md:text-lg font-semibold text-foreground/90">
+                  Det här är vi inte
+                </h3>
+              </div>
+              <ul className="space-y-3">
+                {[
+                  "Inget bokföringssystem – behåll Fortnox, Visma eller motsvarande.",
+                  "Inget HR- eller lönesystem – vi exporterar underlag, ni kör lön.",
+                  "Inget CRM för säljpipelines – vi hanterar kunder, inte leads.",
+                  "Ingen konsumentbokning à la Bokadirekt – vår portal är B2B.",
+                  "Inget ERP – vi täcker fältoperationen, inte hela ekonomin.",
+                  "Ingen white-label-app till era slutkunder – kundportalen är webbaserad.",
+                ].map((item) => (
+                  <li key={item} className="flex items-start gap-3 text-sm text-muted-foreground leading-relaxed">
+                    <Minus className="w-4 h-4 text-muted-foreground/70 mt-0.5 shrink-0" strokeWidth={2.5} />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </motion.div>
+          </div>
         </div>
       </section>
 

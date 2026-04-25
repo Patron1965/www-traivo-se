@@ -1,118 +1,112 @@
-# Plan: Betald djupanalys på Hjärnan
+## Mål
+Höja kundupplevelsen och konverteringen på Traivo.se via fem konkreta åtgärder. Allt levereras i en serie steg där varje steg avslutas med ett **funktionstest** (manuell verifiering eller browser-test där relevant) innan jag går vidare till nästa.
 
-## Vad vi bygger
+---
 
-Efter att Hjärnan gett sitt gratis snabbsvar dyker ett uppgraderings-kort upp:
+## Steg 1 — Trust-sektion på förstasidan ("Vad Traivo gör / Vad Traivo inte gör")
 
-> **Vill du gå djupare?** Få en utförlig analys (3–5 sidor) av risker, möjligheter, ROI-uppskattning och en prioriterad åtgärdsplan — skickad som PDF till din mejl. **399 kr.**
+**Vad:** Ny sektion på `/` (Index.tsx), placerad direkt efter hero/AI-kortet och före "Problem recognition". Två kolumner sida vid sida på desktop, staplade på mobil.
 
-Användaren klickar → fyller i e-post + fakturauppgifter (företag, namn, ev. org.nr) → betalar med kort via Stripe → vi genererar PDF-rapporten i bakgrunden med Lovable AI → mejlar den som bilaga + bekräftelse.
+- **Vänster kolumn — "Det här är Traivo"** (gröna bockar): Planering, ruttoptimering, fältapp offline, kundportal/SMS, fakturering & Fortnox-export, AI-rekommendationer.
+- **Höger kolumn — "Det här är vi inte"** (gråa kryss): Inte ett bokföringssystem. Inte ett HR-/lönesystem. Inte ett CRM för säljpipelines. Ingen tidsbokning för slutkonsument (typ Bokadirekt). Inte ett ERP.
 
-Snabb-Hjärnan förblir helt anonym och gratis (precis som idag). Djupanalysen är ett tydligt separat premium-spår.
+Tonalitet: kort, sakligt, en mening per punkt.
 
-## Användarflöde
+**Funktionstest steg 1:**
+- Visuell kontroll i preview (desktop + mobil 390px).
+- Bekräfta att sektionen renderas mellan rätt sektioner och inte spräcker layouten.
 
-```
-/hjarna
-  └─ Snabbsvar visas (gratis, anonymt)
-       └─ NYTT KORT: "Vill du gå djupare? 399 kr"
-            └─ Klick → Modal/sida med formulär:
-                  • E-post (för leverans)
-                  • Företag + ditt namn (för faktura)
-                  • Org.nr (valfritt, för moms-spec)
-                  • Bekräfta verksamhetsbeskrivningen
-                 → "Betala 399 kr" → Stripe Checkout
-                      └─ Tillbaka till /hjarna/tack?session_id=xxx
-                            • "Tack! Din rapport genereras nu och kommer
-                              till din mejl inom några minuter."
-                            • Bakgrundsjobb: AI genererar PDF + mejlar den
-```
+---
 
-## Innehåll i djupanalysen (3–5 sidor PDF)
+## Steg 2 — Förbättrad djupanalys-leverans (innehåll + struktur)
 
-AI:n får en mer omfattande prompt än Hjärnan och producerar:
+**Vad:** Skärpa kvaliteten på det kunden får för 399 kr.
 
-1. **Sammanfattning** — kärnproblem, vår bedömning på 3 rader
-2. **Verksamhetsanalys** — vad vi förstår om dem (storlek, modell, nuvarande flöden)
-3. **Risker & flaskhalsar** — 4–6 specifika punkter
-4. **Möjligheter** — 4–6 konkreta förbättringsområden
-5. **ROI-uppskattning** — grov beräkning baserat på antal tekniker/bilar/objekt de nämnt
-6. **Rekommenderade Traivo-moduler** — prioriterad lista, vad löser vad
-7. **Prioriterad åtgärdsplan** — 30/60/90 dagar
-8. **Nästa steg** — boka demo
+1. **Stärka system-prompten** i `supabase/functions/generate-deep-analysis/index.ts`:
+   - Tvinga konkreta siffror (timmar, kr/år, %) i sektion 5 (ROI).
+   - Kräva minst 3 specifika hävstänger (inte generiska floskler).
+   - Lägga till "Quick wins (vecka 1)" som egen liten sektion under åtgärdsplanen.
+   - Förbjuda säljspråk explicit ("revolutionerande", "transformera", "next-gen") med exempel i prompten.
+2. **Strukturkontroll** efter generering: edge-funktionen verifierar att alla 9 rubriker finns; om någon saknas → markera som `failed` med tydligt felmeddelande istället för att leverera en halvfärdig rapport.
+3. **PDF-rendering**: säkerställa att thank-you-sidan renderar markdown korrekt (kontroll av befintlig kod).
 
-PDF:en brandas med Traivo-loggotyp, primärfärg och samma typografi som sajten.
+**Funktionstest steg 2:**
+- Trigga om-generering på en befintlig betald order (eller skapa testorder via sandbox).
+- Granska rapporten: alla 9 rubriker, ROI med siffror, inga floskler, korrekt företagsnamn och webbplats-referenser.
+- Ladda ner PDF och kontrollera att formattering fungerar.
 
-## Tekniska delar
+---
 
-### 1. Aktivera betalningar
-- Aktivera Lovable Payments med Stripe (test-läge direkt, live efter verifiering)
-- Skapa en produkt: "Traivo Djupanalys" — 399 kr engångsbetalning
+## Steg 3 — Performance-pass (mobil & 4G)
 
-### 2. Ny tabell: `deep_analyses`
-Spara alla beställningar för spårning, kvitton, omleveranser:
-- `id`, `created_at`
-- `email`, `company`, `contact_name`, `org_number` (nullable)
-- `business_description` (texten användaren skickat in)
-- `quick_response` (Hjärnans gratissvar — sparas så AI:n kan bygga vidare)
-- `stripe_session_id`, `payment_status` (pending/paid/failed/refunded)
-- `report_status` (pending/generating/sent/failed)
-- `pdf_storage_path` (i Supabase Storage)
-- `paid_at`, `report_sent_at`
+**Vad:** Snabbare första-paint på mobil.
 
-RLS: ingen publik SELECT — bara edge functions skriver/läser via service role.
+1. **Lazy-load tunga animationer** — `BrainHero`, `FieldVisual`, `AboutVisual`, `PlannerVisual` får `IntersectionObserver`-baserad lazy mount så de inte blockerar initial render.
+2. **Reducera blur-filter på mobil** — `<768px` får mindre `blur()`-värden via en CSS-klass (blur 50px → 20px på mobil), eftersom `blur(150px)` är tungt på äldre Android-telefoner.
+3. **Code-splitting** på sällanbesökta routes: `GoLiveChecklist`, `DeepAnalysisCheckout`, `DeepAnalysisThankYou` lazy-loadas via `React.lazy()`.
+4. **Preconnect** till Supabase + Lovable AI gateway i `index.html` för snabbare första API-anrop.
 
-### 3. Storage bucket: `deep-analysis-reports`
-Privat bucket där PDF:erna sparas. Endast åtkomlig via signed URLs från edge functions.
+**Funktionstest steg 3:**
+- Bygga produktion lokalt (`npm run build`) och kontrollera bundle-storlek.
+- Browser-test i 390×844 viewport: ladda `/`, kontrollera att hero syns omedelbart utan layout-skutt.
+- Verifiera att alla sidor fortfarande laddar och animationerna fungerar när man scrollar ner.
 
-### 4. Edge functions
-- **`create-checkout`** — tar emot beställningsdata, skapar `deep_analyses`-rad, returnerar Stripe Checkout-URL
-- **`stripe-webhook`** — lyssnar på `checkout.session.completed`, markerar betald, triggar generering
-- **`generate-deep-analysis`** — kallar Lovable AI (gemini-2.5-pro för djup), bygger PDF med React PDF eller Puppeteer, sparar i Storage
-- **`send-deep-analysis-email`** — mejlar PDF som bilaga via Lovable Emails (kräver e-post-domän setup)
+---
 
-### 5. Email-infrastruktur
-- Sätta upp en avsändardomän (t.ex. `notify.traivo.se`) för att mejla PDF:er från `noreply@traivo.se`
-- Skapa transactional email template: "Din djupanalys är klar"
+## Steg 4 — Kontaktformulär: bekräftelse via mail + spara säkrare
 
-### 6. UI-ändringar i `src/pages/BrainPage.tsx`
-- Lägga till uppgraderings-kort efter Hjärnans svar (när `latestResponse && !isLoading`)
-- Skapa `src/components/DeepAnalysisUpsell.tsx` — det säljande kortet
-- Skapa `src/pages/DeepAnalysisCheckout.tsx` — formulärsidan (`/hjarna/djupanalys`)
-- Skapa `src/pages/DeepAnalysisThankYou.tsx` — kvittosidan (`/hjarna/tack`)
+**Vad:** Säkerställa att inget tappas och att kunden vet att vi tagit emot.
 
-### 7. Bekräftelsesida + statuspolling
-Tack-sidan pollar `deep_analyses` var 5:e sekund för att visa:
-- "Genererar din rapport…" (spinner)
-- "Din rapport har skickats till {email} ✓"
-- Vid problem: "Något gick fel — vi har fått notis och kontaktar dig"
+1. **Bekräftelsemail till kunden** — ny edge-funktion `notify-contact-submission` som triggas efter lyckad insert. Skickar:
+   - Mail till kunden: "Tack, vi återkommer inom 1 arbetsdag" + sammanfattning av deras meddelande.
+   - Mail till `info@traivo.se`: hela formulärsubmissionen så ni ser den direkt.
+2. **Använd Lovable transactional email** (Resend via Lovable Cloud) — ingen extra konfiguration krävs av användaren.
+3. **Frontend uppdatering** i `Contact.tsx`: efter lyckad insert, anropa edge-funktionen i bakgrunden (fail-soft — om mail-utskick failar tappar vi inte själva submissionen).
 
-## Anonymitet — vad ändras
+**Funktionstest steg 4:**
+- Fyll i formuläret med en testadress (din egen).
+- Verifiera att (a) raden hamnar i `contact_submissions`, (b) du får bekräftelsemail, (c) info@traivo.se får kopia.
+- Testa felfall: avbryt mail-funktionen artificiellt och bekräfta att submissionen ändå sparas.
 
-- **Snabb-Hjärnan:** oförändrat helt anonym. Loggar inget.
-- **Djupanalys:** kräver e-post + företag + namn. Tydligt kommunicerat på upgrade-kortet: *"För att leverera din rapport och kvitto behöver vi e-post och fakturauppgifter."*
-- Privacy-bannern på sidan uppdateras för att förklara skillnaden.
+*Notera om mailadress:* `info@traivo.se` används som mottagare. Om domänen `traivo.se` inte är verifierad i Lovable Cloud än kan jag använda en `onboarding@resend.dev`-fallback i utvecklingsläge och flagga upp att ni behöver verifiera domänen för produktion.
 
-## Vad jag rekommenderar att vi INTE bygger nu
+---
 
-- **Manuell granskning före leverans** — börja med ren AI-leverans, lägg till mänsklig review senare om det visar sig behövas
-- **Kundportal med tidigare rapporter** — onödigt för engångsköp; använd PDF + e-post som arkivering
-- **Refunds-flöde i UI** — hantera de få fall som dyker upp manuellt via Stripe-dashboard
+## Steg 5 — Hjärnan: hårdare anti-flosker + tydligare upsell
 
-## Genomförandeordning
+**Vad:** Höja signal-brus-förhållandet i AI-svaren och göra 399 kr-erbjudandet ärligare.
 
-1. Aktivera Lovable Payments (Stripe) + skapa produkten
-2. Skapa databas-tabell + storage bucket
-3. Sätt upp e-postdomän + transactional email
-4. Bygg edge functions (checkout → webhook → generera PDF → mejla)
-5. Bygg UI (upsell-kort → checkout-form → tack-sida)
-6. Uppdatera privacy-bannern på /hjarna
-7. Testa hela flödet i Stripe sandbox med 100 % rabattkod
+1. **Stärka system-prompten** i `supabase/functions/brain/index.ts`:
+   - Förbjud säljspråk explicit (samma lista som steg 2).
+   - Tvinga svar att börja med vad användaren beskrev (visa att vi lyssnat) innan rekommendationer.
+   - Max 3 rekommendationer (inte 7 generiska bullets).
+2. **Djupanalys-upsell-komponenten** (`DeepAnalysisUpsell.tsx`): tydligare lista över exakt vad de får (3-5 sidors PDF, ROI-beräkning, 30/60/90-plan, levereras inom 2 minuter, ingen mailspam efteråt).
+3. **Ångerinformation**: kort rad om att 399 kr återbetalas om rapporten inte levereras inom 5 minuter (om ni vill — annars stryker jag den punkten).
 
-## Frågor jag inte tagit ställning till — kan justeras efter approval
+**Funktionstest steg 5:**
+- Skicka 3 olika test-prompts till Hjärnan (en kort, en lång, en på engelska).
+- Verifiera: max 3 rekommendationer, börjar med en spegling, inga floskler.
+- Klicka på upsell-kortet och kontrollera att checkout-sidan visar samma löften.
 
-- **Moms:** Stripe kan automatiskt lägga på 25 % moms ovanpå 399 kr (= 499 kr för kund). Eller är 399 kr inklusive moms? *Default i planen: 399 kr inkl. moms.*
-- **Avsändardomän:** Jag föreslår `notify.traivo.se` — säg till om ni vill ha annan.
-- **PDF-bibliotek:** React PDF (renderar direkt i edge function) är enklast. Puppeteer ger snyggare resultat men mer komplex setup. *Default: React PDF.*
+---
 
-Säg till när jag ska köra igång — eller om något ska justeras först.
+## Tekniska detaljer
+
+| Steg | Filer som ändras | Nya filer |
+|------|------------------|-----------|
+| 1 | `src/pages/Index.tsx` | – |
+| 2 | `supabase/functions/generate-deep-analysis/index.ts` | – |
+| 3 | `src/App.tsx`, `src/components/BrainHero.tsx`, `src/components/FieldVisual.tsx`, `src/components/AboutVisual.tsx`, `src/components/PlannerVisual.tsx`, `src/index.css`, `index.html` | – |
+| 4 | `src/pages/Contact.tsx`, `supabase/config.toml` | `supabase/functions/notify-contact-submission/index.ts` |
+| 5 | `supabase/functions/brain/index.ts`, `src/components/DeepAnalysisUpsell.tsx` | – |
+
+**Inga DB-migrationer behövs** — alla nödvändiga kolumner finns redan i `contact_submissions` och `deep_analyses`.
+
+**Inga nya secrets/connectors behövs** — Lovable Cloud transactional email används out-of-the-box för steg 4.
+
+**Bekräfta innan steg 4:** Kontaktmail ska gå till `info@traivo.se` — säg till om annan adress önskas (t.ex. `tomas@traivo.se`).
+
+---
+
+## Leveransordning & avbrott
+Jag kör steg 1 → 5 sekventiellt. Efter varje steg pausar jag, redovisar resultatet av funktionstestet, och du säger "fortsätt" eller "stopp/justera". Om något test misslyckas fixar jag och testar om innan nästa steg.
