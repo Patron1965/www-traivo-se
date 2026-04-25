@@ -295,8 +295,9 @@ const DeepAnalysisCheckout = () => {
                 {/* Total + CTA */}
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 p-5 rounded-xl glass border border-primary/20">
                   <div>
-                    <div className="text-xs text-muted-foreground">Totalt att betala</div>
-                    <div className="text-2xl font-bold">399 kr <span className="text-xs font-normal text-muted-foreground">inkl. moms</span></div>
+                    <div className="text-xs text-muted-foreground">Pris</div>
+                    <div className="text-2xl font-bold">399 kr <span className="text-xs font-normal text-muted-foreground">exkl. moms</span></div>
+                    <div className="text-[11px] text-muted-foreground mt-0.5">498,75 kr inkl. moms (25%)</div>
                   </div>
                   <button
                     type="submit"
