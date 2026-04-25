@@ -143,8 +143,8 @@ const Index = () => {
     <>
       {/* ─── HERO ─── */}
       <section className="relative min-h-[85vh] flex flex-col items-center justify-center overflow-hidden bg-noise px-4 sm:px-6 py-20">
-        <div className="absolute top-0 right-0 w-[500px] h-[500px] rounded-full bg-primary/[0.03] blur-[150px]" />
-        <div className="absolute bottom-0 left-0 w-[300px] h-[300px] rounded-full bg-accent/[0.03] blur-[100px]" />
+        <div className="absolute top-0 right-0 w-[min(500px,90vw)] h-[min(500px,90vw)] rounded-full bg-primary/[0.03] blur-[150px]" />
+        <div className="absolute bottom-0 left-0 w-[min(300px,80vw)] h-[min(300px,80vw)] rounded-full bg-accent/[0.03] blur-[100px]" />
         <div className="absolute inset-0 bg-grid-pattern opacity-30" />
 
         <div className="relative z-10 w-full max-w-3xl mx-auto text-center">
@@ -190,11 +190,11 @@ const Index = () => {
             <Link
               to="/hjarna#brain-input"
               aria-label="Öppna Hjärnan och hoppa direkt till inmatningsfältet — fältet får fokus automatiskt"
-              className="group block rounded-2xl glass glow-teal p-6 md:p-7 text-left transition-all duration-300 hover:border-primary/40 hover:scale-[1.01] outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+              className="group block rounded-2xl glass glow-teal p-4 sm:p-6 md:p-7 text-left transition-all duration-300 hover:border-primary/40 hover:scale-[1.01] outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
             >
-              <div className="flex items-start gap-4">
-                <div className="shrink-0 w-12 h-12 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center group-hover:bg-primary/15 transition-colors">
-                  <Brain className="w-6 h-6 text-primary" strokeWidth={2} />
+              <div className="flex items-start gap-3 sm:gap-4">
+                <div className="shrink-0 w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center group-hover:bg-primary/15 transition-colors">
+                  <Brain className="w-5 h-5 sm:w-6 sm:h-6 text-primary" strokeWidth={2} />
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 mb-1.5">
@@ -203,7 +203,7 @@ const Index = () => {
                       Prova Hjärnan
                     </span>
                   </div>
-                  <h2 className="font-display text-lg md:text-xl font-semibold text-foreground mb-2 leading-snug">
+                  <h2 className="font-display text-base sm:text-lg md:text-xl font-semibold text-foreground mb-2 leading-snug">
                     Beskriv din verksamhet anonymt – få konkreta rekommendationer på 20 sekunder.
                   </h2>
                   <p className="text-xs md:text-sm text-muted-foreground leading-relaxed mb-5">
