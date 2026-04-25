@@ -88,7 +88,7 @@ const MondayHero = () => {
           >
             <Brain className="w-3.5 h-3.5 text-primary/70 group-hover:text-primary transition-colors" strokeWidth={2.5} />
             <span>
-              Hellre prova själv först?{" "}
+              Vill du hellre prova själv först?{" "}
               <span className="underline underline-offset-4 decoration-dotted decoration-muted-foreground/40 group-hover:decoration-primary/60">
                 Beskriv din verksamhet anonymt
               </span>
