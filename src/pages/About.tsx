@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Users, Brain, Wrench, Globe } from "lucide-react";
 import AIChatLink from "@/components/AIChatLink";
+import AboutVisual from "@/components/AboutVisual";
 
 const fadeIn = {
   initial: { opacity: 0, y: 24 },
@@ -25,28 +26,33 @@ const About = () => {
         <div className="absolute inset-0 bg-grid-pattern opacity-15" />
         <div className="absolute top-0 left-1/3 w-[400px] h-[400px] rounded-full bg-primary/[0.03] blur-[150px]" />
 
-        <div className="relative z-10 max-w-7xl mx-auto px-6 w-full py-28">
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mb-4">
-            <span className="text-[11px] font-medium uppercase tracking-[0.25em] text-primary">Om Traivo</span>
-          </motion.div>
-          <motion.h1
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7 }}
-            className="font-display text-4xl md:text-6xl font-bold leading-[0.95] tracking-tight mb-5 max-w-3xl"
-          >
-            <span className="text-gradient-ice">Vi byggde det</span>
-            <br />
-            <span className="text-gradient-aurora">vi själva sökte efter.</span>
-          </motion.h1>
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.2 }}
-            className="text-muted-foreground max-w-xl leading-relaxed"
-          >
-            Vi byggde Traivo för att vi själva var trötta på att hoppa mellan system. Idag är det en plattform för dem som driver fältservice på riktigt – i bilen, på kontoret och däremellan.
-          </motion.p>
+        <div className="relative z-10 max-w-7xl mx-auto px-6 w-full py-28 grid lg:grid-cols-2 gap-12 items-center">
+          <div>
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mb-4">
+              <span className="text-[11px] font-medium uppercase tracking-[0.25em] text-primary">Om Traivo</span>
+            </motion.div>
+            <motion.h1
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7 }}
+              className="font-display text-4xl md:text-6xl font-bold leading-[0.95] tracking-tight mb-5 max-w-2xl"
+            >
+              <span className="text-gradient-ice">Vi byggde det</span>
+              <br />
+              <span className="text-gradient-aurora">vi själva sökte efter.</span>
+            </motion.h1>
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.2 }}
+              className="text-muted-foreground max-w-xl leading-relaxed"
+            >
+              Vi byggde Traivo för att vi själva var trötta på att hoppa mellan system. Idag är det en plattform för dem som driver fältservice på riktigt – i bilen, på kontoret och däremellan.
+            </motion.p>
+          </div>
+          <div className="hidden lg:flex justify-end">
+            <AboutVisual />
+          </div>
         </div>
       </section>
 
