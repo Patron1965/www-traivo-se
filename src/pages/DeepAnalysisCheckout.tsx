@@ -230,6 +230,23 @@ const DeepAnalysisCheckout = () => {
 
                   <div>
                     <label className="block text-xs font-medium text-foreground/80 mb-1.5">
+                      Webbplats <span className="text-destructive">*</span>
+                    </label>
+                    <input
+                      type="url"
+                      required
+                      value={form.websiteUrl}
+                      onChange={(e) => update("websiteUrl", e.target.value)}
+                      placeholder="https://erforetag.se"
+                      className="w-full px-3 py-2.5 rounded-lg bg-background border border-border focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/30 text-sm transition-colors"
+                    />
+                    <p className="mt-1.5 text-[10px] text-muted-foreground">
+                      Vår AI läser av er sajt för att göra analysen mer träffsäker.
+                    </p>
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-medium text-foreground/80 mb-1.5">
                       Org.nr <span className="text-muted-foreground font-normal">(valfritt - för fakturaspecifikation)</span>
                     </label>
                     <input
