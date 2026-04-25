@@ -16,7 +16,7 @@ const Navbar = () => {
   const location = useLocation();
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 glass">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-background border-b border-border">
       <div className="max-w-7xl mx-auto px-6 flex items-center justify-between h-14">
         <Link to="/" className="font-display font-bold tracking-tight">
           <span className="text-gradient-ocean text-3xl">Traivo</span>
