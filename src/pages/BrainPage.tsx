@@ -389,8 +389,8 @@ const Brain_Page = () => {
                       className="text-left p-3 rounded-xl glass-subtle hover:border-primary/40 hover:bg-primary/[0.03] transition-all group"
                     >
                       <div className="flex items-center gap-2 mb-1.5">
-                        <ex.icon className="w-3.5 h-3.5 text-primary opacity-70 group-hover:opacity-100 transition-opacity" />
-                        <span className="text-[11px] font-semibold uppercase tracking-wider text-foreground/90">
+                        <ex.icon className="w-3.5 h-3.5 text-primary opacity-80 group-hover:opacity-100 transition-opacity flex-shrink-0" strokeWidth={2.25} />
+                        <span className="text-[10.5px] font-semibold uppercase tracking-wider text-foreground/90 truncate">
                           {ex.label}
                         </span>
                       </div>
