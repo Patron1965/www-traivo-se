@@ -4,7 +4,6 @@ import { Link, useLocation } from "react-router-dom";
 import ReactMarkdown from "react-markdown";
 import {
   Send, Loader2, Brain, Lock, RotateCcw, X, Sparkles,
-  PenLine, Lightbulb, Compass, ShieldCheck, Clock,
   Trash2, Building2, Users, MapPin,
   Wrench, Snowflake, Zap, Leaf, Truck, HardHat,
 } from "lucide-react";
