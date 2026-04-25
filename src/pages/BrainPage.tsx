@@ -6,6 +6,7 @@ import {
   Send, Loader2, Brain, Lock, RotateCcw, X,
   Trash2, Building2, Users, MapPin, Sparkles,
   Wrench, Snowflake, Zap, Leaf, Truck, HardHat,
+  PenLine, Lightbulb, Compass, ShieldCheck, Clock,
 } from "lucide-react";
 import DeepAnalysisUpsell from "@/components/DeepAnalysisUpsell";
 
