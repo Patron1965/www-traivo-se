@@ -18,19 +18,8 @@ const Navbar = () => {
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 glass">
       <div className="max-w-7xl mx-auto px-6 flex items-center justify-between h-14">
-        <Link to="/" className="relative font-display font-bold text-[1.375rem] tracking-tight">
-          {/* Pulserande glow runt loggan */}
-          <motion.span
-            aria-hidden
-            animate={{ opacity: [0.48, 1, 0.48], scale: [0.9, 1.15, 0.9] }}
-            transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-            className="pointer-events-none absolute inset-0 -m-4 rounded-full blur-xl"
-            style={{
-              background:
-                "radial-gradient(ellipse at center, hsl(var(--primary) / 0.72), hsl(var(--primary) / 0.24) 50%, transparent 75%)",
-            }}
-          />
-          <span className="relative text-gradient-ocean rounded-none shadow-none text-3xl">{"Traivo \n"}</span>
+        <Link to="/" className="font-display font-bold tracking-tight">
+          <span className="text-gradient-ocean text-3xl">Traivo</span>
         </Link>
 
         {/* Desktop */}
