@@ -20,9 +20,9 @@ const Navbar = () => {
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-background border-b border-border">
-      <div className="max-w-7xl mx-auto px-6 flex items-center justify-between h-14">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between h-14">
         <Link to="/" className="font-display font-bold tracking-tight">
-          <span className="text-gradient-ocean text-3xl">Traivo</span>
+          <span className="text-gradient-ocean text-2xl sm:text-3xl">Traivo</span>
         </Link>
 
         {/* Desktop */}
@@ -67,7 +67,7 @@ const Navbar = () => {
             exit={{ opacity: 0, y: -10 }}
             className="md:hidden absolute inset-x-0 top-14 bg-background border-t border-border"
           >
-            <div className="px-6 py-5 space-y-1">
+            <div className="px-4 sm:px-6 py-5 space-y-1">
               {links.map((link) => (
                 <Link
                   key={link.to}
