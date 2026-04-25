@@ -276,6 +276,19 @@ Deno.serve(async (req) => {
         scraped.note,
       );
 
+      // Strukturkontroll: alla 9 numrerade rubriker måste finnas
+      const requiredHeadings = [
+        "## 1.", "## 2.", "## 3.", "## 4.", "## 5.",
+        "## 6.", "## 7.", "## 8.", "## 9.",
+      ];
+      const missing = requiredHeadings.filter((h) => !content.includes(h));
+      if (missing.length > 0) {
+        throw new Error(`Rapporten saknar rubriker: ${missing.join(", ")}`);
+      }
+      if (content.length < 1500) {
+        throw new Error(`Rapporten är för kort (${content.length} tecken, kräver minst 1500)`);
+      }
+
       await supabase
         .from("deep_analyses")
         .update({
