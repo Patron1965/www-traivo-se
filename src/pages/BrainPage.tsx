@@ -433,19 +433,15 @@ const Brain_Page = () => {
                       type="button"
                       initial={{ opacity: 0, y: 8 }}
                       animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.5 + i * 0.04 }}
+                      transition={{ delay: 0.5 + i * 0.03 }}
                       onClick={() => handleExample(ex.text)}
-                      className="min-w-0 text-left p-3 rounded-xl glass-subtle hover:border-primary/40 hover:bg-primary/[0.03] transition-all group"
+                      title={ex.text}
+                      className="min-w-0 text-left px-2.5 py-2 rounded-lg glass-subtle hover:border-primary/40 hover:bg-primary/[0.03] transition-all group flex items-center gap-2"
                     >
-                      <div className="flex items-center gap-2 mb-1.5">
-                        <ex.icon className="w-3.5 h-3.5 text-primary opacity-80 group-hover:opacity-100 transition-opacity flex-shrink-0" strokeWidth={2.25} />
-                        <span className="min-w-0 text-[10.5px] font-semibold uppercase tracking-wider text-foreground/90 truncate">
-                          {ex.label}
-                        </span>
-                      </div>
-                      <p className="text-[11px] text-muted-foreground leading-relaxed line-clamp-2">
-                        {ex.text}
-                      </p>
+                      <ex.icon className="w-3.5 h-3.5 text-primary opacity-80 group-hover:opacity-100 transition-opacity flex-shrink-0" strokeWidth={2.25} />
+                      <span className="min-w-0 text-[10.5px] font-semibold uppercase tracking-wider text-foreground/90 truncate">
+                        {ex.label}
+                      </span>
                     </motion.button>
                   ))}
                 </div>
