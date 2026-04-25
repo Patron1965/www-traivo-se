@@ -12,9 +12,17 @@ interface FormData {
   company: string;
   contactName: string;
   orgNumber: string;
+  websiteUrl: string;
   businessDescription: string;
   quickResponse: string;
 }
+
+const normalizeUrl = (raw: string): string => {
+  const v = raw.trim();
+  if (!v) return v;
+  if (/^https?:\/\//i.test(v)) return v;
+  return `https://${v}`;
+};
 
 const DeepAnalysisCheckout = () => {
   const navigate = useNavigate();
@@ -28,6 +36,7 @@ const DeepAnalysisCheckout = () => {
     company: "",
     contactName: "",
     orgNumber: "",
+    websiteUrl: "",
     businessDescription: "",
     quickResponse: "",
   });
@@ -57,6 +66,10 @@ const DeepAnalysisCheckout = () => {
     if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(form.email.trim())) return "Ogiltig e-postadress";
     if (form.company.trim().length < 2) return "Ange företagsnamn";
     if (form.contactName.trim().length < 2) return "Ange ditt namn";
+    const url = normalizeUrl(form.websiteUrl);
+    if (!url || !/^https?:\/\/[^\s.]+\.[^\s]+/i.test(url)) {
+      return "Ange en giltig webbplats (t.ex. https://erforetag.se)";
+    }
     if (form.businessDescription.trim().length < 30) {
       return "Verksamhetsbeskrivningen behöver vara minst 30 tecken";
     }
@@ -83,6 +96,7 @@ const DeepAnalysisCheckout = () => {
             company: form.company.trim(),
             contactName: form.contactName.trim(),
             orgNumber: form.orgNumber.trim() || undefined,
+            websiteUrl: normalizeUrl(form.websiteUrl),
             businessDescription: form.businessDescription.trim(),
             quickResponse: form.quickResponse || undefined,
             returnUrl,
