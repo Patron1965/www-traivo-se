@@ -5,12 +5,67 @@ import ReactMarkdown from "react-markdown";
 import {
   Send, Loader2, Brain, Lock, RotateCcw, X, Sparkles,
   PenLine, Lightbulb, Compass, ShieldCheck, Clock,
+  Trash2, Building2, Users, MapPin,
+  Wrench, Snowflake, Zap, Leaf, Truck, HardHat,
 } from "lucide-react";
 import DeepAnalysisUpsell from "@/components/DeepAnalysisUpsell";
 
 const BRAIN_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/brain`;
 
 type Msg = { role: "user" | "assistant"; content: string };
+
+const examples = [
+  {
+    icon: Trash2,
+    label: "Avfall & sanering",
+    text: "Vi rengör soptunnor och soprum åt 80 BRF:er i Mälardalen. 8 tekniker, 6 bilar. Akutjobb varje vecka rubbar rutterna och vid sjukdom blir det kaos. Planeringen sker i Excel och dagboken är pappersburen.",
+  },
+  {
+    icon: Building2,
+    label: "Fastighetsdrift",
+    text: "Vi sköter teknisk fastighetsdrift för 200 fastigheter i Stockholm. Tekniker får jobb via SMS, kvitterar i Excel och felanmälningar kommer in via mejl. Vi tappar tid på dubbelarbete och fakturaunderlagen är ofullständiga.",
+  },
+  {
+    icon: Snowflake,
+    label: "Värme & kyla",
+    text: "25 servicetekniker som installerar och servar värmepumpar och kylanläggningar i Mellansverige. Mycket körtid mellan jobb, pappersprotokoll skannas på kontoret och garantiärenden är svåra att spåra tillbaka.",
+  },
+  {
+    icon: Wrench,
+    label: "VVS-företag",
+    text: "Vi är 15 rörmokare som gör både service och nyinstallation. Akutjobb krockar ofta med planerade jobb och vi hinner inte fakturera i tid. Material registreras på papperslappar i bilen.",
+  },
+  {
+    icon: Zap,
+    label: "Elinstallation",
+    text: "Elfirma med 30 montörer som jobbar mot både privatkund och företag. Vi har problem att hålla koll på vilka jobb som är klara, signaturer från kund och vilka delar som gått åt per jobb.",
+  },
+  {
+    icon: Leaf,
+    label: "Mark & trädgård",
+    text: "Vi gör grönyteskötsel åt kommuner och fastighetsbolag. 40 personer i fält under sommarhalvåret. Säsongsplanering är ett pussel och vi behöver bevis på utfört arbete för att få betalt.",
+  },
+  {
+    icon: HardHat,
+    label: "Bygg & hantverk",
+    text: "Byggfirma med 50 hantverkare på flera projekt parallellt. Tidsrapportering sker på papper, ÄTA-arbeten dokumenteras dåligt och projektledarna har svårt att se vilka som är var.",
+  },
+  {
+    icon: Truck,
+    label: "Transport & logistik",
+    text: "Lokalt åkeri med 20 bilar som kör schemalagda och akuta uppdrag. Vi behöver bättre koll på var bilarna är, digitala körorder och att kunder kan följa leveransen.",
+  },
+  {
+    icon: Users,
+    label: "Hemtjänst & vård",
+    text: "Privat hemtjänst med 35 medarbetare. Schemaläggning är komplex pga kompetenskrav och kontinuitet hos brukare. Vi vill också få in tidsrapportering och avvikelser digitalt.",
+  },
+  {
+    icon: MapPin,
+    label: "Endast fältstöd",
+    text: "Vi har bara 3 tekniker men de behöver bättre verktyg i bilen – navigation, checklistor, foto och digitala protokoll. Planeringen funkar redan i ett befintligt system.",
+  },
+];
 
 async function streamBrain({
   messages,
@@ -358,6 +413,52 @@ const Brain_Page = () => {
               </span>
             </div>
           </motion.form>
+
+          {/* Hitta din bransch — exempel som fyller i textfältet */}
+          <AnimatePresence>
+            {!hasAsked && (
+              <motion.div
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{ delay: 0.45, duration: 0.5 }}
+                className="mt-8"
+              >
+                <div className="text-center mb-4">
+                  <p className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground/70 font-medium mb-1.5">
+                    Snabbstart
+                  </p>
+                  <h2 className="font-display text-lg md:text-xl font-bold text-foreground">
+                    Hitta din bransch — fyller i åt dig
+                  </h2>
+                  <p className="text-xs text-muted-foreground mt-1.5 max-w-md mx-auto leading-relaxed">
+                    Klicka på det område som liknar er verksamhet mest. Texten fylls i ovan så kan du justera den innan du skickar.
+                  </p>
+                </div>
+                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2.5">
+                  {examples.map((ex, i) => (
+                    <motion.button
+                      key={ex.label}
+                      type="button"
+                      initial={{ opacity: 0, y: 8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.5 + i * 0.03 }}
+                      onClick={() => handleExample(ex.text)}
+                      title={ex.text}
+                      className="min-w-0 text-left px-3 py-2.5 rounded-lg glass-subtle hover:border-primary/50 hover:bg-primary/[0.05] hover:-translate-y-0.5 transition-all group flex items-center gap-2.5"
+                    >
+                      <div className="w-7 h-7 rounded-md bg-primary/10 border border-primary/20 flex items-center justify-center flex-shrink-0 group-hover:bg-primary/20 transition-colors">
+                        <ex.icon className="w-3.5 h-3.5 text-primary" strokeWidth={2.25} />
+                      </div>
+                      <span className="min-w-0 text-xs font-semibold text-foreground/90 leading-tight">
+                        {ex.label}
+                      </span>
+                    </motion.button>
+                  ))}
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
 
           {/* Värdefull botten-sektion när inget svar finns ännu */}
           <AnimatePresence>
