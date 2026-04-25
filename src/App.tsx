@@ -13,6 +13,7 @@ import Contact from "./pages/Contact";
 import BrainPage from "./pages/BrainPage";
 import DeepAnalysisCheckout from "./pages/DeepAnalysisCheckout";
 import DeepAnalysisThankYou from "./pages/DeepAnalysisThankYou";
+import GoLiveChecklist from "./pages/GoLiveChecklist";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -31,6 +32,7 @@ const App = () => (
             <Route path="/hjarna" element={<BrainPage />} />
             <Route path="/hjarna/djupanalys" element={<DeepAnalysisCheckout />} />
             <Route path="/hjarna/djupanalys/tack" element={<DeepAnalysisThankYou />} />
+            <Route path="/go-live" element={<GoLiveChecklist />} />
             <Route path="/priser" element={<Pricing />} />
             <Route path="/om-oss" element={<About />} />
             <Route path="/kontakt" element={<Contact />} />
