@@ -239,19 +239,19 @@ const Brain_Page = () => {
       <section className="relative min-h-[60vh] flex items-center overflow-hidden bg-noise pt-24 pb-12">
         <div className="absolute inset-0 bg-grid-pattern opacity-15" />
         {/* Glow */}
-        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[500px] h-[500px] rounded-full bg-primary/[0.06] blur-[140px]" />
+        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[min(500px,100vw)] h-[min(500px,100vw)] rounded-full bg-primary/[0.06] blur-[140px]" />
 
         <div className="relative z-10 max-w-3xl mx-auto px-4 sm:px-6 w-full text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="mb-6 inline-flex items-center gap-2 px-3 py-1.5 rounded-full glass-subtle"
+            className="mb-6 inline-flex max-w-full items-center gap-2 px-3 py-1.5 rounded-full glass-subtle"
           >
             <span className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75" />
               <span className="relative inline-flex rounded-full h-2 w-2 bg-primary" />
             </span>
-            <span className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground font-medium">
+            <span className="text-[10px] uppercase tracking-[0.18em] sm:tracking-[0.25em] text-muted-foreground font-medium">
               Hjärnan · AI-stöd · Anonymt
             </span>
           </motion.div>
@@ -382,7 +382,7 @@ const Brain_Page = () => {
                 placeholder="Vi är ett företag inom… Vi har X tekniker… Vårt största problem är…"
                 aria-label="Beskriv er verksamhet för Hjärnans AI-rådgivare"
                 aria-describedby="brain-input-help brain-input-counter"
-                className="relative w-full bg-transparent px-6 py-5 pr-16 text-foreground placeholder:text-muted-foreground focus:outline-none focus-visible:outline-none resize-none min-h-[140px] text-sm leading-relaxed"
+                className="relative w-full bg-transparent px-5 sm:px-6 py-5 pr-16 text-foreground placeholder:text-muted-foreground focus:outline-none focus-visible:outline-none resize-none min-h-[140px] text-base leading-relaxed"
                 rows={5}
                 maxLength={2000}
                 onKeyDown={(e) => {
@@ -405,7 +405,7 @@ const Brain_Page = () => {
                 )}
               </button>
             </div>
-            <div className="mt-2 flex items-center justify-between text-[10px] text-muted-foreground/70 px-1">
+            <div className="mt-2 flex items-center justify-between gap-3 text-[10px] text-muted-foreground/70 px-1">
               <span id="brain-input-help">⌘ + Enter för att skicka</span>
               <span id="brain-input-counter" aria-live="off">
                 {input.length}/2000
@@ -426,7 +426,7 @@ const Brain_Page = () => {
                 <p className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground/70 mb-3 text-center">
                   Eller välj ett exempel för en träffsäker rekommendation
                 </p>
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2">
                   {examples.map((ex, i) => (
                     <motion.button
                       key={ex.label}
@@ -435,11 +435,11 @@ const Brain_Page = () => {
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.5 + i * 0.04 }}
                       onClick={() => handleExample(ex.text)}
-                      className="text-left p-3 rounded-xl glass-subtle hover:border-primary/40 hover:bg-primary/[0.03] transition-all group"
+                      className="min-w-0 text-left p-3 rounded-xl glass-subtle hover:border-primary/40 hover:bg-primary/[0.03] transition-all group"
                     >
                       <div className="flex items-center gap-2 mb-1.5">
                         <ex.icon className="w-3.5 h-3.5 text-primary opacity-80 group-hover:opacity-100 transition-opacity flex-shrink-0" strokeWidth={2.25} />
-                        <span className="text-[10.5px] font-semibold uppercase tracking-wider text-foreground/90 truncate">
+                        <span className="min-w-0 text-[10.5px] font-semibold uppercase tracking-wider text-foreground/90 truncate">
                           {ex.label}
                         </span>
                       </div>

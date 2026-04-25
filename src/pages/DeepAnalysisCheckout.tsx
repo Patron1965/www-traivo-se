@@ -194,7 +194,7 @@ const DeepAnalysisCheckout = () => {
                       value={form.email}
                       onChange={(e) => update("email", e.target.value)}
                       placeholder="namn@foretag.se"
-                      className="w-full px-3 py-2.5 rounded-lg bg-background border border-border focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/30 text-sm transition-colors"
+                      className="w-full px-3 py-2.5 rounded-lg bg-background border border-border focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/30 text-base md:text-sm transition-colors"
                     />
                   </div>
 
@@ -209,7 +209,7 @@ const DeepAnalysisCheckout = () => {
                         value={form.company}
                         onChange={(e) => update("company", e.target.value)}
                         placeholder="Acme AB"
-                        className="w-full px-3 py-2.5 rounded-lg bg-background border border-border focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/30 text-sm transition-colors"
+                        className="w-full px-3 py-2.5 rounded-lg bg-background border border-border focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/30 text-base md:text-sm transition-colors"
                       />
                     </div>
 
@@ -223,7 +223,7 @@ const DeepAnalysisCheckout = () => {
                         value={form.contactName}
                         onChange={(e) => update("contactName", e.target.value)}
                         placeholder="För- och efternamn"
-                        className="w-full px-3 py-2.5 rounded-lg bg-background border border-border focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/30 text-sm transition-colors"
+                        className="w-full px-3 py-2.5 rounded-lg bg-background border border-border focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/30 text-base md:text-sm transition-colors"
                       />
                     </div>
                   </div>
@@ -238,7 +238,7 @@ const DeepAnalysisCheckout = () => {
                       value={form.websiteUrl}
                       onChange={(e) => update("websiteUrl", e.target.value)}
                       placeholder="https://erforetag.se"
-                      className="w-full px-3 py-2.5 rounded-lg bg-background border border-border focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/30 text-sm transition-colors"
+                      className="w-full px-3 py-2.5 rounded-lg bg-background border border-border focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/30 text-base md:text-sm transition-colors"
                     />
                     <p className="mt-1.5 text-[10px] text-muted-foreground">
                       Vår AI läser av er sajt för att göra analysen mer träffsäker.
@@ -254,7 +254,7 @@ const DeepAnalysisCheckout = () => {
                       value={form.orgNumber}
                       onChange={(e) => update("orgNumber", e.target.value)}
                       placeholder="556677-8899"
-                      className="w-full px-3 py-2.5 rounded-lg bg-background border border-border focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/30 text-sm transition-colors"
+                      className="w-full px-3 py-2.5 rounded-lg bg-background border border-border focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/30 text-base md:text-sm transition-colors"
                     />
                   </div>
                 </div>
@@ -277,7 +277,7 @@ const DeepAnalysisCheckout = () => {
                     placeholder="Beskriv er verksamhet: antal tekniker/bilar, geografi, kundtyp, nuvarande system, största utmaningarna..."
                     rows={6}
                     maxLength={5000}
-                    className="w-full px-3 py-2.5 rounded-lg bg-background border border-border focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/30 text-sm leading-relaxed resize-none transition-colors"
+                    className="w-full px-3 py-2.5 rounded-lg bg-background border border-border focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/30 text-base md:text-sm leading-relaxed resize-none transition-colors"
                   />
                   <div className="text-[10px] text-muted-foreground text-right">
                     {form.businessDescription.length}/5000
