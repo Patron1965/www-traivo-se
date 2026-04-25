@@ -69,9 +69,9 @@ const DeepAnalysisUpsell = ({ businessDescription, quickResponse }: DeepAnalysis
           {/* Price + CTA */}
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 pt-4 border-t border-border/40">
             <div>
-              <div className="flex items-baseline gap-1.5">
+              <div className="flex items-baseline gap-1.5 flex-wrap">
                 <span className="text-3xl font-bold text-foreground">399 kr</span>
-                <span className="text-xs text-muted-foreground">inkl. moms · engångsbetalning</span>
+                <span className="text-xs text-muted-foreground">exkl. moms · engångsbetalning</span>
               </div>
               <div className="flex items-center gap-1.5 mt-1">
                 <Shield className="w-3 h-3 text-muted-foreground" />
