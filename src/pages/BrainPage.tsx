@@ -469,9 +469,9 @@ const Brain_Page = () => {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.5 }}
-                className="mt-8"
+                className="mt-5"
               >
-                <div className="rounded-2xl glass p-6 md:p-8 relative overflow-hidden">
+                <div className="rounded-2xl glass p-5 md:p-6 relative overflow-hidden">
                   {/* Subtle accent stripe */}
                   <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent" />
 
