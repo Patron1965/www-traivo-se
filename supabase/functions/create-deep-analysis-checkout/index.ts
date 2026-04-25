@@ -11,6 +11,7 @@ interface RequestBody {
   company: string;
   contactName: string;
   orgNumber?: string;
+  websiteUrl: string;
   businessDescription: string;
   quickResponse?: string;
   returnUrl: string;
@@ -24,6 +25,7 @@ function validateBody(body: any): { valid: true; data: RequestBody } | { valid: 
   const company = String(body.company || "").trim();
   const contactName = String(body.contactName || "").trim();
   const orgNumber = body.orgNumber ? String(body.orgNumber).trim() : undefined;
+  let websiteUrl = String(body.websiteUrl || "").trim();
   const businessDescription = String(body.businessDescription || "").trim();
   const quickResponse = body.quickResponse ? String(body.quickResponse) : undefined;
   const returnUrl = String(body.returnUrl || "");
@@ -33,6 +35,11 @@ function validateBody(body: any): { valid: true; data: RequestBody } | { valid: 
   if (company.length < 2 || company.length > 200) return { valid: false, error: "Ogiltigt företagsnamn" };
   if (contactName.length < 2 || contactName.length > 200) return { valid: false, error: "Ogiltigt namn" };
   if (orgNumber && orgNumber.length > 50) return { valid: false, error: "Ogiltigt org.nr" };
+  if (!websiteUrl) return { valid: false, error: "Webbplats måste anges" };
+  if (!/^https?:\/\//i.test(websiteUrl)) websiteUrl = `https://${websiteUrl}`;
+  if (!/^https?:\/\/[^\s.]+\.[^\s]+/i.test(websiteUrl) || websiteUrl.length > 500) {
+    return { valid: false, error: "Ogiltig webbplats-URL" };
+  }
   if (businessDescription.length < 30 || businessDescription.length > 5000) {
     return { valid: false, error: "Verksamhetsbeskrivning måste vara 30-5000 tecken" };
   }
@@ -40,7 +47,7 @@ function validateBody(body: any): { valid: true; data: RequestBody } | { valid: 
 
   return {
     valid: true,
-    data: { email, company, contactName, orgNumber, businessDescription, quickResponse, returnUrl, environment },
+    data: { email, company, contactName, orgNumber, websiteUrl, businessDescription, quickResponse, returnUrl, environment },
   };
 }
 
