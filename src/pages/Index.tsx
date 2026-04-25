@@ -187,7 +187,7 @@ const Index = () => {
             className="w-full max-w-2xl mx-auto"
           >
             <Link
-              to="/hjarna"
+              to="/hjarna#brain-input"
               className="group block rounded-2xl glass glow-teal p-6 md:p-7 text-left transition-all duration-300 hover:border-primary/40 hover:scale-[1.01] outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
             >
               <div className="flex items-start gap-4">

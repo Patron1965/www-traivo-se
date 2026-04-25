@@ -1,6 +1,6 @@
-import { useState, FormEvent, useRef } from "react";
+import { useState, FormEvent, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import ReactMarkdown from "react-markdown";
 import {
   Send, Loader2, Brain, Lock, RotateCcw, X,
@@ -151,6 +151,20 @@ const Brain_Page = () => {
   const [showPrivacy, setShowPrivacy] = useState(false);
   const [error, setError] = useState("");
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const formRef = useRef<HTMLFormElement>(null);
+  const location = useLocation();
+
+  // Scroll to + focus the input when navigated with #brain-input
+  useEffect(() => {
+    if (location.hash === "#brain-input") {
+      // small delay so layout is settled after route change
+      const t = setTimeout(() => {
+        formRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+        textareaRef.current?.focus({ preventScroll: true });
+      }, 120);
+      return () => clearTimeout(t);
+    }
+  }, [location.hash]);
 
   const latestResponse = messages.filter((m) => m.role === "assistant").pop();
 
@@ -323,11 +337,13 @@ const Brain_Page = () => {
 
           {/* Input */}
           <motion.form
+            ref={formRef}
+            id="brain-input"
             onSubmit={handleSubmit}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4, duration: 0.6 }}
-            className="relative"
+            className="relative scroll-mt-24"
           >
             <div className="relative rounded-2xl glass glow-teal overflow-hidden transition-all focus-within:border-primary/40">
               <textarea
