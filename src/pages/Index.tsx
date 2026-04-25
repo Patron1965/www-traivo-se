@@ -1,11 +1,10 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import AIInput from "@/components/AIInput";
 import {
   Calendar, Smartphone, Route, MapPin, Brain, WifiOff,
   ArrowRight, Users, FileText, CreditCard, X, ChevronDown,
-  Recycle, Wrench, Building2, Truck, HeartPulse
+  Recycle, Wrench, Building2, Truck, HeartPulse, Lock, Sparkles
 } from "lucide-react";
 import {
   Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger
@@ -180,9 +179,49 @@ const Index = () => {
             Vi byggde det vi själva saknade i 15 år i fält.
           </motion.p>
 
-          <div id="ai-chat" className="w-full max-w-2xl mx-auto">
-            <AIInput />
-          </div>
+          <motion.div
+            id="ai-chat"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4, duration: 0.6 }}
+            className="w-full max-w-2xl mx-auto"
+          >
+            <Link
+              to="/hjarna"
+              className="group block rounded-2xl glass glow-teal p-6 md:p-7 text-left transition-all duration-300 hover:border-primary/40 hover:scale-[1.01] outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+            >
+              <div className="flex items-start gap-4">
+                <div className="shrink-0 w-12 h-12 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center group-hover:bg-primary/15 transition-colors">
+                  <Brain className="w-6 h-6 text-primary" strokeWidth={2} />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2 mb-1.5">
+                    <Sparkles className="w-3.5 h-3.5 text-primary" />
+                    <span className="text-[11px] font-semibold uppercase tracking-[0.2em] text-primary">
+                      Prova Hjärnan
+                    </span>
+                  </div>
+                  <h2 className="font-display text-lg md:text-xl font-semibold text-foreground mb-2 leading-snug">
+                    Beskriv din verksamhet anonymt – få konkreta rekommendationer på 20 sekunder.
+                  </h2>
+                  <p className="text-xs md:text-sm text-muted-foreground leading-relaxed mb-5">
+                    Vår AI-rådgivare läser din situation och föreslår vad som faktiskt skulle göra skillnad i din vardag. Ingen inloggning. Inget sparas. Inga säljsamtal.
+                  </p>
+
+                  <div className="flex flex-wrap items-center gap-x-5 gap-y-3">
+                    <span className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-primary text-primary-foreground text-sm font-semibold shadow-[0_0_0_3px_hsl(var(--primary)/0.18),0_4px_14px_hsl(var(--primary)/0.30)] group-hover:bg-primary/90 transition-all">
+                      Öppna Hjärnan
+                      <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" strokeWidth={2.5} />
+                    </span>
+                    <span className="inline-flex items-center gap-1.5 text-[11px] text-muted-foreground">
+                      <Lock className="w-3 h-3 text-yellow-500" />
+                      Helt anonymt · Inget loggas · Inga säljsamtal
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </Link>
+          </motion.div>
         </div>
       </section>
 

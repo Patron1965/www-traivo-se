@@ -1,5 +1,5 @@
-import { useLocation, useNavigate } from "react-router-dom";
-import { ReactNode, MouseEvent } from "react";
+import { Link } from "react-router-dom";
+import { ReactNode } from "react";
 
 interface AIChatLinkProps {
   children: ReactNode;
@@ -7,25 +7,10 @@ interface AIChatLinkProps {
 }
 
 const AIChatLink = ({ children, className }: AIChatLinkProps) => {
-  const location = useLocation();
-  const navigate = useNavigate();
-
-  const handleClick = (e: MouseEvent<HTMLAnchorElement>) => {
-    e.preventDefault();
-    if (location.pathname !== "/") {
-      navigate("/");
-      setTimeout(() => {
-        document.getElementById("ai-chat")?.scrollIntoView({ behavior: "smooth", block: "center" });
-      }, 100);
-    } else {
-      document.getElementById("ai-chat")?.scrollIntoView({ behavior: "smooth", block: "center" });
-    }
-  };
-
   return (
-    <a href="/#ai-chat" onClick={handleClick} className={className}>
+    <Link to="/hjarna" className={className}>
       {children}
-    </a>
+    </Link>
   );
 };
 
