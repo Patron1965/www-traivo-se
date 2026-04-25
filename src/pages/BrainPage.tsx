@@ -150,6 +150,8 @@ const Brain_Page = () => {
   const [hasAsked, setHasAsked] = useState(false);
   const [showPrivacy, setShowPrivacy] = useState(false);
   const [error, setError] = useState("");
+  const [focusAnnouncement, setFocusAnnouncement] = useState("");
+  const [justFocused, setJustFocused] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
   const location = useLocation();
@@ -161,6 +163,13 @@ const Brain_Page = () => {
       const t = setTimeout(() => {
         formRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
         textareaRef.current?.focus({ preventScroll: true });
+        // Announce to screen readers that the input is now focused
+        setFocusAnnouncement(
+          "Inmatningsfältet för verksamhetsbeskrivning är nu fokuserat. Börja skriva för att beskriva er verksamhet."
+        );
+        setJustFocused(true);
+        // Clear visual focus highlight after a moment, but keep announcement until next nav
+        window.setTimeout(() => setJustFocused(false), 2200);
       }, 120);
       return () => clearTimeout(t);
     }
@@ -344,14 +353,35 @@ const Brain_Page = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4, duration: 0.6 }}
             className="relative scroll-mt-24"
+            aria-labelledby="brain-input-label"
+            aria-describedby="brain-input-help"
           >
-            <div className="relative rounded-2xl glass glow-teal overflow-hidden transition-all focus-within:border-primary/40">
+            {/* Visually-hidden label for screen readers */}
+            <label htmlFor="brain-input-textarea" id="brain-input-label" className="sr-only">
+              Beskriv er verksamhet för Hjärnans AI-rådgivare
+            </label>
+
+            {/* Polite live region — announces focus change after hash navigation */}
+            <div role="status" aria-live="polite" aria-atomic="true" className="sr-only">
+              {focusAnnouncement}
+            </div>
+
+            <div
+              className={`relative rounded-2xl glass glow-teal overflow-hidden transition-all duration-300 focus-within:border-primary/40 ${
+                justFocused
+                  ? "ring-2 ring-primary ring-offset-2 ring-offset-background border-primary/60 shadow-[0_0_0_4px_hsl(var(--primary)/0.25)]"
+                  : ""
+              }`}
+            >
               <textarea
                 ref={textareaRef}
+                id="brain-input-textarea"
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 placeholder="Vi är ett företag inom… Vi har X tekniker… Vårt största problem är…"
-                className="relative w-full bg-transparent px-6 py-5 pr-16 text-foreground placeholder:text-muted-foreground focus:outline-none resize-none min-h-[140px] text-sm leading-relaxed"
+                aria-label="Beskriv er verksamhet för Hjärnans AI-rådgivare"
+                aria-describedby="brain-input-help brain-input-counter"
+                className="relative w-full bg-transparent px-6 py-5 pr-16 text-foreground placeholder:text-muted-foreground focus:outline-none focus-visible:outline-none resize-none min-h-[140px] text-sm leading-relaxed"
                 rows={5}
                 maxLength={2000}
                 onKeyDown={(e) => {
@@ -364,7 +394,7 @@ const Brain_Page = () => {
               <button
                 type="submit"
                 disabled={!input.trim() || isLoading}
-                aria-label="Skicka"
+                aria-label={isLoading ? "Skickar din beskrivning" : "Skicka beskrivning till Hjärnan"}
                 className="absolute right-3 bottom-3 inline-flex items-center justify-center w-11 h-11 rounded-xl bg-primary text-primary-foreground border border-primary-foreground/20 shadow-[0_0_0_3px_hsl(var(--primary)/0.25),0_4px_14px_hsl(var(--primary)/0.35)] hover:bg-primary/90 hover:scale-[1.05] active:scale-95 disabled:opacity-40 disabled:cursor-not-allowed disabled:shadow-none disabled:hover:scale-100 transition-all duration-200 outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
               >
                 {isLoading ? (
@@ -375,8 +405,10 @@ const Brain_Page = () => {
               </button>
             </div>
             <div className="mt-2 flex items-center justify-between text-[10px] text-muted-foreground/70 px-1">
-              <span>⌘ + Enter för att skicka</span>
-              <span>{input.length}/2000</span>
+              <span id="brain-input-help">⌘ + Enter för att skicka</span>
+              <span id="brain-input-counter" aria-live="off">
+                {input.length}/2000
+              </span>
             </div>
           </motion.form>
 
