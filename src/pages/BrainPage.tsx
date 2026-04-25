@@ -1,0 +1,465 @@
+import { useState, FormEvent, useRef } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Link } from "react-router-dom";
+import ReactMarkdown from "react-markdown";
+import {
+  Send, Loader2, Brain, Lock, RotateCcw, X,
+  Trash2, Building2, Users, MapPin, Sparkles
+} from "lucide-react";
+
+const BRAIN_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/brain`;
+
+type Msg = { role: "user" | "assistant"; content: string };
+
+const examples = [
+  {
+    icon: Trash2,
+    label: "Avfallshantering",
+    text: "Vi rengör soptunnor och soprum åt bostadsrättsföreningar i Mälardalen. 8 tekniker, 6 bilar. Mycket akutjobb och svårt att hålla rutterna effektiva när folk är sjuka.",
+  },
+  {
+    icon: Building2,
+    label: "Fastighetsservice",
+    text: "Vi sköter fastighetsdrift för 200 fastigheter i Stockholm. Planeringen sker i Excel och teknikerna får sina jobb via SMS. Vi har problem med dokumentation och fakturering.",
+  },
+  {
+    icon: Users,
+    label: "Teknisk service",
+    text: "Vi är 25 servicetekniker som installerar och servar värmepumpar. Mycket reser tid mellan jobb. Tekniker rapporterar i pappersprotokoll som scannas på kontoret.",
+  },
+  {
+    icon: MapPin,
+    label: "Endast i fält",
+    text: "Vi har bara 3 tekniker men de behöver bättre verktyg i bilen – navigation, checklistor och digitala protokoll. Planeringen funkar redan.",
+  },
+];
+
+async function streamBrain({
+  messages,
+  onDelta,
+  onDone,
+  onError,
+}: {
+  messages: Msg[];
+  onDelta: (text: string) => void;
+  onDone: () => void;
+  onError: (msg: string) => void;
+}) {
+  const resp = await fetch(BRAIN_URL, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
+    },
+    body: JSON.stringify({ messages }),
+  });
+
+  if (!resp.ok) {
+    const err = await resp.json().catch(() => ({ error: "Något gick fel" }));
+    onError(err.error || "Något gick fel");
+    return;
+  }
+
+  if (!resp.body) {
+    onError("Ingen data mottagen");
+    return;
+  }
+
+  const reader = resp.body.getReader();
+  const decoder = new TextDecoder();
+  let buffer = "";
+
+  while (true) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    buffer += decoder.decode(value, { stream: true });
+
+    let newlineIndex: number;
+    while ((newlineIndex = buffer.indexOf("\n")) !== -1) {
+      let line = buffer.slice(0, newlineIndex);
+      buffer = buffer.slice(newlineIndex + 1);
+      if (line.endsWith("\r")) line = line.slice(0, -1);
+      if (line.startsWith(":") || line.trim() === "") continue;
+      if (!line.startsWith("data: ")) continue;
+      const jsonStr = line.slice(6).trim();
+      if (jsonStr === "[DONE]") break;
+      try {
+        const parsed = JSON.parse(jsonStr);
+        const content = parsed.choices?.[0]?.delta?.content as string | undefined;
+        if (content) onDelta(content);
+      } catch {
+        buffer = line + "\n" + buffer;
+        break;
+      }
+    }
+  }
+
+  if (buffer.trim()) {
+    for (let raw of buffer.split("\n")) {
+      if (!raw) continue;
+      if (raw.endsWith("\r")) raw = raw.slice(0, -1);
+      if (!raw.startsWith("data: ")) continue;
+      const jsonStr = raw.slice(6).trim();
+      if (jsonStr === "[DONE]") continue;
+      try {
+        const parsed = JSON.parse(jsonStr);
+        const content = parsed.choices?.[0]?.delta?.content as string | undefined;
+        if (content) onDelta(content);
+      } catch { /* ignore */ }
+    }
+  }
+
+  onDone();
+}
+
+const Brain_Page = () => {
+  const [input, setInput] = useState("");
+  const [messages, setMessages] = useState<Msg[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [hasAsked, setHasAsked] = useState(false);
+  const [showPrivacy, setShowPrivacy] = useState(false);
+  const [error, setError] = useState("");
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  const latestResponse = messages.filter((m) => m.role === "assistant").pop();
+
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    if (!input.trim() || isLoading) return;
+
+    const userMsg: Msg = { role: "user", content: input.trim() };
+    const allMessages = [...messages, userMsg];
+
+    setMessages(allMessages);
+    setIsLoading(true);
+    setHasAsked(true);
+    setError("");
+    setInput("");
+
+    let assistantSoFar = "";
+
+    try {
+      await streamBrain({
+        messages: allMessages,
+        onDelta: (chunk) => {
+          assistantSoFar += chunk;
+          setMessages((prev) => {
+            const last = prev[prev.length - 1];
+            if (last?.role === "assistant") {
+              return prev.map((m, i) =>
+                i === prev.length - 1 ? { ...m, content: assistantSoFar } : m
+              );
+            }
+            return [...prev, { role: "assistant", content: assistantSoFar }];
+          });
+        },
+        onDone: () => setIsLoading(false),
+        onError: (msg) => {
+          setError(msg);
+          setIsLoading(false);
+        },
+      });
+    } catch {
+      setError("Kunde inte ansluta. Försök igen.");
+      setIsLoading(false);
+    }
+  };
+
+  const handleExample = (text: string) => {
+    setInput(text);
+    textareaRef.current?.focus();
+  };
+
+  const handleReset = () => {
+    setInput("");
+    setMessages([]);
+    setHasAsked(false);
+    setError("");
+    textareaRef.current?.focus();
+  };
+
+  return (
+    <>
+      {/* Hero */}
+      <section className="relative min-h-[60vh] flex items-center overflow-hidden bg-noise pt-24 pb-12">
+        <div className="absolute inset-0 bg-grid-pattern opacity-15" />
+        {/* Glow */}
+        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[500px] h-[500px] rounded-full bg-primary/[0.06] blur-[140px]" />
+
+        <div className="relative z-10 max-w-3xl mx-auto px-6 w-full text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="mb-6 inline-flex items-center gap-2 px-3 py-1.5 rounded-full glass-subtle"
+          >
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75" />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-primary" />
+            </span>
+            <span className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground font-medium">
+              Hjärnan · AI-stöd · Anonymt
+            </span>
+          </motion.div>
+
+          <motion.h1
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7 }}
+            className="font-display text-4xl md:text-6xl font-bold leading-[0.95] tracking-tight mb-5"
+          >
+            Beskriv er verksamhet.<br />
+            <span className="text-gradient-ocean">Få ett ärligt råd.</span>
+          </motion.h1>
+
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.2 }}
+            className="text-muted-foreground max-w-xl mx-auto leading-relaxed"
+          >
+            Berätta hur ni jobbar idag – utan att lämna namn, e-post eller företag.
+            Hjärnan föreslår vilka delar av Traivo som faktiskt skulle göra skillnad,
+            eller säger ärligt om vi inte är rätt för er.
+          </motion.p>
+        </div>
+      </section>
+
+      {/* Form + response */}
+      <section className="relative pb-24 px-6 -mt-4">
+        <div className="relative z-10 max-w-2xl mx-auto">
+          {/* Input */}
+          <motion.form
+            onSubmit={handleSubmit}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4, duration: 0.6 }}
+            className="relative"
+          >
+            <div className="relative rounded-2xl glass glow-teal overflow-hidden transition-all focus-within:border-primary/40">
+              <textarea
+                ref={textareaRef}
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                placeholder="Vi är ett företag inom… Vi har X tekniker… Vårt största problem är…"
+                className="relative w-full bg-transparent px-6 py-5 pr-16 text-foreground placeholder:text-muted-foreground focus:outline-none resize-none min-h-[140px] text-sm leading-relaxed"
+                rows={5}
+                maxLength={2000}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) {
+                    e.preventDefault();
+                    handleSubmit(e);
+                  }
+                }}
+              />
+              <button
+                type="submit"
+                disabled={!input.trim() || isLoading}
+                aria-label="Skicka"
+                className="absolute right-3 bottom-3 inline-flex items-center justify-center w-11 h-11 rounded-xl bg-primary text-primary-foreground border border-primary-foreground/20 shadow-[0_0_0_3px_hsl(var(--primary)/0.25),0_4px_14px_hsl(var(--primary)/0.35)] hover:bg-primary/90 hover:scale-[1.05] active:scale-95 disabled:opacity-40 disabled:cursor-not-allowed disabled:shadow-none disabled:hover:scale-100 transition-all duration-200 outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+              >
+                {isLoading ? (
+                  <Loader2 className="w-5 h-5 animate-spin" strokeWidth={2.5} />
+                ) : (
+                  <Send className="w-5 h-5" strokeWidth={2.5} />
+                )}
+              </button>
+            </div>
+            <div className="mt-2 flex items-center justify-between text-[10px] text-muted-foreground/70 px-1">
+              <span>⌘ + Enter för att skicka</span>
+              <span>{input.length}/2000</span>
+            </div>
+          </motion.form>
+
+          {/* Examples */}
+          <AnimatePresence>
+            {!hasAsked && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{ delay: 0.5 }}
+                className="mt-6"
+              >
+                <p className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground/70 mb-3 text-center">
+                  Eller välj ett exempel
+                </p>
+                <div className="grid sm:grid-cols-2 gap-2">
+                  {examples.map((ex, i) => (
+                    <motion.button
+                      key={ex.label}
+                      type="button"
+                      initial={{ opacity: 0, y: 8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.6 + i * 0.06 }}
+                      onClick={() => handleExample(ex.text)}
+                      className="text-left p-3 rounded-xl glass-subtle hover:border-primary/25 transition-all group"
+                    >
+                      <div className="flex items-center gap-2 mb-1.5">
+                        <ex.icon className="w-3.5 h-3.5 text-primary opacity-70 group-hover:opacity-100 transition-opacity" />
+                        <span className="text-[11px] font-semibold uppercase tracking-wider text-foreground/90">
+                          {ex.label}
+                        </span>
+                      </div>
+                      <p className="text-[11px] text-muted-foreground leading-relaxed line-clamp-2">
+                        {ex.text}
+                      </p>
+                    </motion.button>
+                  ))}
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+
+          {/* Privacy */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.8 }}
+            className="flex items-center justify-center mt-6"
+          >
+            <button
+              onClick={() => setShowPrivacy((v) => !v)}
+              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-[11px] text-muted-foreground hover:text-foreground hover:bg-muted/20 transition-all"
+              aria-label="Integritetsinformation"
+            >
+              <Lock className="w-3 h-3 text-yellow-500" />
+              <span>Helt anonymt – inget sparas</span>
+            </button>
+          </motion.div>
+
+          <AnimatePresence>
+            {showPrivacy && (
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 10 }}
+                transition={{ duration: 0.3 }}
+                className="mt-3 rounded-2xl glass p-5 relative"
+              >
+                <button
+                  onClick={() => setShowPrivacy(false)}
+                  className="absolute top-3 right-3 text-muted-foreground hover:text-foreground transition-colors"
+                  aria-label="Stäng"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+                <div className="flex items-start gap-3">
+                  <Lock className="w-5 h-5 text-yellow-500 mt-0.5 shrink-0" />
+                  <div>
+                    <h4 className="text-sm font-semibold text-foreground mb-2">
+                      Full integritet – på dina villkor
+                    </h4>
+                    <p className="text-xs text-muted-foreground leading-relaxed">
+                      Vi sparar aldrig det du skriver här. Inga personuppgifter, ingen IP, inget företagsnamn.
+                      Du är helt anonym tills du själv väljer att höra av dig. Inga säljsamtal, ingen spam.
+                    </p>
+                  </div>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+
+          {/* Error */}
+          {error && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="mt-4 p-4 rounded-2xl glass text-sm text-destructive"
+            >
+              {error}
+            </motion.div>
+          )}
+
+          {/* Response */}
+          <AnimatePresence>
+            {(isLoading || latestResponse) && hasAsked && (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.5 }}
+                className="mt-8"
+              >
+                <div className="rounded-2xl glass p-6 md:p-8 relative overflow-hidden">
+                  {/* Subtle accent stripe */}
+                  <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent" />
+
+                  {isLoading && !latestResponse ? (
+                    <div className="flex items-center gap-3 text-muted-foreground">
+                      <Brain className="w-5 h-5 animate-pulse text-primary" />
+                      <span className="text-sm">Hjärnan analyserar er verksamhet…</span>
+                    </div>
+                  ) : (
+                    <>
+                      <div className="flex items-center gap-2 mb-4 pb-4 border-b border-border/40">
+                        <Sparkles className="w-4 h-4 text-primary" />
+                        <span className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground font-medium">
+                          Hjärnans rekommendation
+                        </span>
+                      </div>
+                      <div className="prose prose-invert prose-sm max-w-none prose-headings:text-primary prose-headings:font-display prose-p:text-foreground/80 prose-strong:text-primary prose-li:text-foreground/80 prose-blockquote:text-muted-foreground prose-blockquote:border-primary/20">
+                        <ReactMarkdown
+                          components={{
+                            h2: ({ children }) => (
+                              <h2 className="text-primary border-b border-primary/20 pb-1 text-base">
+                                {children}
+                              </h2>
+                            ),
+                            h3: ({ children }) => <h3 className="text-primary/80">{children}</h3>,
+                          }}
+                        >
+                          {latestResponse?.content || ""}
+                        </ReactMarkdown>
+                        {isLoading && (
+                          <span className="inline-block w-2 h-4 bg-primary/60 animate-pulse ml-0.5" />
+                        )}
+                      </div>
+                    </>
+                  )}
+
+                  {latestResponse && !isLoading && (
+                    <div className="flex flex-wrap gap-3 mt-6 pt-5 border-t border-border/40">
+                      <Link
+                        to="/traivo-one"
+                        className="text-xs px-3 py-1.5 rounded-lg glass-subtle hover:border-primary/30 hover:text-primary transition-all"
+                      >
+                        Läs om Traivo One →
+                      </Link>
+                      <Link
+                        to="/traivo-go"
+                        className="text-xs px-3 py-1.5 rounded-lg glass-subtle hover:border-accent/30 hover:text-accent transition-all"
+                      >
+                        Läs om Traivo Go →
+                      </Link>
+                      <Link
+                        to="/kontakt"
+                        className="ml-auto text-xs font-semibold px-3 py-1.5 rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 transition-all"
+                      >
+                        Boka demo →
+                      </Link>
+                    </div>
+                  )}
+                </div>
+
+                {latestResponse && !isLoading && (
+                  <motion.button
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.3 }}
+                    onClick={handleReset}
+                    className="mt-4 flex items-center gap-2 text-xs text-muted-foreground hover:text-primary transition-colors mx-auto"
+                  >
+                    <RotateCcw className="w-3 h-3" />
+                    Beskriv en annan verksamhet
+                  </motion.button>
+                )}
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+      </section>
+    </>
+  );
+};
+
+export default Brain_Page;
