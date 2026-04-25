@@ -234,7 +234,7 @@ const Brain_Page = () => {
   };
 
   return (
-    <>
+    <div className="flex flex-col min-h-[calc(100vh-4rem)]">
       {/* Hero */}
       <section className="relative overflow-hidden bg-noise pt-20 pb-4">
         <div className="absolute inset-0 bg-grid-pattern opacity-15" />
@@ -567,7 +567,7 @@ const Brain_Page = () => {
           </AnimatePresence>
         </div>
       </section>
-    </>
+    </div>
   );
 };
 
