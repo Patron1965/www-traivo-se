@@ -1,53 +1,55 @@
+## Förslag
 
+Jag håller med — det är bättre att **inte** ha en aktiv chattruta direkt i hero på startsidan. Två AI-ingångar (en på `/` och en på `/hjarna`) skapar förvirring, splittrar trafiken och gör startsidan mindre fokuserad. Startsidan ska sälja in idén; **`/hjarna` är platsen där analysen sker**.
 
-## Plan: Lägg till "Marknader vi vänder oss till"-sektion
+## Vad jag vill ändra
 
-### Mål
-Skapa en ny sektion på startsidan som tydligt presenterar de fem primära branscherna Traivo riktar sig till, samt motivera varför Traivo passar just dem.
+### 1. Startsidan (`src/pages/Index.tsx`) — hero-sektionen
 
-### Var det placeras
-Ny sektion på `src/pages/Index.tsx`, infogad **efter** "SOLUTION / FEATURES"-sektionen och **före** "CLOSING STATEMENT". Det skapar en logisk flow: problem → bakgrund → lösning → **för vem konkret** → avslut.
+Ta bort `<AIInput />` ur hero (rad 183–185) och ersätt med en **inbjudande "teaser" till Hjärnan** som inte går att skriva i — bara klicka.
 
-### Innehåll
+Layouten blir:
 
-**Sektionsrubrik:**
-- Eyebrow: "Branscher"
-- Rubrik: "Byggt för verksamheter med många stopp"
-- Ingress (kort): "Traivo passar bäst där geografi, tid och kompetens måste pussla ihop varje dag. Här är branscherna där vi gör störst skillnad."
+```text
+   Dina tekniker kör. Dina planerare släcker bränder. Dina kunder väntar.
+   Vi byggde det vi själva saknade i 15 år i fält.
 
-**Fem branschkort (grid 2 kolumner desktop, 1 mobil):**
+   ┌──────────────────────────────────────────────────────────┐
+   │  🧠  Prova Hjärnan                                        │
+   │                                                           │
+   │  Beskriv din verksamhet anonymt – få konkreta             │
+   │  rekommendationer på 20 sekunder. Inga säljsamtal.        │
+   │                                                           │
+   │  [ Öppna Hjärnan → ]    Helt anonymt · Inget sparas       │
+   └──────────────────────────────────────────────────────────┘
+```
 
-| # | Bransch | Ikon (lucide) | Kort beskrivning (ca 2 rader) |
-|---|---------|---------------|-------------------------------|
-| 1 | Miljö, återvinning & avfall | `Recycle` | Geofencing av tömningsställen, ruttoptimering för tunga fordon, snabb hantering av budningar och extratömningar. |
-| 2 | Tekniska installationer & service | `Wrench` | Vitvaror, fiber, hiss, kyla. Koppling mellan avtal, artiklar och teknikerns kompetens – med snabb dokumentation i fält. |
-| 3 | Fastighet & facility management | `Building2` | Yttre skötsel, trappstädning, snöröjning, rondering. Årsplanering, QR-kvitto på utfört arbete och prediktivt underhåll. |
-| 4 | Transport & last mile | `Truck` | Distribution där rutter ändras dagligen. What-if-analys, automatisk omplanering och kundportal med live-leveransstatus. |
-| 5 | Hemtjänst & mobil vård | `HeartPulse` | Hårda tidsfönster och slotpreferenser per brukare. Heatmaps som visar belastning per område innan personalen blir överkörd. |
+Komponenten är en `Link` till `/hjarna` (hela kortet är klickbart) med:
+- Hjärn-ikon + rubrik "Prova Hjärnan"
+- Kort beskrivning av vad det är
+- Tydlig CTA-knapp "Öppna Hjärnan →"
+- Mikro-trust-rad: "Helt anonymt · Inget loggas · Inga säljsamtal"
+- Samma `glass` / `glow-teal`-stilar som befintliga kort så det matchar designen
 
-**Avslutande textblock (under korten):**
-Kort stycke som förklarar varför Traivo sticker ut – fokus på kombinationen geografi + AI:
-> "Det som gör skillnad är kombinationen geografi och AI. Klustervalidering hindrar att jobb säljs där de inte kan utföras lönsamt. Ruttoptimering med riktiga vägdata sparar bränsle och timmar varje dag. Och beslutsstödet förklarar *varför* AI:n placerade jobbet just där – så planeraren behåller kontrollen."
+Behåller `id="ai-chat"` på wrappern så befintliga ankarlänkar (t.ex. `AIChatLink` som scrollar till `#ai-chat`) fortfarande landar på rätt ställe.
 
-### Stilval (följer befintlig design)
-- `border-t border-border`, `py-24 md:py-28 px-6`
-- `max-w-5xl mx-auto`
-- Branschkort: `glass-subtle rounded-xl p-6`, ikon i `bg-primary/10` cirkel (likt About-sidans value-cards)
-- Eyebrow `text-[11px] uppercase tracking-[0.25em] text-primary`
-- Rubrik: `font-display text-2xl md:text-3xl font-bold`
-- Animationer: `motion.div` med `whileInView` + staggered delay (`i * 0.07`) – samma mönster som features-griden
+### 2. `AIChatLink` (`src/components/AIChatLink.tsx`)
 
-### Ton
-- Naturlig talad svenska, inga buzzwords ("revolutionerande", "game-changer" etc.)
-- Industritermer används rakt: budning, rondering, tömningsställe, slot, last mile
-- Objektiv, beskrivande – inte säljig
+Uppdatera så att den navigerar direkt till `/hjarna` istället för att scrolla till `#ai-chat` på startsidan. Det matchar den nya intentionen: alla "starta AI-analys"-länkar i sidan leder till Hjärnan.
 
-### Tekniska detaljer
-- Endast en fil ändras: `src/pages/Index.tsx`
-- Inga nya komponenter, inga nya routes, inga nya beroenden
-- Lägga till ikoner i befintlig `lucide-react`-import: `Recycle`, `Wrench`, `Building2`, `Truck`, `HeartPulse`
-- Definiera `industries`-array nära toppen av filen (parallellt med befintlig `features`-array)
+### 3. Behålla `AIInput`-komponenten
 
-### Memory-uppdatering
-Uppdatera `mem://strategy/malgrupp-industrier` med den slutliga listan på fem branscher och deras värdeprop, så att framtida sessioner är konsekventa.
+Komponenten `src/components/AIInput.tsx` tas **inte bort** — den är inte använd någon annanstans men kan vara värdefull att behålla i koden ifall vi vill återanvända chat-flödet senare. (Säg till om du hellre vill att jag raderar den.)
 
+## Varför det här är bättre
+
+- **En tydlig väg in**: startsidan presenterar erbjudandet, `/hjarna` är verktyget. Inget dubbelarbete.
+- **Snabbare startsida**: ingen tung textarea + streaming-logik laddas i hero.
+- **Bättre konvertering till Hjärnan**: ett klick istället för att skriva direkt — användaren kommer till en sida som är byggd för analysen, med exempel, integritetsbanner och rätt kontext.
+- **Renare narrativ**: hero → problem → branscher → trovärdighet → kontakt, utan att hero-sektionen försöker leverera värdet redan.
+
+## Vad jag inte rör
+
+- `/hjarna`-sidan och `BrainPage` — fungerar redan bra och är platsen där flödet ska leva.
+- Edge-funktionerna (`brain` och `chat`).
+- Övriga sektioner på startsidan (problem, branscher, credibility, kontakt).
