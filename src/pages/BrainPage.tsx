@@ -280,7 +280,7 @@ const Brain_Page = () => {
       </section>
 
       {/* Form + response */}
-      <section className="relative pb-24 px-6 -mt-4">
+      <section className="relative pb-24 px-4 sm:px-6 -mt-4">
         <div className="relative z-10 max-w-2xl mx-auto">
           {/* Privacy banner – ovanför textfältet */}
           <motion.div
