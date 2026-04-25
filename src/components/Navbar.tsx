@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 
 const links = [
-  { to: "/#ai-chat", label: "Utforska", isAnchor: true },
+  { to: "/hjarna", label: "Hjärnan" },
   { to: "/traivo-one", label: "Traivo One" },
   { to: "/traivo-go", label: "Traivo Go" },
   
