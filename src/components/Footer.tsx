@@ -45,11 +45,11 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="border-t border-border mt-16 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+        <div className="border-t border-border mt-12 sm:mt-16 pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-center md:text-left">
           <p className="text-xs text-muted-foreground">
             © 2026 Traivo AB · Byggd i Skandinavien
           </p>
-          <div className="flex items-center gap-6 text-xs text-muted-foreground">
+          <div className="flex items-center justify-center flex-wrap gap-x-6 gap-y-2 text-xs text-muted-foreground">
             <span>🇸🇪 Sverige</span>
             <span>🇳🇴 Norge</span>
             <span>🇫🇮 Finland</span>
