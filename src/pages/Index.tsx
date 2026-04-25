@@ -602,7 +602,7 @@ const Index = () => {
       {/* ─── FOOTER CTA ─── */}
       <section className="relative py-28 px-4 sm:px-6 border-t border-border overflow-hidden">
         <div className="absolute inset-0">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] rounded-full bg-primary/[0.04] blur-[120px]" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[min(400px,90vw)] h-[min(400px,90vw)] rounded-full bg-primary/[0.04] blur-[120px]" />
         </div>
         <div className="relative z-10 max-w-2xl mx-auto text-center">
           <motion.div
