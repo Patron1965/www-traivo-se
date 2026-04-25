@@ -51,7 +51,7 @@ const Navbar = () => {
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
-            className="md:hidden absolute inset-x-0 top-14 glass border-t border-border"
+            className="md:hidden absolute inset-x-0 top-14 bg-background border-t border-border"
           >
             <div className="px-6 py-5 space-y-1">
               {links.map((link) => (
