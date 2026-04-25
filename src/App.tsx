@@ -11,6 +11,8 @@ import Pricing from "./pages/Pricing";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import BrainPage from "./pages/BrainPage";
+import DeepAnalysisCheckout from "./pages/DeepAnalysisCheckout";
+import DeepAnalysisThankYou from "./pages/DeepAnalysisThankYou";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -27,6 +29,8 @@ const App = () => (
             <Route path="/traivo-one" element={<TraivoOne />} />
             <Route path="/traivo-go" element={<TraivoGo />} />
             <Route path="/hjarna" element={<BrainPage />} />
+            <Route path="/hjarna/djupanalys" element={<DeepAnalysisCheckout />} />
+            <Route path="/hjarna/djupanalys/tack" element={<DeepAnalysisThankYou />} />
             <Route path="/priser" element={<Pricing />} />
             <Route path="/om-oss" element={<About />} />
             <Route path="/kontakt" element={<Contact />} />
