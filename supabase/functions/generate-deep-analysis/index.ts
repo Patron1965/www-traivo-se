@@ -157,9 +157,15 @@ async function generateReport(
 
   const today = new Date().toLocaleDateString("sv-SE", { year: "numeric", month: "long", day: "numeric" });
 
+  const websiteSection = websiteUrl
+    ? (websiteContent
+        ? `\nKundens webbplats: ${websiteUrl}\nFöljande innehåll har hämtats automatiskt från sajten - använd det aktivt för att göra analysen mer konkret (referera till tjänster, värdeord, segment de själva lyfter fram):\n---\n${websiteContent}\n---\n`
+        : `\nKundens webbplats: ${websiteUrl}\nObs: ${websiteNote}\n`)
+    : "";
+
   const userMessage = `Företag: ${company}
 Dagens datum: ${today}
-
+${websiteSection}
 Verksamhetsbeskrivning från kunden:
 ${businessDescription}
 
@@ -212,7 +218,7 @@ Deno.serve(async (req) => {
 
     const { data: order, error } = await supabase
       .from("deep_analyses")
-      .select("id, company, business_description, quick_response, payment_status, report_status")
+      .select("id, company, business_description, quick_response, website_url, payment_status, report_status")
       .eq("id", orderId)
       .single();
 
@@ -243,10 +249,18 @@ Deno.serve(async (req) => {
       .eq("id", orderId);
 
     try {
+      const websiteUrl = (order.website_url as string | null) ?? null;
+      const scraped = websiteUrl
+        ? await scrapeWebsite(websiteUrl)
+        : { ok: false, content: "", note: "Webbplats saknas." };
+
       const content = await generateReport(
         order.business_description as string,
         order.quick_response as string | null,
-        order.company as string
+        order.company as string,
+        websiteUrl,
+        scraped.content,
+        scraped.note,
       );
 
       await supabase
