@@ -126,28 +126,28 @@ const Contact = () => {
               <p className="text-sm text-muted-foreground">Vi hör av oss inom 24 timmar.</p>
             </div>
           ) : (
-            <form onSubmit={handleSubmit} noValidate className="glass rounded-2xl p-7 space-y-4">
+              <form onSubmit={handleSubmit} noValidate className="glass rounded-2xl p-5 sm:p-7 space-y-4">
               <div className="grid sm:grid-cols-2 gap-3">
                 <div>
                   <label htmlFor="name" className="text-[10px] font-medium uppercase tracking-wider text-muted-foreground mb-1.5 block">Namn</label>
-                  <Input id="name" name="name" placeholder="Anna Andersson" required minLength={2} className="bg-secondary/30 border-border text-sm" />
+                  <Input id="name" name="name" placeholder="Anna Andersson" required minLength={2} className="bg-secondary/30 border-border text-base md:text-sm" />
                 </div>
                 <div>
                   <label htmlFor="company" className="text-[10px] font-medium uppercase tracking-wider text-muted-foreground mb-1.5 block">Företag</label>
-                  <Input id="company" name="company" placeholder="Ert företag" required minLength={2} className="bg-secondary/30 border-border text-sm" />
+                  <Input id="company" name="company" placeholder="Ert företag" required minLength={2} className="bg-secondary/30 border-border text-base md:text-sm" />
                 </div>
               </div>
               <div>
                 <label htmlFor="email" className="text-[10px] font-medium uppercase tracking-wider text-muted-foreground mb-1.5 block">E-post</label>
-                <Input id="email" name="email" type="email" placeholder="anna@foretaget.se" required className="bg-secondary/30 border-border text-sm" />
+                <Input id="email" name="email" type="email" placeholder="anna@foretaget.se" required className="bg-secondary/30 border-border text-base md:text-sm" />
               </div>
               <div>
                 <label htmlFor="phone" className="text-[10px] font-medium uppercase tracking-wider text-muted-foreground mb-1.5 block">Telefon (valfritt)</label>
-                <Input id="phone" name="phone" type="tel" placeholder="070-123 45 67" className="bg-secondary/30 border-border text-sm" />
+                <Input id="phone" name="phone" type="tel" placeholder="070-123 45 67" className="bg-secondary/30 border-border text-base md:text-sm" />
               </div>
               <div>
                 <label htmlFor="message" className="text-[10px] font-medium uppercase tracking-wider text-muted-foreground mb-1.5 block">Berätta</label>
-                <Textarea id="message" name="message" placeholder="Vilken bransch? Utmaningar? Antal tekniker?" rows={4} maxLength={5000} className="bg-secondary/30 border-border text-sm" />
+                <Textarea id="message" name="message" placeholder="Vilken bransch? Utmaningar? Antal tekniker?" rows={4} maxLength={5000} className="bg-secondary/30 border-border text-base md:text-sm" />
               </div>
               <button
                 type="submit"
