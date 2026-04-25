@@ -10,6 +10,7 @@ import TraivoGo from "./pages/TraivoGo";
 import Pricing from "./pages/Pricing";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
+import BrainPage from "./pages/BrainPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -25,6 +26,7 @@ const App = () => (
             <Route path="/" element={<Index />} />
             <Route path="/traivo-one" element={<TraivoOne />} />
             <Route path="/traivo-go" element={<TraivoGo />} />
+            <Route path="/hjarna" element={<BrainPage />} />
             <Route path="/priser" element={<Pricing />} />
             <Route path="/om-oss" element={<About />} />
             <Route path="/kontakt" element={<Contact />} />
