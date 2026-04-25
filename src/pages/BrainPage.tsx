@@ -373,54 +373,6 @@ const Brain_Page = () => {
             )}
           </AnimatePresence>
 
-          {/* Privacy */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.8 }}
-            className="flex items-center justify-center mt-6"
-          >
-            <button
-              onClick={() => setShowPrivacy((v) => !v)}
-              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-[11px] text-muted-foreground hover:text-foreground hover:bg-muted/20 transition-all"
-              aria-label="Integritetsinformation"
-            >
-              <Lock className="w-3 h-3 text-yellow-500" />
-              <span>Helt anonymt – inget sparas</span>
-            </button>
-          </motion.div>
-
-          <AnimatePresence>
-            {showPrivacy && (
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 10 }}
-                transition={{ duration: 0.3 }}
-                className="mt-3 rounded-2xl glass p-5 relative"
-              >
-                <button
-                  onClick={() => setShowPrivacy(false)}
-                  className="absolute top-3 right-3 text-muted-foreground hover:text-foreground transition-colors"
-                  aria-label="Stäng"
-                >
-                  <X className="w-4 h-4" />
-                </button>
-                <div className="flex items-start gap-3">
-                  <Lock className="w-5 h-5 text-yellow-500 mt-0.5 shrink-0" />
-                  <div>
-                    <h4 className="text-sm font-semibold text-foreground mb-2">
-                      Full integritet – på dina villkor
-                    </h4>
-                    <p className="text-xs text-muted-foreground leading-relaxed">
-                      Vi sparar aldrig det du skriver här. Inga personuppgifter, ingen IP, inget företagsnamn.
-                      Du är helt anonym tills du själv väljer att höra av dig. Inga säljsamtal, ingen spam.
-                    </p>
-                  </div>
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
 
           {/* Error */}
           {error && (
