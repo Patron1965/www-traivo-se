@@ -258,7 +258,7 @@ const Index = () => {
       </section>
 
       {/* ─── INDUSTRIES ─── */}
-      <section className="py-24 md:py-28 px-4 sm:px-6 border-t border-border">
+      <section id="branscher" className="py-24 md:py-28 px-4 sm:px-6 border-t border-border scroll-mt-20">
         <div className="max-w-5xl mx-auto">
           <motion.div
             initial={{ opacity: 0 }}
