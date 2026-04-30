@@ -2,21 +2,29 @@ import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, ArrowUpRight } from "lucide-react";
+import LanguageToggle from "./LanguageToggle";
+import { useT } from "@/i18n/LanguageContext";
 
-const links = [
-  { to: "/hjarna", label: "Hjärnan" },
-  { to: "/traivo-one", label: "Traivo One" },
-  { to: "/traivo-go", label: "Traivo Go" },
-  { to: "/om-oss", label: "Om oss" },
-  { to: "/kontakt", label: "Kontakt" },
-];
-
-// Tillfällig länk till systemet – byt ut här när den permanenta URL:en är klar.
 const SYSTEM_URL = "https://kinab-core-concepts--tomas155.replit.app";
 
 const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const location = useLocation();
+  const t = useT();
+
+  const links = [
+    { to: "/hjarna", label: t({ sv: "Hjärnan", en: "The Brain" }) },
+    { to: "/traivo-one", label: "Traivo One" },
+    { to: "/traivo-go", label: "Traivo Go" },
+    { to: "/om-oss", label: t({ sv: "Om oss", en: "About" }) },
+    { to: "/kontakt", label: t({ sv: "Kontakt", en: "Contact" }) },
+  ];
+
+  const loginLabel = t({ sv: "Logga in", en: "Sign in" });
+  const loginAria = t({
+    sv: "Logga in i Traivo-systemet (öppnas i ny flik)",
+    en: "Sign in to the Traivo system (opens in a new tab)",
+  });
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-background border-b border-border">
@@ -41,22 +49,29 @@ const Navbar = () => {
             </Link>
           ))}
 
+          <div className="ml-2">
+            <LanguageToggle />
+          </div>
+
           <a
             href={SYSTEM_URL}
             target="_blank"
             rel="noopener noreferrer"
-            aria-label="Logga in i Traivo-systemet (öppnas i ny flik)"
+            aria-label={loginAria}
             className="ml-3 inline-flex items-center gap-1.5 px-4 py-2 rounded-lg text-[12px] font-semibold uppercase tracking-wide bg-primary text-primary-foreground shadow-[0_0_0_3px_hsl(var(--primary)/0.18),0_4px_14px_hsl(var(--primary)/0.30)] hover:bg-primary/90 transition-all outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
           >
-            Logga in
+            {loginLabel}
             <ArrowUpRight className="w-3.5 h-3.5" strokeWidth={2.5} />
           </a>
         </div>
 
         {/* Mobile */}
-        <button className="md:hidden p-2 text-foreground" onClick={() => setMobileOpen(!mobileOpen)}>
-          {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-        </button>
+        <div className="md:hidden flex items-center gap-2">
+          <LanguageToggle compact />
+          <button className="p-2 text-foreground" onClick={() => setMobileOpen(!mobileOpen)}>
+            {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+          </button>
+        </div>
       </div>
 
       <AnimatePresence>
@@ -88,10 +103,10 @@ const Navbar = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => setMobileOpen(false)}
-                aria-label="Logga in i Traivo-systemet (öppnas i ny flik)"
+                aria-label={loginAria}
                 className="mt-2 flex items-center justify-center gap-1.5 px-4 py-3 rounded-lg text-sm font-semibold bg-primary text-primary-foreground shadow-[0_0_0_3px_hsl(var(--primary)/0.18),0_4px_14px_hsl(var(--primary)/0.30)] hover:bg-primary/90 transition-all"
               >
-                Logga in i systemet
+                {t({ sv: "Logga in i systemet", en: "Sign in to the system" })}
                 <ArrowUpRight className="w-4 h-4" strokeWidth={2.5} />
               </a>
             </div>
