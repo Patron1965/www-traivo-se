@@ -6,7 +6,7 @@ const corsHeaders = {
     "authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version",
 };
 
-const SYSTEM_PROMPT = `Du är Traivos "Hjärna" – en objektiv, nordisk rådgivare som hjälper besökare förstå vilka delar av Traivo som faktiskt skulle göra skillnad i deras verksamhet.
+const SYSTEM_PROMPT_SV = `Du är Traivos "Hjärna" – en objektiv, nordisk rådgivare som hjälper besökare förstå vilka delar av Traivo som faktiskt skulle göra skillnad i deras verksamhet.
 
 ## Din roll
 Besökaren beskriver sin verksamhet anonymt. Du analyserar och rekommenderar konkret vilka system och moduler som passar – eller är ärlig om Traivo inte är rätt för dem.
@@ -53,7 +53,7 @@ En enda mening: föreslå att de beskriver mer eller bokar en demo via /kontakt.
 - Saklig, jordnära, aldrig säljig
 - Använd ALDRIG entusiasm-fraser ("Vad spännande!", "Vilken bra fråga!", "Fantastiskt!")
 - Ingen smörja – gå rakt på sak
-- Svara alltid på svenska om besökaren inte uttryckligen skriver på annat språk
+- Svara alltid på svenska
 - Var ärlig: om verksamheten inte passar (t.ex. butik, e-handel, restaurang utan fältarbete) – säg det rakt ut
 - Dela aldrig priser
 - Svara aldrig längre än ~200 ord
@@ -61,13 +61,68 @@ En enda mening: föreslå att de beskriver mer eller bokar en demo via /kontakt.
 ## Avgränsning
 Du är en första rådgivare, inte teknisk support. Vid djupa frågor: hänvisa till demo.`;
 
+const SYSTEM_PROMPT_EN = `You are Traivo's "Brain" – an objective Nordic advisor that helps visitors understand which parts of Traivo would actually make a difference in their operation.
+
+## Your role
+The visitor describes their business anonymously. You analyze and concretely recommend which systems and modules fit – or honestly say if Traivo isn't right for them.
+
+## The platform
+
+**Traivo One** (web, for planners and supervisors)
+- Drag-and-drop weekly planning
+- AI auto-scheduling (skills, geography, hours, vehicles)
+- Route optimization with real road distances
+- Live GPS map and disruption handling
+- Customer and site registry with map + service areas
+- Customer portal with automatic SMS
+- AI assistant and predictive maintenance (IoT)
+- Invoicing, Fortnox export, white-label
+
+**Traivo Go** (mobile, for field technicians)
+- Today's jobs with one-tap navigation
+- Digital reports, photo, signature, materials log
+- Check-in/out and payroll data
+- Offline-first – syncs when coverage returns
+- Push notifications and messages
+
+## How you respond
+
+You MUST follow this structure in every reply (markdown):
+
+## What I hear
+1–2 sentences mirroring their situation so they feel understood.
+
+## Recommendation
+State clearly: **Traivo One**, **Traivo Go**, **both** or **neither is right**. One sentence why.
+
+## This would help you most
+Bullet list with 3–5 specific modules/features from the list above. For each: name in bold + one sentence on why it solves their problem.
+
+## What we don't solve
+1–2 sentences on what Traivo does NOT address in their case (if relevant – otherwise skip).
+
+## Next step
+A single sentence: suggest they describe more or book a demo via /kontakt.
+
+## Tone and rules
+- Factual, grounded, never salesy
+- NEVER use enthusiasm phrases ("How exciting!", "Great question!", "Amazing!")
+- No fluff – get straight to the point
+- Always reply in English
+- Be honest: if the operation doesn't fit (e.g. retail, e-commerce, restaurant without field work) – say so directly
+- Never share prices
+- Never reply longer than ~200 words
+
+## Scope
+You are a first-line advisor, not technical support. For deep questions: refer to a demo.`;
+
 serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
   }
 
   try {
-    const { messages } = await req.json();
+    const { messages, language } = await req.json();
 
     if (!messages || !Array.isArray(messages)) {
       return new Response(
@@ -75,6 +130,9 @@ serve(async (req) => {
         { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
     }
+
+    const lang = language === "en" ? "en" : "sv";
+    const systemPrompt = lang === "en" ? SYSTEM_PROMPT_EN : SYSTEM_PROMPT_SV;
 
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
     if (!LOVABLE_API_KEY) {
@@ -90,7 +148,7 @@ serve(async (req) => {
       body: JSON.stringify({
         model: "google/gemini-3-flash-preview",
         messages: [
-          { role: "system", content: SYSTEM_PROMPT },
+          { role: "system", content: systemPrompt },
           ...messages,
         ],
         stream: true,
@@ -100,20 +158,20 @@ serve(async (req) => {
     if (!response.ok) {
       if (response.status === 429) {
         return new Response(
-          JSON.stringify({ error: "För många förfrågningar just nu. Försök igen om en stund." }),
+          JSON.stringify({ error: lang === "en" ? "Too many requests right now. Please try again shortly." : "För många förfrågningar just nu. Försök igen om en stund." }),
           { status: 429, headers: { ...corsHeaders, "Content-Type": "application/json" } }
         );
       }
       if (response.status === 402) {
         return new Response(
-          JSON.stringify({ error: "AI-tjänsten är tillfälligt otillgänglig." }),
+          JSON.stringify({ error: lang === "en" ? "The AI service is temporarily unavailable." : "AI-tjänsten är tillfälligt otillgänglig." }),
           { status: 402, headers: { ...corsHeaders, "Content-Type": "application/json" } }
         );
       }
       const t = await response.text();
       console.error("AI gateway error:", response.status, t);
       return new Response(
-        JSON.stringify({ error: "Kunde inte nå AI-tjänsten" }),
+        JSON.stringify({ error: lang === "en" ? "Could not reach the AI service" : "Kunde inte nå AI-tjänsten" }),
         { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
     }
@@ -124,7 +182,7 @@ serve(async (req) => {
   } catch (e) {
     console.error("brain error:", e);
     return new Response(
-      JSON.stringify({ error: e instanceof Error ? e.message : "Okänt fel" }),
+      JSON.stringify({ error: e instanceof Error ? e.message : "Unknown error" }),
       { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
     );
   }
