@@ -6,6 +6,7 @@ import { ArrowLeft, FileText, Shield, Loader2, AlertCircle, CheckCircle2 } from 
 import { getStripe, getStripeEnvironment } from "@/lib/stripe";
 import { supabase } from "@/integrations/supabase/client";
 import { PaymentTestModeBanner } from "@/components/PaymentTestModeBanner";
+import { useT, useLang } from "@/i18n/LanguageContext";
 
 interface FormData {
   email: string;
@@ -26,6 +27,8 @@ const normalizeUrl = (raw: string): string => {
 
 const DeepAnalysisCheckout = () => {
   const navigate = useNavigate();
+  const t = useT();
+  const { lang } = useLang();
   const [step, setStep] = useState<"form" | "checkout">("form");
   const [clientSecret, setClientSecret] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -41,7 +44,6 @@ const DeepAnalysisCheckout = () => {
     quickResponse: "",
   });
 
-  // Pick up payload from /hjarna
   useEffect(() => {
     try {
       const raw = sessionStorage.getItem("deepAnalysisPayload");
@@ -63,15 +65,24 @@ const DeepAnalysisCheckout = () => {
   };
 
   const validate = (): string | null => {
-    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(form.email.trim())) return "Ogiltig e-postadress";
-    if (form.company.trim().length < 2) return "Ange företagsnamn";
-    if (form.contactName.trim().length < 2) return "Ange ditt namn";
+    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(form.email.trim()))
+      return t({ sv: "Ogiltig e-postadress", en: "Invalid email address" });
+    if (form.company.trim().length < 2)
+      return t({ sv: "Ange företagsnamn", en: "Enter company name" });
+    if (form.contactName.trim().length < 2)
+      return t({ sv: "Ange ditt namn", en: "Enter your name" });
     const url = normalizeUrl(form.websiteUrl);
     if (!url || !/^https?:\/\/[^\s.]+\.[^\s]+/i.test(url)) {
-      return "Ange en giltig webbplats (t.ex. https://erforetag.se)";
+      return t({
+        sv: "Ange en giltig webbplats (t.ex. https://erforetag.se)",
+        en: "Enter a valid website (e.g. https://yourcompany.com)",
+      });
     }
     if (form.businessDescription.trim().length < 30) {
-      return "Verksamhetsbeskrivningen behöver vara minst 30 tecken";
+      return t({
+        sv: "Verksamhetsbeskrivningen behöver vara minst 30 tecken",
+        en: "The business description must be at least 30 characters",
+      });
     }
     return null;
   };
@@ -101,21 +112,22 @@ const DeepAnalysisCheckout = () => {
             quickResponse: form.quickResponse || undefined,
             returnUrl,
             environment: getStripeEnvironment(),
+            language: lang,
           },
         }
       );
 
       if (invokeError) {
-        throw new Error(invokeError.message || "Kunde inte starta checkout");
+        throw new Error(invokeError.message || t({ sv: "Kunde inte starta checkout", en: "Could not start checkout" }));
       }
       if (!data?.clientSecret) {
-        throw new Error(data?.error || "Inget client secret från servern");
+        throw new Error(data?.error || t({ sv: "Inget client secret från servern", en: "No client secret from the server" }));
       }
 
       setClientSecret(data.clientSecret);
       setStep("checkout");
     } catch (e) {
-      setError(e instanceof Error ? e.message : "Ett okänt fel inträffade");
+      setError(e instanceof Error ? e.message : t({ sv: "Ett okänt fel inträffade", en: "An unknown error occurred" }));
     } finally {
       setIsSubmitting(false);
     }
@@ -134,7 +146,7 @@ const DeepAnalysisCheckout = () => {
             className="mb-6 inline-flex items-center gap-2 text-xs text-muted-foreground hover:text-foreground transition-colors"
           >
             <ArrowLeft className="w-3.5 h-3.5" />
-            Tillbaka
+            {t({ sv: "Tillbaka", en: "Back" })}
           </button>
 
           <motion.div
@@ -146,54 +158,66 @@ const DeepAnalysisCheckout = () => {
               <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full glass-subtle mb-4">
                 <FileText className="w-3 h-3 text-primary" strokeWidth={2.5} />
                 <span className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground font-medium">
-                  Traivo Djupanalys · 399 kr
+                  {t({ sv: "Traivo Djupanalys · 399 kr", en: "Traivo Deep Analysis · 399 SEK" })}
                 </span>
               </div>
 
               <h1 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold leading-tight mb-3">
-                {step === "form" ? "Beställ er djupanalys" : "Slutför betalning"}
+                {step === "form"
+                  ? t({ sv: "Beställ er djupanalys", en: "Order your deep analysis" })
+                  : t({ sv: "Slutför betalning", en: "Complete payment" })}
               </h1>
               <p className="text-sm text-muted-foreground">
                 {step === "form"
-                  ? "Fyll i kontaktuppgifter så genererar vi en utförlig 3-5 sidors analys av er verksamhet direkt efter betalning."
-                  : "Genomför betalningen säkert nedan. Rapporten genereras direkt och visas på nästa sida."}
+                  ? t({
+                      sv: "Fyll i kontaktuppgifter så genererar vi en utförlig 3-5 sidors analys av er verksamhet direkt efter betalning.",
+                      en: "Fill in your contact details and we'll generate a thorough 3–5 page analysis of your operation right after payment.",
+                    })
+                  : t({
+                      sv: "Genomför betalningen säkert nedan. Rapporten genereras direkt och visas på nästa sida.",
+                      en: "Complete the payment securely below. The report is generated immediately and shown on the next page.",
+                    })}
               </p>
             </div>
 
             {step === "form" && (
               <form onSubmit={handleSubmit} className="space-y-5">
-                {/* Trust row */}
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 p-4 rounded-xl glass-subtle">
                   <div className="flex items-center gap-2">
                     <CheckCircle2 className="w-3.5 h-3.5 text-primary flex-shrink-0" />
-                    <span className="text-[11px] text-foreground/80">3-5 sidor PDF</span>
+                    <span className="text-[11px] text-foreground/80">
+                      {t({ sv: "3-5 sidor PDF", en: "3–5 page PDF" })}
+                    </span>
                   </div>
                   <div className="flex items-center gap-2">
                     <CheckCircle2 className="w-3.5 h-3.5 text-primary flex-shrink-0" />
-                    <span className="text-[11px] text-foreground/80">Direkt leverans</span>
+                    <span className="text-[11px] text-foreground/80">
+                      {t({ sv: "Direkt leverans", en: "Instant delivery" })}
+                    </span>
                   </div>
                   <div className="flex items-center gap-2">
                     <Shield className="w-3.5 h-3.5 text-primary flex-shrink-0" />
-                    <span className="text-[11px] text-foreground/80">Säker betalning</span>
+                    <span className="text-[11px] text-foreground/80">
+                      {t({ sv: "Säker betalning", en: "Secure payment" })}
+                    </span>
                   </div>
                 </div>
 
-                {/* Contact */}
                 <div className="space-y-4 p-5 rounded-xl glass">
                   <h3 className="text-xs uppercase tracking-wider text-muted-foreground font-semibold">
-                    Leverans & faktura
+                    {t({ sv: "Leverans & faktura", en: "Delivery & invoice" })}
                   </h3>
 
                   <div>
                     <label className="block text-xs font-medium text-foreground/80 mb-1.5">
-                      E-post <span className="text-destructive">*</span>
+                      {t({ sv: "E-post", en: "Email" })} <span className="text-destructive">*</span>
                     </label>
                     <input
                       type="email"
                       required
                       value={form.email}
                       onChange={(e) => update("email", e.target.value)}
-                      placeholder="namn@foretag.se"
+                      placeholder={t({ sv: "namn@foretag.se", en: "name@company.com" })}
                       className="w-full px-3 py-2.5 rounded-lg bg-background border border-border focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/30 text-base md:text-sm transition-colors"
                     />
                   </div>
@@ -201,7 +225,7 @@ const DeepAnalysisCheckout = () => {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                       <label className="block text-xs font-medium text-foreground/80 mb-1.5">
-                        Företag <span className="text-destructive">*</span>
+                        {t({ sv: "Företag", en: "Company" })} <span className="text-destructive">*</span>
                       </label>
                       <input
                         type="text"
@@ -215,14 +239,14 @@ const DeepAnalysisCheckout = () => {
 
                     <div>
                       <label className="block text-xs font-medium text-foreground/80 mb-1.5">
-                        Ditt namn <span className="text-destructive">*</span>
+                        {t({ sv: "Ditt namn", en: "Your name" })} <span className="text-destructive">*</span>
                       </label>
                       <input
                         type="text"
                         required
                         value={form.contactName}
                         onChange={(e) => update("contactName", e.target.value)}
-                        placeholder="För- och efternamn"
+                        placeholder={t({ sv: "För- och efternamn", en: "First and last name" })}
                         className="w-full px-3 py-2.5 rounded-lg bg-background border border-border focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/30 text-base md:text-sm transition-colors"
                       />
                     </div>
@@ -230,24 +254,30 @@ const DeepAnalysisCheckout = () => {
 
                   <div>
                     <label className="block text-xs font-medium text-foreground/80 mb-1.5">
-                      Webbplats <span className="text-destructive">*</span>
+                      {t({ sv: "Webbplats", en: "Website" })} <span className="text-destructive">*</span>
                     </label>
                     <input
                       type="url"
                       required
                       value={form.websiteUrl}
                       onChange={(e) => update("websiteUrl", e.target.value)}
-                      placeholder="https://erforetag.se"
+                      placeholder={t({ sv: "https://erforetag.se", en: "https://yourcompany.com" })}
                       className="w-full px-3 py-2.5 rounded-lg bg-background border border-border focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/30 text-base md:text-sm transition-colors"
                     />
                     <p className="mt-1.5 text-[10px] text-muted-foreground">
-                      Vår AI läser av er sajt för att göra analysen mer träffsäker.
+                      {t({
+                        sv: "Vår AI läser av er sajt för att göra analysen mer träffsäker.",
+                        en: "Our AI reads your site to make the analysis more accurate.",
+                      })}
                     </p>
                   </div>
 
                   <div>
                     <label className="block text-xs font-medium text-foreground/80 mb-1.5">
-                      Org.nr <span className="text-muted-foreground font-normal">(valfritt - för fakturaspecifikation)</span>
+                      {t({ sv: "Org.nr", en: "Org. no." })}{" "}
+                      <span className="text-muted-foreground font-normal">
+                        {t({ sv: "(valfritt - för fakturaspecifikation)", en: "(optional – for invoice specification)" })}
+                      </span>
                     </label>
                     <input
                       type="text"
@@ -259,14 +289,16 @@ const DeepAnalysisCheckout = () => {
                   </div>
                 </div>
 
-                {/* Business description */}
                 <div className="space-y-4 p-5 rounded-xl glass">
                   <div>
                     <h3 className="text-xs uppercase tracking-wider text-muted-foreground font-semibold mb-1">
-                      Verksamhetsbeskrivning
+                      {t({ sv: "Verksamhetsbeskrivning", en: "Business description" })}
                     </h3>
                     <p className="text-[11px] text-muted-foreground">
-                      Detta är vad vår AI analyserar. Komplettera gärna om något saknas.
+                      {t({
+                        sv: "Detta är vad vår AI analyserar. Komplettera gärna om något saknas.",
+                        en: "This is what our AI analyzes. Feel free to add details if anything is missing.",
+                      })}
                     </p>
                   </div>
 
@@ -274,7 +306,10 @@ const DeepAnalysisCheckout = () => {
                     required
                     value={form.businessDescription}
                     onChange={(e) => update("businessDescription", e.target.value)}
-                    placeholder="Beskriv er verksamhet: antal tekniker/bilar, geografi, kundtyp, nuvarande system, största utmaningarna..."
+                    placeholder={t({
+                      sv: "Beskriv er verksamhet: antal tekniker/bilar, geografi, kundtyp, nuvarande system, största utmaningarna...",
+                      en: "Describe your operation: number of technicians/vehicles, geography, customer type, current systems, biggest challenges…",
+                    })}
                     rows={6}
                     maxLength={5000}
                     className="w-full px-3 py-2.5 rounded-lg bg-background border border-border focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/30 text-base md:text-sm leading-relaxed resize-none transition-colors"
@@ -284,7 +319,6 @@ const DeepAnalysisCheckout = () => {
                   </div>
                 </div>
 
-                {/* Error */}
                 {error && (
                   <div className="flex items-start gap-2 p-3 rounded-lg bg-destructive/10 border border-destructive/30 text-sm text-destructive">
                     <AlertCircle className="w-4 h-4 flex-shrink-0 mt-0.5" />
@@ -292,12 +326,18 @@ const DeepAnalysisCheckout = () => {
                   </div>
                 )}
 
-                {/* Total + CTA */}
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 p-5 rounded-xl glass border border-primary/20">
                   <div>
-                    <div className="text-xs text-muted-foreground">Pris</div>
-                    <div className="text-2xl font-bold">399 kr <span className="text-xs font-normal text-muted-foreground">exkl. moms</span></div>
-                    <div className="text-[11px] text-muted-foreground mt-0.5">498,75 kr inkl. moms (25%)</div>
+                    <div className="text-xs text-muted-foreground">{t({ sv: "Pris", en: "Price" })}</div>
+                    <div className="text-2xl font-bold">
+                      {t({ sv: "399 kr", en: "399 SEK" })}{" "}
+                      <span className="text-xs font-normal text-muted-foreground">
+                        {t({ sv: "exkl. moms", en: "excl. VAT" })}
+                      </span>
+                    </div>
+                    <div className="text-[11px] text-muted-foreground mt-0.5">
+                      {t({ sv: "498,75 kr inkl. moms (25%)", en: "498.75 SEK incl. VAT (25%)" })}
+                    </div>
                   </div>
                   <button
                     type="submit"
@@ -307,11 +347,11 @@ const DeepAnalysisCheckout = () => {
                     {isSubmitting ? (
                       <>
                         <Loader2 className="w-4 h-4 animate-spin" />
-                        Förbereder betalning...
+                        {t({ sv: "Förbereder betalning...", en: "Preparing payment…" })}
                       </>
                     ) : (
                       <>
-                        Gå vidare till betalning
+                        {t({ sv: "Gå vidare till betalning", en: "Proceed to payment" })}
                         <ArrowLeft className="w-4 h-4 rotate-180" />
                       </>
                     )}
@@ -319,7 +359,10 @@ const DeepAnalysisCheckout = () => {
                 </div>
 
                 <p className="text-[10px] text-muted-foreground text-center">
-                  Genom att fortsätta godkänner du att vi behandlar dina kontaktuppgifter för att leverera analysen och kvitto.
+                  {t({
+                    sv: "Genom att fortsätta godkänner du att vi behandlar dina kontaktuppgifter för att leverera analysen och kvitto.",
+                    en: "By continuing you agree that we process your contact details to deliver the analysis and receipt.",
+                  })}
                 </p>
               </form>
             )}
