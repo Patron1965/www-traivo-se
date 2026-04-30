@@ -3,11 +3,12 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Link, useLocation } from "react-router-dom";
 import ReactMarkdown from "react-markdown";
 import {
-  Send, Loader2, Brain, Lock, RotateCcw, X, Sparkles,
+  Send, Loader2, Brain, Lock, RotateCcw, Sparkles,
   Trash2, Building2, Users, MapPin,
   Wrench, Snowflake, Zap, Leaf, Truck, HardHat,
 } from "lucide-react";
 import DeepAnalysisUpsell from "@/components/DeepAnalysisUpsell";
+import { useT, useLang } from "@/i18n/LanguageContext";
 
 const BRAIN_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/brain`;
 
@@ -68,11 +69,13 @@ const examples = [
 
 async function streamBrain({
   messages,
+  language,
   onDelta,
   onDone,
   onError,
 }: {
   messages: Msg[];
+  language: "sv" | "en";
   onDelta: (text: string) => void;
   onDone: () => void;
   onError: (msg: string) => void;
@@ -83,12 +86,13 @@ async function streamBrain({
       "Content-Type": "application/json",
       Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
     },
-    body: JSON.stringify({ messages }),
+    body: JSON.stringify({ messages, language }),
   });
 
   if (!resp.ok) {
-    const err = await resp.json().catch(() => ({ error: "Något gick fel" }));
-    onError(err.error || "Något gick fel");
+    const fallback = language === "en" ? "Something went wrong" : "Något gick fel";
+    const err = await resp.json().catch(() => ({ error: fallback }));
+    onError(err.error || fallback);
     return;
   }
 
@@ -145,6 +149,8 @@ async function streamBrain({
 }
 
 const Brain_Page = () => {
+  const t = useT();
+  const { lang } = useLang();
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState<Msg[]>([]);
   const [isLoading, setIsLoading] = useState(false);

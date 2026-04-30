@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Users, Brain, Wrench, Globe } from "lucide-react";
 import AIChatLink from "@/components/AIChatLink";
 import AboutVisual from "@/components/AboutVisual";
+import { useT } from "@/i18n/LanguageContext";
 
 const fadeIn = {
   initial: { opacity: 0, y: 24 },
@@ -11,14 +12,16 @@ const fadeIn = {
   transition: { duration: 0.6 },
 };
 
-const values = [
-  { icon: Users, title: "Erfarenhet från fältet", desc: "Vi har planerat rutter, kört bilen och fakturerat på kvällen. Vi vet var det skaver." },
-  { icon: Brain, title: "AI som förstärker", desc: "AI tar det repetitiva. Människan tar besluten. Inte tvärtom." },
-  { icon: Wrench, title: "Byggt med kunderna", desc: "Utvecklat sida vid sida med riktiga fältserviceföretag, inte i en pitchdeck." },
-  { icon: Globe, title: "Nordiska villkor", desc: "Långa avstånd, hård vinter, lokala regelverk – grundförutsättningar, inte tilläggsfunktioner." },
-];
-
 const About = () => {
+  const t = useT();
+
+  const values = [
+    { icon: Users,  title: t({ sv: "Erfarenhet från fältet", en: "Experience from the field" }), desc: t({ sv: "Vi har planerat rutter, kört bilen och fakturerat på kvällen. Vi vet var det skaver.", en: "We’ve planned routes, driven the van and invoiced at night. We know where it chafes." }) },
+    { icon: Brain,  title: t({ sv: "AI som förstärker", en: "AI that augments" }),               desc: t({ sv: "AI tar det repetitiva. Människan tar besluten. Inte tvärtom.", en: "AI handles the repetitive. People make the decisions. Not the other way around." }) },
+    { icon: Wrench, title: t({ sv: "Byggt med kunderna", en: "Built with customers" }),          desc: t({ sv: "Utvecklat sida vid sida med riktiga fältserviceföretag, inte i en pitchdeck.", en: "Developed side by side with real field service companies, not in a pitch deck." }) },
+    { icon: Globe,  title: t({ sv: "Nordiska villkor", en: "Nordic conditions" }),               desc: t({ sv: "Långa avstånd, hård vinter, lokala regelverk – grundförutsättningar, inte tilläggsfunktioner.", en: "Long distances, hard winters, local regulations — baseline assumptions, not add-ons." }) },
+  ];
+
   return (
     <>
       {/* Hero */}
@@ -29,7 +32,9 @@ const About = () => {
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 w-full py-20 sm:py-28 grid lg:grid-cols-2 gap-12 items-center">
           <div>
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mb-4">
-              <span className="text-[11px] font-medium uppercase tracking-[0.25em] text-primary">Om Traivo</span>
+              <span className="text-[11px] font-medium uppercase tracking-[0.25em] text-primary">
+                {t({ sv: "Om Traivo", en: "About Traivo" })}
+              </span>
             </motion.div>
             <motion.h1
               initial={{ opacity: 0, y: 30 }}
@@ -37,17 +42,15 @@ const About = () => {
               transition={{ duration: 0.7 }}
               className="font-display text-3xl sm:text-4xl md:text-6xl font-bold leading-[0.95] tracking-tight mb-5 max-w-2xl"
             >
-              <span className="text-gradient-ice">Vi byggde det</span>
+              <span className="text-gradient-ice">{t({ sv: "Vi byggde det", en: "We built what" })}</span>
               <br />
-              <span className="text-gradient-aurora">vi själva sökte efter.</span>
+              <span className="text-gradient-aurora">{t({ sv: "vi själva sökte efter.", en: "we were looking for ourselves." })}</span>
             </motion.h1>
-            <motion.p
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.2 }}
-              className="text-muted-foreground max-w-xl leading-relaxed"
-            >
-              Vi byggde Traivo för att vi själva var trötta på att hoppa mellan system. Idag är det en plattform för dem som driver fältservice på riktigt – i bilen, på kontoret och däremellan.
+            <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }} className="text-muted-foreground max-w-xl leading-relaxed">
+              {t({
+                sv: "Vi byggde Traivo för att vi själva var trötta på att hoppa mellan system. Idag är det en plattform för dem som driver fältservice på riktigt – i bilen, på kontoret och däremellan.",
+                en: "We built Traivo because we were tired of jumping between systems ourselves. Today it’s a platform for those who actually run field service — in the van, in the office and in between.",
+              })}
             </motion.p>
           </div>
           <div className="hidden lg:flex justify-end">
@@ -60,21 +63,21 @@ const About = () => {
       <section className="py-28 px-4 sm:px-6 border-t border-border">
         <div className="max-w-4xl mx-auto">
           <motion.div {...fadeIn} className="max-w-2xl mb-20">
-            <span className="text-[11px] font-medium uppercase tracking-[0.25em] text-primary mb-4 block">Vision</span>
+            <span className="text-[11px] font-medium uppercase tracking-[0.25em] text-primary mb-4 block">
+              {t({ sv: "Vision", en: "Vision" })}
+            </span>
             <p className="font-display text-xl md:text-2xl font-medium leading-relaxed text-foreground/85">
-              Framtidens fältservice handlar inte om att ersätta erfarna tekniker med maskiner. Det handlar om att ge dem verktygen att slippa det som aldrig borde vara{" "}
-              <span className="text-primary">deras problem</span>.
+              {t({
+                sv: "Framtidens fältservice handlar inte om att ersätta erfarna tekniker med maskiner. Det handlar om att ge dem verktygen att slippa det som aldrig borde vara",
+                en: "The future of field service isn’t about replacing experienced technicians with machines. It’s about giving them the tools to avoid what should never have been",
+              })}{" "}
+              <span className="text-primary">{t({ sv: "deras problem", en: "their problem" })}</span>.
             </p>
           </motion.div>
 
           <div className="grid sm:grid-cols-2 gap-3">
             {values.map((v, i) => (
-              <motion.div
-                key={v.title}
-                {...fadeIn}
-                transition={{ delay: i * 0.08 }}
-                className="glass-subtle rounded-xl p-5 group hover:border-primary/15 transition-all duration-300"
-              >
+              <motion.div key={v.title} {...fadeIn} transition={{ delay: i * 0.08 }} className="glass-subtle rounded-xl p-5 group hover:border-primary/15 transition-all duration-300">
                 <div className="flex items-start gap-4">
                   <div className="w-9 h-9 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center shrink-0">
                     <v.icon className="w-4 h-4 text-primary" />
@@ -96,18 +99,20 @@ const About = () => {
         <div className="relative z-10 max-w-2xl mx-auto">
           <motion.div {...fadeIn}>
             <span className="text-[11px] font-medium uppercase tracking-[0.25em] text-primary mb-4 block">
-              Varför Norden?
+              {t({ sv: "Varför Norden?", en: "Why the Nordics?" })}
             </span>
             <h2 className="font-display text-2xl md:text-3xl font-bold mb-6">
-              Byggd för skandinaviska villkor
+              {t({ sv: "Byggd för skandinaviska villkor", en: "Built for Scandinavian conditions" })}
             </h2>
             <div className="space-y-4 text-sm text-muted-foreground leading-relaxed">
-              <p>
-                Hård vinter, långa avstånd mellan jobben, höga lönekostnader och dokumentationskrav som inte tål genvägar. Det är inte specialfall för oss – det är utgångsläget.
-              </p>
-              <p>
-                Svenska, norska, finska, danska. Lokala integrationer. Logik som förstår att en plogbil inte fungerar som en hisstekniker. Byggt in från början, inte tillagt i efterhand.
-              </p>
+              <p>{t({
+                sv: "Hård vinter, långa avstånd mellan jobben, höga lönekostnader och dokumentationskrav som inte tål genvägar. Det är inte specialfall för oss – det är utgångsläget.",
+                en: "Hard winters, long distances between jobs, high labor costs and documentation requirements that don’t tolerate shortcuts. For us, those aren’t edge cases — they’re the baseline.",
+              })}</p>
+              <p>{t({
+                sv: "Svenska, norska, finska, danska. Lokala integrationer. Logik som förstår att en plogbil inte fungerar som en hisstekniker. Byggt in från början, inte tillagt i efterhand.",
+                en: "Swedish, Norwegian, Finnish, Danish. Local integrations. Logic that understands a plow truck doesn’t work like an elevator technician. Built in from the start, not bolted on later.",
+              })}</p>
             </div>
           </motion.div>
         </div>
@@ -118,12 +123,12 @@ const About = () => {
         <div className="absolute inset-0 bg-grid-pattern opacity-10" />
         <div className="relative z-10 max-w-2xl mx-auto text-center">
           <motion.p {...fadeIn} className="font-display text-xl md:text-2xl font-medium leading-relaxed text-foreground/90 mb-6">
-            Vi byggde Traivo för folk som oss själva. Förhoppningsvis känner du igen dig.
+            {t({ sv: "Vi byggde Traivo för folk som oss själva. Förhoppningsvis känner du igen dig.", en: "We built Traivo for people like us. Hopefully you recognize yourself." })}
           </motion.p>
           <motion.p {...fadeIn} className="text-sm text-muted-foreground">
-            <AIChatLink className="text-primary hover:underline">Beskriv er verksamhet</AIChatLink>
-            {" "}eller{" "}
-            <Link to="/kontakt" className="text-primary hover:underline">hör av dig</Link>.
+            <AIChatLink className="text-primary hover:underline">{t({ sv: "Beskriv er verksamhet", en: "Describe your business" })}</AIChatLink>
+            {" "}{t({ sv: "eller", en: "or" })}{" "}
+            <Link to="/kontakt" className="text-primary hover:underline">{t({ sv: "hör av dig", en: "get in touch" })}</Link>.
           </motion.p>
         </div>
       </section>

@@ -8,8 +8,10 @@ import { supabase } from "@/integrations/supabase/client";
 import {
   Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger
 } from "@/components/ui/dialog";
+import { useT } from "@/i18n/LanguageContext";
 
 const Contact = () => {
+  const t = useT();
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const { toast } = useToast();
@@ -29,8 +31,8 @@ const Contact = () => {
 
     if (!payload.name || !payload.company || !payload.email) {
       toast({
-        title: "Fyll i obligatoriska fält",
-        description: "Namn, företag och e-post behövs.",
+        title: t({ sv: "Fyll i obligatoriska fält", en: "Please fill in required fields" }),
+        description: t({ sv: "Namn, företag och e-post behövs.", en: "Name, company and email are required." }),
         variant: "destructive",
       });
       return;
@@ -43,15 +45,18 @@ const Contact = () => {
     if (error) {
       console.error("Contact submission failed:", error);
       toast({
-        title: "Något gick fel",
-        description: "Försök igen om en stund eller mejla info@traivo.se.",
+        title: t({ sv: "Något gick fel", en: "Something went wrong" }),
+        description: t({ sv: "Försök igen om en stund eller mejla info@traivo.se.", en: "Please try again shortly or email info@traivo.se." }),
         variant: "destructive",
       });
       return;
     }
 
     setSubmitted(true);
-    toast({ title: "Tack!", description: "Vi återkommer inom kort." });
+    toast({
+      title: t({ sv: "Tack!", en: "Thanks!" }),
+      description: t({ sv: "Vi återkommer inom kort.", en: "We’ll get back to you shortly." }),
+    });
   };
 
   return (
@@ -60,18 +65,21 @@ const Contact = () => {
       <div className="absolute top-20 right-20 w-[min(300px,80vw)] h-[min(300px,80vw)] rounded-full bg-primary/[0.03] blur-[100px]" />
 
       <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 py-20 sm:py-28 grid md:grid-cols-2 gap-10 md:gap-16 items-start">
-        {/* Left */}
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
           <span className="text-[11px] font-medium uppercase tracking-[0.25em] text-primary mb-4 block">
-            Kontakt
+            {t({ sv: "Kontakt", en: "Contact" })}
           </span>
           <h1 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold leading-[1.05] tracking-tight mb-5">
-            <span className="text-gradient-ice">Har ni frågor om plattformen, vill se en demo eller bara prata fältservice?</span>
+            <span className="text-gradient-ice">
+              {t({
+                sv: "Har ni frågor om plattformen, vill se en demo eller bara prata fältservice?",
+                en: "Have questions about the platform, want a demo, or just want to talk field service?",
+              })}
+            </span>
           </h1>
           <p className="text-sm text-muted-foreground mb-8 leading-relaxed max-w-sm">
-            Fyll i formuläret så återkommer vi.
+            {t({ sv: "Fyll i formuläret så återkommer vi.", en: "Fill in the form and we’ll get back to you." })}
           </p>
-
 
           <div className="space-y-2.5 text-xs text-muted-foreground">
             <div className="flex items-center gap-2">
@@ -80,7 +88,7 @@ const Contact = () => {
             </div>
             <div className="flex items-center gap-2">
               <MapPin className="w-3.5 h-3.5 text-primary/50" />
-              <span>Sverige</span>
+              <span>{t({ sv: "Sverige", en: "Sweden" })}</span>
             </div>
           </div>
           <div className="mt-6">
@@ -88,66 +96,68 @@ const Contact = () => {
               <DialogTrigger asChild>
                 <button className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-primary/20 text-xs font-medium text-foreground/90 hover:border-primary/40 hover:bg-primary/[0.04] transition-all duration-300">
                   <Users className="w-3.5 h-3.5 text-primary/60" />
-                  Vem är Traivo till för?
+                  {t({ sv: "Vem är Traivo till för?", en: "Who is Traivo for?" })}
                 </button>
               </DialogTrigger>
               <DialogContent className="sm:max-w-lg">
                 <DialogHeader>
                   <DialogTitle className="font-display text-xl font-bold">
-                    Vem är Traivo till för?
+                    {t({ sv: "Vem är Traivo till för?", en: "Who is Traivo for?" })}
                   </DialogTitle>
                 </DialogHeader>
                 <div className="text-sm text-muted-foreground leading-relaxed space-y-4 pt-2">
-                  <p>
-                    Traivo är till för dig som driver serviceverksamhet där tekniker åker ut till kund –
-                    VVS, el, kyla, hissar, fastighet, IT, säkerhet, vitvaror, maskinservice eller sophantering.
-                  </p>
-                  <p>
-                    Om dina tekniker kör rutter och du schemalägger uppdrag varje dag, är Traivo byggt för dig.
-                  </p>
+                  <p>{t({ sv: "Traivo är till för dig som driver serviceverksamhet där tekniker åker ut till kund – VVS, el, kyla, hissar, fastighet, IT, säkerhet, vitvaror, maskinservice eller sophantering.", en: "Traivo is for you if you run a service operation where technicians go out to customers — plumbing, electrical, cooling, elevators, property, IT, security, appliances, machinery or waste." })}</p>
+                  <p>{t({ sv: "Om dina tekniker kör rutter och du schemalägger uppdrag varje dag, är Traivo byggt för dig.", en: "If your technicians drive routes and you schedule jobs every day, Traivo is built for you." })}</p>
                 </div>
               </DialogContent>
             </Dialog>
           </div>
         </motion.div>
 
-        {/* Right */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.15 }}
-        >
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.15 }}>
           {submitted ? (
             <div className="glass rounded-2xl p-10 text-center">
               <div className="w-14 h-14 rounded-full bg-accent/10 flex items-center justify-center mx-auto mb-5">
                 <CheckCircle2 className="w-7 h-7 text-accent" />
               </div>
-              <h2 className="font-display text-lg font-bold mb-2">Tack!</h2>
-              <p className="text-sm text-muted-foreground">Vi hör av oss inom 24 timmar.</p>
+              <h2 className="font-display text-lg font-bold mb-2">{t({ sv: "Tack!", en: "Thanks!" })}</h2>
+              <p className="text-sm text-muted-foreground">
+                {t({ sv: "Vi hör av oss inom 24 timmar.", en: "We’ll be in touch within 24 hours." })}
+              </p>
             </div>
           ) : (
-              <form onSubmit={handleSubmit} noValidate className="glass rounded-2xl p-5 sm:p-7 space-y-4">
+            <form onSubmit={handleSubmit} noValidate className="glass rounded-2xl p-5 sm:p-7 space-y-4">
               <div className="grid sm:grid-cols-2 gap-3">
                 <div>
-                  <label htmlFor="name" className="text-[10px] font-medium uppercase tracking-wider text-muted-foreground mb-1.5 block">Namn</label>
-                  <Input id="name" name="name" placeholder="Anna Andersson" required minLength={2} className="bg-secondary/30 border-border text-base md:text-sm" />
+                  <label htmlFor="name" className="text-[10px] font-medium uppercase tracking-wider text-muted-foreground mb-1.5 block">
+                    {t({ sv: "Namn", en: "Name" })}
+                  </label>
+                  <Input id="name" name="name" placeholder={t({ sv: "Anna Andersson", en: "Anna Andersson" })} required minLength={2} className="bg-secondary/30 border-border text-base md:text-sm" />
                 </div>
                 <div>
-                  <label htmlFor="company" className="text-[10px] font-medium uppercase tracking-wider text-muted-foreground mb-1.5 block">Företag</label>
-                  <Input id="company" name="company" placeholder="Ert företag" required minLength={2} className="bg-secondary/30 border-border text-base md:text-sm" />
+                  <label htmlFor="company" className="text-[10px] font-medium uppercase tracking-wider text-muted-foreground mb-1.5 block">
+                    {t({ sv: "Företag", en: "Company" })}
+                  </label>
+                  <Input id="company" name="company" placeholder={t({ sv: "Ert företag", en: "Your company" })} required minLength={2} className="bg-secondary/30 border-border text-base md:text-sm" />
                 </div>
               </div>
               <div>
-                <label htmlFor="email" className="text-[10px] font-medium uppercase tracking-wider text-muted-foreground mb-1.5 block">E-post</label>
+                <label htmlFor="email" className="text-[10px] font-medium uppercase tracking-wider text-muted-foreground mb-1.5 block">
+                  {t({ sv: "E-post", en: "Email" })}
+                </label>
                 <Input id="email" name="email" type="email" placeholder="anna@foretaget.se" required className="bg-secondary/30 border-border text-base md:text-sm" />
               </div>
               <div>
-                <label htmlFor="phone" className="text-[10px] font-medium uppercase tracking-wider text-muted-foreground mb-1.5 block">Telefon (valfritt)</label>
+                <label htmlFor="phone" className="text-[10px] font-medium uppercase tracking-wider text-muted-foreground mb-1.5 block">
+                  {t({ sv: "Telefon (valfritt)", en: "Phone (optional)" })}
+                </label>
                 <Input id="phone" name="phone" type="tel" placeholder="070-123 45 67" className="bg-secondary/30 border-border text-base md:text-sm" />
               </div>
               <div>
-                <label htmlFor="message" className="text-[10px] font-medium uppercase tracking-wider text-muted-foreground mb-1.5 block">Berätta</label>
-                <Textarea id="message" name="message" placeholder="Vilken bransch? Utmaningar? Antal tekniker?" rows={4} maxLength={5000} className="bg-secondary/30 border-border text-base md:text-sm" />
+                <label htmlFor="message" className="text-[10px] font-medium uppercase tracking-wider text-muted-foreground mb-1.5 block">
+                  {t({ sv: "Berätta", en: "Tell us more" })}
+                </label>
+                <Textarea id="message" name="message" placeholder={t({ sv: "Vilken bransch? Utmaningar? Antal tekniker?", en: "Which industry? Challenges? Number of technicians?" })} rows={4} maxLength={5000} className="bg-secondary/30 border-border text-base md:text-sm" />
               </div>
               <button
                 type="submit"
@@ -157,14 +167,14 @@ const Contact = () => {
                 {submitting ? (
                   <>
                     <Loader2 className="w-3.5 h-3.5 animate-spin" />
-                    Skickar...
+                    {t({ sv: "Skickar...", en: "Sending..." })}
                   </>
                 ) : (
-                  "Skicka"
+                  t({ sv: "Skicka", en: "Send" })
                 )}
               </button>
               <p className="text-[10px] text-muted-foreground/50 text-center">
-                Vi delar aldrig din information.
+                {t({ sv: "Vi delar aldrig din information.", en: "We never share your information." })}
               </p>
             </form>
           )}
