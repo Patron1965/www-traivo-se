@@ -149,6 +149,8 @@ async function streamBrain({
 }
 
 const Brain_Page = () => {
+  const t = useT();
+  const { lang } = useLang();
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState<Msg[]>([]);
   const [isLoading, setIsLoading] = useState(false);
