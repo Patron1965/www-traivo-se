@@ -1,48 +1,38 @@
-## Mål
+# Färdigställ engelsk översättning
 
-Anpassa priset på Djupanalysen till svensk B2B-standard: visa **399 kr exkl. moms** i hela UI:et, och säkerställ att Stripe lägger på moms (498,75 kr totalt vid checkout) istället för att momsen är inbakad i 399.
+i18n-infrastrukturen (`LanguageProvider`, `useT()`, `LanguageToggle` i navbar) finns redan på plats. Edge-funktionen `brain` accepterar redan `language`-parameter. Det som återstår är att fixa byggfelet på `BrainPage.tsx` och översätta resterande UI-strängar.
 
-## Bakgrund
+## Vad som ska göras
 
-I Sverige är det lagkrav/branschpraxis att B2B-priser anges **exklusive moms**. Idag står det "399 kr inkl. moms" på två ställen, vilket både är fel signal till företagskunder och troligen fel konfigurerat i Stripe (priset är sannolikt satt som `tax_behavior: inclusive`, så kunden betalar 399 kr totalt och företaget får bara 319 kr netto).
+### 1. Fixa byggfel
+- **`src/pages/BrainPage.tsx`** rad ~203: `streamBrain` saknar `language`-argumentet. Skicka med `lang` från `useLang()` i request-body till edge-funktionen.
 
-## Ändringar
+### 2. Översätt återstående sidor
+- **`src/pages/BrainPage.tsx`** — UI-strängar, exempel-chips (8 st: Avfall & sanering → Waste & sanitation, Fastighetsdrift → Property operations, Värme & kyla → Heating & cooling, VVS-företag → Plumbing, Elinstallation → Electrical, Mark & trädgård → Grounds & landscaping, Bygg & hantverk → Construction & trades, samt befintliga). Exempeltexterna översätts också så engelska användare ser engelska scenarier.
+- **`src/pages/GoLiveChecklist.tsx`** — checklisterubriker, status-texter, knappar.
+- **`src/pages/DeepAnalysisCheckout.tsx`** — checkout-flöde, prisinfo, knappar.
+- **`src/pages/DeepAnalysisThankYou.tsx`** — tackmeddelande, leveransinfo.
+- **`src/pages/NotFound.tsx`** — 404-text.
 
-### 1. UI-texter (visuellt)
+### 3. Översätt återstående komponenter
+- **`src/components/BrainHero.tsx`** — rubriker, beskrivning, CTA.
+- **`src/components/AIInput.tsx`** — placeholder, knappar, statusmeddelanden.
+- **`src/components/AIChatLink.tsx`** — länktext.
+- **`src/components/HowItWorks.tsx`** — rubrik, steg.
+- **`src/components/TeamSection.tsx`** — rubrik, roller (behåll namn).
+- **`src/components/AboutVisual.tsx`** — eventuella textetiketter.
+- **`src/components/PaymentTestModeBanner.tsx`** — banner-text.
 
-**`src/components/DeepAnalysisUpsell.tsx`** (rad 73–74)
-- Ändra "inkl. moms · engångsbetalning" → **"exkl. moms · engångsbetalning"**
+### 4. Konsekvensgranskning
+Sök igenom hela `src/` med `rg` efter återstående svenska strängar (vanliga ord: "och", "för", "med", "är", "vi") som inte är inlindade i `t({ sv, en })` — fixa det jag hittar.
 
-**`src/pages/DeepAnalysisCheckout.tsx`**
-- Rad 149: behåll "Traivo Djupanalys · 399 kr" som den är (neutral)
-- Rad 299: "399 kr inkl. moms" → **"399 kr exkl. moms"**
-- Lägg till en rad direkt under: liten muted text "498,75 kr inkl. moms" så kunden tydligt ser totalsumman före checkout
+## Tekniska detaljer
 
-### 2. Stripe-pris (tax_behavior)
+- Använder befintlig `useT()`-hook överallt: `t({ sv: "…", en: "…" })`.
+- `useLang()` används där vi behöver själva språkkoden (BrainPage för att skicka till edge-funktion, ev. för att välja exempeltext).
+- Inga nya bibliotek, inga nya routes, inga nya filer — endast refaktor av strängar.
+- Edge-funktionen är redan klar (`SYSTEM_PROMPT_EN` finns).
+- Språkval sparas i `localStorage` (redan implementerat) — sömlöst mellan sidor.
 
-Det befintliga priset `deep_analysis_one_time` i Stripe är sannolikt satt som `tax_behavior: inclusive`. Jag uppdaterar produkten/priset så:
-- `unit_amount` = **39900** (399,00 kr)
-- `tax_behavior` = **`exclusive`**
-- `currency` = `sek`
-
-Stripe tillåter inte att man ändrar `tax_behavior` på ett befintligt pris — i så fall skapas ett nytt pris med samma `lookup_key` (`deep_analysis_one_time`), och det gamla arkiveras. `create-deep-analysis-checkout`-funktionen letar redan upp priset via `lookup_keys`, så ingen kodändring behövs där.
-
-Detta körs som en engångsuppdatering via en uppdaterad version av `setup-deep-analysis-product`-edge functionen (den finns redan, jag utökar den till att även hantera priset, inte bara `tax_code`).
-
-### 3. Verifiering
-
-Efter deploy:
-1. Öppna `/hjarna/djupanalys`
-2. Bekräfta att UI visar "399 kr exkl. moms" + "498,75 kr inkl. moms"
-3. Starta sandbox-checkout med kort `4242 4242 4242 4242`
-4. Bekräfta att Stripe-betalfönstret visar:
-   - Subtotal: 399,00 kr
-   - Moms (25%): 99,75 kr
-   - **Totalt: 498,75 kr**
-
-## Inget som ändras
-
-- `Pricing.tsx` är redan korrekt ("Priserna är exklusive moms")
-- Edge function-logiken för checkout/webhook/PDF rörs inte
-- Inga ändringar i databasschemat
-- Inga ändringar i `automatic_tax`-flaggan (den är redan på)
+## Resultat
+Hela publika sajten + Hjärnan/AI-flödet + checkout-flödet fungerar fullt ut på engelska. Användaren växlar med SV/EN-knappen i navbaren. Svenska förblir standard.

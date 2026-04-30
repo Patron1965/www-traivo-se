@@ -13,7 +13,7 @@ import {
 } from "lucide-react";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
-import { supabase } from "@/integrations/supabase/client";
+import { useT } from "@/i18n/LanguageContext";
 
 interface OrderStatus {
   orderId: string;
@@ -26,9 +26,10 @@ interface OrderStatus {
 }
 
 const POLL_INTERVAL = 3500;
-const MAX_POLLS = 60; // ~3.5 minutes
+const MAX_POLLS = 60;
 
 const DeepAnalysisThankYou = () => {
+  const t = useT();
   const [searchParams] = useSearchParams();
   const sessionId = searchParams.get("session_id");
 
@@ -38,10 +39,9 @@ const DeepAnalysisThankYou = () => {
   const [isExporting, setIsExporting] = useState(false);
   const reportRef = useRef<HTMLDivElement>(null);
 
-  // Poll for status until ready or failed
   useEffect(() => {
     if (!sessionId) {
-      setError("Saknar session-id i URL");
+      setError(t({ sv: "Saknar session-id i URL", en: "Missing session id in URL" }));
       return;
     }
 
@@ -63,7 +63,7 @@ const DeepAnalysisThankYou = () => {
         if (cancelled) return;
 
         if (!resp.ok) {
-          setError(data.error || "Kunde inte hämta status");
+          setError(data.error || t({ sv: "Kunde inte hämta status", en: "Could not fetch status" }));
           return;
         }
 
@@ -74,7 +74,10 @@ const DeepAnalysisThankYou = () => {
         if (!done && pollCount < MAX_POLLS) {
           timeoutId = window.setTimeout(poll, POLL_INTERVAL);
         } else if (!done) {
-          setError("Det tog för lång tid att generera rapporten. Vi har dina uppgifter och kontaktar dig.");
+          setError(t({
+            sv: "Det tog för lång tid att generera rapporten. Vi har dina uppgifter och kontaktar dig.",
+            en: "It took too long to generate the report. We have your details and will contact you.",
+          }));
         }
       } catch (e) {
         if (cancelled) return;
@@ -96,7 +99,6 @@ const DeepAnalysisThankYou = () => {
     setIsExporting(true);
 
     try {
-      // Render to canvas with white background for PDF
       const canvas = await html2canvas(reportRef.current, {
         scale: 2,
         backgroundColor: "#ffffff",
@@ -127,10 +129,13 @@ const DeepAnalysisThankYou = () => {
       }
 
       const safeCompany = status.company.replace(/[^a-z0-9åäö-]+/gi, "_").toLowerCase();
-      pdf.save(`Traivo-Djupanalys-${safeCompany}.pdf`);
+      pdf.save(`Traivo-${t({ sv: "Djupanalys", en: "Deep-Analysis" })}-${safeCompany}.pdf`);
     } catch (e) {
       console.error("PDF export failed:", e);
-      setError("Kunde inte skapa PDF. Försök igen eller ta en skärmdump.");
+      setError(t({
+        sv: "Kunde inte skapa PDF. Försök igen eller ta en skärmdump.",
+        en: "Could not create PDF. Try again or take a screenshot.",
+      }));
     } finally {
       setIsExporting(false);
     }
@@ -144,7 +149,6 @@ const DeepAnalysisThankYou = () => {
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[500px] h-[500px] rounded-full bg-primary/[0.05] blur-[140px] pointer-events-none" />
 
       <div className="relative z-10 max-w-3xl mx-auto">
-        {/* Confirmation header */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -155,16 +159,22 @@ const DeepAnalysisThankYou = () => {
             <CheckCircle2 className="w-8 h-8 text-primary" strokeWidth={2.5} />
           </div>
           <h1 className="font-display text-3xl md:text-4xl font-bold mb-2">
-            Tack för din beställning!
+            {t({ sv: "Tack för din beställning!", en: "Thanks for your order!" })}
           </h1>
           <p className="text-muted-foreground text-sm max-w-md mx-auto">
-            Betalningen är genomförd. {isWaiting
-              ? "Vår AI analyserar nu er verksamhet - detta tar 30-90 sekunder."
-              : "Här är er djupanalys - ladda ner som PDF nedan."}
+            {t({ sv: "Betalningen är genomförd. ", en: "Payment is complete. " })}
+            {isWaiting
+              ? t({
+                  sv: "Vår AI analyserar nu er verksamhet - detta tar 30-90 sekunder.",
+                  en: "Our AI is now analyzing your operation – this takes 30–90 seconds.",
+                })
+              : t({
+                  sv: "Här är er djupanalys - ladda ner som PDF nedan.",
+                  en: "Here is your deep analysis – download it as PDF below.",
+                })}
           </p>
         </motion.div>
 
-        {/* Error */}
         {error && (
           <motion.div
             initial={{ opacity: 0 }}
@@ -176,7 +186,6 @@ const DeepAnalysisThankYou = () => {
           </motion.div>
         )}
 
-        {/* Generating state */}
         {isWaiting && !error && (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -190,12 +199,13 @@ const DeepAnalysisThankYou = () => {
               </div>
             </div>
             <h2 className="font-display text-xl font-bold mb-2">
-              Analyserar er verksamhet...
+              {t({ sv: "Analyserar er verksamhet...", en: "Analyzing your operation…" })}
             </h2>
             <p className="text-sm text-muted-foreground max-w-md mx-auto leading-relaxed">
-              Vår AI går igenom er beskrivning, identifierar risker och möjligheter,
-              räknar ut ROI och skriver en prioriterad åtgärdsplan. Stanna kvar på sidan -
-              den uppdateras automatiskt.
+              {t({
+                sv: "Vår AI går igenom er beskrivning, identifierar risker och möjligheter, räknar ut ROI och skriver en prioriterad åtgärdsplan. Stanna kvar på sidan - den uppdateras automatiskt.",
+                en: "Our AI reviews your description, identifies risks and opportunities, calculates ROI and writes a prioritized action plan. Stay on the page – it updates automatically.",
+              })}
             </p>
             <div className="mt-6 flex items-center justify-center gap-2 text-[11px] text-muted-foreground">
               <Sparkles className="w-3 h-3 text-primary animate-pulse" />
@@ -204,21 +214,24 @@ const DeepAnalysisThankYou = () => {
           </motion.div>
         )}
 
-        {/* Report ready */}
         {status?.reportStatus === "ready" && status.reportContent && (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
-            {/* Action bar */}
             <div className="flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between mb-6 p-4 rounded-xl glass border border-primary/20">
               <div className="flex items-center gap-3">
                 <FileText className="w-5 h-5 text-primary" />
                 <div>
-                  <div className="text-sm font-semibold">Er djupanalys är klar</div>
+                  <div className="text-sm font-semibold">
+                    {t({ sv: "Er djupanalys är klar", en: "Your deep analysis is ready" })}
+                  </div>
                   <div className="text-[11px] text-muted-foreground">
-                    Spara PDF:en lokalt - vi sparar inte rapporten åt er.
+                    {t({
+                      sv: "Spara PDF:en lokalt - vi sparar inte rapporten åt er.",
+                      en: "Save the PDF locally – we don't keep the report for you.",
+                    })}
                   </div>
                 </div>
               </div>
@@ -230,18 +243,17 @@ const DeepAnalysisThankYou = () => {
                 {isExporting ? (
                   <>
                     <Loader2 className="w-4 h-4 animate-spin" />
-                    Skapar PDF...
+                    {t({ sv: "Skapar PDF...", en: "Creating PDF…" })}
                   </>
                 ) : (
                   <>
                     <Download className="w-4 h-4" />
-                    Ladda ner PDF
+                    {t({ sv: "Ladda ner PDF", en: "Download PDF" })}
                   </>
                 )}
               </button>
             </div>
 
-            {/* Report content - rendered both on screen and into PDF */}
             <div className="rounded-2xl bg-white text-gray-900 shadow-2xl overflow-hidden">
               <div ref={reportRef} className="p-8 md:p-12">
                 <div className="prose prose-sm md:prose-base max-w-none prose-headings:text-gray-900 prose-h1:text-3xl prose-h1:font-bold prose-h2:text-xl prose-h2:font-bold prose-h2:mt-8 prose-h2:pb-2 prose-h2:border-b prose-h2:border-gray-200 prose-h3:text-base prose-h3:font-bold prose-strong:text-gray-900 prose-p:text-gray-700 prose-li:text-gray-700 prose-em:text-gray-500">
@@ -250,42 +262,46 @@ const DeepAnalysisThankYou = () => {
               </div>
             </div>
 
-            {/* Next steps */}
             <div className="mt-8 p-5 rounded-xl glass">
               <h3 className="text-sm font-bold mb-3 flex items-center gap-2">
                 <Sparkles className="w-4 h-4 text-primary" />
-                Nästa steg
+                {t({ sv: "Nästa steg", en: "Next step" })}
               </h3>
               <p className="text-xs text-muted-foreground leading-relaxed mb-4">
-                Vill ni gå vidare? Boka en demo så går vi igenom analysen tillsammans
-                och visar systemet i praktiken.
+                {t({
+                  sv: "Vill ni gå vidare? Boka en demo så går vi igenom analysen tillsammans och visar systemet i praktiken.",
+                  en: "Want to go further? Book a demo and we'll walk through the analysis together and show the system in practice.",
+                })}
               </p>
               <Link
                 to="/kontakt"
                 className="inline-flex items-center gap-2 text-sm font-semibold text-primary hover:underline"
               >
-                Boka demo
+                {t({ sv: "Boka demo", en: "Book a demo" })}
                 <ArrowRight className="w-3.5 h-3.5" />
               </Link>
             </div>
           </motion.div>
         )}
 
-        {/* Failed state */}
         {status?.reportStatus === "failed" && (
           <div className="p-6 rounded-2xl glass border border-destructive/30">
             <h2 className="font-display text-lg font-bold mb-2 text-destructive">
-              Något gick fel vid genereringen
+              {t({ sv: "Något gick fel vid genereringen", en: "Something went wrong during generation" })}
             </h2>
             <p className="text-sm text-muted-foreground mb-4">
-              Din betalning gick igenom men vi kunde inte färdigställa rapporten.
-              Vi har fått en notis och kontaktar dig på <strong className="text-foreground">{status.contactName}</strong> inom kort.
+              {t({
+                sv: "Din betalning gick igenom men vi kunde inte färdigställa rapporten. Vi har fått en notis och kontaktar dig på ",
+                en: "Your payment went through but we couldn't complete the report. We've been notified and will contact ",
+              })}
+              <strong className="text-foreground">{status.contactName}</strong>{" "}
+              {t({ sv: "inom kort.", en: "shortly." })}
             </p>
             <Link
               to="/kontakt"
               className="inline-flex items-center gap-2 text-sm text-primary hover:underline"
             >
-              Eller hör av dig direkt →
+              {t({ sv: "Eller hör av dig direkt →", en: "Or reach out directly →" })}
             </Link>
           </div>
         )}

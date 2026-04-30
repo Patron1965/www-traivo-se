@@ -1,25 +1,36 @@
 import { motion } from "framer-motion";
 import { MessageSquare, Brain, Sparkles } from "lucide-react";
-
-const steps = [
-  {
-    icon: MessageSquare,
-    title: "Beskriv din verksamhet",
-    desc: "Skriv fritt om vad ni gör. Ingen inloggning krävs.",
-  },
-  {
-    icon: Brain,
-    title: "AI analyserar",
-    desc: "Traivos AI matchar era behov mot plattformens kapacitet.",
-  },
-  {
-    icon: Sparkles,
-    title: "Få insikter",
-    desc: "Se konkret hur Traivo kan effektivisera just er verksamhet.",
-  },
-];
+import { useT } from "@/i18n/LanguageContext";
 
 const HowItWorks = () => {
+  const t = useT();
+  const steps = [
+    {
+      icon: MessageSquare,
+      title: t({ sv: "Beskriv din verksamhet", en: "Describe your operation" }),
+      desc: t({
+        sv: "Skriv fritt om vad ni gör. Ingen inloggning krävs.",
+        en: "Write freely about what you do. No sign-in required.",
+      }),
+    },
+    {
+      icon: Brain,
+      title: t({ sv: "AI analyserar", en: "AI analyzes" }),
+      desc: t({
+        sv: "Traivos AI matchar era behov mot plattformens kapacitet.",
+        en: "Traivo's AI matches your needs against the platform's capabilities.",
+      }),
+    },
+    {
+      icon: Sparkles,
+      title: t({ sv: "Få insikter", en: "Get insights" }),
+      desc: t({
+        sv: "Se konkret hur Traivo kan effektivisera just er verksamhet.",
+        en: "See concretely how Traivo can streamline your operation.",
+      }),
+    },
+  ];
+
   return (
     <section className="py-24 px-6 relative">
       <div className="max-w-4xl mx-auto">
@@ -29,7 +40,7 @@ const HowItWorks = () => {
           viewport={{ once: true }}
           className="text-2xl font-display font-semibold text-center mb-16 text-gradient-neural"
         >
-          Hur det fungerar
+          {t({ sv: "Hur det fungerar", en: "How it works" })}
         </motion.h2>
 
         <div className="grid md:grid-cols-3 gap-8">

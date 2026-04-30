@@ -1,31 +1,25 @@
 import { motion } from "framer-motion";
 import { Users, Brain, Wrench, Sparkles } from "lucide-react";
+import { useT } from "@/i18n/LanguageContext";
 
-/**
- * Visualisering för About-sidan.
- * Tre roller (planerare, AI, tekniker) i ett system som arbetar ihop.
- * Matchar stilen från PlannerVisual / FieldVisual.
- */
 const AboutVisual = () => {
-  // Tre noder i triangel: planerare (vänster), AI (topp), tekniker (höger)
+  const t = useT();
   const nodes = [
-    { id: "planner", icon: Users, label: "Planerare", x: 18, y: 72, color: "primary" },
-    { id: "ai", icon: Brain, label: "AI-hjärna", x: 50, y: 22, color: "accent" },
-    { id: "field", icon: Wrench, label: "Tekniker", x: 82, y: 72, color: "primary" },
+    { id: "planner", icon: Users, label: t({ sv: "Planerare", en: "Planner" }), x: 18, y: 72, color: "primary" },
+    { id: "ai", icon: Brain, label: t({ sv: "AI-hjärna", en: "AI brain" }), x: 50, y: 22, color: "accent" },
+    { id: "field", icon: Wrench, label: t({ sv: "Tekniker", en: "Technician" }), x: 82, y: 72, color: "primary" },
   ] as const;
 
-  // Linjer mellan noderna
   const edges = [
     { from: 0, to: 1 },
     { from: 1, to: 2 },
     { from: 0, to: 2 },
   ];
 
-  // Tidslinje – små "händelser" som rör sig genom systemet
   const events = [
-    { t: 0.0, label: "Akutjobb in" },
-    { t: 0.33, label: "AI omplanerar" },
-    { t: 0.66, label: "Push till bil" },
+    { t: 0.0, label: t({ sv: "Akutjobb in", en: "Emergency in" }) },
+    { t: 0.33, label: t({ sv: "AI omplanerar", en: "AI replans" }) },
+    { t: 0.66, label: t({ sv: "Push till bil", en: "Push to vehicle" }) },
   ];
 
   return (
@@ -58,7 +52,7 @@ const AboutVisual = () => {
         <div className="absolute top-3 left-3 flex items-center gap-1.5 z-10">
           <Sparkles className="w-3.5 h-3.5 text-primary" strokeWidth={2.5} />
           <span className="text-[10px] uppercase tracking-wider text-foreground font-bold">
-            Människa + AI
+            {t({ sv: "Människa + AI", en: "Human + AI" })}
           </span>
         </div>
 
@@ -208,12 +202,12 @@ const AboutVisual = () => {
           <div className="flex items-center gap-1.5">
             <Brain className="w-3.5 h-3.5 text-accent" strokeWidth={2.5} />
             <span className="text-[10px] uppercase tracking-wider text-foreground font-bold">
-              Beslutsflöde
+              {t({ sv: "Beslutsflöde", en: "Decision flow" })}
             </span>
           </div>
           <div className="flex items-center gap-1">
             <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse shadow-[0_0_6px_hsl(var(--primary))]" />
-            <span className="text-[9px] text-foreground/80 font-semibold">Live</span>
+            <span className="text-[9px] text-foreground/80 font-semibold">{t({ sv: "Live", en: "Live" })}</span>
           </div>
         </div>
 
@@ -264,9 +258,9 @@ const AboutVisual = () => {
         >
           <div className="flex items-center gap-1 text-foreground/80 font-medium">
             <Sparkles className="w-3 h-3 text-primary" strokeWidth={2.5} />
-            <span>Människan beslutar</span>
+            <span>{t({ sv: "Människan beslutar", en: "Human decides" })}</span>
           </div>
-          <span className="text-primary font-bold">AI förstärker</span>
+          <span className="text-primary font-bold">{t({ sv: "AI förstärker", en: "AI amplifies" })}</span>
         </motion.div>
       </motion.div>
     </div>
