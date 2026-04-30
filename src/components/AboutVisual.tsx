@@ -52,7 +52,7 @@ const AboutVisual = () => {
         <div className="absolute top-3 left-3 flex items-center gap-1.5 z-10">
           <Sparkles className="w-3.5 h-3.5 text-primary" strokeWidth={2.5} />
           <span className="text-[10px] uppercase tracking-wider text-foreground font-bold">
-            Människa + AI
+            {t({ sv: "Människa + AI", en: "Human + AI" })}
           </span>
         </div>
 
@@ -202,12 +202,12 @@ const AboutVisual = () => {
           <div className="flex items-center gap-1.5">
             <Brain className="w-3.5 h-3.5 text-accent" strokeWidth={2.5} />
             <span className="text-[10px] uppercase tracking-wider text-foreground font-bold">
-              Beslutsflöde
+              {t({ sv: "Beslutsflöde", en: "Decision flow" })}
             </span>
           </div>
           <div className="flex items-center gap-1">
             <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse shadow-[0_0_6px_hsl(var(--primary))]" />
-            <span className="text-[9px] text-foreground/80 font-semibold">Live</span>
+            <span className="text-[9px] text-foreground/80 font-semibold">{t({ sv: "Live", en: "Live" })}</span>
           </div>
         </div>
 
@@ -258,9 +258,9 @@ const AboutVisual = () => {
         >
           <div className="flex items-center gap-1 text-foreground/80 font-medium">
             <Sparkles className="w-3 h-3 text-primary" strokeWidth={2.5} />
-            <span>Människan beslutar</span>
+            <span>{t({ sv: "Människan beslutar", en: "Human decides" })}</span>
           </div>
-          <span className="text-primary font-bold">AI förstärker</span>
+          <span className="text-primary font-bold">{t({ sv: "AI förstärker", en: "AI amplifies" })}</span>
         </motion.div>
       </motion.div>
     </div>
