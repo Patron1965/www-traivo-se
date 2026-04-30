@@ -1,30 +1,44 @@
 import { motion } from "framer-motion";
 import { Users, Brain, Wrench, TrendingUp } from "lucide-react";
-
-const values = [
-  {
-    icon: Users,
-    title: "Erfaret team",
-    desc: "Vårt team kommer från fältservicebranschen. Vi förstår verkligheten — inte bara tekniken.",
-  },
-  {
-    icon: Brain,
-    title: "Mänsklig intelligens först",
-    desc: "AI ersätter inte era beslut. Den förstärker dem med data, mönster och prognoser.",
-  },
-  {
-    icon: Wrench,
-    title: "Byggt i fält",
-    desc: "Traivo är utvecklat tillsammans med riktiga fältserviceföretag — inte i ett labb.",
-  },
-  {
-    icon: TrendingUp,
-    title: "AI som lyfter teamet",
-    desc: "Smart schemaläggning, ruttoptimering och anomalidetektering — så era medarbetare kan fokusera på det som räknas.",
-  },
-];
+import { useT } from "@/i18n/LanguageContext";
 
 const TeamSection = () => {
+  const t = useT();
+  const values = [
+    {
+      icon: Users,
+      title: t({ sv: "Erfaret team", en: "Experienced team" }),
+      desc: t({
+        sv: "Vårt team kommer från fältservicebranschen. Vi förstår verkligheten — inte bara tekniken.",
+        en: "Our team comes from the field service industry. We understand the reality — not just the tech.",
+      }),
+    },
+    {
+      icon: Brain,
+      title: t({ sv: "Mänsklig intelligens först", en: "Human intelligence first" }),
+      desc: t({
+        sv: "AI ersätter inte era beslut. Den förstärker dem med data, mönster och prognoser.",
+        en: "AI doesn't replace your decisions. It amplifies them with data, patterns and forecasts.",
+      }),
+    },
+    {
+      icon: Wrench,
+      title: t({ sv: "Byggt i fält", en: "Built in the field" }),
+      desc: t({
+        sv: "Traivo är utvecklat tillsammans med riktiga fältserviceföretag — inte i ett labb.",
+        en: "Traivo is developed together with real field service companies — not in a lab.",
+      }),
+    },
+    {
+      icon: TrendingUp,
+      title: t({ sv: "AI som lyfter teamet", en: "AI that lifts the team" }),
+      desc: t({
+        sv: "Smart schemaläggning, ruttoptimering och anomalidetektering — så era medarbetare kan fokusera på det som räknas.",
+        en: "Smart scheduling, route optimization and anomaly detection — so your people can focus on what matters.",
+      }),
+    },
+  ];
+
   return (
     <section className="py-24 px-6 relative">
       <div className="max-w-5xl mx-auto">
@@ -35,12 +49,19 @@ const TeamSection = () => {
           className="text-center mb-16"
         >
           <h2 className="text-2xl md:text-3xl font-display font-bold mb-3">
-            <span className="text-gradient-synapse">Erfarenhet</span> möter{" "}
-            <span className="text-gradient-neural">intelligens</span>
+            <span className="text-gradient-synapse">
+              {t({ sv: "Erfarenhet", en: "Experience" })}
+            </span>{" "}
+            {t({ sv: "möter", en: "meets" })}{" "}
+            <span className="text-gradient-neural">
+              {t({ sv: "intelligens", en: "intelligence" })}
+            </span>
           </h2>
           <p className="text-muted-foreground text-sm max-w-md mx-auto">
-            Vi tror inte på teknik utan förståelse. Traivo är byggt av människor 
-            som levt i fältservicens vardag.
+            {t({
+              sv: "Vi tror inte på teknik utan förståelse. Traivo är byggt av människor som levt i fältservicens vardag.",
+              en: "We don't believe in tech without understanding. Traivo is built by people who have lived field service every day.",
+            })}
           </p>
         </motion.div>
 

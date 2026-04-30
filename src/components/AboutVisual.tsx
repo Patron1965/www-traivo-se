@@ -1,31 +1,25 @@
 import { motion } from "framer-motion";
 import { Users, Brain, Wrench, Sparkles } from "lucide-react";
+import { useT } from "@/i18n/LanguageContext";
 
-/**
- * Visualisering för About-sidan.
- * Tre roller (planerare, AI, tekniker) i ett system som arbetar ihop.
- * Matchar stilen från PlannerVisual / FieldVisual.
- */
 const AboutVisual = () => {
-  // Tre noder i triangel: planerare (vänster), AI (topp), tekniker (höger)
+  const t = useT();
   const nodes = [
-    { id: "planner", icon: Users, label: "Planerare", x: 18, y: 72, color: "primary" },
-    { id: "ai", icon: Brain, label: "AI-hjärna", x: 50, y: 22, color: "accent" },
-    { id: "field", icon: Wrench, label: "Tekniker", x: 82, y: 72, color: "primary" },
+    { id: "planner", icon: Users, label: t({ sv: "Planerare", en: "Planner" }), x: 18, y: 72, color: "primary" },
+    { id: "ai", icon: Brain, label: t({ sv: "AI-hjärna", en: "AI brain" }), x: 50, y: 22, color: "accent" },
+    { id: "field", icon: Wrench, label: t({ sv: "Tekniker", en: "Technician" }), x: 82, y: 72, color: "primary" },
   ] as const;
 
-  // Linjer mellan noderna
   const edges = [
     { from: 0, to: 1 },
     { from: 1, to: 2 },
     { from: 0, to: 2 },
   ];
 
-  // Tidslinje – små "händelser" som rör sig genom systemet
   const events = [
-    { t: 0.0, label: "Akutjobb in" },
-    { t: 0.33, label: "AI omplanerar" },
-    { t: 0.66, label: "Push till bil" },
+    { t: 0.0, label: t({ sv: "Akutjobb in", en: "Emergency in" }) },
+    { t: 0.33, label: t({ sv: "AI omplanerar", en: "AI replans" }) },
+    { t: 0.66, label: t({ sv: "Push till bil", en: "Push to vehicle" }) },
   ];
 
   return (

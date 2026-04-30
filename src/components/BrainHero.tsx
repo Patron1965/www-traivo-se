@@ -2,11 +2,12 @@ import { motion } from "framer-motion";
 import { ShieldCheck } from "lucide-react";
 import brainImage from "@/assets/brain-ai.png";
 import teamImage from "@/assets/team-brain-hero.png";
+import { useT } from "@/i18n/LanguageContext";
 
 const BrainHero = () => {
+  const t = useT();
   return (
     <div className="relative flex flex-col items-center justify-center w-full max-w-full overflow-hidden">
-      {/* Headline above team */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -14,22 +15,26 @@ const BrainHero = () => {
         className="text-center mb-8 max-w-2xl px-2"
       >
         <h1 className="text-2xl sm:text-3xl md:text-4xl font-display font-bold mb-4 leading-tight">
-          <span className="text-gradient-synapse">Rutinerat team</span>
-          {" "}blir{" "}
-          <span className="text-gradient-neural">superhjärna</span>
+          <span className="text-gradient-synapse">
+            {t({ sv: "Rutinerat team", en: "Experienced team" })}
+          </span>
+          {" "}{t({ sv: "blir", en: "becomes" })}{" "}
+          <span className="text-gradient-neural">
+            {t({ sv: "superhjärna", en: "super brain" })}
+          </span>
           <br />
           <span className="text-foreground/80 text-xl sm:text-2xl md:text-3xl">
-            — erfarenhet förstärkt med AI
+            {t({ sv: "— erfarenhet förstärkt med AI", en: "— experience amplified by AI" })}
           </span>
         </h1>
         <p className="text-muted-foreground text-sm leading-relaxed max-w-lg mx-auto mt-4">
-          Traivo kombinerar årtionden av fältserviceerfarenhet med intelligent AI.
-          Vi bygger inte teknik som ersätter människor — vi förstärker dem.
-          Beskriv din verksamhet nedan och se vad det kan betyda för dig.
+          {t({
+            sv: "Traivo kombinerar årtionden av fältserviceerfarenhet med intelligent AI. Vi bygger inte teknik som ersätter människor — vi förstärker dem. Beskriv din verksamhet nedan och se vad det kan betyda för dig.",
+            en: "Traivo combines decades of field service experience with intelligent AI. We don't build technology that replaces people — we amplify them. Describe your operation below and see what it could mean for you.",
+          })}
         </p>
       </motion.div>
 
-      {/* Team image */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -42,11 +47,14 @@ const BrainHero = () => {
           transition={{ delay: 0.3 }}
           className="text-[11px] tracking-widest uppercase text-muted-foreground/60 font-display mb-3"
         >
-          Grunden &middot; Erfarna tekniker i fält
+          {t({
+            sv: "Grunden · Erfarna tekniker i fält",
+            en: "Foundation · Experienced technicians in the field",
+          })}
         </motion.p>
         <motion.img
           src={teamImage}
-          alt="Erfaret fältserviceteam"
+          alt={t({ sv: "Erfaret fältserviceteam", en: "Experienced field service team" })}
           width={624}
           height={364}
           className="relative z-10 w-full h-auto drop-shadow-[0_0_30px_hsla(180,70%,50%,0.15)]"
@@ -56,7 +64,6 @@ const BrainHero = () => {
         />
       </motion.div>
 
-      {/* Connection beams going UP from team to brain */}
       <motion.div
         className="relative z-10 w-full max-w-[500px] h-[80px] -mt-2 -mb-2"
         initial={{ opacity: 0 }}
@@ -79,7 +86,6 @@ const BrainHero = () => {
             </filter>
           </defs>
 
-          {/* Lines from team (bottom) converging UP to brain center */}
           {[
             { x: 80, delay: 0 },
             { x: 170, delay: 0.1 },
@@ -133,14 +139,15 @@ const BrainHero = () => {
         </svg>
       </motion.div>
 
-      {/* Glow backdrop behind brain — constrained to viewport */}
       <div className="absolute bottom-[80px] w-[min(420px,90vw)] h-[min(420px,90vw)] rounded-full bg-glow animate-pulse-glow" />
 
-      {/* Brain — the RESULT of collective experience + AI */}
       <motion.div className="relative z-10 flex flex-col items-center w-full">
         <motion.img
           src={brainImage}
-          alt="Superhjärna — teamets erfarenhet förstärkt med AI"
+          alt={t({
+            sv: "Superhjärna — teamets erfarenhet förstärkt med AI",
+            en: "Super brain — the team's experience amplified by AI",
+          })}
           width={280}
           height={280}
           className="relative z-10 w-[60vw] max-w-[280px] h-auto drop-shadow-[0_0_60px_hsla(180,70%,50%,0.4)]"
@@ -155,11 +162,13 @@ const BrainHero = () => {
           transition={{ delay: 1.8 }}
           className="relative z-10 mt-2 text-[11px] tracking-widest uppercase text-muted-foreground/60 font-display text-center px-4"
         >
-          Erfarenhet + AI = Superhjärna
+          {t({
+            sv: "Erfarenhet + AI = Superhjärna",
+            en: "Experience + AI = Super brain",
+          })}
         </motion.p>
       </motion.div>
 
-      {/* Speech bubble – desktop */}
       <motion.div
         initial={{ opacity: 0, x: 30 }}
         animate={{ opacity: 1, x: 0 }}
@@ -187,14 +196,22 @@ const BrainHero = () => {
           <div className="flex items-start gap-2.5">
             <ShieldCheck className="w-4 h-4 text-primary mt-0.5 shrink-0" />
             <p className="text-xs text-muted-foreground leading-relaxed">
-              Det du gör här loggas inte och leder inte till säljsamtal.
-              <span className="text-foreground/80 font-medium"> Du hör av dig till oss — om och när du vill.</span>
+              {t({
+                sv: "Det du gör här loggas inte och leder inte till säljsamtal.",
+                en: "What you do here isn't logged and won't lead to sales calls.",
+              })}
+              <span className="text-foreground/80 font-medium">
+                {" "}
+                {t({
+                  sv: "Du hör av dig till oss — om och när du vill.",
+                  en: "You reach out to us — if and when you want.",
+                })}
+              </span>
             </p>
           </div>
         </div>
       </motion.div>
 
-      {/* Speech bubble – mobile */}
       <motion.div
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
@@ -205,8 +222,17 @@ const BrainHero = () => {
           <div className="flex items-start gap-2">
             <ShieldCheck className="w-4 h-4 text-primary mt-0.5 shrink-0" />
             <p className="text-[11px] text-muted-foreground leading-relaxed">
-              Det du gör här loggas inte och leder inte till säljsamtal.
-              <span className="text-foreground/80 font-medium"> Du hör av dig till oss — om och när du vill.</span>
+              {t({
+                sv: "Det du gör här loggas inte och leder inte till säljsamtal.",
+                en: "What you do here isn't logged and won't lead to sales calls.",
+              })}
+              <span className="text-foreground/80 font-medium">
+                {" "}
+                {t({
+                  sv: "Du hör av dig till oss — om och när du vill.",
+                  en: "You reach out to us — if and when you want.",
+                })}
+              </span>
             </p>
           </div>
         </div>
