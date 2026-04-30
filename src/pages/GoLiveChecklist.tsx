@@ -13,6 +13,7 @@ import {
   Loader2,
   AlertCircle,
 } from "lucide-react";
+import { useT, useLang } from "@/i18n/LanguageContext";
 
 type RemoteStatus =
   | "completed"
@@ -35,8 +36,8 @@ interface RemoteResponse {
 
 interface StepConfig {
   id: string;
-  title: string;
-  description: string;
+  title: { sv: string; en: string };
+  description: { sv: string; en: string };
   icon: React.ComponentType<{ className?: string }>;
   automated?: boolean;
 }
@@ -44,38 +45,48 @@ interface StepConfig {
 const STEPS: StepConfig[] = [
   {
     id: "claim_account",
-    title: "Anslut Stripe-kontot",
-    description:
-      "Koppla sandbox till ett nytt eller befintligt Stripe-konto via Payments-fliken.",
+    title: { sv: "Anslut Stripe-kontot", en: "Connect Stripe account" },
+    description: {
+      sv: "Koppla sandbox till ett nytt eller befintligt Stripe-konto via Payments-fliken.",
+      en: "Connect sandbox to a new or existing Stripe account via the Payments tab.",
+    },
     icon: CreditCard,
   },
   {
     id: "setup_live_account",
-    title: "Slutför go-live-formuläret hos Stripe",
-    description:
-      "Verifiera företag, person, bankkonto och 2FA i Stripes aktiveringsguide.",
+    title: { sv: "Slutför go-live-formuläret hos Stripe", en: "Complete Stripe's go-live form" },
+    description: {
+      sv: "Verifiera företag, person, bankkonto och 2FA i Stripes aktiveringsguide.",
+      en: "Verify company, person, bank account and 2FA in Stripe's activation guide.",
+    },
     icon: ShieldCheck,
   },
   {
     id: "install_app",
-    title: "Installera Lovable-appen på live-kontot",
-    description:
-      "Krävs om du inte kopierade appen när du växlade från sandbox till live.",
+    title: { sv: "Installera Lovable-appen på live-kontot", en: "Install the Lovable app on the live account" },
+    description: {
+      sv: "Krävs om du inte kopierade appen när du växlade från sandbox till live.",
+      en: "Required if you didn't copy the app when switching from sandbox to live.",
+    },
     icon: PackageCheck,
   },
   {
     id: "provision_live_keys",
-    title: "Live API-nycklar provisioneras",
-    description:
-      "Lovable skapar automatiskt live-nycklar och webhooks - inget du behöver göra.",
+    title: { sv: "Live API-nycklar provisioneras", en: "Provisioning live API keys" },
+    description: {
+      sv: "Lovable skapar automatiskt live-nycklar och webhooks - inget du behöver göra.",
+      en: "Lovable automatically creates live keys and webhooks – nothing you need to do.",
+    },
     icon: KeyRound,
     automated: true,
   },
   {
     id: "readiness_check",
-    title: "Readiness check",
-    description:
-      "Lovable verifierar att produkter, priser och webhooks är redo på live.",
+    title: { sv: "Readiness check", en: "Readiness check" },
+    description: {
+      sv: "Lovable verifierar att produkter, priser och webhooks är redo på live.",
+      en: "Lovable verifies that products, prices and webhooks are ready on live.",
+    },
     icon: Sparkles,
   },
 ];
@@ -83,25 +94,27 @@ const STEPS: StepConfig[] = [
 const POLL_INTERVAL = 10_000;
 const STATUS_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/get-stripe-golive-status`;
 
-const statusLabel: Record<RemoteStatus, string> = {
-  completed: "Klart",
-  in_progress: "Pågår",
-  action_required: "Åtgärd krävs",
-  not_started: "Låst",
-};
-
-const statusBadgeClass: Record<RemoteStatus, string> = {
-  completed: "bg-primary/15 text-primary border border-primary/30",
-  in_progress: "bg-yellow-500/10 text-yellow-300 border border-yellow-500/30",
-  action_required: "bg-destructive/10 text-destructive border border-destructive/30",
-  not_started: "bg-muted/30 text-muted-foreground border border-border",
-};
-
 const GoLiveChecklist = () => {
+  const t = useT();
+  const { lang } = useLang();
   const [remote, setRemote] = useState<RemoteResponse | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
+
+  const statusLabel: Record<RemoteStatus, string> = {
+    completed: t({ sv: "Klart", en: "Done" }),
+    in_progress: t({ sv: "Pågår", en: "In progress" }),
+    action_required: t({ sv: "Åtgärd krävs", en: "Action required" }),
+    not_started: t({ sv: "Låst", en: "Locked" }),
+  };
+
+  const statusBadgeClass: Record<RemoteStatus, string> = {
+    completed: "bg-primary/15 text-primary border border-primary/30",
+    in_progress: "bg-yellow-500/10 text-yellow-300 border border-yellow-500/30",
+    action_required: "bg-destructive/10 text-destructive border border-destructive/30",
+    not_started: "bg-muted/30 text-muted-foreground border border-border",
+  };
 
   const fetchStatus = useCallback(async () => {
     try {
@@ -111,16 +124,16 @@ const GoLiveChecklist = () => {
         },
       });
       const data = await resp.json();
-      if (!resp.ok) throw new Error(data.error || "Kunde inte hämta status");
+      if (!resp.ok) throw new Error(data.error || (lang === "en" ? "Could not fetch status" : "Kunde inte hämta status"));
       setRemote(data);
       setLastUpdated(new Date());
       setError(null);
     } catch (e) {
-      setError(e instanceof Error ? e.message : "Okänt fel");
+      setError(e instanceof Error ? e.message : (lang === "en" ? "Unknown error" : "Okänt fel"));
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [lang]);
 
   useEffect(() => {
     fetchStatus();
@@ -153,30 +166,31 @@ const GoLiveChecklist = () => {
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/30 mb-4">
             <Sparkles className="w-3.5 h-3.5 text-primary" />
             <span className="text-[11px] font-semibold uppercase tracking-wider text-primary">
-              Stripe go-live
+              {t({ sv: "Stripe go-live", en: "Stripe go-live" })}
             </span>
           </div>
           <h1 className="font-display text-3xl md:text-4xl font-bold mb-3">
-            Aktivera riktiga betalningar
+            {t({ sv: "Aktivera riktiga betalningar", en: "Activate live payments" })}
           </h1>
           <p className="text-muted-foreground text-sm md:text-base max-w-xl leading-relaxed">
-            Statusen nedan hämtas automatiskt från Stripe var 10:e sekund. Slutför stegen i
-            Payments-fliken och denna sida uppdaterar sig själv.
+            {t({
+              sv: "Statusen nedan hämtas automatiskt från Stripe var 10:e sekund. Slutför stegen i Payments-fliken och denna sida uppdaterar sig själv.",
+              en: "The status below is fetched automatically from Stripe every 10 seconds. Complete the steps in the Payments tab and this page updates itself.",
+            })}
           </p>
         </motion.div>
 
-        {/* Progress bar */}
         <div className="mb-8 p-5 rounded-2xl glass">
           <div className="flex items-center justify-between mb-3">
             <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground flex items-center gap-2">
               {loading && !remote ? (
                 <>
                   <Loader2 className="w-3 h-3 animate-spin" />
-                  Hämtar status...
+                  {t({ sv: "Hämtar status...", en: "Fetching status…" })}
                 </>
               ) : (
                 <>
-                  {completedCount} av {STEPS.length} klara
+                  {completedCount} {t({ sv: "av", en: "of" })} {STEPS.length} {t({ sv: "klara", en: "done" })}
                   {remote?.environment === "live" && (
                     <span className="text-primary normal-case font-bold">· LIVE</span>
                   )}
@@ -196,7 +210,8 @@ const GoLiveChecklist = () => {
           <div className="mt-3 flex items-center justify-between gap-3">
             {lastUpdated && (
               <span className="text-[10px] text-muted-foreground">
-                Senast uppdaterad {lastUpdated.toLocaleTimeString("sv-SE")}
+                {t({ sv: "Senast uppdaterad", en: "Last updated" })}{" "}
+                {lastUpdated.toLocaleTimeString(lang === "en" ? "en-GB" : "sv-SE")}
               </span>
             )}
             <button
@@ -205,7 +220,7 @@ const GoLiveChecklist = () => {
               className="text-[11px] text-primary hover:underline inline-flex items-center gap-1 disabled:opacity-50"
             >
               <RotateCcw className={`w-3 h-3 ${loading ? "animate-spin" : ""}`} />
-              Uppdatera nu
+              {t({ sv: "Uppdatera nu", en: "Refresh now" })}
             </button>
           </div>
           {allDone && (
@@ -215,22 +230,20 @@ const GoLiveChecklist = () => {
               className="mt-4 text-sm text-primary flex items-center gap-2 font-semibold"
             >
               <CheckCircle2 className="w-4 h-4" />
-              Klart - betalningar är live på traivo.se
+              {t({ sv: "Klart - betalningar är live på traivo.se", en: "Done – payments are live on traivo.se" })}
             </motion.div>
           )}
         </div>
 
-        {/* Error */}
         {error && (
           <div className="mb-6 p-4 rounded-xl bg-destructive/10 border border-destructive/30 flex items-start gap-3">
             <AlertCircle className="w-5 h-5 text-destructive flex-shrink-0 mt-0.5" />
             <div className="text-sm text-destructive">
-              Kunde inte hämta live-status: {error}
+              {t({ sv: "Kunde inte hämta live-status:", en: "Could not fetch live status:" })} {error}
             </div>
           </div>
         )}
 
-        {/* Steps */}
         <ol className="space-y-4">
           {STEPS.map((step, index) => {
             const remoteStep = stepStatusMap.get(step.id);
@@ -257,7 +270,6 @@ const GoLiveChecklist = () => {
                 }`}
               >
                 <div className="flex items-start gap-4">
-                  {/* Status icon */}
                   <div className="flex-shrink-0 mt-0.5">
                     {isDone ? (
                       <div className="w-9 h-9 rounded-full bg-primary/15 border border-primary/40 flex items-center justify-center">
@@ -282,15 +294,14 @@ const GoLiveChecklist = () => {
                     )}
                   </div>
 
-                  {/* Content */}
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 flex-wrap mb-1">
                       <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
-                        Steg {index + 1}
+                        {t({ sv: "Steg", en: "Step" })} {index + 1}
                       </span>
                       {step.automated && (
                         <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-primary/10 text-primary border border-primary/30">
-                          Automatiskt
+                          {t({ sv: "Automatiskt", en: "Automatic" })}
                         </span>
                       )}
                       <span
@@ -300,9 +311,9 @@ const GoLiveChecklist = () => {
                       </span>
                     </div>
                     <h2 className="font-display text-base md:text-lg font-bold mb-1">
-                      {step.title}
+                      {t(step.title)}
                     </h2>
-                    <p className="text-sm text-muted-foreground mb-2">{step.description}</p>
+                    <p className="text-sm text-muted-foreground mb-2">{t(step.description)}</p>
                     {remoteStep?.detail && (
                       <p className="text-xs text-muted-foreground/80 leading-relaxed">
                         {remoteStep.detail}
@@ -315,15 +326,16 @@ const GoLiveChecklist = () => {
           })}
         </ol>
 
-        {/* Actions */}
         <div className="mt-10 p-6 rounded-2xl glass border border-primary/20">
           <h3 className="font-display text-base font-bold mb-2 flex items-center gap-2">
             <ExternalLink className="w-4 h-4 text-primary" />
-            Hantera betalningar
+            {t({ sv: "Hantera betalningar", en: "Manage payments" })}
           </h3>
           <p className="text-sm text-muted-foreground leading-relaxed">
-            Stegen utförs i Payments-fliken i Lovable och i Stripes dashboard. Den här sidan
-            speglar vad Stripe rapporterar tillbaka.
+            {t({
+              sv: "Stegen utförs i Payments-fliken i Lovable och i Stripes dashboard. Den här sidan speglar vad Stripe rapporterar tillbaka.",
+              en: "The steps are performed in the Payments tab in Lovable and in Stripe's dashboard. This page mirrors what Stripe reports back.",
+            })}
           </p>
         </div>
       </div>
