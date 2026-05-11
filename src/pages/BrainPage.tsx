@@ -761,6 +761,94 @@ const Brain_Page = () => {
               en: "Questions about how we handle data? Write to us – only then do we get your email, and nothing else.",
             })}
           </motion.p>
+
+          {/* Cookies & tracking policy */}
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-60px" }}
+            transition={{ duration: 0.5 }}
+            className="mt-12 rounded-xl border border-border/50 bg-background/40 p-6 sm:p-7"
+          >
+            <div className="flex items-center gap-2 mb-4">
+              <div className="w-7 h-7 rounded-md bg-yellow-500/10 border border-yellow-500/25 flex items-center justify-center">
+                <Lock className="w-3.5 h-3.5 text-yellow-500" strokeWidth={2.4} />
+              </div>
+              <h3 className="font-display text-base font-semibold text-foreground">
+                {t({ sv: "Cookies & spårning", en: "Cookies & tracking" })}
+              </h3>
+            </div>
+
+            <p className="text-xs text-muted-foreground leading-relaxed mb-5">
+              {t({
+                sv: "Vi vill vara raka: Hjärnan-sidan använder inga marknadsförings- eller analyscookies. Inga tredjepartstjänster (Google Analytics, Meta Pixel, Hotjar eller liknande) körs här. Det finns inget banner-godkännande att klicka bort eftersom det inte finns något att godkänna.",
+                en: "Let's be straight: the Brain page uses no marketing or analytics cookies. No third-party services (Google Analytics, Meta Pixel, Hotjar or similar) run here. There is no consent banner to dismiss because there is nothing to consent to.",
+              })}
+            </p>
+
+            <div className="space-y-3">
+              <div className="text-[11px] uppercase tracking-[0.18em] text-muted-foreground/80 font-semibold mb-1">
+                {t({ sv: "Det här lagras tekniskt i din webbläsare", en: "What is technically stored in your browser" })}
+              </div>
+
+              {[
+                {
+                  name: { sv: "Språkval (localStorage)", en: "Language preference (localStorage)" },
+                  detail: {
+                    sv: "Nyckeln traivo-lang sparar SV eller EN så sajten minns ditt språk. Ingen identifierare, inget skickas till oss.",
+                    en: "The key traivo-lang stores SV or EN so the site remembers your language. No identifier, nothing sent to us.",
+                  },
+                  optOut: {
+                    sv: "Avstå: rensa webbplatsdata för traivo.se i webbläsaren.",
+                    en: "Opt out: clear site data for traivo.se in your browser.",
+                  },
+                },
+                {
+                  name: { sv: "Djupanalys-utkast (sessionStorage)", en: "Deep analysis draft (sessionStorage)" },
+                  detail: {
+                    sv: "Endast om du själv klickar 'Beställ djupanalys' – då sparas din verksamhetsbeskrivning tillfälligt så kassan kan förfyllas. Försvinner när du stänger fliken.",
+                    en: "Only if you click 'Order deep analysis' – your business description is then stored temporarily so checkout can be pre-filled. Disappears when you close the tab.",
+                  },
+                  optOut: {
+                    sv: "Avstå: använd inte djupanalys-knappen, eller stäng fliken.",
+                    en: "Opt out: don't use the deep analysis button, or close the tab.",
+                  },
+                },
+                {
+                  name: { sv: "Inga andra cookies", en: "No other cookies" },
+                  detail: {
+                    sv: "Vi sätter inga sessionscookies, inga reklamcookies, ingen fingerprinting. Server-loggar hos vår infrastruktur kan innehålla teknisk metadata för säkerhet men kopplas inte till dig av oss.",
+                    en: "We set no session cookies, no advertising cookies, no fingerprinting. Server logs at our infrastructure may contain technical metadata for security but are not linked to you by us.",
+                  },
+                  optOut: null as { sv: string; en: string } | null,
+                },
+              ].map((row, i) => (
+                <div
+                  key={i}
+                  className="rounded-lg border border-border/40 bg-background/30 p-3.5"
+                >
+                  <div className="text-xs font-semibold text-foreground mb-1">
+                    {t(row.name)}
+                  </div>
+                  <p className="text-[11px] text-muted-foreground leading-relaxed">
+                    {t(row.detail)}
+                  </p>
+                  {row.optOut && (
+                    <p className="text-[11px] text-yellow-500/90 leading-relaxed mt-1.5">
+                      {t(row.optOut)}
+                    </p>
+                  )}
+                </div>
+              ))}
+            </div>
+
+            <p className="text-[11px] text-muted-foreground/70 leading-relaxed mt-5 pt-4 border-t border-border/40">
+              {t({
+                sv: "Vill du ändå inte lämna några spår alls? Använd webbläsarens privata läge – då rensas både localStorage och sessionStorage automatiskt när du stänger fönstret.",
+                en: "Want to leave no trace at all? Use your browser's private mode – both localStorage and sessionStorage are cleared automatically when you close the window.",
+              })}
+            </p>
+          </motion.div>
         </div>
       </section>
     </div>
