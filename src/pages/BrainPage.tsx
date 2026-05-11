@@ -6,6 +6,7 @@ import {
   Send, Loader2, Brain, Lock, RotateCcw, Sparkles,
   Trash2, Building2, Users, MapPin,
   Wrench, Snowflake, Zap, Leaf, Truck, HardHat,
+  ShieldCheck, EyeOff, Clock, PhoneOff, Database, FileText,
 } from "lucide-react";
 import DeepAnalysisUpsell from "@/components/DeepAnalysisUpsell";
 import { useT, useLang } from "@/i18n/LanguageContext";
