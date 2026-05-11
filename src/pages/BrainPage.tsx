@@ -6,6 +6,7 @@ import {
   Send, Loader2, Brain, Lock, RotateCcw, Sparkles,
   Trash2, Building2, Users, MapPin,
   Wrench, Snowflake, Zap, Leaf, Truck, HardHat,
+  ShieldCheck, EyeOff, Clock, PhoneOff, Database, FileText,
 } from "lucide-react";
 import DeepAnalysisUpsell from "@/components/DeepAnalysisUpsell";
 import { useT, useLang } from "@/i18n/LanguageContext";
@@ -635,6 +636,131 @@ const Brain_Page = () => {
               </motion.div>
             )}
           </AnimatePresence>
+        </div>
+      </section>
+
+      {/* Anonymity & data protection */}
+      <section className="relative px-4 sm:px-6 py-16 bg-noise border-t border-border/40">
+        <div className="absolute inset-0 bg-grid-pattern opacity-[0.06] pointer-events-none" />
+        <div className="relative z-10 max-w-3xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-10"
+          >
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full glass-subtle mb-4">
+              <ShieldCheck className="w-3.5 h-3.5 text-yellow-500" />
+              <span className="text-[10px] uppercase tracking-[0.22em] text-muted-foreground font-medium">
+                {t({ sv: "Integritet & dataskydd", en: "Privacy & data protection" })}
+              </span>
+            </div>
+            <h2 className="font-display text-2xl md:text-3xl font-bold mb-3">
+              {t({
+                sv: "Anonymt på riktigt – inte bara på pappret.",
+                en: "Truly anonymous – not just on paper.",
+              })}
+            </h2>
+            <p className="text-sm text-muted-foreground max-w-xl mx-auto leading-relaxed">
+              {t({
+                sv: "Du ska kunna utforska Hjärnan i lugn och ro, utan att riskera mejlflöde eller säljsamtal i efterhand. Här är exakt vad som händer – och inte händer – när du skriver något.",
+                en: "You should be able to explore the Brain calmly, without risking email blasts or sales calls afterwards. Here is exactly what happens – and what doesn't – when you type something.",
+              })}
+            </p>
+          </motion.div>
+
+          <div className="grid sm:grid-cols-2 gap-3">
+            {[
+              {
+                icon: EyeOff,
+                title: { sv: "Inga personuppgifter", en: "No personal data" },
+                body: {
+                  sv: "Vi frågar aldrig efter namn, e-post, telefon eller företag för att använda Hjärnan. Du är anonym tills du själv väljer att höra av dig.",
+                  en: "We never ask for name, email, phone or company to use the Brain. You stay anonymous until you choose to reach out.",
+                },
+              },
+              {
+                icon: Database,
+                title: { sv: "Det här loggas", en: "What we log" },
+                body: {
+                  sv: "Endast anonym, aggregerad statistik (t.ex. antal frågor och vilka exempel som klickas) för att förbättra tjänsten. Ingen IP-adress, ingen geolokalisering, inga cookies som identifierar dig.",
+                  en: "Only anonymous, aggregated statistics (e.g. number of questions and which examples are clicked) to improve the service. No IP address, no geolocation, no cookies that identify you.",
+                },
+              },
+              {
+                icon: FileText,
+                title: { sv: "Din text sparas inte", en: "Your text is not stored" },
+                body: {
+                  sv: "Verksamhetsbeskrivningen skickas till AI-modellen för att svara dig – och slängs sedan. Den lagras inte i någon databas och används inte för att träna modeller.",
+                  en: "Your description is sent to the AI model to answer you – and then discarded. It is not stored in any database and is not used to train models.",
+                },
+              },
+              {
+                icon: Clock,
+                title: { sv: "Ingen lagringstid att oroa sig för", en: "No retention to worry about" },
+                body: {
+                  sv: "Eftersom inget kopplas till dig finns inget att radera. Stänger du fliken är samtalet borta. Vill du börja om räcker det att ladda om sidan.",
+                  en: "Because nothing is linked to you, there is nothing to delete. Close the tab and the conversation is gone. Reload the page to start over.",
+                },
+              },
+              {
+                icon: PhoneOff,
+                title: { sv: "Inga säljsamtal eller spam", en: "No sales calls or spam" },
+                body: {
+                  sv: "Vi kan inte ringa dig – vi vet inte vem du är. Du kontaktar oss när du är redo, inte tvärtom.",
+                  en: "We can't call you – we don't know who you are. You contact us when you're ready, not the other way around.",
+                },
+              },
+              {
+                icon: ShieldCheck,
+                title: { sv: "Djupanalys = ditt val", en: "Deep analysis = your choice" },
+                body: {
+                  sv: "Beställer du en betald djupanalys behöver vi en e-post för att leverera rapporten. Den används bara till det – inget nyhetsbrev, ingen försäljning.",
+                  en: "If you order a paid deep analysis we need an email to deliver the report. It is only used for that – no newsletter, no sales outreach.",
+                },
+              },
+            ].map((item, i) => {
+              const Icon = item.icon;
+              return (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, y: 16 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-60px" }}
+                  transition={{ duration: 0.45, delay: i * 0.05 }}
+                  className="rounded-xl glass-subtle p-5 hover:border-primary/20 transition-colors"
+                >
+                  <div className="flex items-start gap-3">
+                    <div className="flex-shrink-0 w-9 h-9 rounded-lg bg-yellow-500/10 border border-yellow-500/25 flex items-center justify-center">
+                      <Icon className="w-4 h-4 text-yellow-500" strokeWidth={2.2} />
+                    </div>
+                    <div className="min-w-0">
+                      <h3 className="text-sm font-semibold text-foreground mb-1.5">
+                        {t(item.title)}
+                      </h3>
+                      <p className="text-xs text-muted-foreground leading-relaxed">
+                        {t(item.body)}
+                      </p>
+                    </div>
+                  </div>
+                </motion.div>
+              );
+            })}
+          </div>
+
+          <motion.p
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 }}
+            className="text-[11px] text-muted-foreground/80 text-center mt-6 leading-relaxed"
+          >
+            {t({
+              sv: "Frågor om hur vi hanterar data? Skriv till oss – då först får vi din e-post, och bara den.",
+              en: "Questions about how we handle data? Write to us – only then do we get your email, and nothing else.",
+            })}
+          </motion.p>
         </div>
       </section>
     </div>
