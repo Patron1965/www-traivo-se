@@ -276,16 +276,15 @@ const DomainStatusPage = () => {
     return () => clearInterval(interval);
   }, [fetchStatus]);
 
+  useEffect(() => {
+    setMeta(
+      "Domänstatus – Traivo",
+      "Live-status för traivo.se: visar om domänen är aktiv, under verifiering eller har problem, samt nästa steg.",
+    );
+  }, []);
+
   return (
     <>
-      <Helmet>
-        <title>Domänstatus – Traivo</title>
-        <meta
-          name="description"
-          content="Live-status för traivo.se: visar om domänen är aktiv, under verifiering eller har problem, samt nästa steg."
-        />
-        <link rel="canonical" href="https://traivo.se/domanstatus" />
-      </Helmet>
 
       <div className="min-h-screen bg-background">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-12 sm:py-16">
