@@ -17,3 +17,6 @@ verify_jwt = false
 
 [functions.get-stripe-golive-status]
 verify_jwt = false
+
+[functions.check-domain-status]
+verify_jwt = false
