@@ -5,6 +5,9 @@
 //   price with the same lookup_key — Stripe transfers the lookup_key automatically and
 //   archives the old price.)
 // Safe to re-run.
+//
+// SECURITY: Requires `Authorization: Bearer <SUPABASE_SERVICE_ROLE_KEY>` to call.
+// This is an admin-only setup tool that mutates Stripe pricing.
 import { createStripeClient, type StripeEnv } from "../_shared/stripe.ts";
 
 const corsHeaders = {
@@ -17,8 +20,30 @@ const TARGET_AMOUNT = 39900; // 399,00 SEK
 const TARGET_CURRENCY = "sek";
 const TARGET_TAX_BEHAVIOR = "exclusive" as const;
 
+function isAuthorized(req: Request): boolean {
+  const expected = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
+  if (!expected) return false;
+  const auth = req.headers.get("authorization") || req.headers.get("Authorization");
+  if (!auth) return false;
+  const m = auth.match(/^Bearer\s+(.+)$/i);
+  if (!m) return false;
+  // constant-time-ish compare
+  const got = m[1];
+  if (got.length !== expected.length) return false;
+  let diff = 0;
+  for (let i = 0; i < got.length; i++) diff |= got.charCodeAt(i) ^ expected.charCodeAt(i);
+  return diff === 0;
+}
+
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response("ok", { headers: corsHeaders });
+
+  if (!isAuthorized(req)) {
+    return new Response(JSON.stringify({ error: "Unauthorized" }), {
+      status: 401,
+      headers: { ...corsHeaders, "Content-Type": "application/json" },
+    });
+  }
 
   try {
     const env: StripeEnv = "sandbox";
@@ -50,9 +75,6 @@ Deno.serve(async (req) => {
     let priceAction: "kept" | "replaced" = "kept";
 
     if (!priceIsCorrect) {
-      // 4. Skapa nytt pris med rätt tax_behavior. Genom att sätta samma lookup_key
-      // med transfer_lookup_key=true flyttar Stripe automatiskt lookup-nyckeln hit
-      // och frikopplar den gamla.
       const newPrice = await stripe.prices.create({
         product: productId,
         unit_amount: TARGET_AMOUNT,
@@ -62,7 +84,6 @@ Deno.serve(async (req) => {
         transfer_lookup_key: true,
       });
 
-      // 5. Arkivera det gamla priset så det inte används av misstag
       await stripe.prices.update(currentPrice.id, { active: false });
 
       newPriceId = newPrice.id;
