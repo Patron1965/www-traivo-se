@@ -35,6 +35,8 @@ interface DomainResult {
   expected_ip_found: boolean;
   txt_verify_found: boolean;
   txt_verify_value: string | null;
+  txt_verify_matches_expected: boolean;
+  expected_token: string;
   txt_records: string[];
   txt_record_name: string;
   https_ok: boolean;
@@ -48,6 +50,7 @@ interface DomainResult {
 interface ApiResponse {
   results: DomainResult[];
   expected_ip: string;
+  expected_token: string;
 }
 
 const STATUS_META: Record<
