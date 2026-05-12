@@ -262,9 +262,16 @@ Producera nu den fullständiga djupanalysen enligt mallen.`;
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response("ok", { headers: corsHeaders });
 
+  if (!isAuthorized(req)) {
+    return new Response(JSON.stringify({ error: "Unauthorized" }), {
+      status: 401,
+      headers: { ...corsHeaders, "Content-Type": "application/json" },
+    });
+  }
+
   try {
     const { orderId } = await req.json();
-    if (!orderId) {
+    if (!orderId || typeof orderId !== "string") {
       return new Response(JSON.stringify({ error: "orderId required" }), {
         status: 400,
         headers: { ...corsHeaders, "Content-Type": "application/json" },
@@ -302,11 +309,28 @@ Deno.serve(async (req) => {
       });
     }
 
-    // Mark as generating
-    await supabase
+    // Atomic lock: only one caller can transition pending|failed -> generating.
+    // Concurrent calls won't both pass this gate, preventing duplicate AI spend.
+    const { data: claimed, error: claimErr } = await supabase
       .from("deep_analyses")
       .update({ report_status: "generating" })
-      .eq("id", orderId);
+      .eq("id", orderId)
+      .in("report_status", ["pending", "failed"])
+      .select("id");
+
+    if (claimErr) {
+      return new Response(JSON.stringify({ error: "Failed to claim order" }), {
+        status: 500,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
+    if (!claimed || claimed.length === 0) {
+      // Already generating (or ready) — let the in-flight run finish.
+      return new Response(JSON.stringify({ success: true, alreadyInProgress: true }), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
 
     try {
       const websiteUrl = (order.website_url as string | null) ?? null;
