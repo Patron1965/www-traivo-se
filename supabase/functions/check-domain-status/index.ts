@@ -134,11 +134,15 @@ Deno.serve(async (req) => {
 
   try {
     let domain = "traivo.se";
+    let expectedToken = EXPECTED_TOKEN;
     if (req.method === "POST") {
       try {
         const body = await req.json();
         if (typeof body?.domain === "string" && /^[a-z0-9.-]{3,253}$/i.test(body.domain)) {
           domain = body.domain.toLowerCase();
+        }
+        if (typeof body?.expected_token === "string" && /^[A-Za-z0-9._-]{8,256}$/.test(body.expected_token)) {
+          expectedToken = body.expected_token;
         }
       } catch {
         // ignore
@@ -146,10 +150,10 @@ Deno.serve(async (req) => {
     }
 
     const targets = [domain, `www.${domain}`];
-    const results = await Promise.all(targets.map(checkDomain));
+    const results = await Promise.all(targets.map((d) => checkDomain(d, expectedToken)));
 
     return new Response(
-      JSON.stringify({ results, expected_ip: EXPECTED_IP }),
+      JSON.stringify({ results, expected_ip: EXPECTED_IP, expected_token: expectedToken }),
       {
         headers: { ...corsHeaders, "Content-Type": "application/json" },
         status: 200,
