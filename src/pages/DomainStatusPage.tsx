@@ -1,4 +1,16 @@
 import { useEffect, useState, useCallback } from "react";
+
+function setMeta(title: string, description: string) {
+  if (typeof document === "undefined") return;
+  document.title = title;
+  let m = document.querySelector('meta[name="description"]');
+  if (!m) {
+    m = document.createElement("meta");
+    m.setAttribute("name", "description");
+    document.head.appendChild(m);
+  }
+  m.setAttribute("content", description);
+}
 import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
