@@ -15,6 +15,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { toast } from "@/hooks/use-toast";
 import {
   CheckCircle2,
   AlertTriangle,
@@ -23,6 +24,7 @@ import {
   Loader2,
   RefreshCw,
   ExternalLink,
+  Copy,
 } from "lucide-react";
 
 type DerivedStatus = "Active" | "Verifying" | "Failed" | "Offline" | "Unknown";
