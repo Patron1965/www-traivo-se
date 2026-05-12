@@ -6,6 +6,10 @@ const corsHeaders = {
 };
 
 const EXPECTED_IP = "185.158.133.1";
+// Förväntat verifieringstoken från Lovable för traivo.se.
+// Om Lovable roterar token, uppdatera här eller skicka in via request body.
+const EXPECTED_TOKEN =
+  "81800f0614580ab31cc70deb5309fd3078761b2146825ec4798312dd3dae4256";
 
 type DerivedStatus = "Active" | "Verifying" | "Failed" | "Offline" | "Unknown";
 
@@ -15,6 +19,8 @@ interface DomainResult {
   expected_ip_found: boolean;
   txt_verify_found: boolean;
   txt_verify_value: string | null;
+  txt_verify_matches_expected: boolean;
+  expected_token: string;
   txt_records: string[];
   txt_record_name: string;
   https_ok: boolean;
@@ -69,7 +75,7 @@ async function checkHttps(domain: string): Promise<{
 function deriveStatus(d: Omit<DomainResult, "derived_status" | "checked_at">): DerivedStatus {
   if (d.a_records.length === 0) return "Unknown";
   if (!d.expected_ip_found) return "Offline";
-  if (!d.txt_verify_found) return "Verifying";
+  if (!d.txt_verify_found || !d.txt_verify_matches_expected) return "Verifying";
   if (!d.https_ok) {
     if (!d.ssl_ok) return "Failed";
     if (d.http_status === 530 || d.http_status === null) return "Verifying";
@@ -78,20 +84,25 @@ function deriveStatus(d: Omit<DomainResult, "derived_status" | "checked_at">): D
   return "Active";
 }
 
-async function checkDomain(domain: string): Promise<DomainResult> {
+async function checkDomain(domain: string, expectedToken: string): Promise<DomainResult> {
   const [aRecords, txtRecords, https] = await Promise.all([
     dnsQuery(domain, "A"),
     dnsQuery(`_lovable.${domain}`, "TXT"),
     checkHttps(domain),
   ]);
 
-  const cleanedTxt = txtRecords.map((t) => t.replace(/^"|"$/g, ""));
+  // DNS-svar kan komma som flera quoted strängar — slå ihop dem korrekt.
+  const cleanedTxt = txtRecords.map((t) =>
+    t.replace(/"\s+"/g, "").replace(/^"|"$/g, ""),
+  );
   const expected_ip_found = aRecords.includes(EXPECTED_IP);
   const verifyMatch = cleanedTxt
     .map((t) => t.match(/lovable_verify=([A-Za-z0-9._-]+)/))
     .find((m): m is RegExpMatchArray => !!m);
   const txt_verify_found = !!verifyMatch;
   const txt_verify_value = verifyMatch ? verifyMatch[1] : null;
+  const txt_verify_matches_expected =
+    !!txt_verify_value && txt_verify_value === expectedToken;
 
   const partial = {
     domain,
@@ -99,6 +110,8 @@ async function checkDomain(domain: string): Promise<DomainResult> {
     expected_ip_found,
     txt_verify_found,
     txt_verify_value,
+    txt_verify_matches_expected,
+    expected_token: expectedToken,
     txt_records: cleanedTxt,
     txt_record_name: `_lovable.${domain}`,
     https_ok: https.ok,
@@ -121,11 +134,15 @@ Deno.serve(async (req) => {
 
   try {
     let domain = "traivo.se";
+    let expectedToken = EXPECTED_TOKEN;
     if (req.method === "POST") {
       try {
         const body = await req.json();
         if (typeof body?.domain === "string" && /^[a-z0-9.-]{3,253}$/i.test(body.domain)) {
           domain = body.domain.toLowerCase();
+        }
+        if (typeof body?.expected_token === "string" && /^[A-Za-z0-9._-]{8,256}$/.test(body.expected_token)) {
+          expectedToken = body.expected_token;
         }
       } catch {
         // ignore
@@ -133,10 +150,10 @@ Deno.serve(async (req) => {
     }
 
     const targets = [domain, `www.${domain}`];
-    const results = await Promise.all(targets.map(checkDomain));
+    const results = await Promise.all(targets.map((d) => checkDomain(d, expectedToken)));
 
     return new Response(
-      JSON.stringify({ results, expected_ip: EXPECTED_IP }),
+      JSON.stringify({ results, expected_ip: EXPECTED_IP, expected_token: expectedToken }),
       {
         headers: { ...corsHeaders, "Content-Type": "application/json" },
         status: 200,

@@ -35,6 +35,8 @@ interface DomainResult {
   expected_ip_found: boolean;
   txt_verify_found: boolean;
   txt_verify_value: string | null;
+  txt_verify_matches_expected: boolean;
+  expected_token: string;
   txt_records: string[];
   txt_record_name: string;
   https_ok: boolean;
@@ -48,6 +50,7 @@ interface DomainResult {
 interface ApiResponse {
   results: DomainResult[];
   expected_ip: string;
+  expected_token: string;
 }
 
 const STATUS_META: Record<
@@ -186,8 +189,9 @@ function NextSteps({ status }: { status: DerivedStatus }) {
 
 function TxtVerificationPanel({ result }: { result: DomainResult }) {
   const found = result.txt_verify_found;
+  const matches = result.txt_verify_matches_expected;
   const value = result.txt_verify_value;
-  const recordName = `_lovable${result.domain.startsWith("www.") ? `.${result.domain}` : `.${result.domain}`}`;
+  const expected = result.expected_token;
 
   const copy = async (text: string, label: string) => {
     try {
@@ -198,78 +202,66 @@ function TxtVerificationPanel({ result }: { result: DomainResult }) {
     }
   };
 
+  const verdict = matches
+    ? { tone: "border-primary/30 bg-primary/5", icon: CheckCircle2, color: "text-primary", label: "Verifierad – token matchar Lovable" }
+    : found
+      ? { tone: "border-destructive/30 bg-destructive/5", icon: XCircle, color: "text-destructive", label: "TXT-record finns men token matchar INTE" }
+      : { tone: "border-amber-500/30 bg-amber-500/5", icon: AlertTriangle, color: "text-amber-400", label: "Ingen TXT-record hittad" };
+  const VerdictIcon = verdict.icon;
+
   return (
-    <div
-      className={`rounded-lg border p-4 ${
-        found
-          ? "border-primary/30 bg-primary/5"
-          : "border-amber-500/30 bg-amber-500/5"
-      }`}
-    >
+    <div className={`rounded-lg border p-4 ${verdict.tone}`}>
       <div className="flex items-center gap-2 mb-3">
-        {found ? (
-          <CheckCircle2 className="w-4 h-4 text-primary" />
-        ) : (
-          <AlertTriangle className="w-4 h-4 text-amber-400" />
-        )}
+        <VerdictIcon className={`w-4 h-4 ${verdict.color}`} />
         <h4 className="text-sm font-semibold text-foreground">
           Loopia TXT-verifiering ({result.txt_record_name})
         </h4>
       </div>
 
-      {found && value ? (
-        <div className="space-y-2">
-          <p className="text-sm text-muted-foreground">
-            Verifieringen är aktiv. Hittat token:
-          </p>
-          <div className="flex items-center gap-2 bg-background/60 rounded border border-border/60 px-3 py-2">
-            <code className="text-xs text-foreground break-all flex-1">
-              lovable_verify={value}
-            </code>
+      <p className={`text-sm font-medium mb-3 ${verdict.color}`}>{verdict.label}</p>
+
+      <div className="space-y-2 text-xs">
+        <div className="bg-background/60 rounded border border-border/60 px-3 py-2">
+          <div className="text-muted-foreground mb-1">Förväntat värde (från Lovable)</div>
+          <div className="flex items-center gap-2">
+            <code className="text-foreground break-all flex-1">lovable_verify={expected}</code>
             <Button
               variant="ghost"
               size="sm"
-              className="h-7 w-7 p-0"
-              onClick={() => copy(`lovable_verify=${value}`, "Token")}
-              aria-label="Kopiera token"
+              className="h-7 w-7 p-0 shrink-0"
+              onClick={() => copy(`lovable_verify=${expected}`, "Förväntat värde")}
+              aria-label="Kopiera förväntat värde"
             >
               <Copy className="w-3.5 h-3.5" />
             </Button>
           </div>
         </div>
-      ) : (
-        <div className="space-y-3">
-          <p className="text-sm text-muted-foreground">
-            Ingen TXT-record hittades på <code>{result.txt_record_name}</code>.
-            {result.txt_records.length > 0 && (
-              <>
-                {" "}Hittade istället: <code className="break-all">{result.txt_records.join(" · ")}</code>
-              </>
-            )}
-          </p>
-          <div className="text-xs text-muted-foreground">
-            Lägg till följande hos Loopia för att slutföra verifieringen. Det exakta token-värdet
-            hittar du i Lovable under <strong>Project Settings → Domains → Configure</strong>.
-          </div>
-          <div className="grid grid-cols-[auto_1fr_auto] gap-x-3 gap-y-1.5 bg-background/60 rounded border border-border/60 p-3 text-xs">
-            <span className="text-muted-foreground">Typ</span>
-            <code className="text-foreground">TXT</code>
-            <span />
-            <span className="text-muted-foreground">Namn</span>
-            <code className="text-foreground break-all">_lovable</code>
-            <Button
-              variant="ghost"
-              size="sm"
-              className="h-6 w-6 p-0 -my-1"
-              onClick={() => copy("_lovable", "Namn")}
-              aria-label="Kopiera namn"
-            >
-              <Copy className="w-3 h-3" />
-            </Button>
-            <span className="text-muted-foreground">Värde</span>
-            <code className="text-foreground break-all">lovable_verify=&lt;token från Lovable&gt;</code>
-            <span />
-          </div>
+
+        <div className="bg-background/60 rounded border border-border/60 px-3 py-2">
+          <div className="text-muted-foreground mb-1">Hittat i DNS hos Loopia</div>
+          {found && value ? (
+            <code className={`break-all ${matches ? "text-primary" : "text-destructive"}`}>
+              lovable_verify={value}
+            </code>
+          ) : result.txt_records.length > 0 ? (
+            <code className="text-muted-foreground break-all">
+              {result.txt_records.join(" · ")}
+            </code>
+          ) : (
+            <span className="text-muted-foreground">Inga TXT-records på {result.txt_record_name}</span>
+          )}
+        </div>
+      </div>
+
+      {!matches && (
+        <div className="mt-3 text-xs text-muted-foreground space-y-1.5">
+          <div className="font-medium text-foreground">Åtgärd hos Loopia:</div>
+          <ol className="list-decimal pl-5 space-y-1">
+            <li>Logga in på Loopia DNS för {result.domain.replace(/^www\./, "")}.</li>
+            <li>Hitta (eller skapa) subdomänen <code>_lovable</code>.</li>
+            <li>Lägg till en TXT-record med exakt det förväntade värdet ovan.</li>
+            <li>Vänta 10–60 minuter och kör om kontrollen.</li>
+          </ol>
         </div>
       )}
     </div>
@@ -304,12 +296,16 @@ function DomainCard({ result, expectedIp }: { result: DomainResult; expectedIp: 
             }
           />
           <CheckRow
-            ok={result.txt_verify_found}
-            label="TXT _lovable (lovable_verify=...)"
+            ok={result.txt_verify_matches_expected}
+            label="TXT _lovable (token matchar Lovable)"
             detail={
-              result.txt_records.length
-                ? result.txt_records.join(" · ")
-                : "Ingen TXT-record hittades"
+              result.txt_verify_matches_expected
+                ? "Verifierad – exakt matchning"
+                : result.txt_verify_found
+                  ? `Hittade lovable_verify=${result.txt_verify_value} — matchar inte förväntat token`
+                  : result.txt_records.length
+                    ? `Inga lovable_verify-rader. Hittade: ${result.txt_records.join(" · ")}`
+                    : "Ingen TXT-record hittades"
             }
           />
           <CheckRow
