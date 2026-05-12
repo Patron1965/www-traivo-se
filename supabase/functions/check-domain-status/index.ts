@@ -14,7 +14,9 @@ interface DomainResult {
   a_records: string[];
   expected_ip_found: boolean;
   txt_verify_found: boolean;
+  txt_verify_value: string | null;
   txt_records: string[];
+  txt_record_name: string;
   https_ok: boolean;
   http_status: number | null;
   ssl_ok: boolean;
