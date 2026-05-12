@@ -14,6 +14,7 @@ import BrainPage from "./pages/BrainPage";
 import DeepAnalysisCheckout from "./pages/DeepAnalysisCheckout";
 import DeepAnalysisThankYou from "./pages/DeepAnalysisThankYou";
 import GoLiveChecklist from "./pages/GoLiveChecklist";
+import DomainStatusPage from "./pages/DomainStatusPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
