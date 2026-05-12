@@ -232,6 +232,8 @@ function DomainCard({ result, expectedIp }: { result: DomainResult; expectedIp: 
           <CheckRow ok={result.ssl_ok} label="SSL/TLS" detail={result.ssl_ok ? "Certifikat OK" : "SSL-problem"} />
         </div>
 
+        <TxtVerificationPanel result={result} />
+
         <div className="pt-2 border-t border-border/50">
           <h4 className="text-sm font-semibold text-foreground mb-2">Nästa steg</h4>
           <NextSteps status={result.derived_status} />
