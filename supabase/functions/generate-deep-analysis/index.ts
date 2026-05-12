@@ -94,11 +94,58 @@ Var ärlig. 2-3 saker som Traivo inte adresserar i deras case (t.ex. bokföring,
 ---
 *Denna analys är genererad av AI baserat på er beskrivning. Den ersätter inte en personlig dialog - boka gärna en demo för djupare diskussion.*`;
 
+function isAuthorized(req: Request): boolean {
+  const expected = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
+  if (!expected) return false;
+  const auth = req.headers.get("authorization") || req.headers.get("Authorization");
+  if (!auth) return false;
+  const m = auth.match(/^Bearer\s+(.+)$/i);
+  if (!m) return false;
+  const got = m[1];
+  if (got.length !== expected.length) return false;
+  let diff = 0;
+  for (let i = 0; i < got.length; i++) diff |= got.charCodeAt(i) ^ expected.charCodeAt(i);
+  return diff === 0;
+}
+
+// SSRF protection: block private/internal IP literals and non-public hosts.
+function isBlockedHost(hostname: string): boolean {
+  const h = hostname.toLowerCase().trim();
+  if (!h) return true;
+  if (h === "localhost" || h.endsWith(".localhost") || h.endsWith(".internal") || h.endsWith(".local")) return true;
+  // strip brackets for IPv6
+  const bare = h.startsWith("[") && h.endsWith("]") ? h.slice(1, -1) : h;
+  // IPv6 loopback / link-local / unique-local
+  if (bare === "::1" || bare === "::") return true;
+  if (bare.startsWith("fe80:") || bare.startsWith("fc") || bare.startsWith("fd")) return true;
+  // IPv4 dotted
+  const m = bare.match(/^(\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})$/);
+  if (m) {
+    const [a, b] = [parseInt(m[1]), parseInt(m[2])];
+    if (a === 10) return true;
+    if (a === 127) return true;
+    if (a === 0) return true;
+    if (a === 169 && b === 254) return true; // link-local incl. cloud metadata
+    if (a === 172 && b >= 16 && b <= 31) return true;
+    if (a === 192 && b === 168) return true;
+    if (a >= 224) return true; // multicast / reserved
+  }
+  return false;
+}
+
 async function scrapeWebsite(url: string): Promise<{ ok: boolean; content: string; note: string }> {
   try {
+    let parsed: URL;
+    try { parsed = new URL(url); } catch { return { ok: false, content: "", note: "Ogiltig webbadress." }; }
+    if (parsed.protocol !== "http:" && parsed.protocol !== "https:") {
+      return { ok: false, content: "", note: "Endast http/https stöds." };
+    }
+    if (isBlockedHost(parsed.hostname)) {
+      return { ok: false, content: "", note: "Webbadressen pekar på en intern eller privat värd och kan inte läsas." };
+    }
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), 12000);
-    const res = await fetch(url, {
+    const res = await fetch(parsed.toString(), {
       signal: controller.signal,
       redirect: "follow",
       headers: {
