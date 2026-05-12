@@ -34,6 +34,7 @@ const App = () => (
             <Route path="/hjarna/djupanalys" element={<DeepAnalysisCheckout />} />
             <Route path="/hjarna/djupanalys/tack" element={<DeepAnalysisThankYou />} />
             <Route path="/go-live" element={<GoLiveChecklist />} />
+            <Route path="/domanstatus" element={<DomainStatusPage />} />
             <Route path="/priser" element={<Pricing />} />
             <Route path="/om-oss" element={<About />} />
             <Route path="/kontakt" element={<Contact />} />
