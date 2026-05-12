@@ -131,6 +131,39 @@ serve(async (req) => {
       );
     }
 
+    // Input size limits to prevent AI cost abuse / prompt-injection at scale
+    const MAX_MESSAGES = 30;
+    const MAX_PER_MESSAGE_CHARS = 8000;
+    const MAX_TOTAL_CHARS = 50000;
+    if (messages.length > MAX_MESSAGES) {
+      return new Response(
+        JSON.stringify({ error: "Too many messages" }),
+        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+    let total = 0;
+    for (const m of messages) {
+      if (!m || typeof m !== "object" || typeof m.role !== "string" || typeof m.content !== "string") {
+        return new Response(
+          JSON.stringify({ error: "Invalid message format" }),
+          { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+        );
+      }
+      if (m.content.length > MAX_PER_MESSAGE_CHARS) {
+        return new Response(
+          JSON.stringify({ error: "Message too long" }),
+          { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+        );
+      }
+      total += m.content.length;
+    }
+    if (total > MAX_TOTAL_CHARS) {
+      return new Response(
+        JSON.stringify({ error: "Conversation too long" }),
+        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
     const lang = language === "en" ? "en" : "sv";
     const systemPrompt = lang === "en" ? SYSTEM_PROMPT_EN : SYSTEM_PROMPT_SV;
 
