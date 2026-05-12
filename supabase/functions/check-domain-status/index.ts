@@ -75,7 +75,7 @@ async function checkHttps(domain: string): Promise<{
 function deriveStatus(d: Omit<DomainResult, "derived_status" | "checked_at">): DerivedStatus {
   if (d.a_records.length === 0) return "Unknown";
   if (!d.expected_ip_found) return "Offline";
-  if (!d.txt_verify_found) return "Verifying";
+  if (!d.txt_verify_found || !d.txt_verify_matches_expected) return "Verifying";
   if (!d.https_ok) {
     if (!d.ssl_ok) return "Failed";
     if (d.http_status === 530 || d.http_status === null) return "Verifying";
@@ -84,20 +84,25 @@ function deriveStatus(d: Omit<DomainResult, "derived_status" | "checked_at">): D
   return "Active";
 }
 
-async function checkDomain(domain: string): Promise<DomainResult> {
+async function checkDomain(domain: string, expectedToken: string): Promise<DomainResult> {
   const [aRecords, txtRecords, https] = await Promise.all([
     dnsQuery(domain, "A"),
     dnsQuery(`_lovable.${domain}`, "TXT"),
     checkHttps(domain),
   ]);
 
-  const cleanedTxt = txtRecords.map((t) => t.replace(/^"|"$/g, ""));
+  // DNS-svar kan komma som flera quoted strängar — slå ihop dem korrekt.
+  const cleanedTxt = txtRecords.map((t) =>
+    t.replace(/"\s+"/g, "").replace(/^"|"$/g, ""),
+  );
   const expected_ip_found = aRecords.includes(EXPECTED_IP);
   const verifyMatch = cleanedTxt
     .map((t) => t.match(/lovable_verify=([A-Za-z0-9._-]+)/))
     .find((m): m is RegExpMatchArray => !!m);
   const txt_verify_found = !!verifyMatch;
   const txt_verify_value = verifyMatch ? verifyMatch[1] : null;
+  const txt_verify_matches_expected =
+    !!txt_verify_value && txt_verify_value === expectedToken;
 
   const partial = {
     domain,
@@ -105,6 +110,8 @@ async function checkDomain(domain: string): Promise<DomainResult> {
     expected_ip_found,
     txt_verify_found,
     txt_verify_value,
+    txt_verify_matches_expected,
+    expected_token: expectedToken,
     txt_records: cleanedTxt,
     txt_record_name: `_lovable.${domain}`,
     https_ok: https.ok,
