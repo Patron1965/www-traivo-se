@@ -14,7 +14,9 @@ interface DomainResult {
   a_records: string[];
   expected_ip_found: boolean;
   txt_verify_found: boolean;
+  txt_verify_value: string | null;
   txt_records: string[];
+  txt_record_name: string;
   https_ok: boolean;
   http_status: number | null;
   ssl_ok: boolean;
@@ -85,14 +87,20 @@ async function checkDomain(domain: string): Promise<DomainResult> {
 
   const cleanedTxt = txtRecords.map((t) => t.replace(/^"|"$/g, ""));
   const expected_ip_found = aRecords.includes(EXPECTED_IP);
-  const txt_verify_found = cleanedTxt.some((t) => t.includes("lovable_verify="));
+  const verifyMatch = cleanedTxt
+    .map((t) => t.match(/lovable_verify=([A-Za-z0-9._-]+)/))
+    .find((m): m is RegExpMatchArray => !!m);
+  const txt_verify_found = !!verifyMatch;
+  const txt_verify_value = verifyMatch ? verifyMatch[1] : null;
 
   const partial = {
     domain,
     a_records: aRecords,
     expected_ip_found,
     txt_verify_found,
+    txt_verify_value,
     txt_records: cleanedTxt,
+    txt_record_name: `_lovable.${domain}`,
     https_ok: https.ok,
     http_status: https.status,
     ssl_ok: https.ssl_ok,
