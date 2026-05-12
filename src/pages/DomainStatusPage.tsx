@@ -296,12 +296,16 @@ function DomainCard({ result, expectedIp }: { result: DomainResult; expectedIp: 
             }
           />
           <CheckRow
-            ok={result.txt_verify_found}
-            label="TXT _lovable (lovable_verify=...)"
+            ok={result.txt_verify_matches_expected}
+            label="TXT _lovable (token matchar Lovable)"
             detail={
-              result.txt_records.length
-                ? result.txt_records.join(" · ")
-                : "Ingen TXT-record hittades"
+              result.txt_verify_matches_expected
+                ? "Verifierad – exakt matchning"
+                : result.txt_verify_found
+                  ? `Hittade lovable_verify=${result.txt_verify_value} — matchar inte förväntat token`
+                  : result.txt_records.length
+                    ? `Inga lovable_verify-rader. Hittade: ${result.txt_records.join(" · ")}`
+                    : "Ingen TXT-record hittades"
             }
           />
           <CheckRow
