@@ -25,6 +25,11 @@ const About = () => {
 
   return (
     <>
+      <SEO
+        path="/om-oss"
+        title={t({ sv: "Om oss – Traivo", en: "About us – Traivo" })}
+        description={t({ sv: "Traivo byggs av människor med erfarenhet från fältet. AI som förstärker, byggt med kunder och anpassat för nordiska villkor.", en: "Traivo is built by people with field experience. AI that augments, built with customers and adapted for Nordic conditions." })}
+      />
       {/* Hero */}
       <section className="relative min-h-[50vh] flex items-center overflow-hidden bg-noise">
         <div className="absolute inset-0 bg-grid-pattern opacity-15" />

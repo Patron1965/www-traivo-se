@@ -164,6 +164,11 @@ const Index = () => {
 
   return (
     <>
+      <SEO
+        path="/"
+        title={t({ sv: "Traivo – AI-driven fältserviceplanering", en: "Traivo – AI-driven field service planning" })}
+        description={t({ sv: "Nordisk AI-plattform för fältserviceplanering. Ruttoptimering, mobil fältapp och kundportal för avfall, fastighet och teknisk drift.", en: "Nordic AI platform for field service planning. Route optimization, mobile field app and customer portal for waste, property and technical operations." })}
+      />
       <MondayHero />
 
       {/* IS / IS NOT */}
