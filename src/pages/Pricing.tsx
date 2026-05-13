@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { CheckCircle2 } from "lucide-react";
 import { Slider } from "@/components/ui/slider";
 import { useT, useLang } from "@/i18n/LanguageContext";
+import SEO from "@/components/SEO";
 
 const fadeIn = {
   initial: { opacity: 0, y: 24 },
@@ -68,6 +69,11 @@ const Pricing = () => {
 
   return (
     <>
+      <SEO
+        path="/priser"
+        title={t({ sv: "Priser – Traivo Standard och Pro", en: "Pricing – Traivo Standard and Pro" })}
+        description={t({ sv: "Transparent prissättning för Traivo. Räkna ut kostnaden för Standard och Pro utifrån antal användare och onboarding.", en: "Transparent pricing for Traivo. Calculate the cost of Standard and Pro based on users and onboarding." })}
+      />
       <section className="relative py-28 px-4 sm:px-6 overflow-hidden bg-noise">
         <div className="absolute inset-0 bg-grid-pattern opacity-15" />
         <div className="relative z-10 max-w-4xl mx-auto text-center">

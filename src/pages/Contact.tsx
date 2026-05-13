@@ -9,6 +9,7 @@ import {
   Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger
 } from "@/components/ui/dialog";
 import { useT } from "@/i18n/LanguageContext";
+import SEO from "@/components/SEO";
 
 const Contact = () => {
   const t = useT();
@@ -60,7 +61,13 @@ const Contact = () => {
   };
 
   return (
-    <section className="relative min-h-screen bg-noise">
+    <>
+      <SEO
+        path="/kontakt"
+        title={t({ sv: "Kontakt – Boka demo av Traivo", en: "Contact – Book a Traivo demo" })}
+        description={t({ sv: "Kontakta Traivo för en demo eller diskussion. Vi svarar inom en arbetsdag.", en: "Contact Traivo for a demo or conversation. We reply within one business day." })}
+      />
+      <section className="relative min-h-screen bg-noise">
       <div className="absolute inset-0 bg-grid-pattern opacity-10" />
       <div className="absolute top-20 right-20 w-[min(300px,80vw)] h-[min(300px,80vw)] rounded-full bg-primary/[0.03] blur-[100px]" />
 
@@ -181,6 +188,7 @@ const Contact = () => {
         </motion.div>
       </div>
     </section>
+    </>
   );
 };
 

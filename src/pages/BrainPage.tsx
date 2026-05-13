@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 import DeepAnalysisUpsell from "@/components/DeepAnalysisUpsell";
 import { useT, useLang } from "@/i18n/LanguageContext";
+import SEO from "@/components/SEO";
 
 const BRAIN_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/brain`;
 
@@ -271,6 +272,11 @@ const Brain_Page = () => {
 
   return (
     <div className="flex flex-col min-h-[calc(100vh-4rem)]">
+      <SEO
+        path="/hjarna"
+        title={t({ sv: "Hjärnan – anonym AI-rådgivare för fältservice", en: "The Brain – anonymous AI advisor for field service" })}
+        description={t({ sv: "Beskriv din verksamhet anonymt och få en objektiv rekommendation om vilka delar av Traivo som skulle göra störst skillnad.", en: "Describe your operation anonymously and get an objective recommendation on which parts of Traivo would make the biggest difference." })}
+      />
       {/* Hero */}
       <section className="relative overflow-hidden bg-noise pt-20 pb-4">
         <div className="absolute inset-0 bg-grid-pattern opacity-15" />

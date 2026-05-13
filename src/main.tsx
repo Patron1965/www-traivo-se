@@ -1,10 +1,13 @@
 import { createRoot } from "react-dom/client";
+import { HelmetProvider } from "react-helmet-async";
 import App from "./App.tsx";
 import { LanguageProvider } from "./i18n/LanguageContext";
 import "./index.css";
 
 createRoot(document.getElementById("root")!).render(
-  <LanguageProvider>
-    <App />
-  </LanguageProvider>
+  <HelmetProvider>
+    <LanguageProvider>
+      <App />
+    </LanguageProvider>
+  </HelmetProvider>
 );
