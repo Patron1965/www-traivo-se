@@ -6,6 +6,7 @@ import {
   Calendar, Route, MapPin, Users, Brain, Receipt,
 } from "lucide-react";
 import { useT } from "@/i18n/LanguageContext";
+import SEO from "@/components/SEO";
 
 const fadeIn = {
   initial: { opacity: 0, y: 24 },

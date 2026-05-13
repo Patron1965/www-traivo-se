@@ -4,6 +4,7 @@ import { Users, Brain, Wrench, Globe } from "lucide-react";
 import AIChatLink from "@/components/AIChatLink";
 import AboutVisual from "@/components/AboutVisual";
 import { useT } from "@/i18n/LanguageContext";
+import SEO from "@/components/SEO";
 
 const fadeIn = {
   initial: { opacity: 0, y: 24 },

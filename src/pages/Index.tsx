@@ -12,6 +12,7 @@ import {
   Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger
 } from "@/components/ui/dialog";
 import { useT } from "@/i18n/LanguageContext";
+import SEO from "@/components/SEO";
 
 const Index = () => {
   const t = useT();

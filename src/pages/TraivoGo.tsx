@@ -4,6 +4,7 @@ import AIChatLink from "@/components/AIChatLink";
 import FieldVisual from "@/components/FieldVisual";
 import { Smartphone, CheckSquare, Clock, WifiOff } from "lucide-react";
 import { useT } from "@/i18n/LanguageContext";
+import SEO from "@/components/SEO";
 
 const fadeIn = {
   initial: { opacity: 0, y: 24 },
