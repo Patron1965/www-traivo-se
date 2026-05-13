@@ -149,7 +149,7 @@ const Index = () => {
     t({ sv: "Mobilapp för tekniker som funkar offline – protokoll, foto, signatur.", en: "Mobile app for technicians that works offline — checklists, photos, signature." }),
     t({ sv: "Kund- och objektregister med karta och serviceområden.", en: "Customer and site registry with map and service areas." }),
     t({ sv: "Kundportal med automatiska SMS, bokning och historik.", en: "Customer portal with automatic SMS, booking and history." }),
-    t({ sv: "Fakturering och Fortnox-export i samma flöde.", en: "Invoicing and Fortnox export in the same flow." }),
+    t({ sv: "Fakturering med färdig Fortnox-koppling – integrationer mot andra ekonomisystem byggs på begäran.", en: "Invoicing with native Fortnox integration — other accounting systems built on request." }),
     t({ sv: "AI som föreslår omplanering, akuttilldelning och prediktivt underhåll.", en: "AI that suggests re-planning, urgent dispatch and predictive maintenance." }),
   ];
   const isNotItems = [

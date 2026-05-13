@@ -29,7 +29,7 @@ Om du fastnar i floskler - skriv om meningen så den beskriver vad som faktiskt 
 - Kund- och objektregister med karta + serviceområden
 - Kundportal med automatiska SMS
 - AI-assistent och prediktivt underhåll (IoT)
-- Fakturering, Fortnox-export, white-label
+- Fakturering, färdig Fortnox-koppling (integrationer mot Visma, Björn Lundén och andra ekonomisystem byggs på begäran), white-label
 
 **Traivo Go** (mobil, för tekniker i fält)
 - Dagens uppdrag med ett-tryck navigation
