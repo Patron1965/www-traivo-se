@@ -1,0 +1,15 @@
+# Traivo
+
+> Nordisk AI-plattform för fältserviceplanering. Ruttoptimering, mobil fältapp och kundportal för avfall, fastighet och teknisk drift.
+
+Traivo kombinerar erfarenhet från fältet med AI för att planera rutter, hantera tekniker och digitalisera protokoll. Plattformen består av Traivo One (webb för planerare och arbetsledare) och Traivo Go (mobilapp för tekniker i fält). Färdig Fortnox-koppling, integrationer mot Visma, Björn Lundén och andra ekonomisystem byggs på begäran.
+
+## Pages
+
+- [Start](/): Översikt av plattformen och målgrupper.
+- [Traivo One](/traivo-one): Webbverktyg för planering, ruttoptimering, kundregister och fakturering.
+- [Traivo Go](/traivo-go): Mobilapp för tekniker – jobb, navigation, digitala protokoll, offline-läge.
+- [Hjärnan](/hjarna): Anonym AI-rådgivare som rekommenderar rätt delar av Traivo för verksamheten.
+- [Priser](/priser): Standard- och Pro-plan med interaktiv kalkylator.
+- [Om oss](/om-oss): Bakgrund, värdegrund och team.
+- [Kontakt](/kontakt): Boka demo och kontakta teamet.
