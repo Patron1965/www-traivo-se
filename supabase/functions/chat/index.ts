@@ -32,7 +32,7 @@ Traivo är en AI-driven SaaS-plattform för fältserviceplanering, utvecklad fö
 
 **Ekonomi och fakturering**
 - Automatisk fakturaunderlag baserat på utfört arbete
-- Fortnox-integration för sömlös ekonomihantering
+- Färdig Fortnox-integration idag; integrationer mot andra ekonomisystem (Visma, Björn Lundén m.fl.) byggs på begäran
 - Flerkund-fakturering och prisliste-hantering
 
 **IoT och prediktivt underhåll**

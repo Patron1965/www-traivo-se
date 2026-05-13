@@ -21,7 +21,7 @@ Besökaren beskriver sin verksamhet anonymt. Du analyserar och rekommenderar kon
 - Kund- och objektregister med karta + serviceområden
 - Kundportal med automatiska SMS
 - AI-assistent och prediktivt underhåll (IoT)
-- Fakturering, Fortnox-export, white-label
+- Fakturering, färdig Fortnox-koppling (integrationer mot Visma, Björn Lundén och andra ekonomisystem byggs på begäran), white-label
 
 **Traivo Go** (mobil, för tekniker i fält)
 - Dagens uppdrag med ett-tryck navigation
@@ -76,7 +76,7 @@ The visitor describes their business anonymously. You analyze and concretely rec
 - Customer and site registry with map + service areas
 - Customer portal with automatic SMS
 - AI assistant and predictive maintenance (IoT)
-- Invoicing, Fortnox export, white-label
+- Invoicing, native Fortnox integration (Visma, Björn Lundén and other accounting systems built on request), white-label
 
 **Traivo Go** (mobile, for field technicians)
 - Today's jobs with one-tap navigation

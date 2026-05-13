@@ -53,7 +53,7 @@ const Pricing = () => {
     }),
     features: [
       t({ sv: "Allt i Standard", en: "Everything in Standard" }),
-      t({ sv: "Fortnox-integration", en: "Fortnox integration" }),
+      t({ sv: "Ekonomisystem (Fortnox idag, övriga på begäran)", en: "Accounting systems (Fortnox today, others on request)" }),
       t({ sv: "Kundportal", en: "Customer portal" }),
       t({ sv: "Väderplanering", en: "Weather-aware planning" }),
       t({ sv: "Prediktivt underhåll", en: "Predictive maintenance" }),

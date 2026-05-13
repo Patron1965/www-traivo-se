@@ -73,7 +73,7 @@ const TraivoOne = () => {
       intro: t({ sv: "Från utfört jobb till skickad faktura – utan omvägar.", en: "From completed job to sent invoice — without detours." }),
       items: [
         { t: t({ sv: "Fakturering", en: "Invoicing" }), d: t({ sv: "Generera med förhandsgranskning.", en: "Generate with preview." }) },
-        { t: t({ sv: "Fortnox-export", en: "Fortnox export" }), d: t({ sv: "Sömlös integration.", en: "Seamless integration." }) },
+        { t: t({ sv: "Ekonomisystem", en: "Accounting systems" }), d: t({ sv: "Färdig Fortnox-koppling. Integrationer mot Visma, Björn Lundén m.fl. byggs på begäran.", en: "Native Fortnox integration. Visma, Björn Lundén and others built on request." }) },
         { t: t({ sv: "White-label", en: "White-label" }), d: t({ sv: "Logga, färger, domän per kund.", en: "Logo, colors, domain per customer." }) },
         { t: t({ sv: "Rollbaserad åtkomst", en: "Role-based access" }), d: t({ sv: "Admin, planerare, tekniker, kund.", en: "Admin, planner, technician, customer." }) },
       ],
