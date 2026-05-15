@@ -313,7 +313,7 @@ const AIInput = () => {
             transition={{ delay: 0.6 }}
             className="mt-4 flex flex-wrap gap-2"
           >
-            {suggestedQuestions.map((q, i) => (
+            {(level === "tech" ? SUGGESTED_TECH : SUGGESTED_BUSINESS).map((q, i) => (
               <motion.button
                 key={q}
                 initial={{ opacity: 0, y: 8 }}
