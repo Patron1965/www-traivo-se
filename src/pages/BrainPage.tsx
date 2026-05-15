@@ -103,15 +103,19 @@ const examples = [
 async function streamBrain({
   messages,
   language,
+  siteUrl,
   onDelta,
   onDone,
   onError,
+  onSiteRead,
 }: {
   messages: Msg[];
   language: "sv" | "en";
+  siteUrl?: string;
   onDelta: (text: string) => void;
   onDone: () => void;
   onError: (msg: string) => void;
+  onSiteRead?: (status: "ok" | "failed" | "skipped") => void;
 }) {
   const resp = await fetch(BRAIN_URL, {
     method: "POST",
@@ -119,7 +123,7 @@ async function streamBrain({
       "Content-Type": "application/json",
       Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
     },
-    body: JSON.stringify({ messages, language }),
+    body: JSON.stringify({ messages, language, siteUrl }),
   });
 
   if (!resp.ok) {
