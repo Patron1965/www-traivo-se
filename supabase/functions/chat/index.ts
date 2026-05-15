@@ -188,7 +188,9 @@ Bra svar: "Två lager. Klassisk ruttoptimering (OR-tools-stil) hanterar hårda c
         model: "google/gemini-3-flash-preview",
         messages: [
           { role: "system", content: SYSTEM_PROMPT + LEVEL_INSTRUCTIONS[answerLevel] },
-          ...messages,
+          ...messages.slice(0, -1),
+          { role: "system", content: LEVEL_REMINDER[answerLevel] },
+          ...messages.slice(-1),
         ],
         stream: true,
       }),
