@@ -179,12 +179,36 @@ const MondayHero = () => {
             </span>
           </div>
 
+          {chosen && (
+            <motion.div
+              initial={{ opacity: 0, y: -4 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="flex flex-col items-center gap-1 -mt-1"
+            >
+              <span className="text-[11px] text-primary/85">
+                {level === "tech"
+                  ? t({ sv: "Hjärnan är inställd på teknisk nivå", en: "The brain is set to technical level" })
+                  : t({ sv: "Hjärnan är inställd på vardagligt språk", en: "The brain is set to everyday language" })}
+              </span>
+              <motion.div
+                animate={{ y: [0, 4, 0] }}
+                transition={{ duration: 1.4, repeat: Infinity, ease: "easeInOut" }}
+              >
+                <ArrowDown className="w-4 h-4 text-primary/80" strokeWidth={2.5} />
+              </motion.div>
+            </motion.div>
+          )}
+
           <Link
             id="ai-chat"
             to="/hjarna#brain-input"
-            className="group inline-flex items-center gap-2 text-xs sm:text-sm text-muted-foreground hover:text-foreground transition-colors"
+            className={`group inline-flex items-center gap-2 text-xs sm:text-sm transition-all rounded-full px-3 py-1.5 ${
+              chosen
+                ? "text-foreground border border-primary/40 bg-primary/[0.06] shadow-[0_0_20px_hsl(var(--primary)/0.15)] hover:bg-primary/[0.1]"
+                : "text-muted-foreground border border-transparent hover:text-foreground"
+            }`}
           >
-            <Brain className="w-3.5 h-3.5 text-primary/70 group-hover:text-primary transition-colors" strokeWidth={2.5} />
+            <Brain className={`w-3.5 h-3.5 transition-colors ${chosen ? "text-primary" : "text-primary/70 group-hover:text-primary"}`} strokeWidth={2.5} />
             <span>
               {t({ sv: "Vill du prova själv först?", en: "Want to try it yourself first?" })}{" "}
               <span className="underline underline-offset-4 decoration-dotted decoration-muted-foreground/40 group-hover:decoration-primary/60">
