@@ -107,7 +107,23 @@ const AIInput = () => {
   const [hasAsked, setHasAsked] = useState(false);
   const [showPrivacy, setShowPrivacy] = useState(false);
   const [error, setError] = useState("");
+  const [level, setLevelState] = useState<Level>(() => {
+    if (typeof window === "undefined") return "business";
+    const stored = localStorage.getItem(LEVEL_STORAGE_KEY);
+    return stored === "tech" ? "tech" : "business";
+  });
+  const [levelChanged, setLevelChanged] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  const setLevel = (l: Level) => {
+    if (l === level) return;
+    setLevelState(l);
+    localStorage.setItem(LEVEL_STORAGE_KEY, l);
+    if (hasAsked) {
+      setLevelChanged(true);
+      setTimeout(() => setLevelChanged(false), 3500);
+    }
+  };
 
   const highlightDemo = (children: React.ReactNode): React.ReactNode => {
     return Array.isArray(children)
