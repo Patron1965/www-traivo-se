@@ -479,6 +479,7 @@ const Brain_Page = () => {
                 </div>
               )}
             </div>
+          </motion.form>
 
           {/* Examples */}
           <AnimatePresence>
