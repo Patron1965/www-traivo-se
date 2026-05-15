@@ -4,6 +4,7 @@ import { CheckCircle2 } from "lucide-react";
 import { Slider } from "@/components/ui/slider";
 import { useT, useLang } from "@/i18n/LanguageContext";
 import SEO from "@/components/SEO";
+import FAQ from "@/components/FAQ";
 
 const fadeIn = {
   initial: { opacity: 0, y: 24 },
@@ -168,6 +169,46 @@ const Pricing = () => {
           })}
         </motion.p>
       </section>
+
+      <FAQ
+        items={[
+          {
+            q: { sv: "Vad ingår i Standard?", en: "What's included in Standard?" },
+            a: {
+              sv: "Webbplanering med drag-and-drop, AI-autoschemaläggning, ruttoptimering, mobil fältapp för tekniker, digitala protokoll, kundregister och support på svenska. Onboarding tillkommer baserat på antal dagar.",
+              en: "Web planning with drag-and-drop, AI auto-scheduling, route optimization, mobile field app, digital reports, customer register and Swedish-language support. Onboarding is added based on number of days.",
+            },
+          },
+          {
+            q: { sv: "Vad får jag extra med Pro?", en: "What do I get extra with Pro?" },
+            a: {
+              sv: "Färdig Fortnox-koppling, kundportal, integrationer mot andra ekonomisystem (Visma, Björn Lundén m.fl.), avancerade AI-analyser för prediktivt underhåll, samt prioriterad support.",
+              en: "Ready Fortnox integration, customer portal, integrations with other finance systems (Visma, Björn Lundén etc.), advanced AI analytics for predictive maintenance, plus priority support.",
+            },
+          },
+          {
+            q: { sv: "Är priserna inklusive eller exklusive moms?", en: "Are prices including or excluding VAT?" },
+            a: {
+              sv: "Alla priser är angivna exklusive moms (B2B). Fakturering sker månadsvis i förskott.",
+              en: "All prices are listed excluding VAT (B2B). Invoicing is monthly in advance.",
+            },
+          },
+          {
+            q: { sv: "Finns det bindningstid?", en: "Is there a lock-in period?" },
+            a: {
+              sv: "Nej, månadsuppsägning. Vi tror att produkten ska sälja sig själv varje månad — inte låsas in genom avtal.",
+              en: "No, monthly cancellation. We believe the product should earn its keep every month — not lock you in by contract.",
+            },
+          },
+          {
+            q: { sv: "Får jag rabatt för fler användare?", en: "Do I get a discount for more users?" },
+            a: {
+              sv: "Ja, kostnaden per användare sjunker volymmässigt på Pro. Kontakta oss för en skräddarsydd offert om ni är fler än 25 användare.",
+              en: "Yes, the cost per user decreases by volume on Pro. Contact us for a tailored quote if you have more than 25 users.",
+            },
+          },
+        ]}
+      />
     </>
   );
 };

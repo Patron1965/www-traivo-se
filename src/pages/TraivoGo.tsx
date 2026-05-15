@@ -5,6 +5,7 @@ import FieldVisual from "@/components/FieldVisual";
 import { Smartphone, CheckSquare, Clock, WifiOff } from "lucide-react";
 import { useT } from "@/i18n/LanguageContext";
 import SEO from "@/components/SEO";
+import FAQ from "@/components/FAQ";
 
 const fadeIn = {
   initial: { opacity: 0, y: 24 },
@@ -154,6 +155,39 @@ const TraivoGo = () => {
           </motion.p>
         </div>
       </section>
+
+      <FAQ
+        items={[
+          {
+            q: { sv: "Fungerar Traivo Go offline?", en: "Does Traivo Go work offline?" },
+            a: {
+              sv: "Ja, appen är byggd offline-first. Jobb, protokoll, foto och signatur fungerar utan nät. Allt synkar automatiskt när täckningen kommer tillbaka — viktigt för källare, hisschakt och glesbygd.",
+              en: "Yes, the app is built offline-first. Jobs, reports, photos and signatures work without coverage. Everything syncs automatically when the network returns — crucial for basements, elevator shafts and rural areas.",
+            },
+          },
+          {
+            q: { sv: "På vilka enheter fungerar Traivo Go?", en: "Which devices does Traivo Go run on?" },
+            a: {
+              sv: "iOS och Android. Byggd med React Native — samma upplevelse på iPhone, iPad och Android-telefoner.",
+              en: "iOS and Android. Built with React Native — the same experience on iPhone, iPad and Android phones.",
+            },
+          },
+          {
+            q: { sv: "Hur snabbt kan en tekniker komma igång?", en: "How fast can a technician get started?" },
+            a: {
+              sv: "Under fem minuter. Inloggning, dagens jobb, navigation till första stoppet. Inga manualer, inga utbildningar — gränssnittet är byggt för någon med handskar på sig och bråttom.",
+              en: "Under five minutes. Login, today's jobs, navigation to the first stop. No manuals, no training — the interface is built for someone with gloves on and in a hurry.",
+            },
+          },
+          {
+            q: { sv: "Kan tekniker signera och fakturera direkt i fält?", en: "Can technicians get signatures and invoice directly in the field?" },
+            a: {
+              sv: "Ja. Kund signerar i appen, tekniker stänger jobbet, och fakturaunderlag skickas direkt till Traivo One — och vidare till Fortnox vid samma dag.",
+              en: "Yes. The customer signs in the app, the technician closes the job, and the invoice basis is sent directly to Traivo One — and on to Fortnox the same day.",
+            },
+          },
+        ]}
+      />
     </>
   );
 };
