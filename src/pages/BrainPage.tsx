@@ -7,6 +7,7 @@ import {
   Trash2, Building2, Users, MapPin,
   Wrench, Snowflake, Zap, Leaf, Truck, HardHat,
   ShieldCheck, EyeOff, Clock, PhoneOff, Database, FileText,
+  Globe, X,
 } from "lucide-react";
 
 import { useT, useLang } from "@/i18n/LanguageContext";
