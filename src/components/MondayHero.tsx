@@ -112,7 +112,10 @@ const MondayHero = () => {
               to="/hjarna#brain-input"
               className="group inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-primary text-primary-foreground font-semibold text-sm sm:text-base shadow-[0_4px_24px_hsl(var(--primary)/0.3)] hover:shadow-[0_6px_32px_hsl(var(--primary)/0.4)] hover:scale-[1.02] active:scale-[0.99] transition-all"
             >
-              <Brain className="w-4 h-4" strokeWidth={2.5} />
+              <span className="relative inline-flex items-center justify-center w-5 h-5">
+                <span className="absolute inset-0 rounded-full bg-primary-foreground/30 animate-ping" />
+                <Brain className="relative w-4 h-4 animate-pulse" strokeWidth={2.5} />
+              </span>
               {t({ sv: "Öppna Hjärnan", en: "Open the Brain" })}
               <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" strokeWidth={2.5} />
             </Link>
