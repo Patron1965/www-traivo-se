@@ -20,3 +20,6 @@ verify_jwt = false
 
 [functions.check-domain-status]
 verify_jwt = false
+
+[functions.gsc-verify]
+verify_jwt = false
