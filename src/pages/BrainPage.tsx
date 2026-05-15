@@ -264,10 +264,9 @@ const Brain_Page = () => {
 
   const handleReset = () => {
     setInput("");
-    setMessages([]);
-    setHasAsked(false);
     setError("");
-    textareaRef.current?.focus();
+    formRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+    textareaRef.current?.focus({ preventScroll: true });
   };
 
   return (
