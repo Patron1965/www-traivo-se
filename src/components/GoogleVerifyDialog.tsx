@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import {
   Dialog,
@@ -33,6 +33,12 @@ export function GoogleVerifyDialog({ open, onOpenChange }: Props) {
   const [addState, setAddState] = useState<StepState>("idle");
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [log, setLog] = useState<LogEntry[]>([]);
+  const logRef = useRef<HTMLOListElement>(null);
+
+  useEffect(() => {
+    const el = logRef.current;
+    if (el) el.scrollTop = el.scrollHeight;
+  }, [log]);
 
   const setErr = (k: string, m: string | null) =>
     setErrors((e) => {
@@ -245,7 +251,7 @@ export function GoogleVerifyDialog({ open, onOpenChange }: Props) {
                 Inga händelser än. Kör ett steg ovan så loggas resultat här.
               </p>
             ) : (
-              <ol className="space-y-1.5 text-xs font-mono max-h-48 overflow-y-auto">
+              <ol ref={logRef} className="space-y-1.5 text-xs font-mono max-h-48 overflow-y-auto">
                 {log.map((e, i) => {
                   const time = new Date(e.ts).toLocaleTimeString("sv-SE", {
                     timeZone: "Europe/Stockholm",
