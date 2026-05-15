@@ -41,10 +41,10 @@ const Navbar = () => {
             <Link
               key={link.to}
               to={link.to}
-              className={`px-3.5 py-2 rounded-lg text-[12px] font-medium tracking-wide uppercase transition-all duration-300 ${
+              className={`px-3.5 py-2 rounded-lg text-sm font-medium tracking-wide uppercase transition-all duration-300 outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background ${
                 location.pathname === link.to
                   ? "text-primary"
-                  : "text-muted-foreground hover:text-foreground"
+                  : "text-foreground/85 hover:text-foreground"
               }`}
             >
               {link.label}
@@ -90,10 +90,10 @@ const Navbar = () => {
                   key={link.to}
                   to={link.to}
                   onClick={() => setMobileOpen(false)}
-                  className={`block px-4 py-2.5 rounded-lg text-sm font-medium transition-colors ${
+                  className={`block px-4 py-3 rounded-lg text-base font-medium transition-colors ${
                     location.pathname === link.to
                       ? "text-primary"
-                      : "text-muted-foreground hover:text-foreground"
+                      : "text-foreground/85 hover:text-foreground"
                   }`}
                 >
                   {link.label}

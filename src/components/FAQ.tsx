@@ -66,7 +66,7 @@ const FAQ = ({ title, intro, items }: FAQProps) => {
                   />
                 </button>
                 {isOpen && (
-                  <div className="px-5 pb-5 text-sm leading-relaxed text-muted-foreground">
+                  <div className="px-5 pb-5 text-base leading-relaxed text-foreground/85">
                     {t(it.a)}
                   </div>
                 )}
