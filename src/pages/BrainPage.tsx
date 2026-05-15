@@ -193,6 +193,9 @@ const Brain_Page = () => {
   const t = useT();
   const { lang } = useLang();
   const [input, setInput] = useState("");
+  const [siteUrl, setSiteUrl] = useState("");
+  const [showUrl, setShowUrl] = useState(false);
+  const [siteReadStatus, setSiteReadStatus] = useState<"ok" | "failed" | "skipped" | null>(null);
   const [messages, setMessages] = useState<Msg[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [hasAsked, setHasAsked] = useState(false);
