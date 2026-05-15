@@ -170,6 +170,7 @@ const AIInput = () => {
     try {
       await streamChat({
         messages: allMessages,
+        level,
         onDelta: (chunk) => {
           assistantSoFar += chunk;
           setMessages((prev) => {
