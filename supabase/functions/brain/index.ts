@@ -116,13 +116,129 @@ A single sentence: suggest they describe more or book a demo via /kontakt.
 ## Scope
 You are a first-line advisor, not technical support. For deep questions: refer to a demo.`;
 
+// SSRF-skydd: blockera privata nätverk, localhost, link-local, .local
+function isPrivateHost(host: string): boolean {
+  const h = host.toLowerCase();
+  if (h === "localhost" || h.endsWith(".local") || h.endsWith(".internal")) return true;
+  if (h === "::1") return true;
+  // IPv4 literal
+  const m = h.match(/^(\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})$/);
+  if (m) {
+    const [a, b] = [parseInt(m[1]), parseInt(m[2])];
+    if (a === 10) return true;
+    if (a === 127) return true;
+    if (a === 0) return true;
+    if (a === 169 && b === 254) return true;
+    if (a === 172 && b >= 16 && b <= 31) return true;
+    if (a === 192 && b === 168) return true;
+    if (a >= 224) return true;
+  }
+  return false;
+}
+
+async function fetchSiteContext(rawUrl: string, lang: "sv" | "en"): Promise<string | null> {
+  try {
+    if (!rawUrl || rawUrl.length > 500) return null;
+    let url: URL;
+    try {
+      url = new URL(rawUrl.trim());
+    } catch {
+      return null;
+    }
+    if (url.protocol !== "http:" && url.protocol !== "https:") return null;
+    if (isPrivateHost(url.hostname)) return null;
+
+    const ctrl = new AbortController();
+    const timeout = setTimeout(() => ctrl.abort(), 6000);
+    let resp: Response;
+    try {
+      resp = await fetch(url.toString(), {
+        method: "GET",
+        redirect: "follow",
+        signal: ctrl.signal,
+        headers: {
+          "User-Agent": "TraivoBrainBot/1.0 (+https://traivo.se)",
+          Accept: "text/html,application/xhtml+xml",
+        },
+      });
+    } finally {
+      clearTimeout(timeout);
+    }
+    if (!resp.ok) return null;
+    const ct = resp.headers.get("content-type") || "";
+    if (!ct.includes("text/html") && !ct.includes("xhtml")) return null;
+
+    // Läs max ~1 MB
+    const reader = resp.body?.getReader();
+    if (!reader) return null;
+    const decoder = new TextDecoder();
+    let html = "";
+    let bytes = 0;
+    const MAX_BYTES = 1_000_000;
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      bytes += value.byteLength;
+      html += decoder.decode(value, { stream: true });
+      if (bytes >= MAX_BYTES) break;
+    }
+    try { reader.cancel(); } catch { /* ignore */ }
+
+    // Extrahera title + meta description
+    const titleMatch = html.match(/<title[^>]*>([\s\S]*?)<\/title>/i);
+    const title = titleMatch ? titleMatch[1].replace(/\s+/g, " ").trim().slice(0, 200) : "";
+    const descMatch =
+      html.match(/<meta[^>]+name=["']description["'][^>]+content=["']([^"']+)["']/i) ||
+      html.match(/<meta[^>]+property=["']og:description["'][^>]+content=["']([^"']+)["']/i);
+    const desc = descMatch ? descMatch[1].replace(/\s+/g, " ").trim().slice(0, 400) : "";
+
+    // Plocka huvudtext: ta bort script/style/nav, strippa taggar
+    const stripped = html
+      .replace(/<script[\s\S]*?<\/script>/gi, " ")
+      .replace(/<style[\s\S]*?<\/style>/gi, " ")
+      .replace(/<noscript[\s\S]*?<\/noscript>/gi, " ")
+      .replace(/<header[\s\S]*?<\/header>/gi, " ")
+      .replace(/<footer[\s\S]*?<\/footer>/gi, " ")
+      .replace(/<nav[\s\S]*?<\/nav>/gi, " ")
+      .replace(/<svg[\s\S]*?<\/svg>/gi, " ")
+      .replace(/<[^>]+>/g, " ")
+      .replace(/&nbsp;/g, " ")
+      .replace(/&amp;/g, "&")
+      .replace(/&lt;/g, "<")
+      .replace(/&gt;/g, ">")
+      .replace(/&quot;/g, '"')
+      .replace(/\s+/g, " ")
+      .trim();
+    const body = stripped.slice(0, 2500);
+
+    if (!title && !desc && !body) return null;
+
+    const header = lang === "en"
+      ? "## Context from the visitor's website (read once, not stored)"
+      : "## Kontext från besökarens webbplats (läst en gång, ej sparad)";
+    const labels = lang === "en"
+      ? { url: "URL", title: "Title", desc: "Description", body: "Excerpt" }
+      : { url: "URL", title: "Titel", desc: "Beskrivning", body: "Utdrag" };
+
+    let ctx = `${header}\n${labels.url}: ${url.toString()}\n`;
+    if (title) ctx += `${labels.title}: ${title}\n`;
+    if (desc) ctx += `${labels.desc}: ${desc}\n`;
+    if (body) ctx += `${labels.body}: ${body}\n`;
+    // Hård takgräns
+    return ctx.slice(0, 4000);
+  } catch (e) {
+    console.error("fetchSiteContext failed", e);
+    return null;
+  }
+}
+
 serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
   }
 
   try {
-    const { messages, language } = await req.json();
+    const { messages, language, siteUrl } = await req.json();
 
     if (!messages || !Array.isArray(messages)) {
       return new Response(
@@ -167,10 +283,23 @@ serve(async (req) => {
     const lang = language === "en" ? "en" : "sv";
     const systemPrompt = lang === "en" ? SYSTEM_PROMPT_EN : SYSTEM_PROMPT_SV;
 
+    let siteContext: string | null = null;
+    let siteReadStatus: "ok" | "failed" | "skipped" = "skipped";
+    if (typeof siteUrl === "string" && siteUrl.trim().length > 0) {
+      siteContext = await fetchSiteContext(siteUrl, lang);
+      siteReadStatus = siteContext ? "ok" : "failed";
+    }
+
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
     if (!LOVABLE_API_KEY) {
       throw new Error("LOVABLE_API_KEY is not configured");
     }
+
+    const composedMessages = [
+      { role: "system", content: systemPrompt },
+      ...(siteContext ? [{ role: "system", content: siteContext }] : []),
+      ...messages,
+    ];
 
     const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
       method: "POST",
@@ -180,10 +309,7 @@ serve(async (req) => {
       },
       body: JSON.stringify({
         model: "google/gemini-3-flash-preview",
-        messages: [
-          { role: "system", content: systemPrompt },
-          ...messages,
-        ],
+        messages: composedMessages,
         stream: true,
       }),
     });
@@ -210,7 +336,12 @@ serve(async (req) => {
     }
 
     return new Response(response.body, {
-      headers: { ...corsHeaders, "Content-Type": "text/event-stream" },
+      headers: {
+        ...corsHeaders,
+        "Content-Type": "text/event-stream",
+        "X-Site-Read": siteReadStatus,
+        "Access-Control-Expose-Headers": "X-Site-Read",
+      },
     });
   } catch (e) {
     console.error("brain error:", e);
