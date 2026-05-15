@@ -437,6 +437,17 @@ const DomainStatusPage = () => {
               <Button onClick={() => setAutoRefresh((v) => !v)} variant="ghost" size="sm">
                 {autoRefresh ? "Pausa auto-uppdatering" : "Återuppta auto-uppdatering"}
               </Button>
+              <Button
+                onClick={() => setGscOpen(true)}
+                disabled={!allActive}
+                variant="default"
+                size="sm"
+                title={allActive ? undefined : "Aktiveras när båda domänerna är Active"}
+              >
+                {allActive
+                  ? "Verifiera i Google Search Console"
+                  : "Verifiera i Google Search Console (väntar på Active)"}
+              </Button>
               {autoRefresh && !loading && (
                 <span className="text-xs text-muted-foreground">
                   Nästa kontroll om {nextIn}s
