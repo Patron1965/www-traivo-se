@@ -1,58 +1,29 @@
-# Säkerställ att de två nivåerna får relevanta svar
+# Pil från nivå-valet direkt till hjärnan
 
-Idag skickas bara `level` med och en kort instruktion läggs sist i system-prompten. Det räcker inte — modellen tappar ofta tonen efter några turer eller ignorerar nivån. Vi gör fyra konkreta saker för att garantera relevans.
+När besökaren har valt nivå i hero ska det synas en tydlig pil/animation som pekar ner mot hjärn-länken — och länken själv ska visa att hjärnan är anpassad till just det valet.
 
-## 1. Skarpare system-prompt per nivå (med exempel)
+## Vad som händer
 
-Byt ut dagens korta `LEVEL_INSTRUCTIONS` mot en tydlig nivå-sektion med:
+1. Besökaren väljer "IT bra — AI används" eller "Rutinerat IT — på väg med AI".
+2. Direkt under pillarna animeras en liten nedåtpil fram (mjuk bounce) tillsammans med texten:
+   - business: "Hjärnan är inställd på vardagligt språk →"
+   - tech: "Hjärnan är inställd på teknisk nivå →"
+3. Pilen pekar ner mot den befintliga "Beskriv din verksamhet anonymt"-länken, som samtidigt får en mjuk highlight (primary-färgad ram + ljus glow) så det blir uppenbart vart man ska.
+4. Klick på länken tar besökaren till `/hjarna#brain-input` precis som idag — `AIInput.tsx` läser redan `traivo-answer-level` från localStorage och svarar enligt valet.
 
-- **Hårda regler** ("Använd ALDRIG", "Använd ALLTID")
-- **Ordlista** med ord som får/inte får användas på nivån
-- **Före/efter-exempel** (1 kort exempel per nivå) som visar samma fråga besvarad rätt
+## UX-detaljer
 
-### "IT bra — AI används" (`business`)
-- Vardagligt språk. Affärsnytta först (tid, pengar, mindre stress, nöjdare kunder).
-- Förbjudna termer utan parentes-förklaring: API, LLM, RAG, webhook, edge, RLS, SDK, multi-tenant, embedding, vektor.
-- Tillåtna analogier: "som en assistent som...", "tänk dig att...".
-- Max 3–4 meningar per stycke. Konkreta siffror när det går ("15–20 % kortare körsträcka").
-
-### "Rutinerat IT — på väg med AI" (`tech`)
-- Får använda tekniska begrepp utan förklaring.
-- Ska beröra arkitektur/dataflöde när det är relevant: integrationer (REST, webhooks), offline-sync, multi-tenant/RLS, edge functions, prompt/LLM-val.
-- Får nämna integrationsytor (Fortnox, Visma, IoT-sensorer, GPS, REST API).
-- Fortfarande kortfattad — undvik onödig teori.
-
-## 2. Skicka nivån i varje turn (inte bara första)
-
-Idag skickas `level` en gång, men modellen kan glida tillbaka. Lös genom att lägga in en **liten påminnelse som sista system-meddelande** precis innan användarens senaste fråga:
-
-```
-[Nivå-påminnelse: svara enligt 'IT bra — AI används' / 'Rutinerat IT — på väg med AI']
-```
-
-Det håller tonen stabil genom hela konversationen utan att blåsa upp prompten.
-
-## 3. Anpassade föreslagna frågor per nivå
-
-I `AIInput.tsx` har vi `suggestedQuestions` som är samma för alla. Dela upp:
-
-- **business**: "Vad sparar vi på det här?", "Hur funkar det när nätet ligger nere?", "Vi använder Fortnox idag", "Vad behöver vi göra för att komma igång?"
-- **tech**: "Hur ser integrationen mot Fortnox ut?", "Hur hanterar ni offline-sync och konfliktlösning?", "Är det multi-tenant med RLS per kund?", "Vilken modell driver AI-planeringen?"
-
-Det styr besökaren mot frågor där nivå-skillnaden faktiskt syns.
-
-## 4. Validering på klientsidan
-
-Edge-funktionen validerar redan `level`. Lägg till samma whitelist i `streamChat` så att felstavade värden aldrig skickas — fallback till `business`.
+- Pilen visas bara efter att ett val gjorts (eller laddas om besökaren har ett sparat val sen tidigare).
+- Mjuk fade-in + lätt bouncy-y-animation (`animate-bounce` eller framer-motion `y: [0, 4, 0]` loop).
+- Highlighten på hjärn-länken är subtil — en `border-primary/40` och `bg-primary/[0.05]` runt hela raden, inte en knapp-look.
+- Inget ändrar sig på själva länkens text eller `href`.
 
 ## Filer som berörs
 
-- `supabase/functions/chat/index.ts` — skarpare `LEVEL_INSTRUCTIONS`, lägga in nivå-påminnelse som sista system-meddelande före user-turn.
-- `src/components/AIInput.tsx` — två uppsättningar `suggestedQuestions` som väljs efter `level`, klient-side level-validering.
+- `src/components/MondayHero.tsx` — lägga till pil + bekräftelse-text under pillarna, villkorlig highlight-styling på hjärn-länken.
 
 ## Vad som INTE ingår
 
-- Inga ändringar i hero/Mondays nivå-väljare (den fungerar redan).
-- Ingen A/B-test eller analytics-spårning av nivå-effekt.
-- Ingen byte av AI-modell — fortsatt `google/gemini-3-flash-preview`.
-- Inga few-shot-exempel som assistant-meddelanden i historik (skulle förorena context).
+- Inga ändringar i AI-input, edge-funktionen eller suggested questions.
+- Ingen extra CTA-knapp — vi förstärker bara den befintliga länken.
+- Ingen ändring av nivå-pillarna själva.
