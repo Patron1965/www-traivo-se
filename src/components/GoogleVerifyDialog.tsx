@@ -82,6 +82,30 @@ export function GoogleVerifyDialog({ open, onOpenChange }: Props) {
     }
   };
 
+  const handleVerifyAndAdd = async () => {
+    setVerifyState("loading");
+    setErr("verify", null);
+    try {
+      await call("verify");
+      setVerifyState("ok");
+    } catch (e) {
+      const msg = e instanceof Error ? e.message : String(e);
+      setErr("verify", msg);
+      setVerifyState("error");
+      return;
+    }
+    setAddState("loading");
+    setErr("add", null);
+    try {
+      await call("add-site");
+      setAddState("ok");
+      toast({ title: "Klart", description: "Verifierat och tillagd i Search Console." });
+    } catch (e) {
+      setErr("add", e instanceof Error ? e.message : String(e));
+      setAddState("error");
+    }
+  };
+
   const copy = async (text: string) => {
     await navigator.clipboard.writeText(text);
     toast({ title: "Kopierat" });
