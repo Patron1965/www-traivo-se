@@ -243,17 +243,6 @@ const MondayHero = () => {
             </span>
           </div>
         </motion.div>
-
-          <div className="flex items-center gap-1.5 text-[10px] sm:text-[11px] text-muted-foreground/70">
-            <Lock className="w-3 h-3" />
-            <span>
-              {t({
-                sv: "Inget loggas · Inga säljsamtal · Helt anonymt",
-                en: "Nothing logged · No sales calls · Fully anonymous",
-              })}
-            </span>
-          </div>
-        </motion.div>
       </div>
 
       <Link
