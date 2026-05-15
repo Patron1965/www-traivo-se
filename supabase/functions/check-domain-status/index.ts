@@ -9,7 +9,7 @@ const EXPECTED_IP = "185.158.133.1";
 // Förväntat verifieringstoken från Lovable för traivo.se.
 // Om Lovable roterar token, uppdatera här eller skicka in via request body.
 const EXPECTED_TOKEN =
-  "81800f0614580ab31cc70deb5309fd3078761b2146825ec4798312dd3dae4256";
+  "996872fab12b46e275130129601b9e597035a0b99bbce66524e3b254ac17ad20";
 
 type DerivedStatus = "Active" | "Verifying" | "Failed" | "Offline" | "Unknown";
 
