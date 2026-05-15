@@ -68,15 +68,15 @@ const MondayHero = () => {
         >
           <span className="text-gradient-ice">
             {t({
-              sv: "En plattform för hela fältoperationen —",
-              en: "One platform for the entire field operation —",
+              sv: "Planera dagen, kör rutten,",
+              en: "Plan the day, run the route,",
             })}
           </span>
           <br />
           <span className="text-gradient-ice">
             {t({
-              sv: "från planering till faktura.",
-              en: "from planning to invoice.",
+              sv: "fakturera samma kväll.",
+              en: "invoice the same evening.",
             })}
           </span>
         </motion.h1>
@@ -85,29 +85,54 @@ const MondayHero = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.3 }}
-          className="text-muted-foreground text-base md:text-lg leading-relaxed max-w-2xl mx-auto mb-3"
+          className="text-muted-foreground text-base md:text-lg leading-relaxed max-w-2xl mx-auto mb-10"
         >
           {t({
-            sv: "Traivo samlar schemaläggning, ruttoptimering, mobilapp för fält och kundportal i ett system.",
-            en: "Traivo brings scheduling, route optimization, a mobile app for the field and a customer portal into one system.",
-          })}
-        </motion.p>
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.4 }}
-          className="text-foreground/70 text-sm md:text-base leading-relaxed max-w-2xl mx-auto mb-10"
-        >
-          {t({
-            sv: "Byggt för verksamheter med många stopp per dag — där geografi, tid och kompetens måste pussla ihop.",
-            en: "Built for operations with many stops per day — where geography, time and skills have to fit together.",
+            sv: "Ett system för fältarbetet — schemaläggning, ruttoptimering, mobilapp och kundportal i samma plattform.",
+            en: "One system for field work — scheduling, route optimization, mobile app and customer portal in one platform.",
           })}
         </motion.p>
 
+        {/* Så funkar det – 4 steg */}
         <motion.div
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5 }}
+          transition={{ delay: 0.45 }}
+          className="mb-10"
+        >
+          <div className="text-[11px] font-medium uppercase tracking-[0.25em] text-muted-foreground/80 mb-4">
+            {t({ sv: "Så funkar det", en: "How it works" })}
+          </div>
+          <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 max-w-3xl mx-auto">
+            {[
+              { icon: CalendarClock, label: t({ sv: "Planera", en: "Plan" }) },
+              { icon: Route, label: t({ sv: "Optimera rutt", en: "Optimize route" }) },
+              { icon: Smartphone, label: t({ sv: "Rapportera i fält", en: "Report in field" }) },
+              { icon: Receipt, label: t({ sv: "Fakturera", en: "Invoice" }) },
+            ].map((step, i, arr) => {
+              const Icon = step.icon;
+              return (
+                <div key={step.label} className="flex items-center gap-2 sm:gap-3">
+                  <div className="inline-flex items-center gap-2 px-3.5 py-2 rounded-full border border-primary/25 bg-card/40 backdrop-blur-sm">
+                    <span className="flex items-center justify-center w-5 h-5 rounded-full bg-primary/15">
+                      <Icon className="w-3 h-3 text-primary" strokeWidth={2.5} />
+                    </span>
+                    <span className="text-xs sm:text-sm font-medium text-foreground/90">{step.label}</span>
+                  </div>
+                  {i < arr.length - 1 && (
+                    <ArrowRight className="w-3.5 h-3.5 text-primary/50 hidden sm:block" strokeWidth={2.5} />
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </motion.div>
+
+        {/* Branscher – kort textrad */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.55 }}
           className="mb-10"
         >
           <div className="text-[11px] font-medium uppercase tracking-[0.25em] text-muted-foreground/80 mb-4">
@@ -136,73 +161,21 @@ const MondayHero = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.7 }}
-          className="flex flex-col items-center gap-5"
+          className="flex flex-col items-center gap-4"
         >
-          <div className="flex flex-col items-center gap-2 pt-1">
-            <span className="text-[11px] uppercase tracking-[0.2em] text-muted-foreground/70">
-              {t({ sv: "Vilken nivå vill du ha svaren på?", en: "Which level do you want answers at?" })}
-            </span>
-            <div className="inline-flex flex-wrap justify-center gap-1 p-1 rounded-xl glass-subtle">
-              {([
-                { id: "business", label: t({ sv: "IT bra — AI används", en: "IT solid — AI in use" }) },
-                { id: "tech", label: t({ sv: "Rutinerat IT — på väg med AI", en: "Seasoned IT — getting into AI" }) },
-              ] as { id: Level; label: string }[]).map((opt) => {
-                const active = level === opt.id;
-                return (
-                  <button
-                    key={opt.id}
-                    type="button"
-                    onClick={() => chooseLevel(opt.id)}
-                    aria-pressed={active}
-                    className={`px-3 py-1.5 rounded-lg text-xs transition-all ${
-                      active
-                        ? "bg-primary/15 text-primary border border-primary/30"
-                        : "text-muted-foreground border border-transparent hover:text-foreground"
-                    }`}
-                  >
-                    {opt.label}
-                  </button>
-                );
-              })}
-            </div>
-            <span className="text-[11px] text-muted-foreground/60">
-              {t({ sv: "Hjärnan anpassar svaren efter ditt val.", en: "The brain tailors answers to your choice." })}
-            </span>
-          </div>
-
-          {chosen && (
-            <motion.div
-              initial={{ opacity: 0, y: -4 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="flex flex-col items-center gap-1 -mt-1"
-            >
-              <span className="text-[11px] text-primary/85">
-                {level === "tech"
-                  ? t({ sv: "Hjärnan är inställd på teknisk nivå", en: "The brain is set to technical level" })
-                  : t({ sv: "Hjärnan är inställd på vardagligt språk", en: "The brain is set to everyday language" })}
-              </span>
-              <motion.div
-                animate={{ y: [0, 4, 0] }}
-                transition={{ duration: 1.4, repeat: Infinity, ease: "easeInOut" }}
-              >
-                <ArrowDown className="w-4 h-4 text-primary/80" strokeWidth={2.5} />
-              </motion.div>
-            </motion.div>
-          )}
-
           <Link
             id="ai-chat"
             to="/hjarna#brain-input"
-            className={`group inline-flex items-center gap-2 text-xs sm:text-sm transition-all rounded-full px-3 py-1.5 ${
+            className={`group inline-flex items-center gap-2 text-xs sm:text-sm transition-all rounded-full px-4 py-2 ${
               chosen
                 ? "text-foreground border border-primary/40 bg-primary/[0.06] shadow-[0_0_20px_hsl(var(--primary)/0.15)] hover:bg-primary/[0.1]"
-                : "text-muted-foreground border border-transparent hover:text-foreground"
+                : "text-foreground/90 border border-primary/30 bg-card/30 hover:bg-primary/[0.06] hover:border-primary/50"
             }`}
           >
-            <Brain className={`w-3.5 h-3.5 transition-colors ${chosen ? "text-primary" : "text-primary/70 group-hover:text-primary"}`} strokeWidth={2.5} />
+            <Brain className="w-3.5 h-3.5 text-primary" strokeWidth={2.5} />
             <span>
               {t({ sv: "Vill du prova själv först?", en: "Want to try it yourself first?" })}{" "}
-              <span className="underline underline-offset-4 decoration-dotted decoration-muted-foreground/40 group-hover:decoration-primary/60">
+              <span className="underline underline-offset-4 decoration-dotted decoration-primary/40 group-hover:decoration-primary/70">
                 {t({
                   sv: "Beskriv din verksamhet anonymt",
                   en: "Describe your business anonymously",
@@ -210,6 +183,66 @@ const MondayHero = () => {
               </span>
             </span>
           </Link>
+
+          {/* Diskret nivå-väljare, dold som standard */}
+          <div className="flex flex-col items-center gap-2">
+            <button
+              type="button"
+              onClick={() => setShowLevel((v) => !v)}
+              className="inline-flex items-center gap-1 text-[11px] text-muted-foreground/70 hover:text-foreground transition-colors"
+              aria-expanded={showLevel}
+            >
+              <span>
+                {chosen
+                  ? level === "tech"
+                    ? t({ sv: "Svarsnivå: teknisk", en: "Answer level: technical" })
+                    : t({ sv: "Svarsnivå: vardagligt språk", en: "Answer level: everyday language" })
+                  : t({ sv: "Anpassa svarsnivå", en: "Adjust answer level" })}
+              </span>
+              <ChevronDown className={`w-3 h-3 transition-transform ${showLevel ? "rotate-180" : ""}`} strokeWidth={2.5} />
+            </button>
+
+            {showLevel && (
+              <motion.div
+                initial={{ opacity: 0, y: -4 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="inline-flex flex-wrap justify-center gap-1 p-1 rounded-xl glass-subtle"
+              >
+                {([
+                  { id: "business", label: t({ sv: "IT bra — AI används", en: "IT solid — AI in use" }) },
+                  { id: "tech", label: t({ sv: "Rutinerat IT — på väg med AI", en: "Seasoned IT — getting into AI" }) },
+                ] as { id: Level; label: string }[]).map((opt) => {
+                  const active = level === opt.id;
+                  return (
+                    <button
+                      key={opt.id}
+                      type="button"
+                      onClick={() => chooseLevel(opt.id)}
+                      aria-pressed={active}
+                      className={`px-3 py-1.5 rounded-lg text-xs transition-all ${
+                        active
+                          ? "bg-primary/15 text-primary border border-primary/30"
+                          : "text-muted-foreground border border-transparent hover:text-foreground"
+                      }`}
+                    >
+                      {opt.label}
+                    </button>
+                  );
+                })}
+              </motion.div>
+            )}
+          </div>
+
+          <div className="flex items-center gap-1.5 text-[10px] sm:text-[11px] text-muted-foreground/70">
+            <Lock className="w-3 h-3" />
+            <span>
+              {t({
+                sv: "Inget loggas · Inga säljsamtal · Helt anonymt",
+                en: "Nothing logged · No sales calls · Fully anonymous",
+              })}
+            </span>
+          </div>
+        </motion.div>
 
           <div className="flex items-center gap-1.5 text-[10px] sm:text-[11px] text-muted-foreground/70">
             <Lock className="w-3 h-3" />
