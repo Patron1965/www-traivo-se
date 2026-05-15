@@ -142,6 +142,38 @@ const MondayHero = () => {
             <ArrowRight className="w-4 h-4" strokeWidth={2.5} />
           </Link>
 
+          <div className="flex flex-col items-center gap-2 pt-1">
+            <span className="text-[11px] uppercase tracking-[0.2em] text-muted-foreground/70">
+              {t({ sv: "Vilken nivå vill du ha svaren på?", en: "Which level do you want answers at?" })}
+            </span>
+            <div className="inline-flex flex-wrap justify-center gap-1 p-1 rounded-xl glass-subtle">
+              {([
+                { id: "business", label: t({ sv: "IT bra — AI intressant", en: "IT solid — AI interesting" }) },
+                { id: "tech", label: t({ sv: "Rutinerat IT — på väg med AI", en: "Seasoned IT — getting into AI" }) },
+              ] as { id: Level; label: string }[]).map((opt) => {
+                const active = level === opt.id;
+                return (
+                  <button
+                    key={opt.id}
+                    type="button"
+                    onClick={() => chooseLevel(opt.id)}
+                    aria-pressed={active}
+                    className={`px-3 py-1.5 rounded-lg text-xs transition-all ${
+                      active
+                        ? "bg-primary/15 text-primary border border-primary/30"
+                        : "text-muted-foreground border border-transparent hover:text-foreground"
+                    }`}
+                  >
+                    {opt.label}
+                  </button>
+                );
+              })}
+            </div>
+            <span className="text-[11px] text-muted-foreground/60">
+              {t({ sv: "Hjärnan anpassar svaren efter ditt val.", en: "The brain tailors answers to your choice." })}
+            </span>
+          </div>
+
           <Link
             id="ai-chat"
             to="/hjarna#brain-input"
