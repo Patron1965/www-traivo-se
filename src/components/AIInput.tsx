@@ -220,7 +220,7 @@ const AIInput = () => {
         <span className="text-xs text-muted-foreground shrink-0">Anpassa svaren för:</span>
         <div className="inline-flex flex-wrap gap-1 p-1 rounded-xl glass-subtle">
           {([
-            { id: "business", label: "IT bra — AI intressant" },
+            { id: "business", label: "IT bra — AI används" },
             { id: "tech", label: "Rutinerat IT — på väg med AI" },
           ] as { id: Level; label: string }[]).map((opt) => {
             const active = level === opt.id;
