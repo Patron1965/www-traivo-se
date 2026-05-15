@@ -109,14 +109,21 @@ export function GoogleVerifyDialog({ open, onOpenChange }: Props) {
   };
 
   const handleVerifyAndAdd = async () => {
-    await handleVerify();
-    // Only continue if verify succeeded
-    setVerifyState((s) => {
-      if (s === "ok") {
-        void handleAdd();
-      }
-      return s;
-    });
+    setVerifyState("loading");
+    setErr("verify", null);
+    append("info", "Verifiera", "Begär att Google verifierar META-taggen…");
+    try {
+      await call("verify");
+      setVerifyState("ok");
+      append("ok", "Verifiera", "Google bekräftade ägarskap.");
+    } catch (e) {
+      const msg = e instanceof Error ? e.message : String(e);
+      setErr("verify", msg);
+      setVerifyState("error");
+      append("error", "Verifiera", msg);
+      return;
+    }
+    await handleAdd();
   };
 
   const copy = async (text: string) => {
