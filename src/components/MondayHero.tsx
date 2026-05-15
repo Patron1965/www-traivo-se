@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import {
   ArrowRight, Brain, Lock, ChevronDown, Monitor,
   Recycle, Wrench, Building2, Truck, HeartPulse,
-  CalendarClock, Route, Smartphone, Receipt,
+  Database, CalendarClock, Route, Smartphone, Receipt,
 } from "lucide-react";
 import { useT } from "@/i18n/LanguageContext";
 
@@ -103,8 +103,9 @@ const MondayHero = () => {
           <div className="text-[11px] font-medium uppercase tracking-[0.25em] text-muted-foreground/80 mb-4">
             {t({ sv: "Så funkar det", en: "How it works" })}
           </div>
-          <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 max-w-3xl mx-auto">
+          <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 max-w-4xl mx-auto">
             {[
+              { icon: Database, label: t({ sv: "Objekt & artiklar", en: "Sites & articles" }) },
               { icon: CalendarClock, label: t({ sv: "Planera", en: "Plan" }) },
               { icon: Route, label: t({ sv: "Optimera rutt", en: "Optimize route" }) },
               { icon: Smartphone, label: t({ sv: "Rapportera i fält", en: "Report in field" }) },
