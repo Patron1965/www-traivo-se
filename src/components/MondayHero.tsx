@@ -13,14 +13,19 @@ const LEVEL_STORAGE_KEY = "traivo-answer-level";
 const MondayHero = () => {
   const t = useT();
   const [level, setLevel] = useState<Level>("business");
+  const [chosen, setChosen] = useState(false);
 
   useEffect(() => {
     const stored = localStorage.getItem(LEVEL_STORAGE_KEY);
-    if (stored === "tech" || stored === "business") setLevel(stored);
+    if (stored === "tech" || stored === "business") {
+      setLevel(stored);
+      setChosen(true);
+    }
   }, []);
 
   const chooseLevel = (l: Level) => {
     setLevel(l);
+    setChosen(true);
     localStorage.setItem(LEVEL_STORAGE_KEY, l);
   };
 
