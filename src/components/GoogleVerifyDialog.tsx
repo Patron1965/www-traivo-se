@@ -123,6 +123,25 @@ export function GoogleVerifyDialog({ open, onOpenChange }: Props) {
           </DialogDescription>
         </DialogHeader>
 
+        <div className="rounded-lg border border-primary/30 bg-primary/5 p-3 flex items-center justify-between gap-3 mt-2">
+          <div className="text-sm">
+            <div className="font-medium text-foreground">Snabbflöde</div>
+            <div className="text-xs text-muted-foreground">
+              Kör steg 3 (Verifiera) och steg 4 (Lägg till site) automatiskt.
+            </div>
+          </div>
+          <Button
+            onClick={handleVerifyAndAdd}
+            disabled={verifyState === "loading" || addState === "loading"}
+            size="sm"
+          >
+            {(verifyState === "loading" || addState === "loading") && (
+              <Loader2 className="w-4 h-4 mr-1 animate-spin" />
+            )}
+            Kör 3 + 4
+          </Button>
+        </div>
+
         <div className="space-y-6 mt-2">
           {/* Step 1 */}
           <Step n={1} title="Hämta verifierings-token från Google" state={tokenState}>
