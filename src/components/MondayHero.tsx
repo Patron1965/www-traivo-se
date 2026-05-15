@@ -15,6 +15,7 @@ const MondayHero = () => {
   const t = useT();
   const [level, setLevel] = useState<Level>("business");
   const [chosen, setChosen] = useState(false);
+  const [showLevel, setShowLevel] = useState(false);
 
   useEffect(() => {
     const stored = localStorage.getItem(LEVEL_STORAGE_KEY);
