@@ -30,6 +30,9 @@ const Footer = () => {
             <div className="space-y-3 text-sm">
               <Link to="/traivo-one" className="block text-foreground/70 hover:text-primary transition-colors">Traivo One</Link>
               <Link to="/traivo-go" className="block text-foreground/70 hover:text-primary transition-colors">Traivo Go</Link>
+              <Link to="/hjarna" className="block text-foreground/70 hover:text-primary transition-colors">
+                {t({ sv: "Hjärnan – AI-rådgivare", en: "The Brain – AI advisor" })}
+              </Link>
               <Link to="/priser" className="block text-foreground/70 hover:text-primary transition-colors">
                 {t({ sv: "Priser", en: "Pricing" })}
               </Link>
@@ -41,6 +44,9 @@ const Footer = () => {
               {t({ sv: "Företag", en: "Company" })}
             </h4>
             <div className="space-y-3 text-sm">
+              <Link to="/kunskap" className="block text-foreground/70 hover:text-primary transition-colors">
+                {t({ sv: "Kunskap", en: "Knowledge" })}
+              </Link>
               <Link to="/om-oss" className="block text-foreground/70 hover:text-primary transition-colors">
                 {t({ sv: "Om oss", en: "About us" })}
               </Link>

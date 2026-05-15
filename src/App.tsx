@@ -15,6 +15,8 @@ import DeepAnalysisCheckout from "./pages/DeepAnalysisCheckout";
 import DeepAnalysisThankYou from "./pages/DeepAnalysisThankYou";
 import GoLiveChecklist from "./pages/GoLiveChecklist";
 import DomainStatusPage from "./pages/DomainStatusPage";
+import KnowledgeIndex from "./pages/KnowledgeIndex";
+import KnowledgeArticle from "./pages/KnowledgeArticle";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -36,6 +38,8 @@ const App = () => (
             <Route path="/go-live" element={<GoLiveChecklist />} />
             <Route path="/domanstatus" element={<DomainStatusPage />} />
             <Route path="/priser" element={<Pricing />} />
+            <Route path="/kunskap" element={<KnowledgeIndex />} />
+            <Route path="/kunskap/:slug" element={<KnowledgeArticle />} />
             <Route path="/om-oss" element={<About />} />
             <Route path="/kontakt" element={<Contact />} />
           </Route>
