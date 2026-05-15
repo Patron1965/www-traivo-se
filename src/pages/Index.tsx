@@ -172,6 +172,7 @@ const Index = () => {
         description={t({ sv: "Nordisk AI-plattform för fältserviceplanering. Ruttoptimering, mobil fältapp och kundportal för avfall, fastighet och teknisk drift.", en: "Nordic AI platform for field service planning. Route optimization, mobile field app and customer portal for waste, property and technical operations." })}
       />
       <MondayHero />
+      <HowItWorksSection />
 
       {/* IS / IS NOT */}
       <section className="py-20 md:py-24 px-4 sm:px-6 border-t border-border">
