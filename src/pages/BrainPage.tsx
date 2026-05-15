@@ -418,7 +418,67 @@ const Brain_Page = () => {
                 {input.length}/2000
               </span>
             </div>
-          </motion.form>
+
+            {/* Valfri webbadress för djupare analys */}
+            <div className="mt-3">
+              {!showUrl ? (
+                <button
+                  type="button"
+                  onClick={() => setShowUrl(true)}
+                  className="inline-flex items-center gap-1.5 text-[11px] text-muted-foreground/80 hover:text-foreground transition-colors"
+                >
+                  <Globe className="w-3 h-3 text-primary/70" strokeWidth={2.5} />
+                  {t({
+                    sv: "+ Lägg till er webbadress för djupare analys (frivilligt)",
+                    en: "+ Add your website for a deeper analysis (optional)",
+                  })}
+                </button>
+              ) : (
+                <div className="rounded-xl border border-primary/20 bg-card/30 backdrop-blur-sm p-3">
+                  <div className="flex items-center gap-2">
+                    <Globe className="w-3.5 h-3.5 text-primary shrink-0" strokeWidth={2.5} />
+                    <input
+                      type="url"
+                      value={siteUrl}
+                      onChange={(e) => setSiteUrl(e.target.value)}
+                      placeholder="https://din-sajt.se"
+                      maxLength={500}
+                      inputMode="url"
+                      autoComplete="url"
+                      className="flex-1 bg-transparent text-sm text-foreground placeholder:text-muted-foreground/60 focus:outline-none"
+                      aria-label={t({ sv: "Webbadress", en: "Website URL" })}
+                    />
+                    <button
+                      type="button"
+                      onClick={() => { setShowUrl(false); setSiteUrl(""); setSiteReadStatus(null); }}
+                      className="text-muted-foreground/70 hover:text-foreground transition-colors p-1"
+                      aria-label={t({ sv: "Ta bort webbadress", en: "Remove URL" })}
+                    >
+                      <X className="w-3.5 h-3.5" />
+                    </button>
+                  </div>
+                  <p className="mt-2 text-[10px] text-muted-foreground/70 leading-relaxed">
+                    {t({
+                      sv: "Vi läser publika sidor en gång för att förstå er bättre. Ingenting sparas.",
+                      en: "We read public pages once to understand you better. Nothing is stored.",
+                    })}
+                  </p>
+                  {siteReadStatus === "ok" && (
+                    <p className="mt-1.5 text-[10px] text-primary">
+                      {t({ sv: "✓ Sajten lästes med i analysen.", en: "✓ Your site was included in the analysis." })}
+                    </p>
+                  )}
+                  {siteReadStatus === "failed" && (
+                    <p className="mt-1.5 text-[10px] text-amber-500/90">
+                      {t({
+                        sv: "Kunde inte läsa sajten — svaret bygger bara på din beskrivning.",
+                        en: "Couldn't read the site — answer is based only on your description.",
+                      })}
+                    </p>
+                  )}
+                </div>
+              )}
+            </div>
 
           {/* Examples */}
           <AnimatePresence>
