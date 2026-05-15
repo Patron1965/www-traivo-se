@@ -18,12 +18,21 @@ interface Props {
 
 type StepState = "idle" | "loading" | "ok" | "error";
 
+type LogLevel = "info" | "ok" | "error";
+interface LogEntry {
+  ts: string;
+  level: LogLevel;
+  step: string;
+  message: string;
+}
+
 export function GoogleVerifyDialog({ open, onOpenChange }: Props) {
   const [token, setToken] = useState<string | null>(null);
   const [tokenState, setTokenState] = useState<StepState>("idle");
   const [verifyState, setVerifyState] = useState<StepState>("idle");
   const [addState, setAddState] = useState<StepState>("idle");
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [log, setLog] = useState<LogEntry[]>([]);
 
   const setErr = (k: string, m: string | null) =>
     setErrors((e) => {
@@ -32,6 +41,12 @@ export function GoogleVerifyDialog({ open, onOpenChange }: Props) {
       else delete n[k];
       return n;
     });
+
+  const append = (level: LogLevel, step: string, message: string) =>
+    setLog((l) => [
+      ...l,
+      { ts: new Date().toISOString(), level, step, message },
+    ]);
 
   const call = async (action: "token" | "verify" | "add-site") => {
     const { data, error } = await supabase.functions.invoke("gsc-verify", {
@@ -45,65 +60,70 @@ export function GoogleVerifyDialog({ open, onOpenChange }: Props) {
   const handleToken = async () => {
     setTokenState("loading");
     setErr("token", null);
+    append("info", "Token", "Hämtar verifierings-token från Google…");
     try {
       const r = (await call("token")) as { token: string };
       setToken(r.token);
       setTokenState("ok");
+      append("ok", "Token", "Token mottagen.");
     } catch (e) {
-      setErr("token", e instanceof Error ? e.message : String(e));
+      const msg = e instanceof Error ? e.message : String(e);
+      setErr("token", msg);
       setTokenState("error");
+      append("error", "Token", msg);
     }
   };
 
   const handleVerify = async () => {
     setVerifyState("loading");
     setErr("verify", null);
+    append("info", "Verifiera", "Begär att Google verifierar META-taggen…");
     try {
       await call("verify");
       setVerifyState("ok");
+      append("ok", "Verifiera", "Google bekräftade ägarskap.");
       toast({ title: "Verifierat", description: "Google har bekräftat ägarskap." });
     } catch (e) {
       const msg = e instanceof Error ? e.message : String(e);
       setErr("verify", msg);
       setVerifyState("error");
+      append("error", "Verifiera", msg);
     }
   };
 
   const handleAdd = async () => {
     setAddState("loading");
     setErr("add", null);
+    append("info", "Lägg till", "Lägger till sajten i Search Console…");
     try {
       await call("add-site");
       setAddState("ok");
+      append("ok", "Lägg till", "Sajten finns nu som property.");
       toast({ title: "Tillagd", description: "Sajten finns nu i Search Console." });
     } catch (e) {
-      setErr("add", e instanceof Error ? e.message : String(e));
+      const msg = e instanceof Error ? e.message : String(e);
+      setErr("add", msg);
       setAddState("error");
+      append("error", "Lägg till", msg);
     }
   };
 
   const handleVerifyAndAdd = async () => {
     setVerifyState("loading");
     setErr("verify", null);
+    append("info", "Verifiera", "Begär att Google verifierar META-taggen…");
     try {
       await call("verify");
       setVerifyState("ok");
+      append("ok", "Verifiera", "Google bekräftade ägarskap.");
     } catch (e) {
       const msg = e instanceof Error ? e.message : String(e);
       setErr("verify", msg);
       setVerifyState("error");
+      append("error", "Verifiera", msg);
       return;
     }
-    setAddState("loading");
-    setErr("add", null);
-    try {
-      await call("add-site");
-      setAddState("ok");
-      toast({ title: "Klart", description: "Verifierat och tillagd i Search Console." });
-    } catch (e) {
-      setErr("add", e instanceof Error ? e.message : String(e));
-      setAddState("error");
-    }
+    await handleAdd();
   };
 
   const copy = async (text: string) => {
@@ -210,6 +230,44 @@ export function GoogleVerifyDialog({ open, onOpenChange }: Props) {
               </a>
             )}
           </Step>
+
+          <div className="rounded-lg border border-border/60 bg-background/40 p-3">
+            <div className="flex items-center justify-between mb-2">
+              <h4 className="text-sm font-semibold text-foreground">Statuslogg</h4>
+              {log.length > 0 && (
+                <Button variant="ghost" size="sm" className="h-7 text-xs" onClick={() => setLog([])}>
+                  Rensa
+                </Button>
+              )}
+            </div>
+            {log.length === 0 ? (
+              <p className="text-xs text-muted-foreground">
+                Inga händelser än. Kör ett steg ovan så loggas resultat här.
+              </p>
+            ) : (
+              <ol className="space-y-1.5 text-xs font-mono max-h-48 overflow-y-auto">
+                {log.map((e, i) => {
+                  const time = new Date(e.ts).toLocaleTimeString("sv-SE", {
+                    timeZone: "Europe/Stockholm",
+                    hour12: false,
+                  });
+                  const tone =
+                    e.level === "ok"
+                      ? "text-primary"
+                      : e.level === "error"
+                        ? "text-destructive"
+                        : "text-muted-foreground";
+                  return (
+                    <li key={i} className="flex gap-2">
+                      <span className="text-muted-foreground/70 shrink-0">{time}</span>
+                      <span className={`shrink-0 ${tone}`}>[{e.step}]</span>
+                      <span className={`break-all ${tone}`}>{e.message}</span>
+                    </li>
+                  );
+                })}
+              </ol>
+            )}
+          </div>
         </div>
       </DialogContent>
     </Dialog>
