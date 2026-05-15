@@ -346,6 +346,11 @@ const DomainStatusPage = () => {
   const [data, setData] = useState<ApiResponse | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [autoRefresh, setAutoRefresh] = useState(true);
+  const [nextIn, setNextIn] = useState<number>(0);
+
+  const allActive = !!data?.results.length && data.results.every((r) => r.derived_status === "Active");
+  const intervalSec = allActive ? 300 : 15;
 
   const fetchStatus = useCallback(async () => {
     setLoading(true);
@@ -366,9 +371,34 @@ const DomainStatusPage = () => {
 
   useEffect(() => {
     fetchStatus();
-    const interval = setInterval(fetchStatus, 60_000);
-    return () => clearInterval(interval);
   }, [fetchStatus]);
+
+  useEffect(() => {
+    if (!autoRefresh) return;
+    setNextIn(intervalSec);
+    const tick = setInterval(() => {
+      if (typeof document !== "undefined" && document.hidden) return;
+      setNextIn((n) => {
+        if (n <= 1) {
+          fetchStatus();
+          return intervalSec;
+        }
+        return n - 1;
+      });
+    }, 1000);
+    return () => clearInterval(tick);
+  }, [autoRefresh, intervalSec, fetchStatus]);
+
+  useEffect(() => {
+    const onVis = () => {
+      if (typeof document !== "undefined" && !document.hidden && autoRefresh) {
+        fetchStatus();
+        setNextIn(intervalSec);
+      }
+    };
+    document.addEventListener("visibilitychange", onVis);
+    return () => document.removeEventListener("visibilitychange", onVis);
+  }, [autoRefresh, intervalSec, fetchStatus]);
 
   useEffect(() => {
     setMeta(
@@ -390,18 +420,26 @@ const DomainStatusPage = () => {
               Domänstatus
             </h1>
             <p className="text-muted-foreground max-w-2xl">
-              Transparent översikt över DNS, SSL och svar för traivo.se. Sidan kontrollerar
-              automatiskt var 60:e sekund.
+              Transparent översikt över DNS, SSL och svar för traivo.se. Sidan uppdateras
+              automatiskt {allActive ? "var 5:e minut" : "var 15:e sekund"} tills allt är Active.
             </p>
-            <div className="mt-5">
+            <div className="mt-5 flex flex-wrap items-center gap-3">
               <Button onClick={fetchStatus} disabled={loading} variant="outline" size="sm">
                 {loading ? (
                   <Loader2 className="w-4 h-4 animate-spin" />
                 ) : (
                   <RefreshCw className="w-4 h-4" />
                 )}
-                Kör om kontrollen
+                Kör om nu
               </Button>
+              <Button onClick={() => setAutoRefresh((v) => !v)} variant="ghost" size="sm">
+                {autoRefresh ? "Pausa auto-uppdatering" : "Återuppta auto-uppdatering"}
+              </Button>
+              {autoRefresh && !loading && (
+                <span className="text-xs text-muted-foreground">
+                  Nästa kontroll om {nextIn}s
+                </span>
+              )}
             </div>
           </header>
 
