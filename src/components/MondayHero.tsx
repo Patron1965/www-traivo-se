@@ -148,7 +148,7 @@ const MondayHero = () => {
             </span>
             <div className="inline-flex flex-wrap justify-center gap-1 p-1 rounded-xl glass-subtle">
               {([
-                { id: "business", label: t({ sv: "IT bra — AI intressant", en: "IT solid — AI interesting" }) },
+                { id: "business", label: t({ sv: "IT bra — AI används", en: "IT solid — AI in use" }) },
                 { id: "tech", label: t({ sv: "Rutinerat IT — på väg med AI", en: "Seasoned IT — getting into AI" }) },
               ] as { id: Level; label: string }[]).map((opt) => {
                 const active = level === opt.id;
