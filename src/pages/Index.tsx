@@ -8,6 +8,7 @@ import {
   Check, Minus
 } from "lucide-react";
 import MondayHero from "@/components/MondayHero";
+import HowItWorksSection from "@/components/HowItWorksSection";
 import {
   Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger
 } from "@/components/ui/dialog";
