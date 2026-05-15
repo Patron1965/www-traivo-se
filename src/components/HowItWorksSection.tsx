@@ -24,21 +24,21 @@ const HowItWorksSection = () => {
           </span>
           <h2 className="font-display text-2xl md:text-3xl font-bold mb-8 max-w-2xl mx-auto">
             {t({
-              sv: "Från planering till faktura — i ett flöde.",
-              en: "From planning to invoice — in one flow.",
+              sv: "Från grunddata till faktura — i ett flöde.",
+              en: "From base data to invoice — in one flow.",
             })}
           </h2>
 
           <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 max-w-4xl mx-auto">
             {[
+              { icon: Database, label: t({ sv: "Administration", en: "Administration" }) },
               { icon: CalendarClock, label: t({ sv: "Planera", en: "Plan" }) },
-              { icon: Database, label: t({ sv: "Förbered grunddata", en: "Prepare data" }) },
               { icon: Route, label: t({ sv: "Optimera rutt", en: "Optimize route" }) },
               { icon: Smartphone, label: t({ sv: "Rapportera i fält", en: "Report in field" }) },
               { icon: Receipt, label: t({ sv: "Fakturera", en: "Invoice" }) },
             ].map((step, i, arr) => {
               const Icon = step.icon;
-              const highlight = step.label === t({ sv: "Förbered grunddata", en: "Prepare data" });
+              const highlight = step.label === t({ sv: "Administration", en: "Administration" });
               return (
                 <div key={step.label} className="flex items-center gap-2 sm:gap-3">
                   <div className={`inline-flex items-center gap-2 px-3.5 py-2 rounded-full border backdrop-blur-sm ${
