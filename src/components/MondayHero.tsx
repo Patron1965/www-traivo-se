@@ -1,11 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import {
-  ArrowRight, Brain, Lock, ChevronDown, Monitor,
-  Recycle, Wrench, Building2, Truck, HeartPulse,
-  Database, CalendarClock, Route, Smartphone, Receipt,
-} from "lucide-react";
+import { ArrowRight, Brain, Lock, ChevronDown, Sparkles } from "lucide-react";
 import { useT } from "@/i18n/LanguageContext";
 
 type Level = "business" | "tech";
@@ -31,21 +27,13 @@ const MondayHero = () => {
     localStorage.setItem(LEVEL_STORAGE_KEY, l);
   };
 
-  const industries = [
-    { icon: Recycle, label: t({ sv: "Miljö & avfall", en: "Environment & waste" }), to: "/#branscher" },
-    { icon: Wrench, label: t({ sv: "Teknisk service", en: "Technical service" }), to: "/#branscher" },
-    { icon: Building2, label: t({ sv: "Fastighet & FM", en: "Property & FM" }), to: "/#branscher" },
-    { icon: Truck, label: t({ sv: "Transport & last mile", en: "Transport & last mile" }), to: "/#branscher" },
-    { icon: HeartPulse, label: t({ sv: "Hemtjänst & mobil vård", en: "Home care & mobile health" }), to: "/#branscher" },
-  ];
-
   return (
-    <section className="relative overflow-hidden bg-noise px-4 sm:px-6 pt-24 pb-20 md:pt-32 md:pb-24">
+    <section className="relative overflow-hidden bg-noise px-4 sm:px-6 pt-24 pb-20 md:pt-32 md:pb-28">
       <div className="absolute top-0 right-0 w-[min(500px,90vw)] h-[min(500px,90vw)] rounded-full bg-primary/[0.04] blur-[150px] pointer-events-none" />
       <div className="absolute bottom-0 left-0 w-[min(300px,80vw)] h-[min(300px,80vw)] rounded-full bg-accent/[0.03] blur-[100px] pointer-events-none" />
       <div className="absolute inset-0 bg-grid-pattern opacity-20 pointer-events-none" />
 
-      <div className="relative z-10 max-w-5xl mx-auto text-center">
+      <div className="relative z-10 max-w-4xl mx-auto text-center">
         <motion.div
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
@@ -85,7 +73,7 @@ const MondayHero = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.3 }}
-          className="text-muted-foreground text-base md:text-lg leading-relaxed max-w-2xl mx-auto mb-10"
+          className="text-muted-foreground text-base md:text-lg leading-relaxed max-w-2xl mx-auto mb-12"
         >
           {t({
             sv: "Ett system för fältarbetet — schemaläggning, ruttoptimering, mobilapp och kundportal i samma plattform.",
@@ -93,205 +81,55 @@ const MondayHero = () => {
           })}
         </motion.p>
 
-        {/* Så funkar det – 4 steg */}
+        {/* Primär CTA: Hjärnan */}
         <motion.div
-          initial={{ opacity: 0, y: 12 }}
+          initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.45 }}
-          className="mb-10"
+          className="mx-auto max-w-2xl"
         >
-          <div className="text-[11px] font-medium uppercase tracking-[0.25em] text-muted-foreground/80 mb-4">
-            {t({ sv: "Så funkar det", en: "How it works" })}
-          </div>
-          <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 max-w-4xl mx-auto">
-            {[
-              { icon: CalendarClock, label: t({ sv: "Planera", en: "Plan" }) },
-              { icon: Database, label: t({ sv: "Förbered grunddata", en: "Prepare data" }) },
-              { icon: Route, label: t({ sv: "Optimera rutt", en: "Optimize route" }) },
-              { icon: Smartphone, label: t({ sv: "Rapportera i fält", en: "Report in field" }) },
-              { icon: Receipt, label: t({ sv: "Fakturera", en: "Invoice" }) },
-            ].map((step, i, arr) => {
-              const Icon = step.icon;
-              const highlight = step.label === t({ sv: "Förbered grunddata", en: "Prepare data" });
-              return (
-                <div key={step.label} className="flex items-center gap-2 sm:gap-3">
-                  <div className={`inline-flex items-center gap-2 px-3.5 py-2 rounded-full border backdrop-blur-sm ${
-                    highlight
-                      ? "border-primary/50 bg-primary/[0.08]"
-                      : "border-primary/25 bg-card/40"
-                  }`}>
-                    <span className="flex items-center justify-center w-5 h-5 rounded-full bg-primary/15">
-                      <Icon className="w-3 h-3 text-primary" strokeWidth={2.5} />
-                    </span>
-                    <span className="text-xs sm:text-sm font-medium text-foreground/90">{step.label}</span>
-                  </div>
-                  {i < arr.length - 1 && (
-                    <ArrowRight className="w-3.5 h-3.5 text-primary/50 hidden sm:block" strokeWidth={2.5} />
-                  )}
-                </div>
-              );
-            })}
-          </div>
-
-          {/* Vad som måste finnas på plats innan optimeraren kan räkna */}
-          <div className="mt-5 max-w-3xl mx-auto">
-            <div className="text-[10px] uppercase tracking-[0.22em] text-muted-foreground/70 mb-2">
+          <div className="relative rounded-2xl border border-primary/30 bg-card/40 backdrop-blur-sm p-6 sm:p-8 shadow-[0_0_40px_hsl(var(--primary)/0.08)]">
+            <div className="flex items-center justify-center gap-2 mb-3">
+              <Sparkles className="w-3.5 h-3.5 text-primary" strokeWidth={2.5} />
+              <span className="text-[11px] font-medium uppercase tracking-[0.25em] text-primary">
+                {t({ sv: "Börja här", en: "Start here" })}
+              </span>
+            </div>
+            <h2 className="font-display text-xl sm:text-2xl md:text-3xl font-semibold text-foreground mb-3 leading-tight">
               {t({
-                sv: "Innan optimeraren kan räkna behövs:",
-                en: "Before the optimizer can run, you need:",
+                sv: "Beskriv din verksamhet — få ett konkret svar direkt.",
+                en: "Describe your operation — get a concrete answer right away.",
               })}
-            </div>
-            <div className="flex flex-wrap justify-center gap-1.5">
-              {[
-                t({ sv: "Objekt & adresser", en: "Sites & addresses" }),
-                t({ sv: "Artiklar/tjänster per objekt", en: "Articles/services per site" }),
-                t({ sv: "Restider", en: "Travel times" }),
-                t({ sv: "Fordon & kapacitet", en: "Vehicles & capacity" }),
-                t({ sv: "Kompetenser", en: "Skills" }),
-                t({ sv: "Tidsfönster & öppettider", en: "Time windows & hours" }),
-                t({ sv: "Tömnings-/serviceintervall", en: "Service intervals" }),
-              ].map((label) => (
-                <span
-                  key={label}
-                  className="inline-flex items-center px-2.5 py-1 rounded-full border border-primary/15 bg-card/20 text-[11px] text-muted-foreground"
-                >
-                  {label}
-                </span>
-              ))}
-            </div>
-            <p className="text-[11px] text-muted-foreground/70 mt-3 italic">
+            </h2>
+            <p className="text-sm sm:text-base text-muted-foreground leading-relaxed mb-6 max-w-xl mx-auto">
               {t({
-                sv: "Traivo håller grunddatan levande — så att rätt rutt kan rullas ut varje morgon.",
-                en: "Traivo keeps the base data alive — so the right route can roll out every morning.",
+                sv: "Hjärnan är vår AI-rådgivare. Berätta hur ni jobbar idag, så får du en analys av vad Traivo skulle göra för just er — anonymt och utan säljsamtal.",
+                en: "The Brain is our AI advisor. Tell it how you work today and get an analysis of what Traivo would do for you — anonymously and without sales calls.",
               })}
             </p>
-          </div>
-        </motion.div>
+            <Link
+              id="ai-chat"
+              to="/hjarna#brain-input"
+              className="group inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-primary text-primary-foreground font-semibold text-sm sm:text-base shadow-[0_4px_24px_hsl(var(--primary)/0.3)] hover:shadow-[0_6px_32px_hsl(var(--primary)/0.4)] hover:scale-[1.02] active:scale-[0.99] transition-all"
+            >
+              <Brain className="w-4 h-4" strokeWidth={2.5} />
+              {t({ sv: "Öppna Hjärnan", en: "Open the Brain" })}
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" strokeWidth={2.5} />
+            </Link>
 
-        {/* Produkt-split: Traivo One + Traivo Go */}
-        <motion.div
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5 }}
-          className="mb-10"
-        >
-          <div className="text-[11px] font-medium uppercase tracking-[0.25em] text-muted-foreground/80 mb-4">
-            {t({ sv: "Två appar — ett system", en: "Two apps — one system" })}
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4 max-w-3xl mx-auto text-left">
-            {[
-              {
-                to: "/traivo-one",
-                icon: Monitor,
-                name: "Traivo One",
-                tag: t({ sv: "För kontoret", en: "For the office" }),
-                desc: t({
-                  sv: "Schemaläggning, ruttoptimering och realtidskoll på fältet — i en kontrollvy.",
-                  en: "Scheduling, route optimization and real-time field tracking — in one control view.",
-                }),
-                cta: t({ sv: "Läs om Traivo One", en: "Explore Traivo One" }),
-              },
-              {
-                to: "/traivo-go",
-                icon: Smartphone,
-                name: "Traivo Go",
-                tag: t({ sv: "För fältet", en: "For the field" }),
-                desc: t({
-                  sv: "Mobilapp för tekniker: digitala protokoll, foto, QR och navigation — fungerar offline.",
-                  en: "Mobile app for technicians: digital protocols, photo, QR and navigation — works offline.",
-                }),
-                cta: t({ sv: "Läs om Traivo Go", en: "Explore Traivo Go" }),
-              },
-            ].map((p) => {
-              const Icon = p.icon;
-              return (
-                <Link
-                  key={p.name}
-                  to={p.to}
-                  className="group relative flex flex-col gap-3 p-5 rounded-2xl border border-primary/20 bg-card/30 backdrop-blur-sm hover:border-primary/50 hover:bg-primary/[0.05] transition-all duration-200"
-                >
-                  <div className="flex items-center gap-3">
-                    <span className="flex items-center justify-center w-9 h-9 rounded-xl bg-primary/15 group-hover:bg-primary/25 transition-colors">
-                      <Icon className="w-4.5 h-4.5 text-primary" strokeWidth={2.25} />
-                    </span>
-                    <div className="flex flex-col">
-                      <span className="font-display font-semibold text-foreground text-base sm:text-lg leading-tight">
-                        {p.name}
-                      </span>
-                      <span className="text-[11px] uppercase tracking-[0.18em] text-primary/80">
-                        {p.tag}
-                      </span>
-                    </div>
-                  </div>
-                  <p className="text-sm text-muted-foreground leading-relaxed">{p.desc}</p>
-                  <span className="inline-flex items-center gap-1.5 text-xs font-medium text-primary group-hover:gap-2 transition-all">
-                    {p.cta}
-                    <ArrowRight className="w-3.5 h-3.5" strokeWidth={2.5} />
-                  </span>
-                </Link>
-              );
-            })}
-          </div>
-        </motion.div>
-
-        {/* Branscher – kort textrad */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.55 }}
-          className="mb-10"
-        >
-          <div className="text-[11px] font-medium uppercase tracking-[0.25em] text-muted-foreground/80 mb-4">
-            {t({ sv: "Vi vänder oss till", en: "Built for" })}
-          </div>
-          <div className="flex flex-wrap justify-center gap-2 max-w-3xl mx-auto">
-            {industries.map((ind) => {
-              const Icon = ind.icon;
-              return (
-                <Link
-                  key={ind.label}
-                  to={ind.to}
-                  className="group inline-flex items-center gap-2 px-3.5 py-2 rounded-full border border-primary/20 bg-card/30 backdrop-blur-sm text-xs sm:text-sm text-foreground/85 hover:border-primary/50 hover:bg-primary/[0.06] hover:text-foreground transition-all duration-200"
-                >
-                  <span className="flex items-center justify-center w-5 h-5 rounded-full bg-primary/10 group-hover:bg-primary/20 transition-colors">
-                    <Icon className="w-3 h-3 text-primary" strokeWidth={2.5} />
-                  </span>
-                  <span className="font-medium">{ind.label}</span>
-                </Link>
-              );
-            })}
-          </div>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.7 }}
-          className="flex flex-col items-center gap-4"
-        >
-          <Link
-            id="ai-chat"
-            to="/hjarna#brain-input"
-            className={`group inline-flex items-center gap-2 text-xs sm:text-sm transition-all rounded-full px-4 py-2 ${
-              chosen
-                ? "text-foreground border border-primary/40 bg-primary/[0.06] shadow-[0_0_20px_hsl(var(--primary)/0.15)] hover:bg-primary/[0.1]"
-                : "text-foreground/90 border border-primary/30 bg-card/30 hover:bg-primary/[0.06] hover:border-primary/50"
-            }`}
-          >
-            <Brain className="w-3.5 h-3.5 text-primary" strokeWidth={2.5} />
-            <span>
-              {t({ sv: "Vill du prova själv först?", en: "Want to try it yourself first?" })}{" "}
-              <span className="underline underline-offset-4 decoration-dotted decoration-primary/40 group-hover:decoration-primary/70">
+            <div className="mt-5 flex items-center justify-center gap-1.5 text-[11px] text-muted-foreground/80">
+              <Lock className="w-3 h-3" />
+              <span>
                 {t({
-                  sv: "Beskriv din verksamhet anonymt",
-                  en: "Describe your business anonymously",
+                  sv: "Inget loggas · Inga säljsamtal · Helt anonymt",
+                  en: "Nothing logged · No sales calls · Fully anonymous",
                 })}
               </span>
-            </span>
-          </Link>
+            </div>
+          </div>
 
-          {/* Diskret nivå-väljare, dold som standard */}
-          <div className="flex flex-col items-center gap-2">
+          {/* Diskret nivå-väljare */}
+          <div className="flex flex-col items-center gap-2 mt-6">
             <button
               type="button"
               onClick={() => setShowLevel((v) => !v)}
@@ -337,16 +175,6 @@ const MondayHero = () => {
                 })}
               </motion.div>
             )}
-          </div>
-
-          <div className="flex items-center gap-1.5 text-[10px] sm:text-[11px] text-muted-foreground/70">
-            <Lock className="w-3 h-3" />
-            <span>
-              {t({
-                sv: "Inget loggas · Inga säljsamtal · Helt anonymt",
-                en: "Nothing logged · No sales calls · Fully anonymous",
-              })}
-            </span>
           </div>
         </motion.div>
       </div>
