@@ -251,7 +251,7 @@ export function GoogleVerifyDialog({ open, onOpenChange }: Props) {
                 Inga händelser än. Kör ett steg ovan så loggas resultat här.
               </p>
             ) : (
-              <ol className="space-y-1.5 text-xs font-mono max-h-48 overflow-y-auto">
+              <ol ref={logRef} className="space-y-1.5 text-xs font-mono max-h-48 overflow-y-auto">
                 {log.map((e, i) => {
                   const time = new Date(e.ts).toLocaleTimeString("sv-SE", {
                     timeZone: "Europe/Stockholm",
