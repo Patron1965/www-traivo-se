@@ -132,6 +132,10 @@ async function streamBrain({
     onError(err.error || fallback);
     return;
   }
+  const siteHeader = resp.headers.get("X-Site-Read");
+  if (siteHeader === "ok" || siteHeader === "failed" || siteHeader === "skipped") {
+    onSiteRead?.(siteHeader);
+  }
 
   if (!resp.body) {
     onError(language === "en" ? "No data received" : "Ingen data mottagen");
