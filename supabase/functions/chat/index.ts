@@ -93,11 +93,45 @@ serve(async (req) => {
       level === "tech" ? "tech" : "business";
 
     const LEVEL_INSTRUCTIONS: Record<"business" | "tech", string> = {
-      business:
-        "\n\n## Anpassad svarsnivå (besökaren har valt 'Förklara vad ni kan göra för oss'):\nSvara i vardagligt språk. Undvik IT/AI-termer (API, LLM, RAG, webhook, edge, RLS osv.) eller förklara dem mycket kort i parentes första gången. Fokusera på affärsnytta — tid sparad, mindre stress, nöjdare kunder, lägre kostnader. Använd konkreta exempel från fältserviceverksamhet.",
-      tech:
-        "\n\n## Anpassad svarsnivå (besökaren har valt 'IT-van / hänger med inom AI'):\nDu får använda tekniska begrepp utan förklaring (LLM, edge functions, integrationer, webhooks, multi-tenant, offline-sync, RLS, REST). Var gärna konkret om arkitektur, dataflöden och integrationsmöjligheter när det är relevant.",
+      business: `
+
+## Anpassad svarsnivå: "IT bra — AI används"
+Besökaren har IT på plats men har inte hunnit sätta sig in i AI-detaljerna. Svara så här:
+
+**Hårda regler:**
+- Använd ALDRIG följande termer utan en kort parentes-förklaring första gången: API, LLM, RAG, webhook, edge function, RLS, SDK, multi-tenant, embedding, vektor, prompt, token.
+- Använd ALLTID vardagligt språk. Förklara med analogier ("som en assistent som...", "tänk dig att...").
+- Fokusera på affärsnytta: tid sparad, mindre stress, nöjdare kunder, lägre kostnader, färre fel.
+- Konkreta siffror när det går ("15–20 % kortare körsträcka", "halverad planeringstid").
+- Max 3–4 meningar per stycke.
+
+**Exempel på rätt ton:**
+Fråga: "Hur funkar er AI?"
+Bra svar: "Tänk dig en planerare som aldrig blir trött. Den tittar på alla jobb, fordon och tekniker varje morgon och föreslår en körordning som sparar tid och bränsle. Du som chef ser förslaget, justerar om du vill, och skickar ut det. Resultatet brukar vara 15–20 % kortare körsträckor och färre akutsamtal på kvällen."`,
+      tech: `
+
+## Anpassad svarsnivå: "Rutinerat IT — på väg med AI"
+Besökaren är van vid IT och vill förstå hur det är byggt. Svara så här:
+
+**Hårda regler:**
+- Du FÅR använda tekniska termer utan förklaring (LLM, edge functions, REST, webhooks, multi-tenant, RLS, offline-sync, JWT, embeddings).
+- Var ALLTID konkret om arkitektur, dataflöden och integrationsytor när det är relevant.
+- Nämn faktiska integrationsmöjligheter: Fortnox (färdig), Visma/Björn Lundén (på begäran), IoT-sensorer, GPS, REST API, webhooks.
+- Beskriv gärna hur planeringen körs (heuristik + LLM-förslag som planeraren godkänner).
+- Fortfarande kortfattad — inga onödiga teoriavsnitt.
+
+**Exempel på rätt ton:**
+Fråga: "Hur funkar er AI?"
+Bra svar: "Två lager. Klassisk ruttoptimering (OR-tools-stil) hanterar hårda constraints — kapacitet, tidsfönster, kompetens. Ovanpå ligger en LLM som föreslår omplanering på naturligt språk ('flytta jobb 14 till bil 3 imorgon') och förklarar varför. Allt körs i edge functions, multi-tenant med RLS per kund. Integrationer mot Fortnox är färdig, övriga ekonomisystem byggs på begäran via REST/webhooks."`,
     };
+
+    const LEVEL_REMINDER: Record<"business" | "tech", string> = {
+      business:
+        "[Nivå-påminnelse: svara enligt 'IT bra — AI används' — vardagligt språk, affärsnytta, inga oförklarade IT/AI-termer.]",
+      tech:
+        "[Nivå-påminnelse: svara enligt 'Rutinerat IT — på väg med AI' — tekniska termer ok, var konkret om arkitektur och integrationer.]",
+    };
+
 
     if (!messages || !Array.isArray(messages)) {
       return new Response(
@@ -154,7 +188,9 @@ serve(async (req) => {
         model: "google/gemini-3-flash-preview",
         messages: [
           { role: "system", content: SYSTEM_PROMPT + LEVEL_INSTRUCTIONS[answerLevel] },
-          ...messages,
+          ...messages.slice(0, -1),
+          { role: "system", content: LEVEL_REMINDER[answerLevel] },
+          ...messages.slice(-1),
         ],
         stream: true,
       }),

@@ -7,17 +7,26 @@ const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/chat`;
 
 type Msg = { role: "user" | "assistant"; content: string };
 
-const suggestedQuestions = [
+const SUGGESTED_BUSINESS = [
   "Vi kör avfallshantering med 15 bilar i Stockholm",
-  "Vi rengör soptunnor och soprum men lönsamheten per tekniker är dålig",
-  "Vi har problem med akutjobb och omplanering",
-  "Kan appen fungera utan internet?",
+  "Vad sparar vi tid och pengar på det här?",
+  "Hur funkar appen när nätet ligger nere?",
   "Vi använder Fortnox idag",
+  "Vad behöver vi göra för att komma igång?",
+];
+
+const SUGGESTED_TECH = [
+  "Hur ser integrationen mot Fortnox ut?",
+  "Hur hanterar ni offline-sync och konfliktlösning i fältappen?",
+  "Är plattformen multi-tenant med RLS per kund?",
+  "Vilken modell driver AI-planeringen och hur tränas den?",
+  "Finns REST API och webhooks för egna integrationer?",
 ];
 
 type Level = "business" | "tech";
 
 const LEVEL_STORAGE_KEY = "traivo-answer-level";
+const isValidLevel = (v: unknown): v is Level => v === "business" || v === "tech";
 
 async function streamChat({
   messages,
@@ -38,7 +47,7 @@ async function streamChat({
       "Content-Type": "application/json",
       Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
     },
-    body: JSON.stringify({ messages, level }),
+    body: JSON.stringify({ messages, level: isValidLevel(level) ? level : "business" }),
   });
 
   if (!resp.ok) {
@@ -304,7 +313,7 @@ const AIInput = () => {
             transition={{ delay: 0.6 }}
             className="mt-4 flex flex-wrap gap-2"
           >
-            {suggestedQuestions.map((q, i) => (
+            {(level === "tech" ? SUGGESTED_TECH : SUGGESTED_BUSINESS).map((q, i) => (
               <motion.button
                 key={q}
                 initial={{ opacity: 0, y: 8 }}
