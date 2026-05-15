@@ -83,7 +83,7 @@ const TeamSection = () => {
                   <h3 className="font-display font-semibold text-foreground mb-1">
                     {v.title}
                   </h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed">
+                  <p className="text-base text-foreground/85 leading-relaxed">
                     {v.desc}
                   </p>
                 </div>
