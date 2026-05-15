@@ -19,7 +19,7 @@ const HowItWorksSection = () => {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <span className="text-[11px] font-medium uppercase tracking-[0.25em] text-primary mb-4 block">
+          <span className="text-xs font-medium uppercase tracking-[0.25em] text-primary mb-4 block">
             {t({ sv: "Så funkar det", en: "How it works" })}
           </span>
           <h2 className="font-display text-2xl md:text-3xl font-bold mb-8 max-w-2xl mx-auto">
@@ -60,7 +60,7 @@ const HowItWorksSection = () => {
           </div>
 
           <div className="mt-8 max-w-3xl mx-auto">
-            <div className="text-[10px] uppercase tracking-[0.22em] text-muted-foreground/70 mb-3">
+            <div className="text-xs uppercase tracking-[0.22em] text-muted-foreground mb-3">
               {t({
                 sv: "Administrationen förbereder grunddatan innan planeraren tar vid:",
                 en: "Administration prepares the base data before the planner takes over:",
@@ -78,13 +78,13 @@ const HowItWorksSection = () => {
               ].map((label) => (
                 <span
                   key={label}
-                  className="inline-flex items-center px-2.5 py-1 rounded-full border border-primary/15 bg-card/20 text-[11px] text-muted-foreground"
+                  className="inline-flex items-center px-2.5 py-1 rounded-full border border-primary/20 bg-card/30 text-xs sm:text-sm text-foreground/85"
                 >
                   {label}
                 </span>
               ))}
             </div>
-            <p className="text-[12px] text-muted-foreground/70 mt-4 italic">
+            <p className="text-sm text-muted-foreground mt-4 italic">
               {t({
                 sv: "Traivo håller grunddatan levande — så att rätt rutt kan rullas ut varje morgon.",
                 en: "Traivo keeps the base data alive — so the right route can roll out every morning.",
@@ -101,7 +101,7 @@ const HowItWorksSection = () => {
           transition={{ delay: 0.05 }}
         >
           <div className="text-center mb-8">
-            <span className="text-[11px] font-medium uppercase tracking-[0.25em] text-primary mb-4 block">
+            <span className="text-xs font-medium uppercase tracking-[0.25em] text-primary mb-4 block">
               {t({ sv: "Två appar — ett system", en: "Two apps — one system" })}
             </span>
             <h2 className="font-display text-2xl md:text-3xl font-bold max-w-2xl mx-auto">
@@ -152,13 +152,13 @@ const HowItWorksSection = () => {
                       <span className="font-display font-semibold text-foreground text-base sm:text-lg leading-tight">
                         {p.name}
                       </span>
-                      <span className="text-[11px] uppercase tracking-[0.18em] text-primary/80">
+                      <span className="text-xs uppercase tracking-[0.18em] text-primary/90">
                         {p.tag}
                       </span>
                     </div>
                   </div>
-                  <p className="text-sm text-muted-foreground leading-relaxed">{p.desc}</p>
-                  <span className="inline-flex items-center gap-1.5 text-xs font-medium text-primary group-hover:gap-2 transition-all">
+                  <p className="text-base text-foreground/85 leading-relaxed">{p.desc}</p>
+                  <span className="inline-flex items-center gap-1.5 text-sm font-medium text-primary group-hover:gap-2 transition-all">
                     {p.cta}
                     <ArrowRight className="w-3.5 h-3.5" strokeWidth={2.5} />
                   </span>
