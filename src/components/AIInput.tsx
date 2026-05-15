@@ -210,6 +210,52 @@ const AIInput = () => {
 
   return (
     <div className="w-full max-w-2xl mx-auto">
+      {/* Level selector */}
+      <motion.div
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.3, duration: 0.5 }}
+        className="mb-3 flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3"
+      >
+        <span className="text-xs text-muted-foreground shrink-0">Anpassa svaren för:</span>
+        <div className="inline-flex flex-wrap gap-1 p-1 rounded-xl glass-subtle">
+          {([
+            { id: "business", label: "Förklara vad ni kan göra för oss" },
+            { id: "tech", label: "Jag är IT-van / hänger med inom AI" },
+          ] as { id: Level; label: string }[]).map((opt) => {
+            const active = level === opt.id;
+            return (
+              <button
+                key={opt.id}
+                type="button"
+                onClick={() => setLevel(opt.id)}
+                className={`px-3 py-1.5 rounded-lg text-xs transition-all ${
+                  active
+                    ? "bg-primary/15 text-primary border border-primary/30"
+                    : "text-muted-foreground border border-transparent hover:text-foreground"
+                }`}
+                aria-pressed={active}
+              >
+                {opt.label}
+              </button>
+            );
+          })}
+        </div>
+      </motion.div>
+
+      <AnimatePresence>
+        {levelChanged && (
+          <motion.div
+            initial={{ opacity: 0, y: -4 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0 }}
+            className="mb-2 text-[11px] text-primary/80"
+          >
+            Nästa svar anpassas till {level === "tech" ? "IT-van nivå" : "förklarande nivå"}.
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {/* Input */}
       <motion.form
         onSubmit={handleSubmit}
