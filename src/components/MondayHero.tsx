@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import {
-  ArrowRight, ArrowDown, Brain, Lock, ChevronDown,
+  ArrowRight, Brain, Lock, ChevronDown,
   Recycle, Wrench, Building2, Truck, HeartPulse,
   CalendarClock, Route, Smartphone, Receipt,
 } from "lucide-react";
