@@ -33,6 +33,12 @@ export function GoogleVerifyDialog({ open, onOpenChange }: Props) {
   const [addState, setAddState] = useState<StepState>("idle");
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [log, setLog] = useState<LogEntry[]>([]);
+  const logRef = useRef<HTMLOListElement>(null);
+
+  useEffect(() => {
+    const el = logRef.current;
+    if (el) el.scrollTop = el.scrollHeight;
+  }, [log]);
 
   const setErr = (k: string, m: string | null) =>
     setErrors((e) => {
