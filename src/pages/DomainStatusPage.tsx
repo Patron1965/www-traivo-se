@@ -26,6 +26,7 @@ import {
   ExternalLink,
   Copy,
 } from "lucide-react";
+import { GoogleVerifyDialog } from "@/components/GoogleVerifyDialog";
 
 type DerivedStatus = "Active" | "Verifying" | "Failed" | "Offline" | "Unknown";
 
