@@ -82,6 +82,30 @@ export function GoogleVerifyDialog({ open, onOpenChange }: Props) {
     }
   };
 
+  const handleVerifyAndAdd = async () => {
+    setVerifyState("loading");
+    setErr("verify", null);
+    try {
+      await call("verify");
+      setVerifyState("ok");
+    } catch (e) {
+      const msg = e instanceof Error ? e.message : String(e);
+      setErr("verify", msg);
+      setVerifyState("error");
+      return;
+    }
+    setAddState("loading");
+    setErr("add", null);
+    try {
+      await call("add-site");
+      setAddState("ok");
+      toast({ title: "Klart", description: "Verifierat och tillagd i Search Console." });
+    } catch (e) {
+      setErr("add", e instanceof Error ? e.message : String(e));
+      setAddState("error");
+    }
+  };
+
   const copy = async (text: string) => {
     await navigator.clipboard.writeText(text);
     toast({ title: "Kopierat" });
@@ -98,6 +122,25 @@ export function GoogleVerifyDialog({ open, onOpenChange }: Props) {
             Fyra steg. Du behöver klistra in en meta-tag i index.html och publicera mellan steg 1 och 3.
           </DialogDescription>
         </DialogHeader>
+
+        <div className="rounded-lg border border-primary/30 bg-primary/5 p-3 flex items-center justify-between gap-3 mt-2">
+          <div className="text-sm">
+            <div className="font-medium text-foreground">Snabbflöde</div>
+            <div className="text-xs text-muted-foreground">
+              Kör steg 3 (Verifiera) och steg 4 (Lägg till site) automatiskt.
+            </div>
+          </div>
+          <Button
+            onClick={handleVerifyAndAdd}
+            disabled={verifyState === "loading" || addState === "loading"}
+            size="sm"
+          >
+            {(verifyState === "loading" || addState === "loading") && (
+              <Loader2 className="w-4 h-4 mr-1 animate-spin" />
+            )}
+            Kör 3 + 4
+          </Button>
+        </div>
 
         <div className="space-y-6 mt-2">
           {/* Step 1 */}
