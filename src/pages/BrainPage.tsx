@@ -245,6 +245,8 @@ const Brain_Page = () => {
       await streamBrain({
         messages: allMessages,
         language: lang,
+        siteUrl: siteUrl.trim() || undefined,
+        onSiteRead: (status) => setSiteReadStatus(status),
         onDelta: (chunk) => {
           assistantSoFar += chunk;
           setMessages((prev) => {
