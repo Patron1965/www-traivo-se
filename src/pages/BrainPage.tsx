@@ -620,9 +620,6 @@ const Brain_Page = () => {
                     </div>
                   )}
                 </div>
-
-              </motion.div>
-            )}
               </motion.div>
             )}
           </AnimatePresence>
