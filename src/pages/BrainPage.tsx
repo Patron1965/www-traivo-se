@@ -8,7 +8,7 @@ import {
   Wrench, Snowflake, Zap, Leaf, Truck, HardHat,
   ShieldCheck, EyeOff, Clock, PhoneOff, Database, FileText,
 } from "lucide-react";
-import DeepAnalysisUpsell from "@/components/DeepAnalysisUpsell";
+
 import { useT, useLang } from "@/i18n/LanguageContext";
 import SEO from "@/components/SEO";
 
