@@ -26,6 +26,7 @@ import {
   ExternalLink,
   Copy,
 } from "lucide-react";
+import { GoogleVerifyDialog } from "@/components/GoogleVerifyDialog";
 
 type DerivedStatus = "Active" | "Verifying" | "Failed" | "Offline" | "Unknown";
 
@@ -348,6 +349,7 @@ const DomainStatusPage = () => {
   const [error, setError] = useState<string | null>(null);
   const [autoRefresh, setAutoRefresh] = useState(true);
   const [nextIn, setNextIn] = useState<number>(0);
+  const [gscOpen, setGscOpen] = useState(false);
 
   const allActive = !!data?.results.length && data.results.every((r) => r.derived_status === "Active");
   const intervalSec = allActive ? 300 : 15;
@@ -435,6 +437,17 @@ const DomainStatusPage = () => {
               <Button onClick={() => setAutoRefresh((v) => !v)} variant="ghost" size="sm">
                 {autoRefresh ? "Pausa auto-uppdatering" : "Återuppta auto-uppdatering"}
               </Button>
+              <Button
+                onClick={() => setGscOpen(true)}
+                disabled={!allActive}
+                variant="default"
+                size="sm"
+                title={allActive ? undefined : "Aktiveras när båda domänerna är Active"}
+              >
+                {allActive
+                  ? "Verifiera i Google Search Console"
+                  : "Verifiera i Google Search Console (väntar på Active)"}
+              </Button>
               {autoRefresh && !loading && (
                 <span className="text-xs text-muted-foreground">
                   Nästa kontroll om {nextIn}s
@@ -493,6 +506,7 @@ const DomainStatusPage = () => {
           </section>
         </div>
       </div>
+      <GoogleVerifyDialog open={gscOpen} onOpenChange={setGscOpen} />
     </>
   );
 };
