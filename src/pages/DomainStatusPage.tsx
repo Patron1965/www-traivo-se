@@ -349,6 +349,7 @@ const DomainStatusPage = () => {
   const [error, setError] = useState<string | null>(null);
   const [autoRefresh, setAutoRefresh] = useState(true);
   const [nextIn, setNextIn] = useState<number>(0);
+  const [gscOpen, setGscOpen] = useState(false);
 
   const allActive = !!data?.results.length && data.results.every((r) => r.derived_status === "Active");
   const intervalSec = allActive ? 300 : 15;
