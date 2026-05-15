@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import {
@@ -6,8 +7,22 @@ import {
 } from "lucide-react";
 import { useT } from "@/i18n/LanguageContext";
 
+type Level = "business" | "tech";
+const LEVEL_STORAGE_KEY = "traivo-answer-level";
+
 const MondayHero = () => {
   const t = useT();
+  const [level, setLevel] = useState<Level>("business");
+
+  useEffect(() => {
+    const stored = localStorage.getItem(LEVEL_STORAGE_KEY);
+    if (stored === "tech" || stored === "business") setLevel(stored);
+  }, []);
+
+  const chooseLevel = (l: Level) => {
+    setLevel(l);
+    localStorage.setItem(LEVEL_STORAGE_KEY, l);
+  };
 
   const industries = [
     { icon: Recycle, label: t({ sv: "Miljö & avfall", en: "Environment & waste" }), to: "/#branscher" },
