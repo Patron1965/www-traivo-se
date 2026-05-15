@@ -1,29 +1,66 @@
-# Pil från nivå-valet direkt till hjärnan
+# Hjärnan: lägg till valfri webbadress för bättre svar
 
-När besökaren har valt nivå i hero ska det synas en tydlig pil/animation som pekar ner mot hjärn-länken — och länken själv ska visa att hjärnan är anpassad till just det valet.
+## Mål
+Höj kvaliteten på Hjärnans analys genom att låta besökaren (frivilligt) ange sin webbadress. Edge-funktionen hämtar då innehållet från sajten, sammanfattar det och låter Hjärnan väva in branschspecifika observationer i sitt svar — utan att tappa anonymiteten (vi sparar fortfarande inget).
 
-## Vad som händer
+## Användarflöde
 
-1. Besökaren väljer "IT bra — AI används" eller "Rutinerat IT — på väg med AI".
-2. Direkt under pillarna animeras en liten nedåtpil fram (mjuk bounce) tillsammans med texten:
-   - business: "Hjärnan är inställd på vardagligt språk →"
-   - tech: "Hjärnan är inställd på teknisk nivå →"
-3. Pilen pekar ner mot den befintliga "Beskriv din verksamhet anonymt"-länken, som samtidigt får en mjuk highlight (primary-färgad ram + ljus glow) så det blir uppenbart vart man ska.
-4. Klick på länken tar besökaren till `/hjarna#brain-input` precis som idag — `AIInput.tsx` läser redan `traivo-answer-level` från localStorage och svarar enligt valet.
+```text
+[Hjärnan-input]
+ ├── Textfält: "Beskriv er verksamhet…"
+ └── Valfritt: 🌐 "Lägg till webbadress för djupare analys"  (expanderbart)
+       └── input: https://...
 
-## UX-detaljer
+[Skicka] → edge function /brain
+            ├── Om URL angiven: hämta + sammanfatta sajten (server-side)
+            └── Skicka kombinerad kontext till AI-modellen
 
-- Pilen visas bara efter att ett val gjorts (eller laddas om besökaren har ett sparat val sen tidigare).
-- Mjuk fade-in + lätt bouncy-y-animation (`animate-bounce` eller framer-motion `y: [0, 4, 0]` loop).
-- Highlighten på hjärn-länken är subtil — en `border-primary/40` och `bg-primary/[0.05]` runt hela raden, inte en knapp-look.
-- Inget ändrar sig på själva länkens text eller `href`.
+[Svar i chatten]
+ └── Vanlig markdown-rendering
+       + liten chip överst: "Analys baserad på din beskrivning + din.se"
+```
 
-## Filer som berörs
+## Vad användaren ser
 
-- `src/components/MondayHero.tsx` — lägga till pil + bekräftelse-text under pillarna, villkorlig highlight-styling på hjärn-länken.
+- Under befintliga textfältet: en diskret länk "+ Lägg till webbadress (frivilligt)" som expanderar ett URL-fält.
+- Hjälptext: "Vi läser publika sidor en gång för att förstå er bättre. Inget sparas."
+- Validering: måste börja med http(s)://, max längd, ingen IP/localhost.
+- Felhantering: om sajten inte kan läsas → svar fortsätter ändå utan URL-kontext, med liten notis "kunde inte läsa sajten".
 
-## Vad som INTE ingår
+## Vad Hjärnan får extra
+1. Företagsnamn (om hittat i title/meta).
+2. 1–2 meningar om vad bolaget gör (från meta description / hero).
+3. Bransch-/tjänsteindikatorer (nyckelord från huvudsidan).
+4. Geografi om det syns (t.ex. "verksam i Mälardalen").
 
-- Inga ändringar i AI-input, edge-funktionen eller suggested questions.
-- Ingen extra CTA-knapp — vi förstärker bara den befintliga länken.
-- Ingen ändring av nivå-pillarna själva.
+Detta läggs in i system-prompten som "## Kontext från besökarens webbplats" så att Hjärnan kan referera konkret ("Eftersom ni jobbar med kyl- och värmepumpsservice i Stockholm…").
+
+## Teknisk lösning
+
+- **Frontend (`src/pages/BrainPage.tsx`)**
+  - Nytt state `siteUrl`, expanderbart input ovanför skicka-knappen.
+  - Skickar med `siteUrl` i body till edge-funktionen.
+  - Visar liten "Läser din.se…" loader-chip när URL finns.
+
+- **Edge function (`supabase/functions/brain/index.ts`)**
+  - Tar emot `siteUrl` (validera: https?, längd, inte localhost/IP).
+  - Om angiven: gör `fetch` mot URL:en med kort timeout (5s), läs HTML, plocka ut `<title>`, `<meta description>`, första ~3000 tecken text. Ren regex/strip-tags räcker — ingen extern beroende.
+  - Bygg en kort kontextsträng (max ~1500 tecken) och prependa till messages som ett system- eller user-meddelande märkt "Kontext från besökarens sajt".
+  - Caching: ingen (vi sparar inget). Per-request only.
+  - Felfall: timeouts/4xx/5xx → ignorera tyst, fortsätt utan URL-kontext, sätt header `X-Site-Read: failed` så frontend kan visa notis.
+
+- **Säkerhet**
+  - Block: `localhost`, `127.*`, `10.*`, `192.168.*`, `169.254.*`, `::1`, interna .local-domäner (SSRF-skydd).
+  - Endast http/https, max URL-längd 500.
+  - Hämta max 1 MB, klipp av därefter.
+  - Ingen lagring – inget i DB, inga loggar med URL-innehåll.
+
+## Filer som ändras
+- `src/pages/BrainPage.tsx` — nytt URL-fält + skicka med i request, liten statusnotis.
+- `supabase/functions/brain/index.ts` — fetch+parse+SSRF-skydd, prepend kontext, valbar respons-header.
+
+## Inga DB-ändringar, inga nya secrets, inga nya beroenden.
+
+## Senare (ej i denna plan)
+- Visa tydlig "läs igen"-knapp om sajten cachelagrats per session.
+- Stötta att AI:n får använda Firecrawl-connectorn för bättre extraktion om vi vill öka kvaliteten.
