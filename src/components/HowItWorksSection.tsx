@@ -62,8 +62,8 @@ const HowItWorksSection = () => {
           <div className="mt-8 max-w-3xl mx-auto">
             <div className="text-[10px] uppercase tracking-[0.22em] text-muted-foreground/70 mb-3">
               {t({
-                sv: "Innan optimeraren kan räkna behövs:",
-                en: "Before the optimizer can run, you need:",
+                sv: "Administrationen förbereder grunddatan innan planeraren tar vid:",
+                en: "Administration prepares the base data before the planner takes over:",
               })}
             </div>
             <div className="flex flex-wrap justify-center gap-1.5">
