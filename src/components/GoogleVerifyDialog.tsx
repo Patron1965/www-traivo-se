@@ -230,6 +230,44 @@ export function GoogleVerifyDialog({ open, onOpenChange }: Props) {
               </a>
             )}
           </Step>
+
+          <div className="rounded-lg border border-border/60 bg-background/40 p-3">
+            <div className="flex items-center justify-between mb-2">
+              <h4 className="text-sm font-semibold text-foreground">Statuslogg</h4>
+              {log.length > 0 && (
+                <Button variant="ghost" size="sm" className="h-7 text-xs" onClick={() => setLog([])}>
+                  Rensa
+                </Button>
+              )}
+            </div>
+            {log.length === 0 ? (
+              <p className="text-xs text-muted-foreground">
+                Inga händelser än. Kör ett steg ovan så loggas resultat här.
+              </p>
+            ) : (
+              <ol className="space-y-1.5 text-xs font-mono max-h-48 overflow-y-auto">
+                {log.map((e, i) => {
+                  const time = new Date(e.ts).toLocaleTimeString("sv-SE", {
+                    timeZone: "Europe/Stockholm",
+                    hour12: false,
+                  });
+                  const tone =
+                    e.level === "ok"
+                      ? "text-primary"
+                      : e.level === "error"
+                        ? "text-destructive"
+                        : "text-muted-foreground";
+                  return (
+                    <li key={i} className="flex gap-2">
+                      <span className="text-muted-foreground/70 shrink-0">{time}</span>
+                      <span className={`shrink-0 ${tone}`}>[{e.step}]</span>
+                      <span className={`break-all ${tone}`}>{e.message}</span>
+                    </li>
+                  );
+                })}
+              </ol>
+            )}
+          </div>
         </div>
       </DialogContent>
     </Dialog>
