@@ -136,17 +136,6 @@ const MondayHero = () => {
           transition={{ delay: 0.7 }}
           className="flex flex-col items-center gap-5"
         >
-          <Link
-            to="/kontakt"
-            className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-xl bg-primary text-primary-foreground font-semibold text-sm sm:text-base shadow-[0_4px_20px_hsl(var(--primary)/0.35)] hover:bg-primary/90 hover:scale-[1.02] active:scale-[0.99] transition-all outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
-          >
-            {t({
-              sv: "Boka 20 min — vi visar er vardag",
-              en: "Book 20 min — we’ll show your everyday",
-            })}
-            <ArrowRight className="w-4 h-4" strokeWidth={2.5} />
-          </Link>
-
           <div className="flex flex-col items-center gap-2 pt-1">
             <span className="text-[11px] uppercase tracking-[0.2em] text-muted-foreground/70">
               {t({ sv: "Vilken nivå vill du ha svaren på?", en: "Which level do you want answers at?" })}
@@ -231,6 +220,14 @@ const MondayHero = () => {
           </div>
         </motion.div>
       </div>
+
+      <Link
+        to="/kontakt"
+        className="fixed bottom-6 right-6 z-40 inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-primary text-primary-foreground font-semibold text-sm shadow-[0_4px_20px_hsl(var(--primary)/0.35)] hover:bg-primary/90 hover:scale-[1.02] active:scale-[0.99] transition-all outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+      >
+        {t({ sv: "Boka demo", en: "Book demo" })}
+        <ArrowRight className="w-4 h-4" strokeWidth={2.5} />
+      </Link>
     </section>
   );
 };
