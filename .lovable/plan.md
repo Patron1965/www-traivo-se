@@ -1,45 +1,40 @@
-# Google Search Console-verifiering på /domain-status
+# Välj svarsnivå i AI-demonstratorn
 
-Lägg till en sektion på `/domain-status` som hjälper dig verifiera `https://traivo.se/` i Google Search Console — synlig först när båda domänerna är **Active**.
+Lägg till en enkel nivå-väljare ovanför AI-input på startsidan så besökaren själv kan välja hur svaren ska formuleras. Det gör demon mer relevant både för IT/AI-vana och för verksamhetsfolk som "bara använder IT".
 
-## Vad användaren ser
+## Tre nivåer
 
-Ny knapp i headern på `/domain-status`:
+1. **Verksamhet** (default)
+   Vardagligt språk, fokus på affärsnytta, tid sparad, färre stressmoment. Inga förkortningar (API, LLM, RAG, etc.) utan förklaring.
+2. **Blandad**
+   Branschtermer från fältservice (rutter, dispatch, ärenden, SLA) men håller AI/IT-jargong nere. Bra för planerare och driftchefer.
+3. **IT/AI-van**
+   Får använda tekniska begrepp (LLM, edge, integrationer, webhooks, multi-tenant, RLS). Mer detaljer om arkitektur när det är relevant.
 
-- **Innan Active**: knappen är inaktiverad med texten "Verifiera i Google Search Console (väntar på Active)".
-- **När båda är Active**: knappen blir aktiv. Klick öppnar en dialog (shadcn `Dialog`) med ett 4-stegs flöde:
+## UX
 
-```text
-Steg 1  Hämta meta-tag från Google
-        [ Hämta verifierings-token ]   → kallar edge function
-        Visar token i kodruta + Kopiera-knapp
+- Liten segmenterad knapp-rad direkt ovanför textarean i `AIInput.tsx`, label: "Anpassa svaren för:"
+- Tre pills: Verksamhet · Blandad · IT/AI-van
+- Val sparas i `localStorage` (`traivo-answer-level`) så återkommande besökare slipper välja om
+- Default = "Verksamhet" (matchar majoriteten av målgruppen)
+- När man byter nivå mitt i en konversation visas en diskret notis: "Nästa svar anpassas till [nivå]"
 
-Steg 2  Lägg in tagg i index.html
-        Förifylld kodrad: <meta name="google-site-verification" content="..." />
-        Instruktion: klistra in i <head>, publicera (Publish-knappen uppe till höger)
+## Hur nivån styr svaret
 
-Steg 3  Verifiera hos Google
-        [ Kör verifiering ]            → kallar edge function
-        Visar OK eller felmeddelande (oftast "deploy inte live än")
+- Nivån skickas med i `fetch`-anropet till edge-funktionen `chat` som ett extra fält (`level`)
+- Edge-funktionen lägger till en kort instruktion sist i system-prompten beroende på nivå, t.ex.:
+  - Verksamhet: "Svara i vardagligt språk. Undvik IT/AI-termer. Fokusera på tid, pengar, mindre stress."
+  - Blandad: "Använd branschtermer från fältservice men förklara IT-begrepp kort."
+  - IT/AI-van: "Du får använda tekniska begrepp utan förklaring. Var gärna konkret om arkitektur och integrationer."
+- Inga andra ändringar i prompten — bara ett tillägg
 
-Steg 4  Lägg till site i Search Console
-        [ Lägg till site ]             → kallar edge function
-        Bekräftar att property finns + länk till search.google.com/search-console
-```
+## Filer som berörs
 
-## Teknik
+- `src/components/AIInput.tsx` — ny nivå-väljare, state, localStorage, skicka `level` i body
+- `supabase/functions/chat/index.ts` — ta emot `level`, lägg till nivå-instruktion i system-prompten
 
-- Ny edge function `gsc-verify` med tre actions via `?action=`:
-  - `token` — POST `/siteVerification/v1/token` (META, identifier `https://traivo.se/`)
-  - `verify` — POST `/siteVerification/v1/webResource?verificationMethod=META`
-  - `add-site` — PUT `/webmasters/v3/sites/https%3A%2F%2Ftraivo.se%2F`
-  - Använder connector-gateway med `LOVABLE_API_KEY` + `GOOGLE_SEARCH_CONSOLE_API_KEY` (båda redan tillgängliga som Supabase-secrets).
-  - `verify_jwt = false` i `supabase/config.toml` (publik admin-sida).
-- Ny komponent `src/components/GoogleVerifyDialog.tsx` med stegvis UI, kallad från `DomainStatusPage`.
-- Knappen i `DomainStatusPage` aktiveras via befintlig `allActive`-flagga.
-- Ingen ändring av `index.html` automatiskt — användaren klistrar själv in meta-taggen och trycker Publish (frontend kräver manuell publish enligt projektets minne).
+## Vad som INTE ingår
 
-## Vad som inte ingår
-
-- Ingen automatisk insättning av meta-taggen i `index.html` (kräver fil-edit + manuell publish — bättre att du kopierar in själv så du ser vad som händer).
-- Ingen sitemap-submit i samma flöde — det görs separat när verifieringen är klar.
+- Ingen ändring av övriga sidor (Hjärnan, Kunskap m.m.)
+- Ingen översättning till engelska i denna iteration (kan läggas till sen via `useT`)
+- Ingen analytics-spårning av valet (kan läggas till om du vill se vilken nivå besökare väljer)
