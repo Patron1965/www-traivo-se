@@ -187,7 +187,7 @@ const Brain_Page = () => {
   const [messages, setMessages] = useState<Msg[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [hasAsked, setHasAsked] = useState(false);
-  const [showPrivacy, setShowPrivacy] = useState(false);
+  
   const [error, setError] = useState("");
   const [focusAnnouncement, setFocusAnnouncement] = useState("");
   const [justFocused, setJustFocused] = useState(false);
