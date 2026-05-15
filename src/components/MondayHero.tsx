@@ -128,6 +128,72 @@ const MondayHero = () => {
           </div>
         </motion.div>
 
+        {/* Produkt-split: Traivo One + Traivo Go */}
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.5 }}
+          className="mb-10"
+        >
+          <div className="text-[11px] font-medium uppercase tracking-[0.25em] text-muted-foreground/80 mb-4">
+            {t({ sv: "Två appar — ett system", en: "Two apps — one system" })}
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4 max-w-3xl mx-auto text-left">
+            {[
+              {
+                to: "/traivo-one",
+                icon: Monitor,
+                name: "Traivo One",
+                tag: t({ sv: "För kontoret", en: "For the office" }),
+                desc: t({
+                  sv: "Schemaläggning, ruttoptimering och realtidskoll på fältet — i en kontrollvy.",
+                  en: "Scheduling, route optimization and real-time field tracking — in one control view.",
+                }),
+                cta: t({ sv: "Läs om Traivo One", en: "Explore Traivo One" }),
+              },
+              {
+                to: "/traivo-go",
+                icon: Smartphone,
+                name: "Traivo Go",
+                tag: t({ sv: "För fältet", en: "For the field" }),
+                desc: t({
+                  sv: "Mobilapp för tekniker: digitala protokoll, foto, QR och navigation — fungerar offline.",
+                  en: "Mobile app for technicians: digital protocols, photo, QR and navigation — works offline.",
+                }),
+                cta: t({ sv: "Läs om Traivo Go", en: "Explore Traivo Go" }),
+              },
+            ].map((p) => {
+              const Icon = p.icon;
+              return (
+                <Link
+                  key={p.name}
+                  to={p.to}
+                  className="group relative flex flex-col gap-3 p-5 rounded-2xl border border-primary/20 bg-card/30 backdrop-blur-sm hover:border-primary/50 hover:bg-primary/[0.05] transition-all duration-200"
+                >
+                  <div className="flex items-center gap-3">
+                    <span className="flex items-center justify-center w-9 h-9 rounded-xl bg-primary/15 group-hover:bg-primary/25 transition-colors">
+                      <Icon className="w-4.5 h-4.5 text-primary" strokeWidth={2.25} />
+                    </span>
+                    <div className="flex flex-col">
+                      <span className="font-display font-semibold text-foreground text-base sm:text-lg leading-tight">
+                        {p.name}
+                      </span>
+                      <span className="text-[11px] uppercase tracking-[0.18em] text-primary/80">
+                        {p.tag}
+                      </span>
+                    </div>
+                  </div>
+                  <p className="text-sm text-muted-foreground leading-relaxed">{p.desc}</p>
+                  <span className="inline-flex items-center gap-1.5 text-xs font-medium text-primary group-hover:gap-2 transition-all">
+                    {p.cta}
+                    <ArrowRight className="w-3.5 h-3.5" strokeWidth={2.5} />
+                  </span>
+                </Link>
+              );
+            })}
+          </div>
+        </motion.div>
+
         {/* Branscher – kort textrad */}
         <motion.div
           initial={{ opacity: 0 }}
