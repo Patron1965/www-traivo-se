@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import {
-  ArrowRight, Brain, Lock,
+  ArrowRight, ArrowDown, Brain, Lock,
   Recycle, Wrench, Building2, Truck, HeartPulse,
 } from "lucide-react";
 import { useT } from "@/i18n/LanguageContext";
