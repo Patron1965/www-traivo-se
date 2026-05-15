@@ -87,7 +87,17 @@ serve(async (req) => {
   }
 
   try {
-    const { messages } = await req.json();
+    const { messages, level } = await req.json();
+
+    const answerLevel: "business" | "tech" =
+      level === "tech" ? "tech" : "business";
+
+    const LEVEL_INSTRUCTIONS: Record<"business" | "tech", string> = {
+      business:
+        "\n\n## Anpassad svarsnivå (besökaren har valt 'Förklara vad ni kan göra för oss'):\nSvara i vardagligt språk. Undvik IT/AI-termer (API, LLM, RAG, webhook, edge, RLS osv.) eller förklara dem mycket kort i parentes första gången. Fokusera på affärsnytta — tid sparad, mindre stress, nöjdare kunder, lägre kostnader. Använd konkreta exempel från fältserviceverksamhet.",
+      tech:
+        "\n\n## Anpassad svarsnivå (besökaren har valt 'IT-van / hänger med inom AI'):\nDu får använda tekniska begrepp utan förklaring (LLM, edge functions, integrationer, webhooks, multi-tenant, offline-sync, RLS, REST). Var gärna konkret om arkitektur, dataflöden och integrationsmöjligheter när det är relevant.",
+    };
 
     if (!messages || !Array.isArray(messages)) {
       return new Response(
@@ -143,7 +153,7 @@ serve(async (req) => {
       body: JSON.stringify({
         model: "google/gemini-3-flash-preview",
         messages: [
-          { role: "system", content: SYSTEM_PROMPT },
+          { role: "system", content: SYSTEM_PROMPT + LEVEL_INSTRUCTIONS[answerLevel] },
           ...messages,
         ],
         stream: true,

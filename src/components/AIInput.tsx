@@ -15,13 +15,19 @@ const suggestedQuestions = [
   "Vi använder Fortnox idag",
 ];
 
+type Level = "business" | "tech";
+
+const LEVEL_STORAGE_KEY = "traivo-answer-level";
+
 async function streamChat({
   messages,
+  level,
   onDelta,
   onDone,
   onError,
 }: {
   messages: Msg[];
+  level: Level;
   onDelta: (text: string) => void;
   onDone: () => void;
   onError: (msg: string) => void;
@@ -32,7 +38,7 @@ async function streamChat({
       "Content-Type": "application/json",
       Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
     },
-    body: JSON.stringify({ messages }),
+    body: JSON.stringify({ messages, level }),
   });
 
   if (!resp.ok) {
@@ -101,7 +107,23 @@ const AIInput = () => {
   const [hasAsked, setHasAsked] = useState(false);
   const [showPrivacy, setShowPrivacy] = useState(false);
   const [error, setError] = useState("");
+  const [level, setLevelState] = useState<Level>(() => {
+    if (typeof window === "undefined") return "business";
+    const stored = localStorage.getItem(LEVEL_STORAGE_KEY);
+    return stored === "tech" ? "tech" : "business";
+  });
+  const [levelChanged, setLevelChanged] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  const setLevel = (l: Level) => {
+    if (l === level) return;
+    setLevelState(l);
+    localStorage.setItem(LEVEL_STORAGE_KEY, l);
+    if (hasAsked) {
+      setLevelChanged(true);
+      setTimeout(() => setLevelChanged(false), 3500);
+    }
+  };
 
   const highlightDemo = (children: React.ReactNode): React.ReactNode => {
     return Array.isArray(children)
@@ -148,6 +170,7 @@ const AIInput = () => {
     try {
       await streamChat({
         messages: allMessages,
+        level,
         onDelta: (chunk) => {
           assistantSoFar += chunk;
           setMessages((prev) => {
@@ -187,6 +210,52 @@ const AIInput = () => {
 
   return (
     <div className="w-full max-w-2xl mx-auto">
+      {/* Level selector */}
+      <motion.div
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.3, duration: 0.5 }}
+        className="mb-3 flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3"
+      >
+        <span className="text-xs text-muted-foreground shrink-0">Anpassa svaren för:</span>
+        <div className="inline-flex flex-wrap gap-1 p-1 rounded-xl glass-subtle">
+          {([
+            { id: "business", label: "Förklara vad ni kan göra för oss" },
+            { id: "tech", label: "Jag är IT-van / hänger med inom AI" },
+          ] as { id: Level; label: string }[]).map((opt) => {
+            const active = level === opt.id;
+            return (
+              <button
+                key={opt.id}
+                type="button"
+                onClick={() => setLevel(opt.id)}
+                className={`px-3 py-1.5 rounded-lg text-xs transition-all ${
+                  active
+                    ? "bg-primary/15 text-primary border border-primary/30"
+                    : "text-muted-foreground border border-transparent hover:text-foreground"
+                }`}
+                aria-pressed={active}
+              >
+                {opt.label}
+              </button>
+            );
+          })}
+        </div>
+      </motion.div>
+
+      <AnimatePresence>
+        {levelChanged && (
+          <motion.div
+            initial={{ opacity: 0, y: -4 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0 }}
+            className="mb-2 text-[11px] text-primary/80"
+          >
+            Nästa svar anpassas till {level === "tech" ? "IT-van nivå" : "förklarande nivå"}.
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {/* Input */}
       <motion.form
         onSubmit={handleSubmit}
