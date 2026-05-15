@@ -1,66 +1,51 @@
-# Hjärnan: lägg till valfri webbadress för bättre svar
+# Tillgänglighet för äldre användare — kontrast & läsbarhet
 
-## Mål
-Höj kvaliteten på Hjärnans analys genom att låta besökaren (frivilligt) ange sin webbadress. Edge-funktionen hämtar då innehållet från sajten, sammanfattar det och låter Hjärnan väva in branschspecifika observationer i sitt svar — utan att tappa anonymiteten (vi sparar fortfarande inget).
+Målgrupp: äldre fältserviceproffs, ofta med försämrad syn. Inga stora visuella förändringar — bara höja kontrast, textstorlek och tydlighet där det idag är svagt.
 
-## Användarflöde
+## Problem som hittats
 
-```text
-[Hjärnan-input]
- ├── Textfält: "Beskriv er verksamhet…"
- └── Valfritt: 🌐 "Lägg till webbadress för djupare analys"  (expanderbart)
-       └── input: https://...
+1. **Muted-text för ljusgrå mot mörk bakgrund** — `--muted-foreground: 185 14% 75%` ger ca 7:1 mot bakgrund, men används i väldigt små storlekar (text-xs, text-[11px], text-[12px]) på t.ex. nav-länkar, badges, "anonymt"-rad under CTA, svarsnivå-väljare. Små + grått = svårläst.
+2. **Navbar-länkar** är `text-[12px] uppercase` i muted färg — kombinationen liten + versal + grå är jobbig för äldre ögon.
+3. **Brödtext** i hero och sektioner använder ofta `text-sm` (14px) eller `text-base` (16px) i muted-färg.
+4. **Fokusringar** finns på CTAs men saknas på vanliga textlänkar.
+5. **Body font-size** är webbstandard 16px — kan höjas något på desktop.
 
-[Skicka] → edge function /brain
-            ├── Om URL angiven: hämta + sammanfatta sajten (server-side)
-            └── Skicka kombinerad kontext till AI-modellen
+## Föreslagna ändringar (små, säkra)
 
-[Svar i chatten]
- └── Vanlig markdown-rendering
-       + liten chip överst: "Analys baserad på din beskrivning + din.se"
-```
+### 1. Höj kontrast på muted-foreground
+`index.css`: `--muted-foreground` från `185 14% 75%` → `185 18% 84%`. Påverkar all sekundärtext globalt utan att ändra layout.
 
-## Vad användaren ser
+### 2. Navbar
+- Höj länkstorlek från `text-[12px]` → `text-sm` (14px), behåll uppercase men öka `tracking` lite mindre.
+- Använd `text-foreground/80` istället för `text-muted-foreground` för inaktiva länkar.
+- Mobilmeny: `text-sm` → `text-base`.
 
-- Under befintliga textfältet: en diskret länk "+ Lägg till webbadress (frivilligt)" som expanderar ett URL-fält.
-- Hjälptext: "Vi läser publika sidor en gång för att förstå er bättre. Inget sparas."
-- Validering: måste börja med http(s)://, max längd, ingen IP/localhost.
-- Felhantering: om sajten inte kan läsas → svar fortsätter ändå utan URL-kontext, med liten notis "kunde inte läsa sajten".
+### 3. Mikrotext (badges, "anonymt"-rader, hjälptexter)
+Höj `text-[11px]` → `text-xs` (12px) och `text-xs` → `text-sm` där det är meningsbärande information (t.ex. raden "Inget loggas · Inga säljsamtal" i MondayHero, svarsnivå-väljaren).
 
-## Vad Hjärnan får extra
-1. Företagsnamn (om hittat i title/meta).
-2. 1–2 meningar om vad bolaget gör (från meta description / hero).
-3. Bransch-/tjänsteindikatorer (nyckelord från huvudsidan).
-4. Geografi om det syns (t.ex. "verksam i Mälardalen").
+### 4. Brödtext i hero/sektioner
+Hero-paragraf: `text-base md:text-lg` → `text-lg md:text-xl`. Sektionsbeskrivningar `text-sm` → `text-base` där de är förklarande text.
 
-Detta läggs in i system-prompten som "## Kontext från besökarens webbplats" så att Hjärnan kan referera konkret ("Eftersom ni jobbar med kyl- och värmepumpsservice i Stockholm…").
+### 5. Fokus & länkar
+Lägg `focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2` på navbar-länkar och inline-länkar som idag saknar synlig fokusmarkering.
 
-## Teknisk lösning
+### 6. Underline på textlänkar i löpande text
+Inline-länkar i brödtext får `underline underline-offset-4 decoration-primary/60` så de inte bara känns igen via färg.
 
-- **Frontend (`src/pages/BrainPage.tsx`)**
-  - Nytt state `siteUrl`, expanderbart input ovanför skicka-knappen.
-  - Skickar med `siteUrl` i body till edge-funktionen.
-  - Visar liten "Läser din.se…" loader-chip när URL finns.
+## Filer som påverkas
 
-- **Edge function (`supabase/functions/brain/index.ts`)**
-  - Tar emot `siteUrl` (validera: https?, längd, inte localhost/IP).
-  - Om angiven: gör `fetch` mot URL:en med kort timeout (5s), läs HTML, plocka ut `<title>`, `<meta description>`, första ~3000 tecken text. Ren regex/strip-tags räcker — ingen extern beroende.
-  - Bygg en kort kontextsträng (max ~1500 tecken) och prependa till messages som ett system- eller user-meddelande märkt "Kontext från besökarens sajt".
-  - Caching: ingen (vi sparar inget). Per-request only.
-  - Felfall: timeouts/4xx/5xx → ignorera tyst, fortsätt utan URL-kontext, sätt header `X-Site-Read: failed` så frontend kan visa notis.
+- `src/index.css` — en token-ändring (`--muted-foreground`).
+- `src/components/Navbar.tsx` — storlek + färg på länkar.
+- `src/components/MondayHero.tsx` — hero-paragraf, microcopy-rader.
+- `src/components/HowItWorksSection.tsx`, `TeamSection.tsx`, `Footer.tsx` — höj `text-sm` till `text-base` på beskrivande text.
+- Eventuellt `FAQ.tsx` om text där är för liten.
 
-- **Säkerhet**
-  - Block: `localhost`, `127.*`, `10.*`, `192.168.*`, `169.254.*`, `::1`, interna .local-domäner (SSRF-skydd).
-  - Endast http/https, max URL-längd 500.
-  - Hämta max 1 MB, klipp av därefter.
-  - Ingen lagring – inget i DB, inga loggar med URL-innehåll.
+## Vad som INTE ändras
 
-## Filer som ändras
-- `src/pages/BrainPage.tsx` — nytt URL-fält + skicka med i request, liten statusnotis.
-- `supabase/functions/brain/index.ts` — fetch+parse+SSRF-skydd, prepend kontext, valbar respons-header.
+- Färgtema, logotyp, layoutstruktur, typsnitt, animationer.
+- Rubrikstorlekar (de är redan stora och tydliga).
+- CTA-knappar (redan höga kontrastvärden).
 
-## Inga DB-ändringar, inga nya secrets, inga nya beroenden.
+## Resultat
 
-## Senare (ej i denna plan)
-- Visa tydlig "läs igen"-knapp om sajten cachelagrats per session.
-- Stötta att AI:n får använda Firecrawl-connectorn för bättre extraktion om vi vill öka kvaliteten.
+Sekundärtext och navigering blir märkbart läsbarare för äldre användare, utan att designens karaktär ändras.
