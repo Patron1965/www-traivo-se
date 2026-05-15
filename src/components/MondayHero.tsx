@@ -40,7 +40,7 @@ const MondayHero = () => {
           className="flex items-center justify-center gap-3 mb-6"
         >
           <div className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse-slow" />
-          <span className="font-medium uppercase tracking-[0.25em] text-muted-foreground text-xs sm:text-sm">
+          <span className="font-medium uppercase tracking-[0.25em] text-foreground/80 text-xs sm:text-sm">
             {t({
               sv: "Plattform för fältservice · Norden",
               en: "Field service platform · Nordics",
@@ -73,7 +73,7 @@ const MondayHero = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.3 }}
-          className="text-muted-foreground text-base md:text-lg leading-relaxed max-w-2xl mx-auto mb-12"
+          className="text-foreground/85 text-lg md:text-xl leading-relaxed max-w-2xl mx-auto mb-12"
         >
           {t({
             sv: "Ett system för fältarbetet — schemaläggning, ruttoptimering, mobilapp och kundportal i samma plattform.",
@@ -91,7 +91,7 @@ const MondayHero = () => {
           <div className="relative rounded-2xl border border-primary/30 bg-card/40 backdrop-blur-sm p-6 sm:p-8 shadow-[0_0_40px_hsl(var(--primary)/0.08)]">
             <div className="flex items-center justify-center gap-2 mb-3">
               <Sparkles className="w-3.5 h-3.5 text-primary" strokeWidth={2.5} />
-              <span className="text-[11px] font-medium uppercase tracking-[0.25em] text-primary">
+              <span className="text-xs font-medium uppercase tracking-[0.25em] text-primary">
                 {t({ sv: "Börja här", en: "Start here" })}
               </span>
             </div>
@@ -101,7 +101,7 @@ const MondayHero = () => {
                 en: "Describe your operation — get a concrete answer right away.",
               })}
             </h2>
-            <p className="text-sm sm:text-base text-muted-foreground leading-relaxed mb-6 max-w-xl mx-auto">
+            <p className="text-base sm:text-lg text-foreground/85 leading-relaxed mb-6 max-w-xl mx-auto">
               {t({
                 sv: "Hjärnan är vår AI-rådgivare. Berätta hur ni jobbar idag, så får du en analys av vad Traivo skulle göra för just er — anonymt och utan säljsamtal.",
                 en: "The Brain is our AI advisor. Tell it how you work today and get an analysis of what Traivo would do for you — anonymously and without sales calls.",
@@ -120,8 +120,8 @@ const MondayHero = () => {
               <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" strokeWidth={2.5} />
             </Link>
 
-            <div className="mt-5 flex items-center justify-center gap-1.5 text-[11px] text-muted-foreground/80">
-              <Lock className="w-3 h-3" />
+            <div className="mt-5 flex items-center justify-center gap-1.5 text-xs sm:text-sm text-muted-foreground">
+              <Lock className="w-3.5 h-3.5" />
               <span>
                 {t({
                   sv: "Inget loggas · Inga säljsamtal · Helt anonymt",
@@ -136,7 +136,7 @@ const MondayHero = () => {
             <button
               type="button"
               onClick={() => setShowLevel((v) => !v)}
-              className="inline-flex items-center gap-1 text-[11px] text-muted-foreground/70 hover:text-foreground transition-colors"
+              className="inline-flex items-center gap-1 text-xs text-foreground/75 hover:text-foreground transition-colors"
               aria-expanded={showLevel}
             >
               <span>
