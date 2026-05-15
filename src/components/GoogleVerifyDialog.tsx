@@ -18,12 +18,21 @@ interface Props {
 
 type StepState = "idle" | "loading" | "ok" | "error";
 
+type LogLevel = "info" | "ok" | "error";
+interface LogEntry {
+  ts: string;
+  level: LogLevel;
+  step: string;
+  message: string;
+}
+
 export function GoogleVerifyDialog({ open, onOpenChange }: Props) {
   const [token, setToken] = useState<string | null>(null);
   const [tokenState, setTokenState] = useState<StepState>("idle");
   const [verifyState, setVerifyState] = useState<StepState>("idle");
   const [addState, setAddState] = useState<StepState>("idle");
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [log, setLog] = useState<LogEntry[]>([]);
 
   const setErr = (k: string, m: string | null) =>
     setErrors((e) => {
@@ -32,6 +41,12 @@ export function GoogleVerifyDialog({ open, onOpenChange }: Props) {
       else delete n[k];
       return n;
     });
+
+  const append = (level: LogLevel, step: string, message: string) =>
+    setLog((l) => [
+      ...l,
+      { ts: new Date().toISOString(), level, step, message },
+    ]);
 
   const call = async (action: "token" | "verify" | "add-site") => {
     const { data, error } = await supabase.functions.invoke("gsc-verify", {
@@ -45,65 +60,63 @@ export function GoogleVerifyDialog({ open, onOpenChange }: Props) {
   const handleToken = async () => {
     setTokenState("loading");
     setErr("token", null);
+    append("info", "Token", "Hämtar verifierings-token från Google…");
     try {
       const r = (await call("token")) as { token: string };
       setToken(r.token);
       setTokenState("ok");
+      append("ok", "Token", "Token mottagen.");
     } catch (e) {
-      setErr("token", e instanceof Error ? e.message : String(e));
+      const msg = e instanceof Error ? e.message : String(e);
+      setErr("token", msg);
       setTokenState("error");
+      append("error", "Token", msg);
     }
   };
 
   const handleVerify = async () => {
     setVerifyState("loading");
     setErr("verify", null);
+    append("info", "Verifiera", "Begär att Google verifierar META-taggen…");
     try {
       await call("verify");
       setVerifyState("ok");
+      append("ok", "Verifiera", "Google bekräftade ägarskap.");
       toast({ title: "Verifierat", description: "Google har bekräftat ägarskap." });
     } catch (e) {
       const msg = e instanceof Error ? e.message : String(e);
       setErr("verify", msg);
       setVerifyState("error");
+      append("error", "Verifiera", msg);
     }
   };
 
   const handleAdd = async () => {
     setAddState("loading");
     setErr("add", null);
+    append("info", "Lägg till", "Lägger till sajten i Search Console…");
     try {
       await call("add-site");
       setAddState("ok");
+      append("ok", "Lägg till", "Sajten finns nu som property.");
       toast({ title: "Tillagd", description: "Sajten finns nu i Search Console." });
     } catch (e) {
-      setErr("add", e instanceof Error ? e.message : String(e));
+      const msg = e instanceof Error ? e.message : String(e);
+      setErr("add", msg);
       setAddState("error");
+      append("error", "Lägg till", msg);
     }
   };
 
   const handleVerifyAndAdd = async () => {
-    setVerifyState("loading");
-    setErr("verify", null);
-    try {
-      await call("verify");
-      setVerifyState("ok");
-    } catch (e) {
-      const msg = e instanceof Error ? e.message : String(e);
-      setErr("verify", msg);
-      setVerifyState("error");
-      return;
-    }
-    setAddState("loading");
-    setErr("add", null);
-    try {
-      await call("add-site");
-      setAddState("ok");
-      toast({ title: "Klart", description: "Verifierat och tillagd i Search Console." });
-    } catch (e) {
-      setErr("add", e instanceof Error ? e.message : String(e));
-      setAddState("error");
-    }
+    await handleVerify();
+    // Only continue if verify succeeded
+    setVerifyState((s) => {
+      if (s === "ok") {
+        void handleAdd();
+      }
+      return s;
+    });
   };
 
   const copy = async (text: string) => {
