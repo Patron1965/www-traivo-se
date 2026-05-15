@@ -1,15 +1,34 @@
 # Traivo
 
-> Nordisk AI-plattform för fältserviceplanering. Ruttoptimering, mobil fältapp och kundportal för avfall, fastighet och teknisk drift.
+> Nordisk AI-plattform för fältserviceplanering. Ruttoptimering, mobil fältapp och kundportal för avfall, fastighet, teknisk drift, transport och hemtjänst.
 
-Traivo kombinerar erfarenhet från fältet med AI för att planera rutter, hantera tekniker och digitalisera protokoll. Plattformen består av Traivo One (webb för planerare och arbetsledare) och Traivo Go (mobilapp för tekniker i fält). Färdig Fortnox-koppling, integrationer mot Visma, Björn Lundén och andra ekonomisystem byggs på begäran.
+Traivo är en svenskbyggd plattform som samlar schemaläggning, ruttoptimering, fältapp och kundportal i ett system. Plattformen är byggd för verksamheter med många stopp per dag — där geografi, tid och kompetens måste pussla ihop.
+
+Plattformen består av två produkter:
+
+- **Traivo One** — webbverktyget för planerare och arbetsledare. Drag-and-drop veckoplanerare, AI-autoschemaläggning baserad på kompetens, geografi och fordonskapacitet, ruttoptimering på riktiga vägar, kundportal, fakturering och färdig Fortnox-koppling.
+- **Traivo Go** — mobilappen för tekniker i fält. Dagens jobb i ordning, ett-tryck navigation, digitala protokoll med foto och signatur, offline-läge som synkar automatiskt när nätet kommer tillbaka.
+
+Målgrupper: avfallshämtning och miljö, teknisk service och installation (vitvaror, fiber, hiss, kyla), fastighetsskötsel och facility management, transport och last mile, hemtjänst och mobil vård.
+
+Kärnvärden: AI som förstärker människan istället för att ersätta. Byggt med kunder, inte för konferensrum. Anpassat för nordiska förhållanden — väder, geografi, tunga fordon, regelverk. Inga buzzwords, ingen säljpitch — bara verktyg som funkar.
+
+Tekniskt: React Native / Expo (mobil), Node.js + Socket.io (realtid), Postgres + Drizzle (databas), OpenAI och Gemini (AI), Geoapify (kartor och rutter). GDPR-anpassat, data lagras inom EU.
+
+Företag: Traivo AB, baserat i Sverige. Verksamt i Sverige, Norge, Finland och Danmark.
 
 ## Pages
 
-- [Start](/): Översikt av plattformen och målgrupper.
-- [Traivo One](/traivo-one): Webbverktyg för planering, ruttoptimering, kundregister och fakturering.
-- [Traivo Go](/traivo-go): Mobilapp för tekniker – jobb, navigation, digitala protokoll, offline-läge.
-- [Hjärnan](/hjarna): Anonym AI-rådgivare som rekommenderar rätt delar av Traivo för verksamheten.
-- [Priser](/priser): Standard- och Pro-plan med interaktiv kalkylator.
-- [Om oss](/om-oss): Bakgrund, värdegrund och team.
-- [Kontakt](/kontakt): Boka demo och kontakta teamet.
+- [Start](/): Översikt av plattformen, branscher och hur Traivo löser planeringskaoset på en typisk måndag morgon.
+- [Traivo One](/traivo-one): Webbverktyg för planering, ruttoptimering, kundregister, fakturering och Fortnox-integration.
+- [Traivo Go](/traivo-go): Mobilapp för tekniker — dagens jobb, navigation, digitala protokoll, foto, signatur och offline-läge.
+- [Hjärnan](/hjarna): Anonym AI-rådgivare. Beskriv din verksamhet och få en objektiv rekommendation om vilka delar av Traivo som skulle göra störst skillnad.
+- [Priser](/priser): Standard- och Pro-plan med interaktiv kalkylator baserad på antal användare och onboarding.
+- [Kunskap](/kunskap): Guider och artiklar om ruttoptimering, fältservice och digitalisering av tekniker i fält.
+- [Om oss](/om-oss): Bakgrund, team och värdegrund — människor med erfarenhet från fältet bygger Traivo.
+- [Kontakt](/kontakt): Boka en 20 minuters demo eller skriv direkt till teamet.
+
+## Optional
+
+- [Djupanalys](/hjarna/djupanalys): Betald AI-djupanalys av din verksamhet.
+- [Go-live checklista](/go-live): Intern checklista inför produktionssättning.
