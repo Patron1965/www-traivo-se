@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/dialog";
 import { useT } from "@/i18n/LanguageContext";
 import SEO from "@/components/SEO";
+import FAQ from "@/components/FAQ";
 
 const Index = () => {
   const t = useT();
@@ -508,6 +509,53 @@ const Index = () => {
           </motion.div>
         </div>
       </section>
+
+      <FAQ
+        items={[
+          {
+            q: { sv: "Vad är Traivo?", en: "What is Traivo?" },
+            a: {
+              sv: "Traivo är en nordisk plattform för fältserviceplanering som samlar schemaläggning, ruttoptimering, mobil fältapp och kundportal i ett system. Den är byggd för verksamheter med många stopp per dag — avfall, fastighet, teknisk service, transport och hemtjänst.",
+              en: "Traivo is a Nordic field service planning platform that brings scheduling, route optimization, a mobile field app and a customer portal into one system. It's built for operations with many stops per day — waste, property, technical service, transport and home care.",
+            },
+          },
+          {
+            q: { sv: "Vilka branscher passar Traivo för?", en: "Which industries is Traivo built for?" },
+            a: {
+              sv: "Avfall och miljö, teknisk service och installation (vitvaror, fiber, hiss, kyla), fastighetsskötsel och facility management, transport och last mile, samt hemtjänst och mobil vård. Gemensamt: många stopp per dag där geografi, tid och kompetens måste pussla ihop.",
+              en: "Waste and environment, technical service and installation (appliances, fiber, elevators, cooling), property and facility management, transport and last mile, plus home care and mobile health. Common thread: many stops per day where geography, time and skills have to fit together.",
+            },
+          },
+          {
+            q: { sv: "Hur skiljer sig Traivo från andra fältserviceverktyg?", en: "How is Traivo different from other field service tools?" },
+            a: {
+              sv: "Det är byggt med människor som har erfarenhet från fältet, anpassat för nordiska förhållanden — väder, geografi, tunga fordon — och fungerar offline där täckningen tar slut. AI används där den faktiskt gör skillnad och förklarar sina förslag, istället för att vara en svart låda.",
+              en: "It's built with people who have field experience, adapted for Nordic conditions — weather, geography, heavy vehicles — and works offline where coverage drops. AI is used where it actually makes a difference and explains its suggestions, instead of being a black box.",
+            },
+          },
+          {
+            q: { sv: "Hur lång tid tar det att komma igång?", en: "How long does it take to get started?" },
+            a: {
+              sv: "Standard onboardas vanligen på 1–3 dagar. Pro tar något längre eftersom integrationer mot ekonomisystem (Fortnox, Visma, Björn Lundén) och kundspecifika anpassningar tas med. Du kan räkna ut din egen kostnad i kalkylatorn under Priser.",
+              en: "Standard is typically onboarded in 1–3 days. Pro takes a bit longer because integrations with finance systems (Fortnox, Visma, Björn Lundén) and customer-specific tweaks are included. You can calculate your own cost in the Pricing calculator.",
+            },
+          },
+          {
+            q: { sv: "Fungerar mobilappen utan nät?", en: "Does the mobile app work without coverage?" },
+            a: {
+              sv: "Ja. Traivo Go är byggd offline-first. Tekniker ser dagens jobb, fyller i protokoll, tar foto och får signatur även utan täckning. Allt synkar automatiskt när nätet kommer tillbaka.",
+              en: "Yes. Traivo Go is built offline-first. Technicians see today's jobs, fill in reports, take photos and get signatures even without coverage. Everything syncs automatically when the network returns.",
+            },
+          },
+          {
+            q: { sv: "Var lagras data?", en: "Where is data stored?" },
+            a: {
+              sv: "Inom EU. Traivo är GDPR-anpassat och du som kund äger din data. Vi använder ingen kunddata för att träna AI-modeller.",
+              en: "Within the EU. Traivo is GDPR-compliant and you as a customer own your data. We don't use customer data to train AI models.",
+            },
+          },
+        ]}
+      />
     </>
   );
 };

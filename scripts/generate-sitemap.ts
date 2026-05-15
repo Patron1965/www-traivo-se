@@ -17,6 +17,10 @@ const entries: SitemapEntry[] = [
   { path: "/traivo-go", changefreq: "monthly", priority: "0.9" },
   { path: "/hjarna", changefreq: "monthly", priority: "0.8" },
   { path: "/priser", changefreq: "monthly", priority: "0.8" },
+  { path: "/kunskap", changefreq: "weekly", priority: "0.8" },
+  { path: "/kunskap/ruttoptimering-fordon", changefreq: "monthly", priority: "0.7" },
+  { path: "/kunskap/digital-faltservice-guide", changefreq: "monthly", priority: "0.7" },
+  { path: "/kunskap/ai-schemalaggning-faltservice", changefreq: "monthly", priority: "0.7" },
   { path: "/om-oss", changefreq: "monthly", priority: "0.6" },
   { path: "/kontakt", changefreq: "monthly", priority: "0.6" },
 ];

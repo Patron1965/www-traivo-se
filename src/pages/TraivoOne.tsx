@@ -7,6 +7,7 @@ import {
 } from "lucide-react";
 import { useT } from "@/i18n/LanguageContext";
 import SEO from "@/components/SEO";
+import FAQ from "@/components/FAQ";
 
 const fadeIn = {
   initial: { opacity: 0, y: 24 },
@@ -156,6 +157,39 @@ const TraivoOne = () => {
           </motion.p>
         </div>
       </section>
+
+      <FAQ
+        items={[
+          {
+            q: { sv: "Vad gör Traivo One?", en: "What does Traivo One do?" },
+            a: {
+              sv: "Traivo One är webbverktyget för planerare och arbetsledare. Det samlar veckoplanering med drag-and-drop, AI-autoschemaläggning, ruttoptimering, kundregister, fakturering och kundportal i ett gränssnitt.",
+              en: "Traivo One is the web tool for planners and supervisors. It combines weekly drag-and-drop planning, AI auto-scheduling, route optimization, customer register, invoicing and customer portal in one interface.",
+            },
+          },
+          {
+            q: { sv: "Vilka ekonomisystem kopplar Traivo mot?", en: "Which finance systems does Traivo integrate with?" },
+            a: {
+              sv: "Färdig integration mot Fortnox. Integrationer mot Visma, Björn Lundén och andra ekonomisystem byggs på begäran inom Pro-planen.",
+              en: "Ready integration with Fortnox. Integrations with Visma, Björn Lundén and other finance systems are built on request as part of the Pro plan.",
+            },
+          },
+          {
+            q: { sv: "Hur fungerar AI-schemaläggningen?", en: "How does the AI scheduling work?" },
+            a: {
+              sv: "Den tar hänsyn till teknikerns kompetens, geografi, arbetstid, fordonskapacitet och kundens tidsfönster. Förslag är förklarbara — du ser varför ett jobb hamnade hos en viss tekniker, och kan ändra utan att hela schemat går sönder.",
+              en: "It accounts for technician skills, geography, working hours, vehicle capacity and customer time windows. Suggestions are explainable — you see why a job ended up with a specific technician, and you can override without breaking the whole schedule.",
+            },
+          },
+          {
+            q: { sv: "Kan jag importera mitt befintliga kundregister?", en: "Can I import my existing customer register?" },
+            a: {
+              sv: "Ja. Vi hjälper er importera kunder, avtal och historik från Excel, Fortnox eller andra system under onboardingen.",
+              en: "Yes. We help you import customers, contracts and history from Excel, Fortnox or other systems during onboarding.",
+            },
+          },
+        ]}
+      />
     </>
   );
 };
