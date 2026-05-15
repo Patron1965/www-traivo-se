@@ -621,24 +621,8 @@ const Brain_Page = () => {
                   )}
                 </div>
 
-                {latestResponse && !isLoading && (
-                  <>
-                    <DeepAnalysisUpsell
-                      businessDescription={messages.filter((m) => m.role === "user").pop()?.content || ""}
-                      quickResponse={latestResponse.content}
-                    />
-                    <motion.button
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      transition={{ delay: 0.5 }}
-                      onClick={handleReset}
-                      className="mt-4 flex items-center gap-2 text-xs text-muted-foreground hover:text-primary transition-colors mx-auto"
-                    >
-                      <RotateCcw className="w-3 h-3" />
-                      {t({ sv: "Beskriv en annan verksamhet", en: "Describe another operation" })}
-                    </motion.button>
-                  </>
-                )}
+              </motion.div>
+            )}
               </motion.div>
             )}
           </AnimatePresence>
