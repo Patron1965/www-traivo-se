@@ -506,6 +506,7 @@ const DomainStatusPage = () => {
           </section>
         </div>
       </div>
+      <GoogleVerifyDialog open={gscOpen} onOpenChange={setGscOpen} />
     </>
   );
 };
