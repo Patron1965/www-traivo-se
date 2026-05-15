@@ -105,16 +105,21 @@ const MondayHero = () => {
           </div>
           <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 max-w-4xl mx-auto">
             {[
-              { icon: Database, label: t({ sv: "Objekt & artiklar", en: "Sites & articles" }) },
               { icon: CalendarClock, label: t({ sv: "Planera", en: "Plan" }) },
+              { icon: Database, label: t({ sv: "Förbered grunddata", en: "Prepare data" }) },
               { icon: Route, label: t({ sv: "Optimera rutt", en: "Optimize route" }) },
               { icon: Smartphone, label: t({ sv: "Rapportera i fält", en: "Report in field" }) },
               { icon: Receipt, label: t({ sv: "Fakturera", en: "Invoice" }) },
             ].map((step, i, arr) => {
               const Icon = step.icon;
+              const highlight = step.label === t({ sv: "Förbered grunddata", en: "Prepare data" });
               return (
                 <div key={step.label} className="flex items-center gap-2 sm:gap-3">
-                  <div className="inline-flex items-center gap-2 px-3.5 py-2 rounded-full border border-primary/25 bg-card/40 backdrop-blur-sm">
+                  <div className={`inline-flex items-center gap-2 px-3.5 py-2 rounded-full border backdrop-blur-sm ${
+                    highlight
+                      ? "border-primary/50 bg-primary/[0.08]"
+                      : "border-primary/25 bg-card/40"
+                  }`}>
                     <span className="flex items-center justify-center w-5 h-5 rounded-full bg-primary/15">
                       <Icon className="w-3 h-3 text-primary" strokeWidth={2.5} />
                     </span>
@@ -126,6 +131,40 @@ const MondayHero = () => {
                 </div>
               );
             })}
+          </div>
+
+          {/* Vad som måste finnas på plats innan optimeraren kan räkna */}
+          <div className="mt-5 max-w-3xl mx-auto">
+            <div className="text-[10px] uppercase tracking-[0.22em] text-muted-foreground/70 mb-2">
+              {t({
+                sv: "Innan optimeraren kan räkna behövs:",
+                en: "Before the optimizer can run, you need:",
+              })}
+            </div>
+            <div className="flex flex-wrap justify-center gap-1.5">
+              {[
+                t({ sv: "Objekt & adresser", en: "Sites & addresses" }),
+                t({ sv: "Artiklar/tjänster per objekt", en: "Articles/services per site" }),
+                t({ sv: "Restider", en: "Travel times" }),
+                t({ sv: "Fordon & kapacitet", en: "Vehicles & capacity" }),
+                t({ sv: "Kompetenser", en: "Skills" }),
+                t({ sv: "Tidsfönster & öppettider", en: "Time windows & hours" }),
+                t({ sv: "Tömnings-/serviceintervall", en: "Service intervals" }),
+              ].map((label) => (
+                <span
+                  key={label}
+                  className="inline-flex items-center px-2.5 py-1 rounded-full border border-primary/15 bg-card/20 text-[11px] text-muted-foreground"
+                >
+                  {label}
+                </span>
+              ))}
+            </div>
+            <p className="text-[11px] text-muted-foreground/70 mt-3 italic">
+              {t({
+                sv: "Traivo håller grunddatan levande — så att rätt rutt kan rullas ut varje morgon.",
+                en: "Traivo keeps the base data alive — so the right route can roll out every morning.",
+              })}
+            </p>
           </div>
         </motion.div>
 
