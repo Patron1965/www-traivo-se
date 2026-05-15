@@ -15,13 +15,19 @@ const suggestedQuestions = [
   "Vi använder Fortnox idag",
 ];
 
+type Level = "business" | "tech";
+
+const LEVEL_STORAGE_KEY = "traivo-answer-level";
+
 async function streamChat({
   messages,
+  level,
   onDelta,
   onDone,
   onError,
 }: {
   messages: Msg[];
+  level: Level;
   onDelta: (text: string) => void;
   onDone: () => void;
   onError: (msg: string) => void;
@@ -32,7 +38,7 @@ async function streamChat({
       "Content-Type": "application/json",
       Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
     },
-    body: JSON.stringify({ messages }),
+    body: JSON.stringify({ messages, level }),
   });
 
   if (!resp.ok) {
