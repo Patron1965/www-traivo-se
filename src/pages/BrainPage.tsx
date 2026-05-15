@@ -599,6 +599,14 @@ const Brain_Page = () => {
 
                   {latestResponse && !isLoading && (
                     <div className="flex flex-wrap gap-3 mt-6 pt-5 border-t border-border/40">
+                      <button
+                        type="button"
+                        onClick={handleReset}
+                        className="text-xs px-3 py-1.5 rounded-lg glass-subtle hover:border-primary/30 hover:text-primary transition-all inline-flex items-center gap-1.5"
+                      >
+                        <RotateCcw className="w-3 h-3" />
+                        {t({ sv: "Ställ en ny fråga", en: "Ask a new question" })}
+                      </button>
                       <Link
                         to="/traivo-one"
                         className="text-xs px-3 py-1.5 rounded-lg glass-subtle hover:border-primary/30 hover:text-primary transition-all"
