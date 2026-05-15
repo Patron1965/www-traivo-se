@@ -28,12 +28,12 @@ const Footer = () => {
               {t({ sv: "Plattform", en: "Platform" })}
             </h4>
             <div className="space-y-3 text-sm">
-              <Link to="/traivo-one" className="block text-foreground/70 hover:text-primary transition-colors">Traivo One</Link>
-              <Link to="/traivo-go" className="block text-foreground/70 hover:text-primary transition-colors">Traivo Go</Link>
-              <Link to="/hjarna" className="block text-foreground/70 hover:text-primary transition-colors">
+              <Link to="/traivo-one" className="block text-foreground/85 hover:text-primary transition-colors">Traivo One</Link>
+              <Link to="/traivo-go" className="block text-foreground/85 hover:text-primary transition-colors">Traivo Go</Link>
+              <Link to="/hjarna" className="block text-foreground/85 hover:text-primary transition-colors">
                 {t({ sv: "Hjärnan – AI-rådgivare", en: "The Brain – AI advisor" })}
               </Link>
-              <Link to="/priser" className="block text-foreground/70 hover:text-primary transition-colors">
+              <Link to="/priser" className="block text-foreground/85 hover:text-primary transition-colors">
                 {t({ sv: "Priser", en: "Pricing" })}
               </Link>
             </div>
@@ -44,13 +44,13 @@ const Footer = () => {
               {t({ sv: "Företag", en: "Company" })}
             </h4>
             <div className="space-y-3 text-sm">
-              <Link to="/kunskap" className="block text-foreground/70 hover:text-primary transition-colors">
+              <Link to="/kunskap" className="block text-foreground/85 hover:text-primary transition-colors">
                 {t({ sv: "Kunskap", en: "Knowledge" })}
               </Link>
-              <Link to="/om-oss" className="block text-foreground/70 hover:text-primary transition-colors">
+              <Link to="/om-oss" className="block text-foreground/85 hover:text-primary transition-colors">
                 {t({ sv: "Om oss", en: "About us" })}
               </Link>
-              <Link to="/kontakt" className="block text-foreground/70 hover:text-primary transition-colors">
+              <Link to="/kontakt" className="block text-foreground/85 hover:text-primary transition-colors">
                 {t({ sv: "Kontakt", en: "Contact" })}
               </Link>
             </div>
@@ -60,7 +60,7 @@ const Footer = () => {
             <h4 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-4">
               {t({ sv: "Branscher", en: "Industries" })}
             </h4>
-            <div className="space-y-3 text-xs text-muted-foreground">
+            <div className="space-y-3 text-sm text-foreground/75">
               <span className="block">{t({ sv: "Avfallshantering", en: "Waste management" })}</span>
               <span className="block">{t({ sv: "Fastighetsskötsel", en: "Property maintenance" })}</span>
               <span className="block">{t({ sv: "Teknisk service", en: "Technical service" })}</span>
