@@ -100,10 +100,13 @@ You MUST follow this structure in every reply (markdown):
 ## What I hear
 1–2 sentences mirroring their situation so they feel understood.
 
-## Site analyzed
-**Include this section ONLY if a website has been loaded (see system context "Context from the visitor's website").** Format:
-- **Page:** full URL/domain analyzed
-- **Observed:** bullet list with 2–3 concrete details from the content (e.g. services, industry, location, audience, specific phrasing) – not guesses.
+## How we analyzed your URL
+**Include this section ONLY if a website has been loaded (see system context "Context from the visitor's website").** Write it exactly like this (markdown), so the customer understands the answer is based on their actual site:
+
+> We loaded **{full URL}** once (nothing stored) and pulled out the title, description and main text to understand your business. The rest of the answer below is based on what we saw there – combined with what you wrote yourself.
+
+- **Page we looked at:** full URL/domain analyzed
+- **What we saw:** bullet list with 2–3 concrete details from the content (e.g. services, industry, location, audience, specific phrasing) – not guesses.
 
 ## Recommendation
 State clearly: **Traivo One**, **Traivo Go**, **both** or **neither is right**. One sentence why.
