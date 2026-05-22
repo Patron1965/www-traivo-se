@@ -1,51 +1,70 @@
-# Tillgänglighet för äldre användare — kontrast & läsbarhet
 
-Målgrupp: äldre fältserviceproffs, ofta med försämrad syn. Inga stora visuella förändringar — bara höja kontrast, textstorlek och tydlighet där det idag är svagt.
+## Diagnos (klar)
 
-## Problem som hittats
+Jag har redan kollat:
 
-1. **Muted-text för ljusgrå mot mörk bakgrund** — `--muted-foreground: 185 14% 75%` ger ca 7:1 mot bakgrund, men används i väldigt små storlekar (text-xs, text-[11px], text-[12px]) på t.ex. nav-länkar, badges, "anonymt"-rad under CTA, svarsnivå-väljare. Små + grått = svårläst.
-2. **Navbar-länkar** är `text-[12px] uppercase` i muted färg — kombinationen liten + versal + grå är jobbig för äldre ögon.
-3. **Brödtext** i hero och sektioner använder ofta `text-sm` (14px) eller `text-base` (16px) i muted-färg.
-4. **Fokusringar** finns på CTAs men saknas på vanliga textlänkar.
-5. **Body font-size** är webbstandard 16px — kan höjas något på desktop.
+- **`https://traivo.se/`** svarar `200 OK` (Cloudflare + Lovable). Sajten är live.
+- **`/robots.txt`** ✅ tillåter alla crawlers, refererar `sitemap.xml`.
+- **`/sitemap.xml`** ✅ svarar `200`, innehåller alla 12 rutter.
+- **`index.html`** ✅ har title, description, OG-taggar, Organization + WebSite JSON-LD, och Google site-verification token är redan inlagd.
+- **`site:traivo.se` på Google** → **0 träffar**.
 
-## Föreslagna ändringar (små, säkra)
+**Slutsats:** Sajten är tekniskt redo. Google har helt enkelt inte indexerat den ännu. Det förklarar varför "traivo.se" inte ger någon träff – det finns inget i indexet att rangera.
 
-### 1. Höj kontrast på muted-foreground
-`index.css`: `--muted-foreground` från `185 14% 75%` → `185 18% 84%`. Påverkar all sekundärtext globalt utan att ändra layout.
+Det som saknas är de manuella stegen i Google Search Console (verifiering + sitemap submission + "Request indexing"), samt några små tekniska förbättringar som påskyndar och stabiliserar indexeringen.
 
-### 2. Navbar
-- Höj länkstorlek från `text-[12px]` → `text-sm` (14px), behåll uppercase men öka `tracking` lite mindre.
-- Använd `text-foreground/80` istället för `text-muted-foreground` för inaktiva länkar.
-- Mobilmeny: `text-sm` → `text-base`.
+---
 
-### 3. Mikrotext (badges, "anonymt"-rader, hjälptexter)
-Höj `text-[11px]` → `text-xs` (12px) och `text-xs` → `text-sm` där det är meningsbärande information (t.ex. raden "Inget loggas · Inga säljsamtal" i MondayHero, svarsnivå-väljaren).
+## Plan: tre delar
 
-### 4. Brödtext i hero/sektioner
-Hero-paragraf: `text-base md:text-lg` → `text-lg md:text-xl`. Sektionsbeskrivningar `text-sm` → `text-base` där de är förklarande text.
+### Del 1 — Förbättra indexerbarheten (kod)
 
-### 5. Fokus & länkar
-Lägg `focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2` på navbar-länkar och inline-länkar som idag saknar synlig fokusmarkering.
+Småfixar i frontend som gör det enklare för Google att förstå sajten:
 
-### 6. Underline på textlänkar i löpande text
-Inline-länkar i brödtext får `underline underline-offset-4 decoration-primary/60` så de inte bara känns igen via färg.
+1. **Lägg till `<link rel="canonical">` i `index.html`** – pekar på `https://traivo.se/`. Saknas idag, vilket gör att Google kan välja "fel" URL-variant (preview-domän vs produktion) som kanonisk.
+2. **Lägg till per-route SEO med `react-helmet-async`** för de viktigaste sidorna (`/`, `/traivo-one`, `/traivo-go`, `/hjarna`, `/priser`, `/kunskap`, `/om-oss`, `/kontakt` + kunskapsartiklarna). Idag har alla rutter samma title/description, vilket gör att Google bara indexerar startsidan på ett meningsfullt sätt.
+   - Per sida: unik `<title>`, `<meta description>`, `<link rel="canonical">`, OG-taggar.
+   - Kunskapsartiklar får dessutom `Article` JSON-LD.
+3. **Lägg till `BreadcrumbList` JSON-LD** för kunskapsartiklar – ger Google brödsmulor i sökresultaten.
+4. **Säkerställ att `<h1>` är unik per sida** (snabb kontroll, fix vid behov).
 
-## Filer som påverkas
+### Del 2 — Google Search Console-flöde (du klickar)
 
-- `src/index.css` — en token-ändring (`--muted-foreground`).
-- `src/components/Navbar.tsx` — storlek + färg på länkar.
-- `src/components/MondayHero.tsx` — hero-paragraf, microcopy-rader.
-- `src/components/HowItWorksSection.tsx`, `TeamSection.tsx`, `Footer.tsx` — höj `text-sm` till `text-base` på beskrivande text.
-- Eventuellt `FAQ.tsx` om text där är för liten.
+Ni har redan en bra dialog (`GoogleVerifyDialog`). När koden i Del 1 är publicerad:
 
-## Vad som INTE ändras
+1. Öppna verifieringsdialogen → kör steg 1–4 (Hämta token → publicera → Verifiera → Lägg till site).
+2. När sajten finns i Search Console:
+   - **Submit sitemap**: `https://traivo.se/sitemap.xml`
+   - **URL Inspection** → `https://traivo.se/` → **Request Indexing**. Upprepa för 3–5 viktigaste rutterna.
+3. Detta brukar trigga första crawlen inom timmar/dagar istället för veckor.
 
-- Färgtema, logotyp, layoutstruktur, typsnitt, animationer.
-- Rubrikstorlekar (de är redan stora och tydliga).
-- CTA-knappar (redan höga kontrastvärden).
+*(Inget jag behöver göra i koden här – instruktionerna skickas till dig efter Del 1.)*
 
-## Resultat
+### Del 3 — SEO-review
 
-Sekundärtext och navigering blir märkbart läsbarare för äldre användare, utan att designens karaktär ändras.
+Kör den automatiska SEO-granskningen så vi får en konkret lista över ev. återstående problem (t.ex. saknade alt-texter, för långa titlar, dubblerade descriptions). Resultaten dyker upp i SEO-fliken efter ~1 minut.
+
+---
+
+## Tekniska detaljer (Del 1)
+
+**Filer som ändras / läggs till:**
+
+- `index.html` – lägg till `<link rel="canonical" href="https://traivo.se/" />`. Behåll all befintlig head-data.
+- `package.json` – `npm install react-helmet-async`.
+- `src/main.tsx` – wrappa `<App />` med `<HelmetProvider>`.
+- `src/components/SEO.tsx` – komponenten finns redan, ingen ändring behövs.
+- Per sida (`src/pages/Index.tsx`, `TraivoOne.tsx`, `TraivoGo.tsx`, `BrainPage.tsx`, `Pricing.tsx`, `KnowledgeIndex.tsx`, `KnowledgeArticle.tsx`, `About.tsx`, `Contact.tsx`) – importera och rendera `<SEO ... />` med unik titel/description/path.
+- `src/pages/KnowledgeArticle.tsx` – lägg dessutom till `Article` + `BreadcrumbList` JSON-LD via `<Helmet>`.
+
+**Påverkar inte:** routing, design, business logic, edge functions. Allt är ren frontend/presentation.
+
+---
+
+## Förväntat utfall
+
+- Inom **3–14 dagar** efter Search Console-submission börjar `site:traivo.se` ge träffar.
+- Sökning på **"traivo"** börjar visa startsidan inom några veckor (saknas konkurrens på varumärket).
+- Per-sida-SEO gör att även `/priser`, `/kunskap/...` etc. kan rankas på relevanta termer (ruttoptimering, fältservice, etc.).
+
+Säg till om jag ska köra planen så börjar jag med Del 1 + Del 3 i samma sväng.
