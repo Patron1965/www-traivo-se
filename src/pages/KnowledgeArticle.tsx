@@ -139,7 +139,7 @@ const KnowledgeArticle = () => {
     <>
       <SEO
         path={`/kunskap/${slug}`}
-        title={t(meta.title) + " | Traivo"}
+        title={t(meta.metaTitle)}
         description={t(meta.excerpt)}
         type="article"
       />

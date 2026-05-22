@@ -7,6 +7,7 @@ import SEO from "@/components/SEO";
 export interface KnowledgeArticle {
   slug: string;
   title: { sv: string; en: string };
+  metaTitle: { sv: string; en: string };
   excerpt: { sv: string; en: string };
   readTime: { sv: string; en: string };
 }
@@ -17,6 +18,10 @@ export const articles: KnowledgeArticle[] = [
     title: {
       sv: "Ruttoptimering i praktiken — så minskar du kötid och bränsleförbrukning",
       en: "Route optimization in practice — how to cut wait time and fuel use",
+    },
+    metaTitle: {
+      sv: "Ruttoptimering i praktiken | Traivo",
+      en: "Route optimization in practice | Traivo",
     },
     excerpt: {
       sv: "Riktig ruttoptimering räknar inte fågelvägen. Vi går igenom hur trafikdata, fordonstyp och tidsfönster påverkar dagens schema.",
@@ -30,6 +35,10 @@ export const articles: KnowledgeArticle[] = [
       sv: "Guide: Digitalisera fältservice utan att tappa teknikerna på vägen",
       en: "Guide: Digitalize field service without losing the technicians along the way",
     },
+    metaTitle: {
+      sv: "Guide: Digitalisera fältservice | Traivo",
+      en: "Guide: Digitalize field service | Traivo",
+    },
     excerpt: {
       sv: "Vad krävs för att gå från papperslappar till digitala protokoll? Vi summerar vad som faktiskt fungerar — och vad som får tekniker att sluta använda systemet.",
       en: "What does it take to go from paper notes to digital reports? We summarize what actually works — and what makes technicians stop using the system.",
@@ -42,6 +51,10 @@ export const articles: KnowledgeArticle[] = [
       sv: "AI-schemaläggning för fältservice — vad är hype och vad är värde?",
       en: "AI scheduling for field service — what's hype and what's value?",
     },
+    metaTitle: {
+      sv: "AI-schemaläggning för fältservice | Traivo",
+      en: "AI scheduling for field service | Traivo",
+    },
     excerpt: {
       sv: "Inte all AI är användbar i fält. Vi reder ut var maskininlärning gör skillnad i schemaläggning — och var en enkel regel räcker.",
       en: "Not all AI is useful in the field. We sort out where machine learning makes a difference in scheduling — and where a simple rule is enough.",
@@ -49,6 +62,7 @@ export const articles: KnowledgeArticle[] = [
     readTime: { sv: "5 min läsning", en: "5 min read" },
   },
 ];
+
 
 const KnowledgeIndex = () => {
   const t = useT();
