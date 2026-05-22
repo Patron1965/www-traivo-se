@@ -135,6 +135,12 @@ const DeepAnalysisCheckout = () => {
 
   return (
     <>
+      <SEO
+        path="/hjarna/djupanalys"
+        title="Djupanalys — beställ AI-rapport | Traivo"
+        description="Beställ en skräddarsydd AI-djupanalys av din fältserviceverksamhet. Konkreta insikter om rutter, schemaläggning och effektivitet."
+        noindex
+      />
       <PaymentTestModeBanner />
       <section className="relative min-h-screen pt-28 pb-24 px-4 sm:px-6 bg-noise">
         <div className="absolute inset-0 bg-grid-pattern opacity-15 pointer-events-none" />
