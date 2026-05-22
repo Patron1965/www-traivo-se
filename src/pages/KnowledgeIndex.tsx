@@ -57,8 +57,8 @@ const KnowledgeIndex = () => {
       <SEO
         path="/kunskap"
         title={t({
-          sv: "Kunskap — guider om ruttoptimering, fältservice och AI | Traivo",
-          en: "Knowledge — guides on route optimization, field service and AI | Traivo",
+          sv: "Kunskap — ruttoptimering & fältservice | Traivo",
+          en: "Knowledge — route optimization & field service | Traivo",
         })}
         description={t({
           sv: "Praktiska guider om ruttoptimering, digital fältservice och AI-schemaläggning för verksamheter med många stopp per dag.",

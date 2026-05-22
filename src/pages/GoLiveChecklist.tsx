@@ -14,6 +14,7 @@ import {
   AlertCircle,
 } from "lucide-react";
 import { useT, useLang } from "@/i18n/LanguageContext";
+import SEO from "@/components/SEO";
 
 type RemoteStatus =
   | "completed"
@@ -152,6 +153,13 @@ const GoLiveChecklist = () => {
   const progress = Math.round((completedCount / STEPS.length) * 100);
 
   return (
+    <>
+    <SEO
+      path="/go-live"
+      title="Go-Live checklista (intern) | Traivo"
+      description="Intern checklista för att aktivera Traivo i produktion. Inte avsedd för indexering eller publik åtkomst."
+      noindex
+    />
     <section className="relative min-h-screen pt-28 pb-24 px-4 sm:px-6 bg-noise">
       <div className="absolute inset-0 bg-grid-pattern opacity-15 pointer-events-none" />
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[500px] h-[500px] rounded-full bg-primary/[0.05] blur-[140px] pointer-events-none" />
@@ -340,6 +348,7 @@ const GoLiveChecklist = () => {
         </div>
       </div>
     </section>
+    </>
   );
 };
 

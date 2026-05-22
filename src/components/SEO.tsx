@@ -5,11 +5,12 @@ interface SEOProps {
   description: string;
   path: string;
   type?: "website" | "article" | "product";
+  noindex?: boolean;
 }
 
 const BASE = "https://traivo.se";
 
-const SEO = ({ title, description, path, type = "website" }: SEOProps) => {
+const SEO = ({ title, description, path, type = "website", noindex = false }: SEOProps) => {
   const url = `${BASE}${path}`;
   return (
     <Helmet>
@@ -22,6 +23,7 @@ const SEO = ({ title, description, path, type = "website" }: SEOProps) => {
       <meta property="og:type" content={type} />
       <meta name="twitter:title" content={title} />
       <meta name="twitter:description" content={description} />
+      {noindex && <meta name="robots" content="noindex, nofollow" />}
     </Helmet>
   );
 };
