@@ -125,6 +125,16 @@ const KnowledgeArticle = () => {
     mainEntityOfPage: `https://traivo.se/kunskap/${slug}`,
   };
 
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Hem", item: "https://traivo.se/" },
+      { "@type": "ListItem", position: 2, name: "Kunskap", item: "https://traivo.se/kunskap" },
+      { "@type": "ListItem", position: 3, name: meta.title.sv, item: `https://traivo.se/kunskap/${slug}` },
+    ],
+  };
+
   return (
     <>
       <SEO
@@ -135,7 +145,9 @@ const KnowledgeArticle = () => {
       />
       <Helmet>
         <script type="application/ld+json">{JSON.stringify(articleJsonLd)}</script>
+        <script type="application/ld+json">{JSON.stringify(breadcrumbJsonLd)}</script>
       </Helmet>
+
 
       <article className="relative pt-24 pb-20 px-4 sm:px-6 bg-noise">
         <div className="max-w-2xl mx-auto">
