@@ -14,6 +14,7 @@ import {
   AlertCircle,
 } from "lucide-react";
 import { useT, useLang } from "@/i18n/LanguageContext";
+import SEO from "@/components/SEO";
 
 type RemoteStatus =
   | "completed"
@@ -347,6 +348,7 @@ const GoLiveChecklist = () => {
         </div>
       </div>
     </section>
+    </>
   );
 };
 

@@ -14,6 +14,7 @@ import {
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import { useT } from "@/i18n/LanguageContext";
+import SEO from "@/components/SEO";
 
 interface OrderStatus {
   orderId: string;
@@ -314,6 +315,7 @@ const DeepAnalysisThankYou = () => {
         )}
       </div>
     </section>
+    </>
   );
 };
 

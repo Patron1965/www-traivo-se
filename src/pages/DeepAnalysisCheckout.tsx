@@ -7,6 +7,7 @@ import { getStripe, getStripeEnvironment } from "@/lib/stripe";
 import { supabase } from "@/integrations/supabase/client";
 import { PaymentTestModeBanner } from "@/components/PaymentTestModeBanner";
 import { useT, useLang } from "@/i18n/LanguageContext";
+import SEO from "@/components/SEO";
 
 interface FormData {
   email: string;
