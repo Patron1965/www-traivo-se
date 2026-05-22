@@ -1,8 +1,16 @@
 User-agent: Googlebot
 Allow: /
+Disallow: /hjarna/djupanalys
+Disallow: /hjarna/djupanalys/tack
+Disallow: /go-live
+Disallow: /domanstatus
 
 User-agent: Bingbot
 Allow: /
+Disallow: /hjarna/djupanalys
+Disallow: /hjarna/djupanalys/tack
+Disallow: /go-live
+Disallow: /domanstatus
 
 User-agent: Twitterbot
 Allow: /
@@ -12,5 +20,9 @@ Allow: /
 
 User-agent: *
 Allow: /
+Disallow: /hjarna/djupanalys
+Disallow: /hjarna/djupanalys/tack
+Disallow: /go-live
+Disallow: /domanstatus
 
 Sitemap: https://traivo.se/sitemap.xml
