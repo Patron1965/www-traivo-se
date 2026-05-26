@@ -55,7 +55,7 @@ const Pricing = () => {
         { sv: "Fortnox-koppling", en: "Fortnox integration" },
         { sv: "E-post-support", en: "Email support" },
       ],
-      onboarding: { sv: "Quick start: 1–2 dagar", en: "Quick start: 1–2 days" },
+      onboarding: { sv: "Quick start: 1–2 dagar. Kostnad för migrering från befintligt system kan tillkomma.", en: "Quick start: 1–2 days. Migration from existing system may incur additional cost." },
     },
     {
       id: "team",
@@ -71,7 +71,7 @@ const Pricing = () => {
         { sv: "Fler ekonomisystem (Visma, Björn Lundén m.fl.)", en: "More accounting systems (Visma, Björn Lundén etc.)" },
         { sv: "Prioriterad support", en: "Priority support" },
       ],
-      onboarding: { sv: "Standard: 3–5 dagar", en: "Standard: 3–5 days" },
+      onboarding: { sv: "Standard: 3–5 dagar. Kostnad för migrering från befintligt system kan tillkomma.", en: "Standard: 3–5 days. Migration from existing system may incur additional cost." },
     },
     {
       id: "scale",
@@ -86,7 +86,7 @@ const Pricing = () => {
         { sv: "Dedikerad kundansvarig", en: "Dedicated account manager" },
         { sv: "Anpassade integrationer", en: "Custom integrations" },
       ],
-      onboarding: { sv: "På plats: 6–10 dagar", en: "On site: 6–10 days" },
+      onboarding: { sv: "På plats: 6–10 dagar. Kostnad för migrering från befintligt system kan tillkomma.", en: "On site: 6–10 days. Migration from existing system may incur additional cost." },
     },
     {
       id: "enterprise",
@@ -101,7 +101,7 @@ const Pricing = () => {
         { sv: "On-prem-option", en: "On-prem option" },
         { sv: "Anpassad onboarding & utbildning", en: "Custom onboarding & training" },
       ],
-      onboarding: { sv: "Anpassad onboarding", en: "Custom onboarding" },
+      onboarding: { sv: "Anpassad onboarding. Kostnad för migrering från befintligt system kan tillkomma.", en: "Custom onboarding. Migration from existing system may incur additional cost." },
     },
   ];
 
