@@ -1,70 +1,87 @@
+## Ny prismodell för /priser
 
-## Diagnos (klar)
+Målet: ta bort friktionen i per-användare-modellen, koppla besparingen till verkliga siffror, och låta målgruppen (20–80 tekniker, B2B) direkt se vilken plan som passar.
 
-Jag har redan kollat:
+### Tre tier-baserade planer + Enterprise
 
-- **`https://traivo.se/`** svarar `200 OK` (Cloudflare + Lovable). Sajten är live.
-- **`/robots.txt`** ✅ tillåter alla crawlers, refererar `sitemap.xml`.
-- **`/sitemap.xml`** ✅ svarar `200`, innehåller alla 12 rutter.
-- **`index.html`** ✅ har title, description, OG-taggar, Organization + WebSite JSON-LD, och Google site-verification token är redan inlagd.
-- **`site:traivo.se` på Google** → **0 träffar**.
+Fast pris per intervall i stället för grund + per användare. Tre publika tiers, fjärde är offert.
 
-**Slutsats:** Sajten är tekniskt redo. Google har helt enkelt inte indexerat den ännu. Det förklarar varför "traivo.se" inte ger någon träff – det finns inget i indexet att rangera.
+| Plan          | Tekniker      | Pris/mån      | Roll                                  |
+|---------------|---------------|---------------|---------------------------------------|
+| Start         | 1–10          | 4 900 kr      | Mindre team, kom igång                |
+| Team          | 11–25         | 9 900 kr      | **Rekommenderad** — typisk kund       |
+| Scale         | 26–75         | 19 900 kr     | Större drift, fler features           |
+| Enterprise    | 75+ / custom  | Offert        | SLA, SSO, dedikerad infra             |
 
-Det som saknas är de manuella stegen i Google Search Console (verifiering + sitemap submission + "Request indexing"), samt några små tekniska förbättringar som påskyndar och stabiliserar indexeringen.
+Alla priser exkl. moms, månadsuppsägning, ingen bindningstid (behålls).
 
----
+### Vad som ingår var
 
-## Plan: tre delar
+**Allt i Start (basen — höjd ambitionsnivå):**
+Traivo One, Traivo Go, GPS, digitala protokoll, AI-schemaläggning, ruttoptimering, **Fortnox-koppling**, e-post-support.
 
-### Del 1 — Förbättra indexerbarheten (kod)
+Motivering: Fortnox är minimikrav för svensk B2B-fältservice — ska inte vara premium.
 
-Småfixar i frontend som gör det enklare för Google att förstå sajten:
+**Team lägger till:**
+Kundportal, väderplanering, fler ekonomisystem (Visma, Björn Lundén), prioriterad support.
 
-1. **Lägg till `<link rel="canonical">` i `index.html`** – pekar på `https://traivo.se/`. Saknas idag, vilket gör att Google kan välja "fel" URL-variant (preview-domän vs produktion) som kanonisk.
-2. **Lägg till per-route SEO med `react-helmet-async`** för de viktigaste sidorna (`/`, `/traivo-one`, `/traivo-go`, `/hjarna`, `/priser`, `/kunskap`, `/om-oss`, `/kontakt` + kunskapsartiklarna). Idag har alla rutter samma title/description, vilket gör att Google bara indexerar startsidan på ett meningsfullt sätt.
-   - Per sida: unik `<title>`, `<meta description>`, `<link rel="canonical">`, OG-taggar.
-   - Kunskapsartiklar får dessutom `Article` JSON-LD.
-3. **Lägg till `BreadcrumbList` JSON-LD** för kunskapsartiklar – ger Google brödsmulor i sökresultaten.
-4. **Säkerställ att `<h1>` är unik per sida** (snabb kontroll, fix vid behov).
+**Scale lägger till:**
+Prediktivt underhåll, AI-assistent, dedikerad kundansvarig, anpassade integrationer.
 
-### Del 2 — Google Search Console-flöde (du klickar)
+**Enterprise:**
+SSO, dedikerad miljö, SLA, on-prem-option, anpassat.
 
-Ni har redan en bra dialog (`GoogleVerifyDialog`). När koden i Del 1 är publicerad:
+### Konkret ROI-räknare (ersätter 15% / 30%-boxen)
 
-1. Öppna verifieringsdialogen → kör steg 1–4 (Hämta token → publicera → Verifiera → Lägg till site).
-2. När sajten finns i Search Console:
-   - **Submit sitemap**: `https://traivo.se/sitemap.xml`
-   - **URL Inspection** → `https://traivo.se/` → **Request Indexing**. Upprepa för 3–5 viktigaste rutterna.
-3. Detta brukar trigga första crawlen inom timmar/dagar istället för veckor.
+Tre inputs användaren styr:
 
-*(Inget jag behöver göra i koden här – instruktionerna skickas till dig efter Del 1.)*
+- Antal tekniker (default 20)
+- Snitt-timpris för en tekniker (default 650 kr)
+- Arbetsdagar per år (default 220)
 
-### Del 3 — SEO-review
+Output (uppdateras live):
 
-Kör den automatiska SEO-granskningen så vi får en konkret lista över ev. återstående problem (t.ex. saknade alt-texter, för långa titlar, dubblerade descriptions). Resultaten dyker upp i SEO-fliken efter ~1 minut.
+- **Tidsbesparing**: 35 min/tekniker/dag (admin + körtid)
+- **Värde/år**: tekniker × 35 min × dagar × timpris = konkret kronbelopp
+- **Plankostnad/år**: vald tier × 12
+- **Netto/år** + **ROI-multipel** (t.ex. "5,8× pengarna tillbaka")
 
----
+Visas som ett enda kort under planerna, inte en abstrakt procent. Siffrorna är konservativa och kan justeras — poängen är att kunden ser kronor, inte procent.
 
-## Tekniska detaljer (Del 1)
+### Onboarding
 
-**Filer som ändras / läggs till:**
+Behålls som separat post men med kontextuell beskrivning per nivå i stället för rent reglage:
 
-- `index.html` – lägg till `<link rel="canonical" href="https://traivo.se/" />`. Behåll all befintlig head-data.
-- `package.json` – `npm install react-helmet-async`.
-- `src/main.tsx` – wrappa `<App />` med `<HelmetProvider>`.
-- `src/components/SEO.tsx` – komponenten finns redan, ingen ändring behövs.
-- Per sida (`src/pages/Index.tsx`, `TraivoOne.tsx`, `TraivoGo.tsx`, `BrainPage.tsx`, `Pricing.tsx`, `KnowledgeIndex.tsx`, `KnowledgeArticle.tsx`, `About.tsx`, `Contact.tsx`) – importera och rendera `<SEO ... />` med unik titel/description/path.
-- `src/pages/KnowledgeArticle.tsx` – lägg dessutom till `Article` + `BreadcrumbList` JSON-LD via `<Helmet>`.
+- **Quick start** (1–2 dagar, 8 900 kr/dag): grunduppsättning, import av tekniker, första schema
+- **Standard** (3–5 dagar): + dataimport från befintligt system, integrationsuppsättning
+- **På plats** (6–10 dagar): + utbildning på plats, workshops, custom-flöden
 
-**Påverkar inte:** routing, design, business logic, edge functions. Allt är ren frontend/presentation.
+Rekommendation visas baserat på vald plan (Start→Quick, Team→Standard, Scale→På plats).
 
----
+### Visuell hierarki
 
-## Förväntat utfall
+- Tre kort, mittenkortet (Team) lyfts visuellt: subtil teal-glow, "Rekommenderad"-pill överst, något större.
+- Priset visas direkt i hero som ankare: *"Från 4 900 kr/mån. Tre planer, transparent pris, ingen bindningstid."*
+- Reglaget för användare tas bort — ersätts av tier-val. Reglaget för onboarding tas bort — ersätts av tre tydliga val.
+- ROI-kortet placeras under planerna, breddat, med inputs.
 
-- Inom **3–14 dagar** efter Search Console-submission börjar `site:traivo.se` ge träffar.
-- Sökning på **"traivo"** börjar visa startsidan inom några veckor (saknas konkurrens på varumärket).
-- Per-sida-SEO gör att även `/priser`, `/kunskap/...` etc. kan rankas på relevanta termer (ruttoptimering, fältservice, etc.).
+### FAQ-uppdateringar
 
-Säg till om jag ska köra planen så börjar jag med Del 1 + Del 3 i samma sväng.
+- "Vad händer om vi växer förbi en tier?" → automatisk uppgradering vid nästa månad, ingen avgift.
+- "Får jag prova innan?" → 30 dagars utvärdering med pengarna tillbaka (om ni vill ha den policyn).
+- Ta bort frågan om volymrabatt (inbyggd i tiers).
+- Behåll frågor om moms, bindningstid, vad som ingår per plan.
+
+### Teknisk implementation
+
+- `src/pages/Pricing.tsx` skrivs om: ta bort `users` och `onboardingDays` reglage, lägg till `selectedTier` state och tre ROI-inputs.
+- Behåll `Slider`-komponenten endast för ROI-inputs (timpris, dagar) — eller använd `Input` för tydligare numerisk inmatning.
+- Behåll FAQ-komponent och SEO-tags. Texter uppdateras enligt ovan.
+- Memory `mem://product/pricing-structure` uppdateras med ny modell.
+- Lägg till "Rekommenderad"-badge med befintliga semantic tokens (primary), ingen ny design-token behövs.
+
+### Vad jag inte ändrar
+
+- Färg, typografi, ton — befintlig design system och språkriktlinjer behålls.
+- Sv/en-översättningar — ny copy översätts till båda språken i samma format som idag.
+- Hero-rubrik och SEO-meta behålls (justeras bara om priset i hero ändras).
