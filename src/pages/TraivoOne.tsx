@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 import AIChatLink from "@/components/AIChatLink";
 import PlannerVisual from "@/components/PlannerVisual";
 import {
@@ -82,6 +83,18 @@ const TraivoOne = () => {
     },
   ];
 
+  const productJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: "Traivo One",
+    description: t({
+      sv: "Webbverktyget för planerare och arbetsledare. Drag-and-drop, AI-schemaläggning, ruttoptimering, kundportal och Fortnox-koppling.",
+      en: "The web tool for planners and supervisors. Drag-and-drop, AI scheduling, route optimization, customer portal and Fortnox integration.",
+    }),
+    brand: { "@type": "Brand", name: "Traivo" },
+    url: "https://traivo.se/traivo-one",
+  };
+
   return (
     <>
       <SEO
@@ -89,6 +102,9 @@ const TraivoOne = () => {
         title={t({ sv: "Traivo One – planering, rutter och fakturering", en: "Traivo One – planning, routes and invoicing" })}
         description={t({ sv: "Webbverktyget för planerare och arbetsledare. Drag-and-drop, AI-schemaläggning, ruttoptimering, kundportal och Fortnox-koppling.", en: "The web tool for planners and supervisors. Drag-and-drop, AI scheduling, route optimization, customer portal and Fortnox integration." })}
       />
+      <Helmet>
+        <script type="application/ld+json">{JSON.stringify(productJsonLd)}</script>
+      </Helmet>
       <section className="relative min-h-[50vh] flex items-center overflow-hidden bg-noise">
         <div className="absolute inset-0 bg-grid-pattern opacity-20" />
         <div className="absolute top-0 left-0 w-[min(400px,90vw)] h-[min(400px,90vw)] rounded-full bg-primary/[0.03] blur-[150px]" />

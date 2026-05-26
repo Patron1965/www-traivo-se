@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 import AIChatLink from "@/components/AIChatLink";
 import FieldVisual from "@/components/FieldVisual";
 import { Smartphone, CheckSquare, Clock, WifiOff } from "lucide-react";
@@ -60,6 +61,18 @@ const TraivoGo = () => {
     },
   ];
 
+  const productJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: "Traivo Go",
+    description: t({
+      sv: "Mobilappen för tekniker. Dagens jobb, ett-tryck navigation, digitala protokoll, foto, signatur och offline-läge som synkar automatiskt.",
+      en: "The mobile app for technicians. Today's jobs, one-tap navigation, digital reports, photos, signatures and offline mode that syncs automatically.",
+    }),
+    brand: { "@type": "Brand", name: "Traivo" },
+    url: "https://traivo.se/traivo-go",
+  };
+
   return (
     <>
       <SEO
@@ -67,6 +80,9 @@ const TraivoGo = () => {
         title={t({ sv: "Traivo Go – mobilapp för tekniker i fält", en: "Traivo Go – mobile app for field technicians" })}
         description={t({ sv: "Mobilappen för tekniker. Dagens jobb, ett-tryck navigation, digitala protokoll, foto, signatur och offline-läge som synkar automatiskt.", en: "The mobile app for technicians. Today's jobs, one-tap navigation, digital reports, photos, signatures and offline mode that syncs automatically." })}
       />
+      <Helmet>
+        <script type="application/ld+json">{JSON.stringify(productJsonLd)}</script>
+      </Helmet>
       <section className="relative min-h-[50vh] flex items-center overflow-hidden bg-noise">
         <div className="absolute inset-0 bg-grid-pattern opacity-20" />
         <div className="absolute bottom-0 right-0 w-[min(400px,90vw)] h-[min(400px,90vw)] rounded-full bg-accent/[0.03] blur-[150px]" />
