@@ -55,7 +55,7 @@ const Pricing = () => {
         { sv: "Fortnox-koppling", en: "Fortnox integration" },
         { sv: "E-post-support", en: "Email support" },
       ],
-      onboarding: { sv: "Quick start: 1–2 dagar", en: "Quick start: 1–2 days" },
+      onboarding: { sv: "Quick start: 1–2 dagar. Kostnad för migrering från befintligt system kan tillkomma.", en: "Quick start: 1–2 days. Migration from existing system may incur additional cost." },
     },
     {
       id: "team",
@@ -71,7 +71,7 @@ const Pricing = () => {
         { sv: "Fler ekonomisystem (Visma, Björn Lundén m.fl.)", en: "More accounting systems (Visma, Björn Lundén etc.)" },
         { sv: "Prioriterad support", en: "Priority support" },
       ],
-      onboarding: { sv: "Standard: 3–5 dagar", en: "Standard: 3–5 days" },
+      onboarding: { sv: "Standard: 3–5 dagar. Kostnad för migrering från befintligt system kan tillkomma.", en: "Standard: 3–5 days. Migration from existing system may incur additional cost." },
     },
     {
       id: "scale",
@@ -86,7 +86,7 @@ const Pricing = () => {
         { sv: "Dedikerad kundansvarig", en: "Dedicated account manager" },
         { sv: "Anpassade integrationer", en: "Custom integrations" },
       ],
-      onboarding: { sv: "På plats: 6–10 dagar", en: "On site: 6–10 days" },
+      onboarding: { sv: "På plats: 6–10 dagar. Kostnad för migrering från befintligt system kan tillkomma.", en: "On site: 6–10 days. Migration from existing system may incur additional cost." },
     },
     {
       id: "enterprise",
@@ -101,7 +101,7 @@ const Pricing = () => {
         { sv: "On-prem-option", en: "On-prem option" },
         { sv: "Anpassad onboarding & utbildning", en: "Custom onboarding & training" },
       ],
-      onboarding: { sv: "Anpassad onboarding", en: "Custom onboarding" },
+      onboarding: { sv: "Anpassad onboarding. Kostnad för migrering från befintligt system kan tillkomma.", en: "Custom onboarding. Migration from existing system may incur additional cost." },
     },
   ];
 
@@ -332,6 +332,13 @@ const Pricing = () => {
             a: {
               sv: "Ja. Fortnox-kopplingen är basfunktionalitet och ingår i alla planer. Andra ekonomisystem (Visma, Björn Lundén m.fl.) tillkommer i Team och uppåt.",
               en: "Yes. The Fortnox integration is core functionality and is included in all plans. Other accounting systems (Visma, Björn Lundén etc.) are added in Team and above.",
+            },
+          },
+          {
+            q: { sv: "Tillkommer kostnad för migrering från vårt befintliga system?", en: "Is there a cost for migrating from our existing system?" },
+            a: {
+              sv: "Onboarding-tiden ingår i planen, men om ni har ett komplext befintligt system med mycket historik eller anpassade integrationer kan extra migreringsarbete tillkomma. Vi går igenom detta i demo-mötet så det inte blir några överraskningar.",
+              en: "Onboarding time is included in the plan, but if you have a complex existing system with lots of history or custom integrations, additional migration work may apply. We review this during the demo so there are no surprises.",
             },
           },
           {
