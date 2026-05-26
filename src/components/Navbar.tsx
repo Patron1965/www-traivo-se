@@ -17,6 +17,7 @@ const Navbar = () => {
     { to: "/hjarna", label: t({ sv: "Hjärnan", en: "The Brain" }) },
     { to: "/traivo-one", label: "Traivo One" },
     { to: "/traivo-go", label: "Traivo Go" },
+    { to: "/priser", label: t({ sv: "Priser", en: "Pricing" }) },
     { to: "/om-oss", label: t({ sv: "Om oss", en: "About" }) },
     { to: "/kontakt", label: t({ sv: "Kontakt", en: "Contact" }) },
   ];
