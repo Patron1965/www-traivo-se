@@ -335,6 +335,13 @@ const Pricing = () => {
             },
           },
           {
+            q: { sv: "Tillkommer kostnad för migrering från vårt befintliga system?", en: "Is there a cost for migrating from our existing system?" },
+            a: {
+              sv: "Onboarding-tiden ingår i planen, men om ni har ett komplext befintligt system med mycket historik eller anpassade integrationer kan extra migreringsarbete tillkomma. Vi går igenom detta i demo-mötet så det inte blir några överraskningar.",
+              en: "Onboarding time is included in the plan, but if you have a complex existing system with lots of history or custom integrations, additional migration work may apply. We review this during the demo so there are no surprises.",
+            },
+          },
+          {
             q: { sv: "Är priserna inklusive eller exklusive moms?", en: "Are prices including or excluding VAT?" },
             a: {
               sv: "Alla priser är angivna exklusive moms (B2B). Fakturering sker månadsvis i förskott.",
