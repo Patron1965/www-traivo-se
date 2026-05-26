@@ -23,8 +23,8 @@ const FAQ = ({ title, intro, items }: FAQProps) => {
     "@type": "FAQPage",
     mainEntity: items.map((it) => ({
       "@type": "Question",
-      name: it.q.sv,
-      acceptedAnswer: { "@type": "Answer", text: it.a.sv },
+      name: t(it.q),
+      acceptedAnswer: { "@type": "Answer", text: t(it.a) },
     })),
   };
 

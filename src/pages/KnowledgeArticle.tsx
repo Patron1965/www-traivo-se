@@ -118,8 +118,11 @@ const KnowledgeArticle = () => {
   const articleJsonLd = {
     "@context": "https://schema.org",
     "@type": "Article",
-    headline: meta.title.sv,
-    description: meta.excerpt.sv,
+    headline: t(meta.title),
+    description: t(meta.excerpt),
+    image: meta.image,
+    datePublished: meta.datePublished,
+    dateModified: meta.datePublished,
     author: { "@type": "Organization", name: "Traivo" },
     publisher: { "@type": "Organization", name: "Traivo", url: "https://traivo.se/" },
     mainEntityOfPage: `https://traivo.se/kunskap/${slug}`,
@@ -129,9 +132,9 @@ const KnowledgeArticle = () => {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Hem", item: "https://traivo.se/" },
-      { "@type": "ListItem", position: 2, name: "Kunskap", item: "https://traivo.se/kunskap" },
-      { "@type": "ListItem", position: 3, name: meta.title.sv, item: `https://traivo.se/kunskap/${slug}` },
+      { "@type": "ListItem", position: 1, name: t({ sv: "Hem", en: "Home" }), item: "https://traivo.se/" },
+      { "@type": "ListItem", position: 2, name: t({ sv: "Kunskap", en: "Knowledge" }), item: "https://traivo.se/kunskap" },
+      { "@type": "ListItem", position: 3, name: t(meta.title), item: `https://traivo.se/kunskap/${slug}` },
     ],
   };
 

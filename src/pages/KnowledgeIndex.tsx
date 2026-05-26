@@ -10,6 +10,8 @@ export interface KnowledgeArticle {
   metaTitle: { sv: string; en: string };
   excerpt: { sv: string; en: string };
   readTime: { sv: string; en: string };
+  datePublished: string;
+  image: string;
 }
 
 export const articles: KnowledgeArticle[] = [
@@ -28,6 +30,8 @@ export const articles: KnowledgeArticle[] = [
       en: "Real route optimization doesn't measure as the crow flies. We walk through how traffic data, vehicle type and time windows shape the day's schedule.",
     },
     readTime: { sv: "6 min läsning", en: "6 min read" },
+    datePublished: "2025-01-15",
+    image: "https://traivo.se/og-image.jpg",
   },
   {
     slug: "digital-faltservice-guide",
@@ -44,6 +48,8 @@ export const articles: KnowledgeArticle[] = [
       en: "What does it take to go from paper notes to digital reports? We summarize what actually works — and what makes technicians stop using the system.",
     },
     readTime: { sv: "8 min läsning", en: "8 min read" },
+    datePublished: "2025-02-10",
+    image: "https://traivo.se/og-image.jpg",
   },
   {
     slug: "ai-schemalaggning-faltservice",
@@ -60,6 +66,8 @@ export const articles: KnowledgeArticle[] = [
       en: "Not all AI is useful in the field. We sort out where machine learning makes a difference in scheduling — and where a simple rule is enough.",
     },
     readTime: { sv: "5 min läsning", en: "5 min read" },
+    datePublished: "2025-03-05",
+    image: "https://traivo.se/og-image.jpg",
   },
 ];
 
