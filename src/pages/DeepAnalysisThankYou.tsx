@@ -69,10 +69,10 @@ const DeepAnalysisThankYou = () => {
         }
 
         setStatus(data);
-        setPollCount((c) => c + 1);
+        pollCountRef.current += 1;
 
         const done = data.reportStatus === "ready" || data.reportStatus === "failed";
-        if (!done && pollCount < MAX_POLLS) {
+        if (!done && pollCountRef.current < MAX_POLLS) {
           timeoutId = window.setTimeout(poll, POLL_INTERVAL);
         } else if (!done) {
           setError(t({
@@ -82,7 +82,15 @@ const DeepAnalysisThankYou = () => {
         }
       } catch (e) {
         if (cancelled) return;
-        timeoutId = window.setTimeout(poll, POLL_INTERVAL);
+        pollCountRef.current += 1;
+        if (pollCountRef.current < MAX_POLLS) {
+          timeoutId = window.setTimeout(poll, POLL_INTERVAL);
+        } else {
+          setError(t({
+            sv: "Det tog för lång tid att generera rapporten. Vi har dina uppgifter och kontaktar dig.",
+            en: "It took too long to generate the report. We have your details and will contact you.",
+          }));
+        }
       }
     };
 
