@@ -33,6 +33,9 @@ async function handleCheckoutCompleted(session: any, env: StripeEnv) {
   }
 
   const sb = getSupabase();
+  // NOTE: do NOT set report_status here — generate-deep-analysis claims the job
+  // by transitioning pending|failed -> generating. Setting it here would make the
+  // claim match 0 rows and the report would never be generated.
   const { error } = await sb
     .from("deep_analyses")
     .update({
@@ -40,7 +43,6 @@ async function handleCheckoutCompleted(session: any, env: StripeEnv) {
       paid_at: new Date().toISOString(),
       amount_paid_cents: session.amount_total ?? null,
       currency: session.currency ?? "sek",
-      report_status: "generating",
     })
     .eq("id", orderId)
     .eq("environment", env);
