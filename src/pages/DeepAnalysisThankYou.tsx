@@ -36,8 +36,8 @@ const DeepAnalysisThankYou = () => {
 
   const [status, setStatus] = useState<OrderStatus | null>(null);
   const [error, setError] = useState("");
-  const [pollCount, setPollCount] = useState(0);
   const [isExporting, setIsExporting] = useState(false);
+  const pollCountRef = useRef(0);
   const reportRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
