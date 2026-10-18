@@ -6,7 +6,7 @@ import LanguageToggle from "./LanguageToggle";
 import { useT } from "@/i18n/LanguageContext";
 import traivoIcon from "@/assets/traivo-icon.png";
 
-const SYSTEM_URL = "https://kinab-core-concepts--tomas155.replit.app";
+const SYSTEM_URL = "https://traivo-one-kinab.replit.app/";
 
 const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
