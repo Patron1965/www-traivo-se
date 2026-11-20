@@ -6,7 +6,7 @@ import LanguageToggle from "./LanguageToggle";
 import { useT } from "@/i18n/LanguageContext";
 import traivoIcon from "@/assets/traivo-icon.png";
 
-const SYSTEM_URL = "https://traivo-one-kinab.replit.app/";
+const SYSTEM_URL = "https://app.traivo.se/sign-in";
 
 const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
