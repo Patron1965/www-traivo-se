@@ -9,6 +9,7 @@ import {
 } from "lucide-react";
 import MondayHero from "@/components/MondayHero";
 import HowItWorksSection from "@/components/HowItWorksSection";
+import IndustriesSection from "@/components/IndustriesSection";
 import {
   Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger
 } from "@/components/ui/dialog";
@@ -173,6 +174,7 @@ const Index = () => {
       />
       <MondayHero />
       <HowItWorksSection />
+      <IndustriesSection />
 
       {/* IS / IS NOT */}
       <section className="py-20 md:py-24 px-4 sm:px-6 border-t border-border">
