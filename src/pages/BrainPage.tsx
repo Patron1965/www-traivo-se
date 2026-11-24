@@ -226,11 +226,30 @@ const Brain_Page = () => {
 
   const latestResponse = messages.filter((m) => m.role === "assistant").pop();
 
+  const [followUp, setFollowUp] = useState("");
+  const followUpRef = useRef<HTMLTextAreaElement>(null);
+  const firstAssistantIdx = messages.findIndex((m) => m.role === "assistant");
+  const followUpMessages = firstAssistantIdx >= 0 ? messages.slice(firstAssistantIdx + 1) : [];
+  const canFollowUp = messages.length < 28;
+
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    if (!input.trim() || isLoading) return;
+    await sendMessage(input);
+  };
 
-    const userMsg: Msg = { role: "user", content: input.trim() };
+  const handleFollowUp = async (e: FormEvent) => {
+    e.preventDefault();
+    const text = followUp;
+    if (!text.trim() || isLoading) return;
+    setFollowUp("");
+    await sendMessage(text);
+    followUpRef.current?.focus({ preventScroll: true });
+  };
+
+  const sendMessage = async (raw: string) => {
+    if (!raw.trim() || isLoading) return;
+
+    const userMsg: Msg = { role: "user", content: raw.trim() };
     const allMessages = [...messages, userMsg];
 
     setMessages(allMessages);
@@ -278,6 +297,10 @@ const Brain_Page = () => {
 
   const handleReset = () => {
     setInput("");
+    setMessages([]);
+    setFollowUp("");
+    setHasAsked(false);
+    setSiteReadStatus(null);
     setError("");
     formRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
     textareaRef.current?.focus({ preventScroll: true });
@@ -594,13 +617,74 @@ const Brain_Page = () => {
                             h3: ({ children }) => <h3 className="text-primary/80">{children}</h3>,
                           }}
                         >
-                          {latestResponse?.content || ""}
+                          {messages[firstAssistantIdx]?.content || ""}
                         </ReactMarkdown>
-                        {isLoading && (
+                        {isLoading && followUpMessages.length === 0 && (
                           <span className="inline-block w-2 h-4 bg-primary/60 animate-pulse ml-0.5" />
                         )}
                       </div>
                     </>
+                  )}
+
+                  {followUpMessages.length > 0 && (
+                    <div className="mt-6 pt-5 border-t border-border/40 space-y-4">
+                      {followUpMessages.map((m, i) =>
+                        m.role === "user" ? (
+                          <div key={i} className="flex justify-end">
+                            <div className="max-w-[85%] rounded-2xl rounded-br-sm bg-primary text-primary-foreground px-4 py-2.5 text-sm whitespace-pre-wrap">
+                              {m.content}
+                            </div>
+                          </div>
+                        ) : (
+                          <div key={i} className="flex gap-2.5">
+                            <Brain className="w-4 h-4 text-primary mt-1 flex-shrink-0" />
+                            <div className="prose prose-sm max-w-none min-w-0 prose-headings:text-primary prose-headings:font-display prose-p:text-foreground/85 prose-strong:text-primary prose-li:text-foreground/85">
+                              <ReactMarkdown>{m.content}</ReactMarkdown>
+                            </div>
+                          </div>
+                        )
+                      )}
+                      {isLoading && followUpMessages[followUpMessages.length - 1]?.role === "user" && (
+                        <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                          <Brain className="w-4 h-4 animate-pulse text-primary" />
+                          {t({ sv: "Hjärnan tänker…", en: "The Brain is thinking…" })}
+                        </div>
+                      )}
+                    </div>
+                  )}
+
+                  {latestResponse && canFollowUp && (
+                    <form onSubmit={handleFollowUp} className="mt-6 pt-5 border-t border-border/40">
+                      <label htmlFor="brain-followup" className="block text-sm font-medium text-foreground mb-2">
+                        {t({ sv: "Fråga vidare – Hjärnan minns vad ni pratat om", en: "Ask a follow-up – the Brain remembers your conversation" })}
+                      </label>
+                      <div className="flex gap-2 items-end">
+                        <textarea
+                          id="brain-followup"
+                          ref={followUpRef}
+                          value={followUp}
+                          onChange={(e) => setFollowUp(e.target.value)}
+                          onKeyDown={(e) => {
+                            if (e.key === "Enter" && !e.shiftKey) {
+                              e.preventDefault();
+                              handleFollowUp(e as unknown as FormEvent);
+                            }
+                          }}
+                          rows={2}
+                          maxLength={2000}
+                          placeholder={t({ sv: "T.ex. Hur fungerar kopplingen till Fortnox för oss?", en: "E.g. How would the Fortnox integration work for us?" })}
+                          className="flex-1 resize-none rounded-xl border border-input bg-card px-4 py-3 text-base text-foreground placeholder:text-muted-foreground focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                        />
+                        <button
+                          type="submit"
+                          disabled={isLoading || !followUp.trim()}
+                          aria-label={t({ sv: "Skicka följdfråga", en: "Send follow-up" })}
+                          className="h-12 w-12 flex-shrink-0 rounded-xl bg-primary text-primary-foreground flex items-center justify-center hover:bg-primary/90 disabled:opacity-50 transition-all"
+                        >
+                          {isLoading ? <Loader2 className="w-5 h-5 animate-spin" /> : <Send className="w-5 h-5" />}
+                        </button>
+                      </div>
+                    </form>
                   )}
 
                   {latestResponse && !isLoading && (
