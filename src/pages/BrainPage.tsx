@@ -230,6 +230,8 @@ const Brain_Page = () => {
   const followUpRef = useRef<HTMLTextAreaElement>(null);
   const firstAssistantIdx = messages.findIndex((m) => m.role === "assistant");
   const followUpMessages = firstAssistantIdx >= 0 ? messages.slice(firstAssistantIdx + 1) : [];
+  const openingMessages =
+    firstAssistantIdx >= 0 ? messages.slice(0, firstAssistantIdx) : messages;
   const canFollowUp = messages.length < 28;
 
   const handleSubmit = async (e: FormEvent) => {
@@ -584,6 +586,18 @@ const Brain_Page = () => {
               >
                 <div className="rounded-2xl glass p-5 md:p-6 relative overflow-hidden">
                   <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent" />
+
+                  {openingMessages.length > 0 && (
+                    <div className="space-y-3 mb-5">
+                      {openingMessages.map((m, i) => (
+                        <div key={`open-${i}`} className="flex justify-end">
+                          <div className="max-w-[85%] rounded-2xl rounded-br-sm bg-primary text-primary-foreground px-4 py-2.5 text-sm whitespace-pre-wrap break-words">
+                            {m.content}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
 
                   {isLoading && !latestResponse ? (
                     <div className="flex items-center gap-3 text-muted-foreground">
