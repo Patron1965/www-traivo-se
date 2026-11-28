@@ -278,7 +278,7 @@ const Index = () => {
       </section>
 
       {/* INDUSTRIES */}
-      <section id="branscher" className="py-24 md:py-28 px-4 sm:px-6 border-t border-border scroll-mt-20">
+      <section id="branscher-verksamheter" className="py-24 md:py-28 px-4 sm:px-6 border-t border-border scroll-mt-20">
         <div className="max-w-5xl mx-auto">
           <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="max-w-2xl mb-10">
             <span className="text-[11px] font-medium uppercase tracking-[0.25em] text-primary mb-4 block">
