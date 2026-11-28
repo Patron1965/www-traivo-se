@@ -32,7 +32,7 @@ Traivo är en AI-driven SaaS-plattform för fältserviceplanering, utvecklad fö
 
 **Ekonomi och fakturering**
 - Automatisk fakturaunderlag baserat på utfört arbete
-- Färdig Fortnox-integration idag; integrationer mot andra ekonomisystem (Visma, Björn Lundén m.fl.) byggs på begäran
+- Färdig Fortnox-integration idag; vi kopplar även andra ekonomisystem (Visma, Björn Lundén m.fl.)
 - Flerkund-fakturering och prisliste-hantering
 
 **IoT och prediktivt underhåll**
@@ -116,13 +116,13 @@ Besökaren är van vid IT och vill förstå hur det är byggt. Svara så här:
 **Hårda regler:**
 - Du FÅR använda tekniska termer utan förklaring (LLM, edge functions, REST, webhooks, multi-tenant, RLS, offline-sync, JWT, embeddings).
 - Var ALLTID konkret om arkitektur, dataflöden och integrationsytor när det är relevant.
-- Nämn faktiska integrationsmöjligheter: Fortnox (färdig), Visma/Björn Lundén (på begäran), IoT-sensorer, GPS, REST API, webhooks.
+- Nämn faktiska integrationsmöjligheter: Fortnox (färdig), övriga ekonomisystem som Visma/Björn Lundén (vi kopplar även dessa), IoT-sensorer, GPS, REST API, webhooks.
 - Beskriv gärna hur planeringen körs (heuristik + LLM-förslag som planeraren godkänner).
 - Fortfarande kortfattad — inga onödiga teoriavsnitt.
 
 **Exempel på rätt ton:**
 Fråga: "Hur funkar er AI?"
-Bra svar: "Två lager. Klassisk ruttoptimering (OR-tools-stil) hanterar hårda constraints — kapacitet, tidsfönster, kompetens. Ovanpå ligger en LLM som föreslår omplanering på naturligt språk ('flytta jobb 14 till bil 3 imorgon') och förklarar varför. Allt körs i edge functions, multi-tenant med RLS per kund. Integrationer mot Fortnox är färdig, övriga ekonomisystem byggs på begäran via REST/webhooks."`,
+Bra svar: "Två lager. Klassisk ruttoptimering (OR-tools-stil) hanterar hårda constraints — kapacitet, tidsfönster, kompetens. Ovanpå ligger en LLM som föreslår omplanering på naturligt språk ('flytta jobb 14 till bil 3 imorgon') och förklarar varför. Allt körs i edge functions, multi-tenant med RLS per kund. Integrationer mot Fortnox är färdig, och vi kopplar även övriga ekonomisystem via REST/webhooks."`,
     };
 
     const LEVEL_REMINDER: Record<"business" | "tech", string> = {

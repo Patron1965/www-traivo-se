@@ -76,7 +76,7 @@ const TraivoOne = () => {
       intro: t({ sv: "Från utfört jobb till skickad faktura – utan omvägar.", en: "From completed job to sent invoice — without detours." }),
       items: [
         { t: t({ sv: "Fakturering", en: "Invoicing" }), d: t({ sv: "Generera med förhandsgranskning.", en: "Generate with preview." }) },
-        { t: t({ sv: "Ekonomisystem", en: "Accounting systems" }), d: t({ sv: "Färdig Fortnox-koppling. Integrationer mot Visma, Björn Lundén m.fl. byggs på begäran.", en: "Native Fortnox integration. Visma, Björn Lundén and others built on request." }) },
+        { t: t({ sv: "Ekonomisystem", en: "Accounting systems" }), d: t({ sv: "Färdig Fortnox-koppling. Vi kopplar även Visma, Björn Lundén och andra ekonomisystem.", en: "Native Fortnox integration. We also connect Visma, Björn Lundén and other accounting systems." }) },
         { t: t({ sv: "White-label", en: "White-label" }), d: t({ sv: "Logga, färger, domän per kund.", en: "Logo, colors, domain per customer." }) },
         { t: t({ sv: "Rollbaserad åtkomst", en: "Role-based access" }), d: t({ sv: "Admin, planerare, tekniker, kund.", en: "Admin, planner, technician, customer." }) },
       ],
@@ -186,8 +186,8 @@ const TraivoOne = () => {
           {
             q: { sv: "Vilka ekonomisystem kopplar Traivo mot?", en: "Which finance systems does Traivo integrate with?" },
             a: {
-              sv: "Färdig integration mot Fortnox. Integrationer mot Visma, Björn Lundén och andra ekonomisystem byggs på begäran inom Pro-planen.",
-              en: "Ready integration with Fortnox. Integrations with Visma, Björn Lundén and other finance systems are built on request as part of the Pro plan.",
+              sv: "Färdig integration mot Fortnox. Vi kopplar även Visma, Björn Lundén och andra ekonomisystem – ingår från Team-planen och uppåt.",
+              en: "Ready integration with Fortnox. We also connect Visma, Björn Lundén and other accounting systems — included from the Team plan and up.",
             },
           },
           {
