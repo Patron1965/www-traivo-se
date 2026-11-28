@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { useT } from "@/i18n/LanguageContext";
+import traivoLogo from "@/assets/traivo-logo.png.asset.json";
 
 const Footer = () => {
   const t = useT();
@@ -8,7 +9,7 @@ const Footer = () => {
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 py-16 sm:py-20">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 sm:gap-10">
           <div className="col-span-2 md:col-span-1">
-            <span className="font-display font-bold text-2xl text-gradient-ocean">traivo</span>
+            <img src={traivoLogo.url} alt="Traivo" className="h-7 w-auto object-contain" />
             <p className="text-sm text-muted-foreground mt-4 leading-relaxed max-w-[240px]">
               {t({
                 sv: "AI-driven fältserviceplattform byggd för nordiska villkor.",

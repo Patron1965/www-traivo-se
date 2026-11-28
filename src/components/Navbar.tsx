@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, ArrowUpRight } from "lucide-react";
 import LanguageToggle from "./LanguageToggle";
 import { useT } from "@/i18n/LanguageContext";
-import traivoIcon from "@/assets/traivo-icon.png";
+import traivoLogo from "@/assets/traivo-logo.png.asset.json";
 
 const SYSTEM_URL = "https://app.traivo.se/sign-in";
 
@@ -31,9 +31,8 @@ const Navbar = () => {
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-background border-b border-border">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between h-14">
-        <Link to="/" className="font-display font-bold tracking-tight flex items-center gap-2">
-          <img src={traivoIcon} alt="" aria-hidden="true" className="w-[2.33rem] h-[2.33rem] sm:w-[2.662rem] sm:h-[2.662rem] object-contain" />
-          <span className="text-gradient-ocean text-2xl sm:text-3xl">Traivo</span>
+        <Link to="/" className="flex items-center" aria-label="Traivo">
+          <img src={traivoLogo.url} alt="Traivo" className="h-9 sm:h-10 w-auto object-contain" />
         </Link>
 
         {/* Desktop */}
