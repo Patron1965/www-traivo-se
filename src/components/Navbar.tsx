@@ -32,7 +32,7 @@ const Navbar = () => {
     <nav className="fixed top-0 left-0 right-0 z-50 bg-background border-b border-border">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between h-14">
         <Link to="/" className="flex items-center" aria-label="Traivo">
-          <img src={traivoLogo.url} alt="Traivo" className="h-9 sm:h-10 w-auto object-contain" />
+          <img src={traivoLogo.url} alt="Traivo" className="h-[1.8rem] sm:h-[2rem] w-auto object-contain" />
         </Link>
 
         {/* Desktop */}

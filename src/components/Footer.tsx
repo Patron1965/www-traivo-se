@@ -9,7 +9,7 @@ const Footer = () => {
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 py-16 sm:py-20">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 sm:gap-10">
           <div className="col-span-2 md:col-span-1">
-            <img src={traivoLogo.url} alt="Traivo" className="h-7 w-auto object-contain" />
+            <img src={traivoLogo.url} alt="Traivo" className="h-[1.4rem] w-auto object-contain" />
             <p className="text-sm text-muted-foreground mt-4 leading-relaxed max-w-[240px]">
               {t({
                 sv: "AI-driven fältserviceplattform byggd för nordiska villkor.",
